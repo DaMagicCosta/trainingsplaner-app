@@ -11087,7 +11087,9 @@ function _lockReset() {
 // --- Startup: Lock oder Setup ---
 (function() {
   // Hinweis anzeigen wenn crypto.subtle fehlt (file:// in Chrome)
-  if (!_hasCryptoSubtle) {
+  // Prüfe Protokoll statt _hasCryptoSubtle (async-Test ist hier noch nicht fertig)
+  var isInsecureContext = location.protocol === 'file:' && !window.crypto.subtle;
+  if (isInsecureContext) {
     var hint = document.getElementById('lockSetupHint');
     if (hint) {
       hint.style.display = '';
