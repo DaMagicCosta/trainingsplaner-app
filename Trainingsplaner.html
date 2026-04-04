@@ -3128,6 +3128,19 @@
           <button class="btn btn-secondary" onclick="openImportModal()" style="font-size:.82rem;">&#x1F4E5; Importieren</button>
         </div>
       </div>
+
+      <!-- Auto-Sync (nur Trainer) -->
+      <div id="pm_sync_section" style="margin-top:22px;border-top:1px solid var(--border);padding-top:18px;display:none;">
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--green);font-weight:700;margin-bottom:10px;">&#x1F504; Auto-Sync</div>
+        <div style="background:rgba(45,198,83,.07);border:1px solid rgba(45,198,83,.2);border-radius:10px;padding:14px 16px;font-size:.82rem;color:var(--muted);line-height:1.7;margin-bottom:12px;">
+          Athleten-Daten werden nach jeder geloggten Einheit <b style="color:var(--text);">automatisch</b> in deinen Google Drive synchronisiert. Setup: siehe <code>sync/SETUP.md</code>
+        </div>
+        <div class="form-group">
+          <label>Apps Script URL</label>
+          <input type="text" id="pm_sync_url" placeholder="https://script.google.com/macros/s/.../exec" style="font-size:.78rem;" />
+          <div class="hint">Nach dem Deploy aus Google Apps Script kopieren</div>
+        </div>
+      </div>
     </div>
     <div class="modal-footer" style="justify-content:space-between;">
       <div>
@@ -6490,6 +6503,11 @@ function openEditProfileModal(e) {
   if (pmRegenCan) pmRegenCan.checked = regenCfg.athleteCanSetRegen !== false;
   var pmRegenSec = document.getElementById('pm_regen_section');
   if (pmRegenSec) pmRegenSec.style.display = (p.role === 'trainer') ? '' : 'none';
+  // Sync-URL laden (nur Trainer)
+  var pmSyncSec = document.getElementById('pm_sync_section');
+  if (pmSyncSec) pmSyncSec.style.display = (p.role === 'trainer') ? '' : 'none';
+  var pmSyncUrl = document.getElementById('pm_sync_url');
+  if (pmSyncUrl) pmSyncUrl.value = getSyncUrl();
   // Anamnese-Status anzeigen
   var pmAnSt = document.getElementById('pm_anamnese_status');
   if (pmAnSt) {
@@ -6545,6 +6563,10 @@ function saveProfileModal() {
     equipment: equipment
   };
   if (regenConfig) data.regenConfig = regenConfig;
+
+  // Sync-URL speichern (global, nicht pro Profil)
+  var pmSyncUrl = document.getElementById('pm_sync_url');
+  if (pmSyncUrl && pmSyncUrl.value.trim()) { setSyncUrl(pmSyncUrl.value.trim()); }
 
   if (id) {
     // Update existing
@@ -6855,6 +6877,8 @@ function saveLoggedSession() {
   alert('\u2705 Trainingseinheit KW\u00a0'+kw+(logDayIdx!==null?' · Einheit '+(logDayIdx+1):'')+' gespeichert!');
   // Auto-Export: JSON-Backup nach jeder Session herunterladen
   autoExportAfterSession(saveId);
+  // Auto-Sync: Profil im Hintergrund an Trainer-Server senden
+  autoSyncProfile(saveId);
 }
 function autoExportAfterSession(profileId) {
   try {
@@ -6873,6 +6897,37 @@ function autoExportAfterSession(profileId) {
     a.click();
     setTimeout(function(){ document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
   } catch(e) { /* Stiller Fehler – Backup ist optional */ }
+}
+
+// ── Auto-Sync: Profil an Google Apps Script senden ────
+var SYNC_URL_KEY = 'trainingsplaner_sync_url';
+
+function getSyncUrl() {
+  try { return localStorage.getItem(SYNC_URL_KEY) || ''; } catch(e) { return ''; }
+}
+function setSyncUrl(url) {
+  try { localStorage.setItem(SYNC_URL_KEY, url); } catch(e) {}
+}
+
+function autoSyncProfile(profileId) {
+  var syncUrl = getSyncUrl();
+  if (!syncUrl) return; // Kein Sync konfiguriert
+  try {
+    var profiles = getProfiles();
+    var p = null;
+    for (var i = 0; i < profiles.length; i++) { if (profiles[i].id === profileId) { p = profiles[i]; break; } }
+    if (!p) return;
+    // Sensible Daten nicht mitsenden
+    var syncData = JSON.parse(JSON.stringify(p));
+    delete syncData.pin;
+    // Im Hintergrund senden – Athlet merkt nichts
+    fetch(syncUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(syncData)
+    }).catch(function() { /* Stiller Fehler – Sync ist optional */ });
+  } catch(e) { /* Stiller Fehler */ }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -10107,7 +10162,11 @@ function _generateProfileLink(profile) {
   var json = JSON.stringify(linkProfile);
   var b64 = btoa(encodeURIComponent(json));
   var base = window.location.origin + window.location.pathname;
-  return base + '?profile=' + b64;
+  var url = base + '?profile=' + b64;
+  // Sync-URL mitgeben falls konfiguriert
+  var syncUrl = getSyncUrl();
+  if (syncUrl) url += '&sync=' + encodeURIComponent(syncUrl);
+  return url;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -11134,6 +11193,9 @@ function _checkUrlProfileImport() {
       saveProfiles(profiles);
     }
     setActiveProfileId(imported.id);
+    // Sync-URL aus URL-Parameter übernehmen (falls vom Trainer mitgegeben)
+    var syncParam = params.get('sync');
+    if (syncParam) setSyncUrl(decodeURIComponent(syncParam));
     // URL bereinigen (Parameter entfernen)
     if (window.history && window.history.replaceState) {
       var cleanUrl = window.location.pathname;
