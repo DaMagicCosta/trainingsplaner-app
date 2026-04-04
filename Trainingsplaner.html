@@ -10057,6 +10057,10 @@ saveProfileModal = function() {
     saveProfiles(profiles);
     setActiveProfileId(p.id);
   }
+  // Sync-URL speichern (global, nicht pro Profil)
+  var pmSyncUrl = document.getElementById('pm_sync_url');
+  if (pmSyncUrl && pmSyncUrl.value.trim()) { setSyncUrl(pmSyncUrl.value.trim()); }
+
   closeModal('profileModal');
   buildProfileDropdown();
   updateHeaderStats();
