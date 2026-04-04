@@ -7258,7 +7258,7 @@ function buildTrainingsplanView(kwOverride) {
       + '<div style="color:var(--muted);font-size:.9rem;margin-bottom:20px;">'+(isTrainer3 ? 'Öffne den Jahresplan, um diesen Zeitraum zu planen oder nutze die automatische Generierung.' : 'Dein Trainer erstellt noch einen Plan für diese Woche.')+'</div>'
       + '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">'
       + (isTrainer3 ? '<button class="btn btn-primary" onclick="showSection(\'jahresplan\', document.querySelectorAll(\'.tab\')[0]);buildJahresplan();">📅 Zum Jahresplan</button>' : '')
-      + ((!isTrainer3 && getSyncUrl()) ? '<button class="btn btn-primary" style="background:var(--green);border-color:var(--green);" onclick="_pullPlansFromSync()">🔄 Pläne vom Trainer laden</button>' : '')
+      + (!isTrainer3 ? '<button class="btn btn-primary" style="background:var(--green);border-color:var(--green);" onclick="alert(\'Bitte deinen Trainer um einen neuen Plan-Link.\\nLink öffnen → Pläne werden automatisch geladen.\')">💬 Trainer um Plan bitten</button>' : '')
       + (canSetRegen3 ? '<button class="btn btn-outline" style="border-color:#f4a261;color:#f4a261;" onclick="setAthleteRegenWeek('+kw+')">🛌 Als Regeneration setzen</button>' : '')
       + '</div></div>';
     container.innerHTML = html;
@@ -9154,6 +9154,8 @@ function saveWeekPlanFromModal() {
   saveProfiles(profiles);
   // Plan-Sync: Athleten-Profil nach Plan-Speicherung an Drive senden
   autoSyncProfile(_wpeTargetId);
+  // Plan-Update-Link in Zwischenablage kopieren
+  _copyPlanUpdateLink(_wpeTargetId);
   closePlanModal();
   buildJahresplan();
   buildTrainingsplanView();
@@ -10384,6 +10386,36 @@ function _generateProfileLink(profile) {
   return url;
 }
 
+// Plan-Update-Link generieren und in Zwischenablage kopieren
+function _copyPlanUpdateLink(profileId) {
+  var profiles = getProfiles();
+  var p = null;
+  for (var i = 0; i < profiles.length; i++) { if (profiles[i].id === profileId) { p = profiles[i]; break; } }
+  if (!p || p.role === 'trainer') return; // Nur für Athleten
+  var link = _generateFullProfileLink(p);
+  navigator.clipboard.writeText(link).catch(function() {});
+  // Kurze Benachrichtigung
+  var notify = document.createElement('div');
+  notify.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:12px 24px;border-radius:10px;font-size:.88rem;font-weight:600;z-index:9999;';
+  notify.textContent = '📋 Plan-Link für ' + p.name + ' kopiert – per WhatsApp/Mail senden!';
+  document.body.appendChild(notify);
+  setTimeout(function() { document.body.removeChild(notify); }, 4000);
+}
+
+// Vollständigen Profil-Link generieren (inkl. Pläne + Periodisierung)
+function _generateFullProfileLink(profile) {
+  var linkProfile = JSON.parse(JSON.stringify(profile));
+  delete linkProfile.pin;
+  delete linkProfile.sessions; // Sessions nicht im Link (zu groß)
+  var json = JSON.stringify(linkProfile);
+  var b64 = btoa(encodeURIComponent(json));
+  var base = window.location.origin + window.location.pathname;
+  var url = base + '?profile=' + b64;
+  var syncUrl = getSyncUrl();
+  if (syncUrl) url += '&sync=' + encodeURIComponent(syncUrl);
+  return url;
+}
+
 // ═══════════════════════════════════════════════════════════
 //  EXPORT / IMPORT / DRIVE SYNC
 // ═══════════════════════════════════════════════════════════
@@ -11412,33 +11444,9 @@ function _unlockApp() {
 
 // Pläne vom Sync-Server abrufen und lokal mergen
 function _pullPlansFromSync() {
-  var syncUrl = getSyncUrl();
-  if (!syncUrl) return;
-  var p = getActiveProfile();
-  if (!p) return;
-  var profileName = (p.name || '') + '_' + (p.nachname || '');
-  profileName = profileName.replace(/[^a-zA-ZäöüÄÖÜß0-9_\- ]/g, '').trim();
-  if (!profileName) return;
-  var profileId = p.id;
-
-  // Popup öffnet Apps Script URL → postMessage schickt Daten zurück
-  var url = syncUrl + '?name=' + encodeURIComponent(profileName) + '&iframe=true';
-  var popup = window.open(url, '_blank', 'width=1,height=1,left=-100,top=-100');
-
-  function onMessage(event) {
-    if (!event.data || typeof event.data !== 'object') return;
-    window.removeEventListener('message', onMessage);
-    if (event.data.status === 'not_found' || event.data.status === 'error') return;
-    if (event.data.name || event.data.plans) {
-      _mergeSyncData(profileId, event.data);
-    }
-  }
-  window.addEventListener('message', onMessage);
-  // Popup nach 10s schließen falls postMessage nicht kam
-  setTimeout(function() {
-    window.removeEventListener('message', onMessage);
-    try { if (popup && !popup.closed) popup.close(); } catch(e) {}
-  }, 10000);
+  // Plan-Pull funktioniert über den Einladungs-Link (?profile=BASE64)
+  // Der Trainer generiert einen Update-Link, der Athlet öffnet ihn
+  // Automatischer Server-Pull ist wegen CORS/Security nicht möglich
 }
 
 function _mergeSyncData(profileId, serverData) {
@@ -11491,10 +11499,28 @@ function _checkUrlProfileImport() {
     if (!imported.role) imported.role = 'athlete';
     if (!imported.plans) imported.plans = {};
     if (!imported.sessions) imported.sessions = [];
-    // Prüfen ob Profil schon existiert (Doppel-Import verhindern)
+    // Prüfen ob Profil schon existiert → Pläne mergen statt überspringen
     var profiles = getProfiles();
-    var exists = profiles.some(function(p) { return p.id === imported.id; });
-    if (!exists) {
+    var existingIdx = -1;
+    for (var i = 0; i < profiles.length; i++) {
+      if (profiles[i].id === imported.id) { existingIdx = i; break; }
+    }
+    if (existingIdx >= 0) {
+      // Profil existiert → Pläne und Periodisierung vom Trainer übernehmen, Sessions behalten
+      var local = profiles[existingIdx];
+      if (imported.plans) {
+        if (!local.plans) local.plans = {};
+        Object.keys(imported.plans).forEach(function(kwKey) {
+          local.plans[kwKey] = imported.plans[kwKey];
+        });
+      }
+      if (imported.periodization) local.periodization = imported.periodization;
+      // Profildaten aktualisieren (Name, Ziel etc.) aber Sessions behalten
+      ['name','nachname','alter','gewicht','groesse','hfmax','goal','tage','equipment','trainingLocation','regenConfig'].forEach(function(k) {
+        if (imported[k] !== undefined) local[k] = imported[k];
+      });
+      saveProfiles(profiles);
+    } else {
       profiles.push(imported);
       saveProfiles(profiles);
     }
