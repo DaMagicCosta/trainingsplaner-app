@@ -9917,6 +9917,9 @@ switchProfile = function(id) {
   var currentId = getActiveProfileId();
   var isSwitch = currentId !== id;
 
+  // Demo-Modus: keine PIN-Prüfung, direkt wechseln
+  if (_isDemoMode) { _doSwitchProfile(id); return; }
+
   if (target.role === 'trainer' && isSwitch) {
     if (target.pin && target.pin.length === 4) {
       // Trainer MIT PIN → PIN-Modal
