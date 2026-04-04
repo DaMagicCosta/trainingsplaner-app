@@ -5778,6 +5778,7 @@ function generateYearPlan(profileId, overwriteMode) {
   saveProfiles(profiles);
   // Plan-Sync: Athleten-Profil nach Plangenerierung an Drive senden
   autoSyncProfile(id);
+  _copyPlanUpdateLink(id);
   return { written:written, skipped:skipped, regenSkipped:regenSkipped };
 }
 
