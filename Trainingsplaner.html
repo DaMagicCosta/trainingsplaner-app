@@ -10408,6 +10408,18 @@ function _generateFullProfileLink(profile) {
   var linkProfile = JSON.parse(JSON.stringify(profile));
   delete linkProfile.pin;
   delete linkProfile.sessions; // Sessions nicht im Link (zu groß)
+  // Nur aktuelle + nächste 8 Wochen mitnehmen (URL-Länge begrenzen)
+  if (linkProfile.plans) {
+    var currentKw = getISOWeek(new Date());
+    var trimmedPlans = {};
+    for (var kw = currentKw; kw <= currentKw + 8 && kw <= 52; kw++) {
+      var key = 'w' + (kw < 10 ? '0' + kw : kw);
+      var key2 = 'w' + kw;
+      if (linkProfile.plans[key]) trimmedPlans[key] = linkProfile.plans[key];
+      if (linkProfile.plans[key2]) trimmedPlans[key2] = linkProfile.plans[key2];
+    }
+    linkProfile.plans = trimmedPlans;
+  }
   var json = JSON.stringify(linkProfile);
   var b64 = btoa(encodeURIComponent(json));
   var base = window.location.origin + window.location.pathname;
