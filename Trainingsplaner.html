@@ -11174,6 +11174,14 @@ async function _tpDeriveKey(pin, salt) {
     km, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']
   );
 }
+// Hilfsfunktion: Uint8Array → Base64 (chunked, kein Stack Overflow bei großen Daten)
+function _uint8ToBase64(buf) {
+  var binary = '';
+  for (var i = 0; i < buf.length; i += 8192) {
+    binary += String.fromCharCode.apply(null, buf.subarray(i, Math.min(i + 8192, buf.length)));
+  }
+  return btoa(binary);
+}
 async function _tpEncrypt(data, pin) {
   if (!_hasCryptoSubtle) return _xorObfuscate(data, pin);
   var salt = crypto.getRandomValues(new Uint8Array(16));
@@ -11182,7 +11190,7 @@ async function _tpEncrypt(data, pin) {
   var ct   = await crypto.subtle.encrypt({ name:'AES-GCM', iv:iv }, key, new TextEncoder().encode(data));
   var buf  = new Uint8Array(salt.length + iv.length + ct.byteLength);
   buf.set(salt, 0); buf.set(iv, salt.length); buf.set(new Uint8Array(ct), salt.length + iv.length);
-  return btoa(String.fromCharCode.apply(null, buf));
+  return _uint8ToBase64(buf);
 }
 async function _tpDecrypt(b64, pin) {
   if (!_hasCryptoSubtle) return _xorDeobfuscate(b64, pin);
@@ -11217,7 +11225,7 @@ saveProfiles = function(profiles) {
   if (_appPin) {
     _tpEncrypt(json, _appPin).then(function(enc) {
       _lsSet(TP_VAULT_KEY, enc);
-    });
+    }).catch(function(err) { console.error('Vault-Verschlüsselung fehlgeschlagen:', err); });
     // Alten Klartext-Key löschen (Migration)
     try { localStorage.removeItem(PROFILES_KEY); } catch(e) {}
   } else {
