@@ -1062,7 +1062,7 @@
       font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.85);
       opacity: .82; cursor: default; white-space: nowrap; overflow: hidden;
     }
-    .btl-seg.btl-regen { opacity: .45; background: rgba(244,162,97,.4) !important; }
+    .btl-seg.btl-regen { opacity: .55; }
     .btl-seg.btl-active { opacity: 1; box-shadow: 0 0 0 2px rgba(255,255,255,.3); }
 
     /* ── Nicht verfügbare Übungen im Picker ─────── */
@@ -5888,7 +5888,7 @@ function buildJahresplan() {
     ? _jahresplanViewProfileId : getActiveProfileId();
   var periodization = getPeriodization(viewProfileId);
 
-  // Block-Timeline aufbauen (KW 1-52 → Block-Farben)
+  // Block-Timeline aufbauen (KW 1-52 → Block-Farben + alle Regen-Arten)
   var btl = document.getElementById('period_block_timeline');
   if (btl) {
     if (periodization && periodization.active) {
@@ -5896,14 +5896,33 @@ function buildJahresplan() {
       var lastBlockIdx = -1;
       for (var tw = 1; tw <= 52; tw++) {
         var binfo = getKwBlock(tw, periodization);
-        if (!binfo) continue;
-        var blocks = periodization.blocks || PERIOD_BLOCK_DEFAULTS;
-        var bdef = Object.assign({}, PERIOD_BLOCK_DEFAULTS[binfo.blockIdx]||{}, blocks[binfo.blockIdx]||{});
-        var col = binfo.isRegen ? 'rgba(244,162,97,.4)' : (bdef.color || '#4cc9f0');
+        var twIsAutoR = autoRegens.indexOf(tw) >= 0;
+        var twIsAthR  = athleteRegenWeeks.indexOf(tw) >= 0;
+        var twIsGenR  = twIsAutoR || twIsAthR;
         var isActive = tw === currentKW;
-        var lbl = binfo.isRegen ? '🛌' : (binfo.relativeWeek === 1 ? (bdef.label||'').split(' ')[0] : '');
-        segs += '<div class="btl-seg'+(binfo.isRegen?' btl-regen':'')+(isActive?' btl-active':'')+'" '+
-          'style="background:'+col+'" title="KW '+tw+(binfo.isRegen?' · Regen':' · '+(bdef.label||''))+' (W'+binfo.relativeWeek+')">'+(isActive?'●':lbl)+'</div>';
+        if (!binfo && !twIsGenR) continue;
+        // Farbe + Label bestimmen: Athlet-Regen > Auto-Regen > Block-Regen > Training
+        var col, lbl, isRegen = false, ttip;
+        if (twIsAthR) {
+          col = '#f4a261'; lbl = '🛋️'; isRegen = true;
+          ttip = 'KW '+tw+' · Regen (selbst gesetzt)';
+        } else if (twIsAutoR) {
+          col = 'var(--yellow)'; lbl = '💤'; isRegen = true;
+          ttip = 'KW '+tw+' · Regen (Intervall)';
+        } else if (binfo && binfo.isRegen) {
+          col = 'rgba(244,162,97,.4)'; lbl = '🛌'; isRegen = true;
+          ttip = 'KW '+tw+' · Regen (Block-Übergang)';
+        } else if (binfo) {
+          var blocks = periodization.blocks || PERIOD_BLOCK_DEFAULTS;
+          var bdef = Object.assign({}, PERIOD_BLOCK_DEFAULTS[binfo.blockIdx]||{}, blocks[binfo.blockIdx]||{});
+          col = bdef.color || '#4cc9f0';
+          lbl = binfo.relativeWeek === 1 ? (bdef.label||'').split(' ')[0] : '';
+          ttip = 'KW '+tw+' · '+(bdef.label||'')+' (W'+binfo.relativeWeek+')';
+        } else {
+          continue;
+        }
+        segs += '<div class="btl-seg'+(isRegen?' btl-regen':'')+(isActive?' btl-active':'')+'" '+
+          'style="background:'+col+'" title="'+ttip+'">'+(isActive?'●':lbl)+'</div>';
       }
       btl.innerHTML = segs;
       btl.style.display = '';
@@ -7082,14 +7101,26 @@ function autoSyncProfile(profileId) {
     // Sensible Daten nicht mitsenden
     var syncData = JSON.parse(JSON.stringify(p));
     delete syncData.pin;
-    // Im Hintergrund senden – Athlet merkt nichts
-    // Google Apps Script macht einen 302-Redirect, daher kein no-cors
-    fetch(syncUrl, {
-      method: 'POST',
-      redirect: 'follow',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(syncData)
-    }).catch(function() { /* Stiller Fehler – Sync ist optional */ });
+    // Hidden-Form + Iframe: zuverlässigste Methode für Google Apps Script
+    // (fetch hat CORS/Redirect-Probleme mit Apps Script)
+    var iframeName = 'syncFrame_' + Date.now();
+    var iframe = document.createElement('iframe');
+    iframe.name = iframeName;
+    iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
+    document.body.appendChild(iframe);
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = syncUrl;
+    form.target = iframeName;
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'data';
+    input.value = JSON.stringify(syncData);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    setTimeout(function() { try { document.body.removeChild(iframe); } catch(e) {} }, 10000);
   } catch(e) { /* Stiller Fehler */ }
 }
 

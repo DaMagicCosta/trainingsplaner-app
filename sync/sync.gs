@@ -15,7 +15,9 @@ var FOLDER_ID = ''; // ← Hier die Ordner-ID eintragen nach dem Setup
 // ── POST-Handler ───────────────────────────────────────
 function doPost(e) {
   try {
-    var data = JSON.parse(e.postData.contents);
+    // Unterstützt sowohl Form-Daten (e.parameter.data) als auch raw JSON (e.postData.contents)
+    var raw = (e.parameter && e.parameter.data) ? e.parameter.data : e.postData.contents;
+    var data = JSON.parse(raw);
     var profileName = (data.name || 'Unbekannt') + '_' + (data.nachname || '');
     profileName = profileName.replace(/[^a-zA-ZäöüÄÖÜß0-9_\- ]/g, '').trim();
 
