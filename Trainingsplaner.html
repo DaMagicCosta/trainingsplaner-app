@@ -10408,31 +10408,35 @@ function _generateFullProfileLink(profile) {
   var linkProfile = JSON.parse(JSON.stringify(profile));
   delete linkProfile.pin;
   delete linkProfile.sessions; // Sessions nicht im Link (zu groß)
-  // Nur aktuelle + nächste 3 Wochen, Übungen minimal (URL-Länge begrenzen)
+  // Nur aktuelle Woche mitnehmen, Übungen minimal, kompakte Kodierung
+  var currentKw = getISOWeek(new Date());
+  var trimmedPlans = {};
   if (linkProfile.plans) {
-    var currentKw = getISOWeek(new Date());
-    var trimmedPlans = {};
-    for (var kw = currentKw; kw <= currentKw + 3 && kw <= 52; kw++) {
-      var key = 'w' + (kw < 10 ? '0' + kw : kw);
-      var key2 = 'w' + kw;
-      var plan = linkProfile.plans[key] || linkProfile.plans[key2];
-      if (plan) {
-        // Nur essenzielle Felder behalten
-        var slim = { name:plan.name, goal:plan.goal, _source:plan._source, _block:plan._block };
-        if (plan.days) {
-          slim.days = plan.days.map(function(d) {
+    for (var kw = currentKw; kw <= currentKw + 1 && kw <= 52; kw++) {
+      var key = 'w' + kw;
+      var plan = linkProfile.plans[key];
+      if (plan && plan.days) {
+        trimmedPlans[key] = {
+          goal: plan.goal, _source: plan._source,
+          days: plan.days.map(function(d) {
             return { label:d.label, exercises:(d.exercises||[]).map(function(ex) {
-              return { name:ex.name, muscle:ex.muscle, saetze:ex.saetze, wdh:ex.wdh, gewicht:ex.gewicht||'' };
+              return { n:ex.name, s:ex.saetze||3, w:ex.wdh||10 };
             })};
-          });
-        }
-        // Flat exercises aus days generieren
-        slim.exercises = [];
-        (slim.days||[]).forEach(function(d){ slim.exercises = slim.exercises.concat(d.exercises||[]); });
-        trimmedPlans[key2 || key] = slim;
+          })
+        };
       }
     }
-    linkProfile.plans = trimmedPlans;
+  }
+  linkProfile.plans = trimmedPlans;
+  // Periodisierung kompakt
+  if (linkProfile.periodization) {
+    linkProfile.periodization = {
+      active: true,
+      startKw: linkProfile.periodization.startKw,
+      blocks: (linkProfile.periodization.blocks||[]).map(function(b) {
+        return { label:b.label, color:b.color, length:b.length, tplId:b.tplId, tplType:b.tplType };
+      })
+    };
   }
   var json = JSON.stringify(linkProfile);
   var b64 = btoa(encodeURIComponent(json));
@@ -11538,7 +11542,22 @@ function _checkUrlProfileImport() {
       if (imported.plans) {
         if (!local.plans) local.plans = {};
         Object.keys(imported.plans).forEach(function(kwKey) {
-          local.plans[kwKey] = imported.plans[kwKey];
+          var plan = imported.plans[kwKey];
+          // Kompakte Felder expandieren (n→name, s→saetze, w→wdh)
+          if (plan && plan.days) {
+            plan.days.forEach(function(d) {
+              if (d.exercises) d.exercises = d.exercises.map(function(ex) {
+                if (ex.n && !ex.name) return { name:ex.n, muscle:'', saetze:ex.s||3, wdh:ex.w||10, gewicht:'', note:'' };
+                return ex;
+              });
+            });
+            // Flat exercises aus days generieren falls fehlend
+            if (!plan.exercises) {
+              plan.exercises = [];
+              plan.days.forEach(function(d) { plan.exercises = plan.exercises.concat(d.exercises||[]); });
+            }
+          }
+          local.plans[kwKey] = plan;
         });
       }
       if (imported.periodization) local.periodization = imported.periodization;
