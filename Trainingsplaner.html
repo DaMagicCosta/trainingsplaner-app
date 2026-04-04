@@ -11419,43 +11419,52 @@ function _pullPlansFromSync() {
   profileName = profileName.replace(/[^a-zA-ZäöüÄÖÜß0-9_\- ]/g, '').trim();
   if (!profileName) return;
 
-  fetch(syncUrl + '?name=' + encodeURIComponent(profileName), { redirect: 'follow' })
-    .then(function(res) { return res.json(); })
-    .then(function(serverData) {
-      if (!serverData || serverData.status === 'not_found' || serverData.status === 'error') return;
-      if (!serverData.plans) return;
-      // Merge: Server-Pläne übernehmen, lokale Sessions behalten
-      var profiles = getProfiles();
-      var local = null;
-      for (var i = 0; i < profiles.length; i++) {
-        if (profiles[i].id === p.id) { local = profiles[i]; break; }
-      }
-      if (!local) return;
-      var changed = false;
-      Object.keys(serverData.plans).forEach(function(kwKey) {
-        var serverPlan = serverData.plans[kwKey];
-        var localPlan = (local.plans || {})[kwKey];
-        // Nur übernehmen wenn lokal kein Plan existiert oder Server-Plan neuer ist
-        if (!localPlan || (serverPlan._source === 'auto' && !localPlan._source) ||
-            (serverPlan.date && localPlan.date && serverPlan.date !== localPlan.date)) {
-          if (!local.plans) local.plans = {};
-          local.plans[kwKey] = serverPlan;
-          changed = true;
-        }
-      });
-      // Periodisierung übernehmen falls vom Trainer gesetzt
-      if (serverData.periodization && serverData.periodization.active) {
-        local.periodization = serverData.periodization;
-        changed = true;
-      }
-      if (changed) {
-        saveProfiles(profiles);
-        buildJahresplan();
-        buildTrainingsplanView();
-        updateHeaderStats();
-      }
-    })
-    .catch(function() { /* Stiller Fehler – Sync ist optional */ });
+  // JSONP: <script>-Tag umgeht CORS bei Google Apps Script
+  var cbName = '_syncCb_' + Date.now();
+  window[cbName] = function(serverData) {
+    delete window[cbName];
+    _mergeSyncData(p.id, serverData);
+  };
+  var script = document.createElement('script');
+  script.src = syncUrl + '?name=' + encodeURIComponent(profileName) + '&callback=' + cbName;
+  script.onerror = function() { delete window[cbName]; };
+  document.body.appendChild(script);
+  setTimeout(function() {
+    try { document.body.removeChild(script); } catch(e) {}
+    delete window[cbName];
+  }, 15000);
+}
+
+function _mergeSyncData(profileId, serverData) {
+  if (!serverData || serverData.status === 'not_found' || serverData.status === 'error') return;
+  if (!serverData.plans) return;
+  var profiles = getProfiles();
+  var local = null;
+  for (var i = 0; i < profiles.length; i++) {
+    if (profiles[i].id === profileId) { local = profiles[i]; break; }
+  }
+  if (!local) return;
+  var changed = false;
+  Object.keys(serverData.plans).forEach(function(kwKey) {
+    var serverPlan = serverData.plans[kwKey];
+    var localPlan = (local.plans || {})[kwKey];
+    if (!localPlan || (serverPlan._source === 'auto' && !localPlan._source) ||
+        (serverPlan.date && localPlan.date && serverPlan.date !== localPlan.date)) {
+      if (!local.plans) local.plans = {};
+      local.plans[kwKey] = serverPlan;
+      changed = true;
+    }
+  });
+  if (serverData.periodization && serverData.periodization.active) {
+    local.periodization = serverData.periodization;
+    changed = true;
+  }
+  if (changed) {
+    saveProfiles(profiles);
+    buildJahresplan();
+    buildTrainingsplanView();
+    updateHeaderStats();
+  }
 }
 
 // Profil aus URL-Parameter importieren (?profile=BASE64)

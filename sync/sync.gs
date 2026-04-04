@@ -52,33 +52,40 @@ function doPost(e) {
   }
 }
 
-// ── GET-Handler (Statuscheck + Profil-Abruf) ──────────
+// ── GET-Handler (Statuscheck + Profil-Abruf + JSONP) ──
 function doGet(e) {
-  // Profil abrufen: ?name=Demo_Sync oder ?id=p_12345
   var queryName = (e && e.parameter && e.parameter.name) ? e.parameter.name : null;
   var queryId   = (e && e.parameter && e.parameter.id)   ? e.parameter.id   : null;
+  var callback  = (e && e.parameter && e.parameter.callback) ? e.parameter.callback : null;
+
+  // Hilfsfunktion: JSON oder JSONP zurückgeben
+  function respond(data) {
+    var json = (typeof data === 'string') ? data : JSON.stringify(data);
+    if (callback) {
+      // JSONP: callback(data) – umgeht CORS
+      return ContentService.createTextOutput(callback + '(' + json + ')')
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
+  }
 
   if (!queryName && !queryId) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'ok', service: 'Trainingsplaner Sync', version: '2.0' }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond({ status: 'ok', service: 'Trainingsplaner Sync', version: '2.0' });
   }
 
   try {
     var folder = FOLDER_ID ? DriveApp.getFolderById(FOLDER_ID) : DriveApp.getRootFolder();
 
     if (queryName) {
-      // Suche nach Dateiname: Sync_{name}.json
       var fileName = 'Sync_' + queryName + '.json';
       var files = folder.getFilesByName(fileName);
       if (files.hasNext()) {
         var content = files.next().getBlob().getDataAsString();
-        return ContentService.createTextOutput(content).setMimeType(ContentService.MimeType.JSON);
+        return respond(content);
       }
     }
 
     if (queryId) {
-      // Suche nach Profil-ID in allen Sync-Dateien
       var allFiles = folder.getFiles();
       while (allFiles.hasNext()) {
         var f = allFiles.next();
@@ -86,21 +93,14 @@ function doGet(e) {
           var c = f.getBlob().getDataAsString();
           try {
             var d = JSON.parse(c);
-            if (d.id === queryId) {
-              return ContentService.createTextOutput(c).setMimeType(ContentService.MimeType.JSON);
-            }
-          } catch(pe) { /* skip invalid files */ }
+            if (d.id === queryId) { return respond(c); }
+          } catch(pe) {}
         }
       }
     }
 
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'not_found' }))
-      .setMimeType(ContentService.MimeType.JSON);
-
+    return respond({ status: 'not_found' });
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return respond({ status: 'error', message: err.message });
   }
 }
