@@ -828,6 +828,17 @@
     .anamnese-badge.valid { background:rgba(45,198,83,.12); color:var(--green); }
     .anamnese-badge.expired { background:rgba(230,57,70,.12); color:var(--accent); }
 
+    /* ── Trainer-Vereinbarung ─────────────────── */
+    .tv-section { margin-bottom:20px; }
+    .tv-section-title { font-size:.88rem; font-weight:700; color:var(--accent); margin-bottom:8px; }
+    .tv-list { padding-left:20px; margin-bottom:12px; }
+    .tv-list li { font-size:.84rem; line-height:1.8; color:var(--text); }
+    .tv-highlight { background:rgba(230,57,70,.07); border:1px solid rgba(230,57,70,.2); border-radius:10px; padding:14px 16px; font-size:.83rem; color:var(--muted); line-height:1.7; margin-bottom:20px; }
+    .tv-confirm-row { display:flex; align-items:flex-start; gap:10px; margin-top:18px; padding:14px 16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; }
+    .tv-confirm-row input[type="checkbox"] { margin-top:3px; accent-color:var(--accent); width:18px; height:18px; flex-shrink:0; }
+    .tv-confirm-row label { font-size:.84rem; line-height:1.6; color:var(--text); cursor:pointer; }
+    .tv-date { font-size:.75rem; color:var(--muted); margin-top:8px; }
+
     /* ── Fortschritt / Progress ──────────────── */
     .progress-overview { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-bottom:28px; }
     .prog-stat-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
@@ -3109,6 +3120,13 @@
         </div>
       </div>
 
+      <!-- Trainer-Vereinbarung -->
+      <div id="pm_trainerAgreement_section" style="margin-top:22px;border-top:1px solid var(--border);padding-top:18px;display:none;">
+        <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--accent);font-weight:700;margin-bottom:10px;">&#x1F4DD; Trainer-Vereinbarung</div>
+        <div id="pm_trainerAgreement_status" style="font-size:.84rem;color:var(--muted);margin-bottom:10px;"></div>
+        <button class="btn btn-secondary" onclick="openModal('trainerAgreementModal')" style="font-size:.82rem;border-color:var(--accent);color:var(--accent);">Vereinbarung anzeigen</button>
+      </div>
+
       <!-- Anamnesebogen -->
       <div style="margin-top:22px;border-top:1px solid var(--border);padding-top:18px;">
         <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:var(--yellow);font-weight:700;margin-bottom:10px;">&#x1F4CB; Anamnesebogen</div>
@@ -3395,6 +3413,65 @@
   </div>
 </div>
 
+<!-- ── Trainer-Vereinbarung Modal ─────────────────────────────── -->
+<div class="modal-overlay" id="trainerAgreementModal">
+  <div class="modal-box wide">
+    <div class="modal-header">
+      <div class="modal-title">Trainer-Vereinbarung &ndash; Nutzungspflichten</div>
+    </div>
+    <div class="modal-body" style="font-size:.86rem;line-height:1.8;">
+
+      <div class="tv-highlight">
+        <b style="color:var(--accent);">Wichtig:</b> Diese Vereinbarung ist <b>verpflichtend</b> f&uuml;r alle Trainer-Profile. Ohne Best&auml;tigung ist der Zugang zur App nicht m&ouml;glich.
+      </div>
+
+      <div class="tv-section">
+        <div class="tv-section-title">1. Zweck dieser Vereinbarung</div>
+        <p style="margin-bottom:12px;">Der Trainingsplaner wird kontinuierlich weiterentwickelt. Um die Qualit&auml;t und Zuverl&auml;ssigkeit der App sicherzustellen, ist die aktive Mitwirkung aller Trainer bei der Fehlererkennung und -meldung essenziell.</p>
+      </div>
+
+      <div class="tv-section">
+        <div class="tv-section-title">2. Fehlermeldepflicht</div>
+        <p style="margin-bottom:8px;">Als Trainer verpflichte ich mich, folgende Auff&auml;lligkeiten <b>zeitnah</b> zu melden:</p>
+        <ul class="tv-list">
+          <li>Fehlerhafte Berechnungen (1RM, Volumen, Periodisierung)</li>
+          <li>Falsche oder fehlende Daten in Trainingspl&auml;nen</li>
+          <li>Darstellungsfehler oder nicht funktionierende Bedienelemente</li>
+          <li>Unerwartetes Verhalten bei Profilwechsel, Import oder Export</li>
+          <li>Abweichungen zwischen geplantem und angezeigtem Training</li>
+          <li>Jede Situation, in der die App unlogische oder potenziell gef&auml;hrliche Empfehlungen gibt</li>
+        </ul>
+      </div>
+
+      <div class="tv-section">
+        <div class="tv-section-title">3. Meldungsweg</div>
+        <p style="margin-bottom:12px;">Fehler und Auff&auml;lligkeiten sind direkt an den App-Betreiber zu melden &ndash; per Nachricht, E-Mail oder &uuml;ber den im Info-Tab hinterlegten Kontaktweg. Eine kurze Beschreibung des Problems (Was ist passiert? Was wurde erwartet?) ist ausreichend.</p>
+      </div>
+
+      <div class="tv-section">
+        <div class="tv-section-title">4. Verantwortung</div>
+        <p style="margin-bottom:12px;">Der Trainer tr&auml;gt Mitverantwortung f&uuml;r die Trainingsplanung seiner Athleten. Die App unterst&uuml;tzt diesen Prozess, ersetzt jedoch nicht die fachliche Beurteilung. Erkannte Fehler <b>nicht</b> zu melden, kann zu fehlerhaften Trainingsempfehlungen f&uuml;r Athleten f&uuml;hren.</p>
+      </div>
+
+      <div class="tv-section">
+        <div class="tv-section-title">5. Widerruf</div>
+        <p>Diese Vereinbarung kann jederzeit widerrufen werden. Ein Widerruf f&uuml;hrt zum Entzug des Trainer-Zugangs.</p>
+      </div>
+
+      <div class="tv-confirm-row">
+        <input type="checkbox" id="tvAcceptCheck" onchange="document.getElementById('tvAcceptBtn').disabled=!this.checked">
+        <label for="tvAcceptCheck">Ich habe die Trainer-Vereinbarung gelesen und verpflichte mich, Fehler und Auff&auml;lligkeiten in der App zeitnah zu melden.</label>
+      </div>
+      <div class="tv-date" id="tvDateInfo"></div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="declineTrainerAgreement()">Ablehnen</button>
+      <button class="btn" id="tvAcceptBtn" disabled onclick="acceptTrainerAgreement()">Vereinbarung best&auml;tigen</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── Onboarding-Panel Modal ─────────────────────────────────── -->
 <div class="modal-overlay" id="onboardingModal">
   <div class="modal-box wide">
@@ -3565,6 +3642,68 @@ function getVisibleAthletes() {
   // Trainer sieht nur eigene Athleten
   if (me.role === 'trainer') return all.filter(function(a){ return a.createdBy === me.id; });
   return all;
+}
+
+// ── Trainer-Vereinbarung ─────────────────────────────────────────────
+var _trainerAgreementCallback = null;
+
+function checkTrainerAgreement(profileOrId, callback) {
+  var p = typeof profileOrId === 'string'
+    ? getProfiles().find(function(x){ return x.id === profileOrId; })
+    : profileOrId;
+  if (!p || p.role !== 'trainer') { if (callback) callback(); return true; }
+  if (p.trainerAgreementAccepted) { if (callback) callback(); return true; }
+  // Vereinbarung noch nicht bestätigt → Modal zeigen
+  _trainerAgreementCallback = callback || null;
+  document.getElementById('tvAcceptCheck').checked = false;
+  document.getElementById('tvAcceptBtn').disabled = true;
+  var now = new Date();
+  document.getElementById('tvDateInfo').textContent = 'Datum: ' + now.toLocaleDateString('de-AT');
+  openModal('trainerAgreementModal');
+  return false;
+}
+
+function acceptTrainerAgreement() {
+  var p = getActiveProfile();
+  if (p && p.role === 'trainer') {
+    p.trainerAgreementAccepted = new Date().toISOString();
+    var profiles = getProfiles();
+    for (var i = 0; i < profiles.length; i++) {
+      if (profiles[i].id === p.id) { profiles[i] = p; break; }
+    }
+    saveProfiles(profiles);
+  }
+  closeModal('trainerAgreementModal');
+  if (_trainerAgreementCallback) {
+    var cb = _trainerAgreementCallback;
+    _trainerAgreementCallback = null;
+    cb();
+  }
+}
+
+function declineTrainerAgreement() {
+  closeModal('trainerAgreementModal');
+  _trainerAgreementCallback = null;
+  // Gibt es ein anderes Profil, auf das gewechselt werden kann?
+  var profiles = getProfiles();
+  var currentId = getActiveProfileId();
+  var fallback = profiles.find(function(p) {
+    return p.id !== currentId && (p.role !== 'trainer' || p.trainerAgreementAccepted);
+  });
+  if (fallback) {
+    // Auf erlaubtes Profil zurückwechseln
+    switchProfile(fallback.id);
+    return;
+  }
+  // Kein Fallback → Zugang komplett sperren, zurück zum Lock Screen
+  document.getElementById('appContent').classList.add('locked');
+  document.getElementById('appLockScreen').classList.remove('hidden');
+  _appPin = null;
+  _decryptedCache = null;
+  _lockStep = 0;
+  document.getElementById('lockPinInput').value = '';
+  document.getElementById('lockTitle').textContent = 'PIN eingeben';
+  document.getElementById('lockSubtitle').textContent = 'Bitte gib deine PIN ein, um fortzufahren.';
 }
 
 // ── Anamnesebogen ────────────────────────────────────────────────────
@@ -6341,10 +6480,19 @@ function switchProfile(id) {
   // Trainer startet auf Planung, andere auf Jahresplan
   var p = getActiveProfile();
   if (p && p.role === 'trainer') {
-    showSection('planung', document.querySelectorAll('.tab')[0]);
-    initPlanungView();
-    refreshTplLoadSelect();
-    initBuilderAthletePicker();
+    if (!p.trainerAgreementAccepted) {
+      checkTrainerAgreement(p, function() {
+        showSection('planung', document.querySelectorAll('.tab')[0]);
+        initPlanungView();
+        refreshTplLoadSelect();
+        initBuilderAthletePicker();
+      });
+    } else {
+      showSection('planung', document.querySelectorAll('.tab')[0]);
+      initPlanungView();
+      refreshTplLoadSelect();
+      initBuilderAthletePicker();
+    }
   } else {
     showSection('jahresplan', document.querySelectorAll('.tab')[1]);
   }
@@ -6472,6 +6620,8 @@ function openNewProfileModal(e) {
   // Anamnese-Status: bei neuem Profil noch nicht vorhanden
   var pmAnSt = document.getElementById('pm_anamnese_status');
   if (pmAnSt) pmAnSt.innerHTML = '<span class="anamnese-badge expired">Wird nach Erstellung abgefragt</span>';
+  var tvSec = document.getElementById('pm_trainerAgreement_section');
+  if (tvSec) tvSec.style.display = 'none';
   closeProfileDropdown();
   closeModal('profilesOverviewModal');
   openModal('profileModal');
@@ -6516,6 +6666,18 @@ function openEditProfileModal(e) {
         (p.anamneseHistorie && p.anamneseHistorie.length ? ' <span style="font-size:.76rem;color:var(--muted);">(' + p.anamneseHistorie.length + ' vorherige Version' + (p.anamneseHistorie.length > 1 ? 'en' : '') + ')</span>' : '');
     } else {
       pmAnSt.innerHTML = '<span class="anamnese-badge expired">Noch nicht ausgef\u00fcllt</span>';
+    }
+  }
+  // Trainer-Vereinbarung Status
+  var tvSec = document.getElementById('pm_trainerAgreement_section');
+  var tvSt = document.getElementById('pm_trainerAgreement_status');
+  if (tvSec) tvSec.style.display = (p.role === 'trainer') ? '' : 'none';
+  if (tvSt && p.role === 'trainer') {
+    if (p.trainerAgreementAccepted) {
+      var d = new Date(p.trainerAgreementAccepted);
+      tvSt.innerHTML = '<span class="anamnese-badge valid">\u2713 Best\u00e4tigt am ' + d.toLocaleDateString('de-AT') + '</span>';
+    } else {
+      tvSt.innerHTML = '<span class="anamnese-badge expired">Noch nicht best\u00e4tigt</span>';
     }
   }
   openModal('profileModal');
@@ -6921,9 +7083,10 @@ function autoSyncProfile(profileId) {
     var syncData = JSON.parse(JSON.stringify(p));
     delete syncData.pin;
     // Im Hintergrund senden – Athlet merkt nichts
+    // Google Apps Script macht einen 302-Redirect, daher kein no-cors
     fetch(syncUrl, {
       method: 'POST',
-      mode: 'no-cors',
+      redirect: 'follow',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(syncData)
     }).catch(function() { /* Stiller Fehler – Sync ist optional */ });
@@ -11165,10 +11328,20 @@ function _unlockApp() {
   // Initiale Navigation
   var p = getActiveProfile();
   if (p && p.role === 'trainer') {
-    showSection('planung', document.querySelectorAll('.tab')[0]);
-    initPlanungView();
-    refreshTplLoadSelect();
-    initBuilderAthletePicker();
+    // Trainer-Vereinbarung prüfen – ohne Bestätigung kein Zugang
+    if (!p.trainerAgreementAccepted) {
+      checkTrainerAgreement(p, function() {
+        showSection('planung', document.querySelectorAll('.tab')[0]);
+        initPlanungView();
+        refreshTplLoadSelect();
+        initBuilderAthletePicker();
+      });
+    } else {
+      showSection('planung', document.querySelectorAll('.tab')[0]);
+      initPlanungView();
+      refreshTplLoadSelect();
+      initBuilderAthletePicker();
+    }
   } else {
     showSection('jahresplan', document.querySelectorAll('.tab')[1]);
   }
