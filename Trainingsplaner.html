@@ -9948,6 +9948,15 @@ openEditProfileModal = function(e) {
   if (ri2) ri2.value = regenCfg2.interval || 6;
   if (rm2) rm2.value = regenCfg2.athleteCanSetRegen ? (regenCfg2.maxAthleteRegen || 2) : 0;
   if (rc2) rc2.checked = regenCfg2.athleteCanSetRegen !== false;
+  // Sync-Section (nur Trainer)
+  var pmSyncSec2 = document.getElementById('pm_sync_section');
+  if (pmSyncSec2) pmSyncSec2.style.display = (p.role === 'trainer') ? '' : 'none';
+  var pmSyncUrl2 = document.getElementById('pm_sync_url');
+  if (pmSyncUrl2) pmSyncUrl2.value = getSyncUrl();
+  // Regen-Section (nur Trainer)
+  var pmRegenSec2 = document.getElementById('pm_regen_section');
+  if (pmRegenSec2) pmRegenSec2.style.display = (p.role === 'trainer') ? '' : 'none';
+
   document.getElementById('pm_deleteBtn').style.display = (getProfiles().length > 1) ? '' : 'none';
   document.getElementById('profileModalTitle').textContent = '\u270F\uFE0F Profil bearbeiten';
   closeProfileDropdown();
