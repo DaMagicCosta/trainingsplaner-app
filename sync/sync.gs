@@ -52,9 +52,55 @@ function doPost(e) {
   }
 }
 
-// ── GET-Handler (Statuscheck) ──────────────────────────
+// ── GET-Handler (Statuscheck + Profil-Abruf) ──────────
 function doGet(e) {
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok', service: 'Trainingsplaner Sync', version: '1.0' }))
-    .setMimeType(ContentService.MimeType.JSON);
+  // Profil abrufen: ?name=Demo_Sync oder ?id=p_12345
+  var queryName = (e && e.parameter && e.parameter.name) ? e.parameter.name : null;
+  var queryId   = (e && e.parameter && e.parameter.id)   ? e.parameter.id   : null;
+
+  if (!queryName && !queryId) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'ok', service: 'Trainingsplaner Sync', version: '2.0' }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  try {
+    var folder = FOLDER_ID ? DriveApp.getFolderById(FOLDER_ID) : DriveApp.getRootFolder();
+
+    if (queryName) {
+      // Suche nach Dateiname: Sync_{name}.json
+      var fileName = 'Sync_' + queryName + '.json';
+      var files = folder.getFilesByName(fileName);
+      if (files.hasNext()) {
+        var content = files.next().getBlob().getDataAsString();
+        return ContentService.createTextOutput(content).setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+
+    if (queryId) {
+      // Suche nach Profil-ID in allen Sync-Dateien
+      var allFiles = folder.getFiles();
+      while (allFiles.hasNext()) {
+        var f = allFiles.next();
+        if (f.getName().indexOf('Sync_') === 0 && f.getName().indexOf('.json') > 0) {
+          var c = f.getBlob().getDataAsString();
+          try {
+            var d = JSON.parse(c);
+            if (d.id === queryId) {
+              return ContentService.createTextOutput(c).setMimeType(ContentService.MimeType.JSON);
+            }
+          } catch(pe) { /* skip invalid files */ }
+        }
+      }
+    }
+
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'not_found' }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ status: 'error', message: err.message }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
