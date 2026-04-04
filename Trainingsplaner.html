@@ -6553,6 +6553,8 @@ function buildProfileDropdown() {
     var nameEl = document.getElementById('hdr_profile_name');
     if (nameEl) nameEl.textContent = ap.name + ' ' + ap.nachname;
   }
+  // Demo-Modus: Buttons ausgrauen
+  if (typeof _applyDemoRestrictions === 'function') _applyDemoRestrictions();
 }
 function toggleProfileDropdown(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
@@ -6809,6 +6811,7 @@ function saveProfileModal() {
   buildProgressView();
 }
 function deleteActiveProfile() {
+  if (_demoBlock()) return;
   var p = getActiveProfile();
   if (!p) return;
   if (!confirm('Profil "'+p.name+'" wirklich l\u00f6schen? Alle Daten gehen verloren.')) return;
@@ -10183,6 +10186,7 @@ openEditProfileModal = function(e) {
 // ── openNewProfileModal: Owner-Check + Rolle zurücksetzen ─
 var _origOpenNewProfileModal = openNewProfileModal;
 openNewProfileModal = function(e) {
+  if (_demoBlock()) return;
   if (e) e.stopPropagation();
   // Nur der Owner (Inhaber) darf neue Profile anlegen
   var ap = getActiveProfile();
@@ -10233,6 +10237,7 @@ openNewProfileModal = function(e) {
 //  EINLADUNGSSYSTEM
 // ═══════════════════════════════════════════════════════════
 function openInviteModal(e) {
+  if (_demoBlock()) return;
   if (e) e.stopPropagation();
   closeProfileDropdown();
   document.getElementById('inv_name').value = '';
@@ -10460,6 +10465,7 @@ function _generateFullProfileLink(profile) {
 // ═══════════════════════════════════════════════════════════
 
 function exportProfileJSON() {
+  if (_demoBlock()) return;
   var p = getActiveProfile();
   if (!p) { alert('Kein aktives Profil gefunden.'); return; }
   // Sensible Daten entfernen (PIN nicht exportieren!)
@@ -10522,6 +10528,7 @@ function copyExportJSON() {
 }
 
 function openImportModal() {
+  if (_demoBlock()) return;
   document.getElementById('importJsonArea').value = '';
   document.getElementById('importFileInput').value = '';
   openModal('importProfileModal');
@@ -11597,6 +11604,47 @@ function _checkUrlProfileImport() {
 // ── Demo-Modus ──────────────────────────────────────────
 var _preDemoCache = null; // Echte Daten zwischenspeichern
 
+// Demo-Hinweis bei gesperrten Aktionen
+function _demoBlock() {
+  if (!_isDemoMode) return false;
+  var n = document.createElement('div');
+  n.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:12px 24px;border-radius:10px;font-size:.88rem;font-weight:600;z-index:9999;text-align:center;max-width:90%;';
+  n.textContent = 'Diese Funktion ist im Demo-Modus nicht verf\u00fcgbar.';
+  document.body.appendChild(n);
+  setTimeout(function() { document.body.removeChild(n); }, 2500);
+  return true;
+}
+
+// Buttons im Demo-Modus ausgrauen
+function _applyDemoRestrictions() {
+  if (!_isDemoMode) return;
+  // Desktop-Dropdown Buttons
+  var actions = document.querySelectorAll('.profile-dropdown-actions .pda-btn');
+  actions.forEach(function(btn) {
+    var text = btn.textContent.trim();
+    // Neu, Einladen, Import ausgrauen
+    if (text.indexOf('Neu') >= 0 || text.indexOf('Einladen') >= 0 || text.indexOf('Import') >= 0) {
+      btn.style.opacity = '0.3';
+      btn.style.pointerEvents = 'none';
+      btn.style.cursor = 'default';
+    }
+  });
+  // Overview-Modal "Neues Profil" Button
+  var overviewBtn = document.getElementById('overviewNewProfileBtn');
+  if (overviewBtn) { overviewBtn.style.opacity = '0.3'; overviewBtn.style.pointerEvents = 'none'; }
+  // Mobile-Profil-Modal: "+ Neu" ausgrauen
+  var mobileList = document.getElementById('mobileProfileList');
+  if (mobileList) {
+    var mobileBtns = mobileList.querySelectorAll('div[onclick]');
+    mobileBtns.forEach(function(btn) {
+      var oc = btn.getAttribute('onclick') || '';
+      if (oc.indexOf('openNewProfileModal') >= 0) {
+        btn.style.opacity = '0.3'; btn.style.pointerEvents = 'none';
+      }
+    });
+  }
+}
+
 function _enterDemoMode() {
   _isDemoMode = true;
   _preDemoCache = _decryptedCache; // Echte Daten sichern (kann null sein)
@@ -11851,9 +11899,9 @@ function _enterDemoMode() {
     ]
   };
 
-  // Max Huber – erfahrener Athlet & Trainer
+  // Max Muster – erfahrener Athlet & Trainer
   var trainerProfile = {
-    id: 'p_demo_trainer', name: 'Max', nachname: 'Huber',
+    id: 'p_demo_trainer', name: 'Max', nachname: 'Muster',
     alter: 28, gewicht: 82, groesse: 183, hfmax: 192,
     goal: 'hypertrophie', tage: ['Mo', 'Mi', 'Fr'],
     isOwner: true, role: 'trainer',
@@ -11948,6 +11996,9 @@ function _enterDemoMode() {
   initPlanungView();
   refreshTplLoadSelect();
   initBuilderAthletePicker();
+
+  // Buttons ausgrauen
+  _applyDemoRestrictions();
 }
 
 function _exitDemoMode() {
