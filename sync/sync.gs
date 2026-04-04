@@ -15,7 +15,24 @@ var FOLDER_ID = ''; // ← Hier die Ordner-ID eintragen nach dem Setup
 // ── POST-Handler ───────────────────────────────────────
 function doPost(e) {
   try {
-    // Unterstützt sowohl Form-Daten (e.parameter.data) als auch raw JSON (e.postData.contents)
+    var folder = FOLDER_ID ? DriveApp.getFolderById(FOLDER_ID) : DriveApp.getRootFolder();
+
+    // Pull-Modus: Pläne abrufen (action=pull&name=Demo_Sync)
+    if (e.parameter && e.parameter.action === 'pull' && e.parameter.name) {
+      var pullName = 'Sync_' + e.parameter.name + '.json';
+      var pullFiles = folder.getFilesByName(pullName);
+      if (pullFiles.hasNext()) {
+        var pullContent = pullFiles.next().getBlob().getDataAsString();
+        var html = '<html><body><script>parent.postMessage(' + pullContent + ',"*");<\/script></body></html>';
+        return HtmlService.createHtmlOutput(html)
+          .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+      }
+      var html404 = '<html><body><script>parent.postMessage({"status":"not_found"},"*");<\/script></body></html>';
+      return HtmlService.createHtmlOutput(html404)
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+    }
+
+    // Sync-Modus: Profil speichern
     var raw = (e.parameter && e.parameter.data) ? e.parameter.data : e.postData.contents;
     var data = JSON.parse(raw);
     var profileName = (data.name || 'Unbekannt') + '_' + (data.nachname || '');
@@ -24,15 +41,6 @@ function doPost(e) {
     var fileName = 'Sync_' + profileName + '.json';
     var jsonContent = JSON.stringify(data, null, 2);
 
-    // Ordner holen (oder Root wenn keine ID gesetzt)
-    var folder;
-    if (FOLDER_ID) {
-      folder = DriveApp.getFolderById(FOLDER_ID);
-    } else {
-      folder = DriveApp.getRootFolder();
-    }
-
-    // Bestehende Datei suchen und aktualisieren (statt Duplikate)
     var existing = folder.getFilesByName(fileName);
     if (existing.hasNext()) {
       var file = existing.next();

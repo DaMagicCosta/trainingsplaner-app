@@ -11420,28 +11420,43 @@ function _pullPlansFromSync() {
   if (!profileName) return;
   var profileId = p.id;
 
-  // iframe + postMessage: umgeht CORS zuverlässig
+  // Hidden-Form POST mit action=pull → Apps Script gibt HTML mit postMessage zurück
+  var iframeName = '_pullFrame_' + Date.now();
   var iframe = document.createElement('iframe');
+  iframe.name = iframeName;
   iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
-  iframe.src = syncUrl + '?name=' + encodeURIComponent(profileName) + '&iframe=true';
-
-  function onMessage(event) {
-    // Nur Nachrichten von Google akzeptieren
-    if (!event.origin || event.origin.indexOf('google') < 0) return;
-    window.removeEventListener('message', onMessage);
-    try { document.body.removeChild(iframe); } catch(e) {}
-    if (event.data && typeof event.data === 'object') {
-      _mergeSyncData(profileId, event.data);
-    }
-  }
-  window.addEventListener('message', onMessage);
   document.body.appendChild(iframe);
 
-  // Timeout: nach 15s aufräumen
-  setTimeout(function() {
+  function onMessage(event) {
+    if (!event.data || typeof event.data !== 'object') return;
+    if (event.data.status === 'not_found') { cleanup(); return; }
+    if (event.data.name || event.data.plans) {
+      window.removeEventListener('message', onMessage);
+      _mergeSyncData(profileId, event.data);
+      cleanup();
+    }
+  }
+  function cleanup() {
     window.removeEventListener('message', onMessage);
     try { document.body.removeChild(iframe); } catch(e) {}
-  }, 15000);
+  }
+  window.addEventListener('message', onMessage);
+
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = syncUrl;
+  form.target = iframeName;
+  var inp1 = document.createElement('input');
+  inp1.type = 'hidden'; inp1.name = 'action'; inp1.value = 'pull';
+  var inp2 = document.createElement('input');
+  inp2.type = 'hidden'; inp2.name = 'name'; inp2.value = profileName;
+  form.appendChild(inp1);
+  form.appendChild(inp2);
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+
+  setTimeout(cleanup, 15000);
 }
 
 function _mergeSyncData(profileId, serverData) {
