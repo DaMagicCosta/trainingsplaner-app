@@ -1183,7 +1183,7 @@
   <div class="lock-error" id="lockError"></div>
   <div class="lock-setup-hint" id="lockSetupHint" style="display:none;">Erste Nutzung: W&#228;hle eine 4-stellige PIN.<br>Diese PIN sch&#252;tzt alle deine Daten.</div>
   <a href="#" class="lock-demo-link" onclick="_enterDemoMode();return false;">Demo ansehen</a>
-  <a href="#" onclick="_lockReset();return false;" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--muted);text-decoration:none;opacity:.4;">Daten zur&#252;cksetzen</a>
+  <a href="#" id="lockResetLink" onclick="_lockReset();return false;" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--muted);text-decoration:none;opacity:.4;">Daten zur&#252;cksetzen</a>
 </div>
 
 <!-- APP CONTENT (hidden until unlocked) -->
@@ -12053,6 +12053,10 @@ function _lockReset() {
     if (existing.length > 0) {
       document.getElementById('lockSetupHint').innerHTML = 'Bestehende Daten werden verschl\u00fcsselt.<br>W\u00e4hle eine 4-stellige PIN.';
     }
+  } else {
+    // Daten vorhanden → Reset-Link anzeigen
+    var resetLink = document.getElementById('lockResetLink');
+    if (resetLink) resetLink.style.display = '';
   }
   // Sonst: normaler Login → warten auf PIN-Eingabe
 })();
