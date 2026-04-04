@@ -1206,6 +1206,7 @@
         <div class="pda-btn" onclick="openEditProfileModal(event)">&#x270F;&#xFE0F; Bearbeiten</div>
         <div class="pda-btn" onclick="openImportModal();closeProfileDropdown();" style="border-color:var(--green);color:var(--green);">&#x1F4E5; Import</div>
         <div class="pda-btn" id="inviteBtn" onclick="openInviteModal(event)" style="border-color:#9b5de5;color:#c084fc;">&#x1F4E8; Einladen</div>
+        <div class="pda-btn" onclick="_lockApp()" style="border-color:var(--accent);color:var(--accent);">&#x1F512; Abmelden</div>
       </div>
     </div>
   </div>
@@ -6419,6 +6420,7 @@ function buildMobileProfileList() {
   html += '<div style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--border);color:var(--text);font-size:.82rem;font-weight:600;text-align:center;cursor:pointer;" onclick="closeModal(\'mobileProfileModal\');openEditProfileModal()">&#x270F;&#xFE0F; Bearbeiten</div>';
   html += '<div style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--accent2);color:var(--accent2);font-size:.82rem;font-weight:600;text-align:center;cursor:pointer;" onclick="closeModal(\'mobileProfileModal\');openProfilesOverview(event)">&#x1F4CA; Alle</div>';
   html += '</div>';
+  html += '<div style="padding:8px 4px 0;"><div style="padding:10px;border-radius:10px;border:1px solid var(--accent);color:var(--accent);font-size:.82rem;font-weight:600;text-align:center;cursor:pointer;" onclick="closeModal(\'mobileProfileModal\');_lockApp()">&#x1F512; Abmelden</div></div>';
   list.innerHTML = html;
 }
 function closeProfileDropdown() {
@@ -11139,6 +11141,30 @@ function _checkUrlProfileImport() {
     }
     return true;
   } catch(e) { return false; }
+}
+
+function _lockApp() {
+  // App sperren – zurück zum PIN-Screen, Daten bleiben erhalten
+  _appPin = null;
+  _decryptedCache = null;
+  _lockPin = '';
+  _lockStep = 0;
+  _lockIsSetup = false;
+  // PIN-Dots zurücksetzen
+  _lockUpdateDots();
+  var errEl = document.getElementById('lockError');
+  if (errEl) { errEl.textContent = ''; }
+  // Welcome-Name ausblenden
+  var welcomeEl = document.getElementById('lockWelcomeName');
+  if (welcomeEl) welcomeEl.style.display = 'none';
+  // Lock Screen anzeigen, App verstecken
+  document.getElementById('appLockScreen').classList.remove('hidden');
+  document.getElementById('appContent').classList.add('locked');
+  // Dropdown/Modals schließen
+  closeProfileDropdown();
+  // Sub-Text aktualisieren
+  var subEl = document.querySelector('.lock-sub');
+  if (subEl) subEl.textContent = 'PIN eingeben';
 }
 
 function _lockReset() {
