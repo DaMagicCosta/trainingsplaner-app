@@ -1153,6 +1153,11 @@
     .lock-setup-hint { color:var(--muted); font-size:.78rem; margin-top:18px; text-align:center; max-width:260px; }
     @keyframes lockShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-8px)} 40%,80%{transform:translateX(8px)} }
     .lock-shake { animation: lockShake .4s; }
+    .lock-demo-link { margin-top:22px; color:var(--accent2); font-size:.82rem; text-decoration:none; opacity:.7; transition:opacity .2s; }
+    .lock-demo-link:hover { opacity:1; text-decoration:underline; }
+    #demoBanner { display:none; background:linear-gradient(90deg,#f4a261,#e07070); color:#fff; text-align:center; padding:8px 16px; font-size:.82rem; font-weight:700; position:sticky; top:0; z-index:900; }
+    #demoBanner button { background:rgba(255,255,255,.25); color:#fff; border:1px solid rgba(255,255,255,.5); border-radius:8px; padding:4px 14px; font-size:.78rem; font-weight:700; cursor:pointer; margin-left:12px; transition:all .15s; }
+    #demoBanner button:hover { background:rgba(255,255,255,.45); }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.1/dist/chartjs-chart-matrix.min.js"></script>
@@ -1177,11 +1182,13 @@
   <button id="lockSubmitBtn" onclick="_lockSubmit()" style="display:none;margin-top:16px;padding:12px 40px;border-radius:12px;border:none;background:var(--accent);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;">Entsperren</button>
   <div class="lock-error" id="lockError"></div>
   <div class="lock-setup-hint" id="lockSetupHint" style="display:none;">Erste Nutzung: W&#228;hle eine 4-stellige PIN.<br>Diese PIN sch&#252;tzt alle deine Daten.</div>
+  <a href="#" class="lock-demo-link" onclick="_enterDemoMode();return false;">Demo ansehen</a>
   <a href="#" onclick="_lockReset();return false;" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-size:.72rem;color:var(--muted);text-decoration:none;opacity:.4;">Daten zur&#252;cksetzen</a>
 </div>
 
 <!-- APP CONTENT (hidden until unlocked) -->
 <div id="appContent" class="locked">
+<div id="demoBanner">Demo-Modus &ndash; Beispieldaten werden angezeigt <button onclick="_exitDemoMode()">Beenden</button></div>
 
 <header>
   <div class="header-top">
@@ -7097,6 +7104,7 @@ function setSyncUrl(url) {
 }
 
 function autoSyncProfile(profileId) {
+  if (_isDemoMode) return; // Demo-Modus: kein Sync
   var syncUrl = getSyncUrl();
   if (!syncUrl) return; // Kein Sync konfiguriert
   try {
@@ -11271,6 +11279,7 @@ async function _tpDecrypt(b64, pin) {
 
 // --- Encrypted Storage Override ---
 var _decryptedCache = null; // entschlüsselte Daten im RAM
+var _isDemoMode = false;    // Demo-Modus: keine Persistierung
 
 function _isEncryptedMode() { return !!_appPin; }
 
@@ -11289,6 +11298,8 @@ getProfiles = function() {
 saveProfiles = function(profiles) {
   var json = JSON.stringify(profiles);
   _decryptedCache = json;
+  // Demo-Modus: nur im RAM, nicht persistieren
+  if (_isDemoMode) return;
   // Unverschlüsselt im Klartext NICHT mehr speichern
   if (_appPin) {
     _tpEncrypt(json, _appPin).then(function(enc) {
@@ -11583,8 +11594,384 @@ function _checkUrlProfileImport() {
   } catch(e) { return false; }
 }
 
+// ── Demo-Modus ──────────────────────────────────────────
+var _preDemoCache = null; // Echte Daten zwischenspeichern
+
+function _enterDemoMode() {
+  _isDemoMode = true;
+  _preDemoCache = _decryptedCache; // Echte Daten sichern (kann null sein)
+
+  var now = new Date();
+  var year = now.getFullYear();
+  var currentKw = getISOWeek(now);
+
+  // ── Max Huber: 3 Jahre realistische Trainingsgeschichte ──
+  // Pseudo-Zufall (deterministisch für konsistente Demo)
+  var _seed = 42;
+  function rand() { _seed = (_seed * 16807 + 0) % 2147483647; return (_seed & 0x7fffffff) / 2147483647; }
+
+  // Phase-Map: jede KW im Jahr bekommt eine Phase
+  // Jedes Jahr hat ein anderes Muster – wird über yearIdx variiert
+  function getPhase(kw, yearIdx) {
+    // yearIdx: 0=erstes Jahr (Anfänger), 1=zweites, 2=drittes (aktuelles)
+    // Offset pro Jahr für Variation
+    var offsets = [
+      // Jahr 1: Klassischer Anfänger – schnelle Fortschritte, dann erster Einbruch
+      [
+        [1,4,'einstieg'],  [5,12,'aufbau1'], [13,14,'plateau1'], [15,15,'overreach'],
+        [16,17,'einbruch'], [18,18,'deload'], [19,26,'aufbau2'], [27,28,'plateau2'],
+        [29,30,'krank'], [31,33,'comeback'], [34,42,'peak'], [43,44,'urlaub'],
+        [45,48,'aufbau3'], [49,50,'plateau3'], [51,52,'deload2']
+      ],
+      // Jahr 2: Fortgeschritten – weniger lineare Gains, mehr Schwankung
+      [
+        [1,3,'aufbau1'], [4,4,'deload'], [5,10,'aufbau2'], [11,13,'plateau1'],
+        [14,14,'overreach'], [15,16,'einbruch'], [17,17,'deload'], [18,25,'peak'],
+        [26,27,'urlaub'], [28,30,'comeback'], [31,38,'aufbau3'], [39,40,'plateau2'],
+        [41,41,'overreach'], [42,43,'einbruch'], [44,44,'deload'], [45,50,'aufbau2'],
+        [51,52,'plateau3']
+      ],
+      // Jahr 3 (aktuell): Erfahren – gezielte Blöcke, Verletzungspause
+      [
+        [1,2,'aufbau1'], [3,8,'peak'], [9,10,'plateau1'], [11,11,'overreach'],
+        [12,13,'einbruch'], [14,14,'deload'], [15,20,'aufbau2'],
+        [21,22,'verletzung'], [23,25,'comeback'], [26,32,'aufbau3'],
+        [33,36,'peak'], [37,38,'urlaub'], [39,39,'deload'],
+        [40,46,'aufbau2'], [47,48,'plateau2'], [49,50,'peak'], [51,52,'deload2']
+      ]
+    ];
+    var phases = offsets[yearIdx] || offsets[2];
+    var phaseName = 'aufbau1';
+    for (var i = 0; i < phases.length; i++) {
+      if (kw >= phases[i][0] && kw <= phases[i][1]) { phaseName = phases[i][2]; break; }
+    }
+    // Phase-Parameter
+    var map = {
+      'einstieg':  { wFactor:0.80, rpeMod:-1.5, volMod:0.75, skipChance:0 },
+      'aufbau1':   { wFactor:0.92, rpeMod:-0.5, volMod:1.0,  skipChance:0.03 },
+      'aufbau2':   { wFactor:0.96, rpeMod:-0.3, volMod:1.05, skipChance:0.05 },
+      'aufbau3':   { wFactor:1.0,  rpeMod:0,    volMod:1.08, skipChance:0.05 },
+      'plateau1':  { wFactor:1.0,  rpeMod:0.5,  volMod:1.0,  skipChance:0.05 },
+      'plateau2':  { wFactor:1.02, rpeMod:0.8,  volMod:1.0,  skipChance:0.08 },
+      'plateau3':  { wFactor:1.0,  rpeMod:0.6,  volMod:0.95, skipChance:0.08 },
+      'overreach': { wFactor:1.03, rpeMod:1.5,  volMod:1.3,  skipChance:0 },
+      'einbruch':  { wFactor:0.88, rpeMod:1.0,  volMod:0.7,  skipChance:0.35 },
+      'deload':    { wFactor:0.75, rpeMod:-2.0, volMod:0.6,  skipChance:0 },
+      'deload2':   { wFactor:0.78, rpeMod:-1.5, volMod:0.65, skipChance:0 },
+      'krank':     { wFactor:0.7,  rpeMod:0,    volMod:0.4,  skipChance:0.7 },
+      'verletzung':{ wFactor:0.6,  rpeMod:0,    volMod:0.3,  skipChance:0.85 },
+      'comeback':  { wFactor:0.82, rpeMod:-0.5, volMod:0.8,  skipChance:0.1 },
+      'peak':      { wFactor:1.05, rpeMod:0,    volMod:1.1,  skipChance:0.06 },
+      'urlaub':    { wFactor:0.7,  rpeMod:0,    volMod:0.3,  skipChance:0.8 }
+    };
+    var p = map[phaseName] || map['aufbau1'];
+    // Leichte KW-abhängige Variation innerhalb des Blocks
+    var micro = Math.sin(kw * 1.3 + yearIdx * 2.1) * 0.03;
+    p = { name: phaseName, wFactor: p.wFactor + micro, rpeMod: p.rpeMod, volMod: p.volMod, skipChance: p.skipChance };
+    return p;
+  }
+
+  var sessions = [];
+  var exercises = [
+    // [Name, Muskel, Basis-kg-Jahr1, Gain/Jahr, Schwankung, isIso]
+    // --- Tag A: Brust ↔ Rücken (Antagonisten) ---
+    ['Bankdr\u00fccken mit Langhantel',     'Gro\u00dfer Brustmuskel, Trizeps',           60,  10, 2.5, false],  // 0
+    ['Langhantelrudern vorgebeugt',          'Latissimus, Rautenmuskeln',                 50,  12, 3,   false],  // 1
+    ['Schr\u00e4gbankdr\u00fccken (KH)',    'Gro\u00dfer Brustmuskel, Deltamuskel',       18,  6,  1.5, false],  // 2
+    ['Latzug zur Brust',                     'Latissimus, Bizeps',                        45,   8, 2.5, false],  // 3
+    ['Fliegende Bewegungen (KH)',            'Gro\u00dfer Brustmuskel',                   10,  4,  1,   false],  // 4
+    ['Klimmz\u00fcge',                       'Latissimus, Bizeps',                        0,   0,  0,   false],  // 5 (BW)
+    // --- Tag B: Schultern + Arme (Bizeps ↔ Trizeps) ---
+    ['Schulterdr\u00fccken sitzend',         'Deltamuskel, Trizeps',                      35,   7, 2,   false],  // 6
+    ['Seitheben mit Kurzhanteln',            'Deltamuskel (seitlich)',                     8,    3, 1,   false],  // 7
+    ['Bizeps Curls (KH)',                    'Bizeps',                                    10,   4, 1,   false],  // 8
+    ['Trizeps Dips',                         'Trizeps, Gro\u00dfer Brustmuskel',          0,    0, 0,   false],  // 9 (BW)
+    ['Face Pulls (Kabel)',                   'Deltamuskel (hinterer), Rautenmuskeln',     15,   4, 1.5, false],  // 10
+    ['Hammercurls (KH)',                     'Bizeps, Unterarm',                          10,   3, 1,   false],  // 11
+    // --- Tag C: Beine (Quadrizeps ↔ Hamstrings) + Core ---
+    ['Kniebeuge mit Langhantel',            'Quadrizeps, Gluteus',                        70,  15, 4,   false],  // 12
+    ['Kreuzheben',                           'Beinbeuger, Gluteus',                       80,  17, 5,   false],  // 13
+    ['Beinpresse',                           'Quadrizeps, Gluteus',                       100, 20, 5,   false],  // 14
+    ['Beinbeuger (Maschine)',                'Beinbeuger',                                30,   8, 2,   false],  // 15
+    ['Wadenheben stehend',                   'Wadenmuskulatur',                           40,   8, 2,   false],  // 16
+    ['Plank (Unterarmst\u00fctz)',           'Gerader Bauchmuskel',                       0,    0, 0,   true ]   // 17
+  ];
+  // Antagonisten-Split: gegensätzliche Muskeln in einer Einheit
+  var splitA = [0, 1, 2, 3, 4, 5]; // Brust ↔ Rücken
+  var splitB = [6, 7, 8, 9, 10, 11]; // Schultern + Bizeps ↔ Trizeps
+  var splitC = [12, 13, 14, 15, 16, 17]; // Quad ↔ Hamstrings + Waden + Core
+
+  // 3 Jahre generieren: year-2, year-1, year (bis aktuelle KW)
+  for (var yi = 0; yi < 3; yi++) {
+    var sessionYear = year - 2 + yi;
+    var maxKw = (yi < 2) ? 52 : currentKw;
+    // Jahres-Basis-Shift: Gewichte steigen über die Jahre
+    var yearGainFactor = 1.0 + yi * 0.12; // +12% pro Jahr Grundniveau
+
+    for (var kw = 1; kw <= maxKw; kw++) {
+      var phase = getPhase(kw, yi);
+      var isRegen = (kw % 6 === 0);
+      var splits = isRegen ? ['C'] : ['A', 'B', 'C'];
+
+      splits.forEach(function(split) {
+        if (rand() < phase.skipChance) return;
+
+        var regenFactor = isRegen ? 0.75 : 1.0;
+        var indices = split === 'A' ? splitA : (split === 'B' ? splitB : splitC);
+
+        // Tagesform
+        var dayForm = 1.0;
+        var dayRoll = rand();
+        if (dayRoll < 0.12) dayForm = 0.92 + rand() * 0.03;
+        else if (dayRoll > 0.85) dayForm = 1.03 + rand() * 0.04;
+
+        var exList = indices.map(function(idx) {
+          var ex = exercises[idx];
+          var numSets = isRegen ? 2 : Math.round(3 * phase.volMod);
+          numSets = Math.max(1, Math.min(5, numSets));
+
+          var baseRpe = 7.0 + phase.rpeMod + (rand() - 0.5) * 1.5;
+          baseRpe = Math.round(Math.max(5, Math.min(10, baseRpe)) * 2) / 2;
+
+          var sets = [];
+          for (var s = 0; s < numSets; s++) {
+            var fatigue = 1.0 - s * 0.03;
+            var setRpe = Math.min(10, baseRpe + s * 0.5);
+
+            if (idx === 5) {
+              // Klimmzüge (BW): über 3 Jahre von ~4 auf ~14 Wdh
+              var pullBase = 4 + yi * 3 + (kw / 52) * 3;
+              var pullReps = Math.round(pullBase * phase.wFactor * dayForm * fatigue);
+              sets.push({ wdh: Math.max(2, Math.min(18, pullReps)), gewicht: null, rpe: setRpe });
+            } else if (idx === 9) {
+              // Dips (BW): über 3 Jahre von ~6 auf ~18 Wdh
+              var dipBase = 6 + yi * 3 + (kw / 52) * 4;
+              var dipReps = Math.round(dipBase * phase.wFactor * dayForm * fatigue);
+              sets.push({ wdh: Math.max(3, Math.min(22, dipReps)), gewicht: null, rpe: setRpe });
+            } else if (ex[5]) {
+              // Plank (isometric): über 3 Jahre von 25s auf 120s
+              var plankBase = 25 + yi * 20 + kw * 0.6;
+              var sek = Math.round(plankBase * phase.wFactor * regenFactor * dayForm);
+              sets.push({ wdh: Math.max(10, Math.min(180, sek)), gewicht: null, rpe: setRpe });
+            } else {
+              // Gewichtsübung: Basis + Jahres-Gain + KW-Progression + Phase
+              var baseW = (ex[2] + ex[3] * yi) + (ex[3] * kw / 52);
+              var kg = baseW * yearGainFactor * phase.wFactor * regenFactor * dayForm * fatigue;
+              kg += (rand() - 0.5) * ex[4] * 2;
+              kg = Math.round(kg * 2) / 2;
+              kg = Math.max(ex[2] * 0.5, kg);
+
+              var baseReps = isRegen ? 15 : (s < 2 ? 10 : 8);
+              if (setRpe >= 9.5) baseReps = Math.max(3, baseReps - 3);
+              else if (setRpe >= 8.5) baseReps = Math.max(5, baseReps - 1);
+              if (phase.name === 'overreach' && rand() < 0.3) baseReps = Math.max(4, baseReps - 2);
+
+              sets.push({ wdh: baseReps, gewicht: kg, rpe: setRpe });
+            }
+          }
+          return { name: ex[0], muscle: ex[1], isometric: ex[5], sets: sets };
+        });
+
+        var dayOfYear = (kw - 1) * 7 + (split === 'A' ? 1 : split === 'B' ? 3 : 5);
+        var d = new Date(sessionYear, 0, dayOfYear);
+        var dateStr = (d.getDate() < 10 ? '0' : '') + d.getDate() + '.' + (d.getMonth()+1 < 10 ? '0' : '') + (d.getMonth()+1) + '.' + sessionYear;
+        sessions.push({
+          id: 's_demo_y' + yi + '_kw' + kw + '_' + split, date: dateStr, kw: kw,
+          dayIdx: split === 'A' ? 0 : split === 'B' ? 1 : 2, exercises: exList
+        });
+      });
+    }
+  }
+  sessions.reverse();
+
+  // Demo-Pläne für KW-2 bis KW+2 (aktuelles Jahr)
+  var plans = {};
+  for (var pk = Math.max(1, currentKw - 2); pk <= Math.min(52, currentKw + 2); pk++) {
+    var wKey = 'w' + (pk < 10 ? '0' + pk : pk);
+    if (pk % 6 === 0) continue;
+    plans[wKey] = {
+      date: new Date().toISOString(), name: 'KW ' + pk + ' Plan', goal: 'hypertrophie',
+      _source: 'manual',
+      days: [
+        { label: 'Brust \u2194 R\u00fccken (Mo)', exercises: [
+          { name: 'Bankdr\u00fccken mit Langhantel', muscle: 'Gro\u00dfer Brustmuskel, Trizeps', saetze: 4, wdh: 10, gewicht: '', note: '' },
+          { name: 'Langhantelrudern vorgebeugt', muscle: 'Latissimus, Rautenmuskeln', saetze: 4, wdh: 10, gewicht: '', note: '' },
+          { name: 'Schr\u00e4gbankdr\u00fccken (KH)', muscle: 'Gro\u00dfer Brustmuskel, Deltamuskel', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Latzug zur Brust', muscle: 'Latissimus, Bizeps', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Fliegende Bewegungen (KH)', muscle: 'Gro\u00dfer Brustmuskel', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Klimmz\u00fcge', muscle: 'Latissimus, Bizeps', saetze: 3, wdh: 8, gewicht: '', note: '' }
+        ]},
+        { label: 'Schultern + Arme (Mi)', exercises: [
+          { name: 'Schulterdr\u00fccken sitzend', muscle: 'Deltamuskel, Trizeps', saetze: 4, wdh: 10, gewicht: '', note: '' },
+          { name: 'Seitheben mit Kurzhanteln', muscle: 'Deltamuskel (seitlich)', saetze: 3, wdh: 15, gewicht: '', note: '' },
+          { name: 'Bizeps Curls (KH)', muscle: 'Bizeps', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Trizeps Dips', muscle: 'Trizeps, Gro\u00dfer Brustmuskel', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Face Pulls (Kabel)', muscle: 'Deltamuskel (hinterer), Rautenmuskeln', saetze: 3, wdh: 15, gewicht: '', note: '' },
+          { name: 'Hammercurls (KH)', muscle: 'Bizeps, Unterarm', saetze: 3, wdh: 12, gewicht: '', note: '' }
+        ]},
+        { label: 'Beine + Core (Fr)', exercises: [
+          { name: 'Kniebeuge mit Langhantel', muscle: 'Quadrizeps, Gluteus', saetze: 4, wdh: 8, gewicht: '', note: '' },
+          { name: 'Kreuzheben', muscle: 'Beinbeuger, Gluteus', saetze: 4, wdh: 8, gewicht: '', note: '' },
+          { name: 'Beinpresse', muscle: 'Quadrizeps, Gluteus', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Beinbeuger (Maschine)', muscle: 'Beinbeuger', saetze: 3, wdh: 12, gewicht: '', note: '' },
+          { name: 'Wadenheben stehend', muscle: 'Wadenmuskulatur', saetze: 3, wdh: 15, gewicht: '', note: '' },
+          { name: 'Plank (Unterarmst\u00fctz)', muscle: 'Gerader Bauchmuskel', saetze: 3, wdh: 60, gewicht: '', note: '', isometric: true }
+        ]}
+      ],
+      exercises: [
+        { name: 'Bankdr\u00fccken mit Langhantel', muscle: 'Gro\u00dfer Brustmuskel, Trizeps', saetze: 4, wdh: 10 },
+        { name: 'Langhantelrudern vorgebeugt', muscle: 'Latissimus, Rautenmuskeln', saetze: 4, wdh: 10 },
+        { name: 'Schr\u00e4gbankdr\u00fccken (KH)', muscle: 'Gro\u00dfer Brustmuskel, Deltamuskel', saetze: 3, wdh: 12 },
+        { name: 'Latzug zur Brust', muscle: 'Latissimus, Bizeps', saetze: 3, wdh: 12 },
+        { name: 'Fliegende Bewegungen (KH)', muscle: 'Gro\u00dfer Brustmuskel', saetze: 3, wdh: 12 },
+        { name: 'Klimmz\u00fcge', muscle: 'Latissimus, Bizeps', saetze: 3, wdh: 8 },
+        { name: 'Schulterdr\u00fccken sitzend', muscle: 'Deltamuskel, Trizeps', saetze: 4, wdh: 10 },
+        { name: 'Seitheben mit Kurzhanteln', muscle: 'Deltamuskel (seitlich)', saetze: 3, wdh: 15 },
+        { name: 'Bizeps Curls (KH)', muscle: 'Bizeps', saetze: 3, wdh: 12 },
+        { name: 'Trizeps Dips', muscle: 'Trizeps, Gro\u00dfer Brustmuskel', saetze: 3, wdh: 12 },
+        { name: 'Face Pulls (Kabel)', muscle: 'Deltamuskel (hinterer), Rautenmuskeln', saetze: 3, wdh: 15 },
+        { name: 'Hammercurls (KH)', muscle: 'Bizeps, Unterarm', saetze: 3, wdh: 12 },
+        { name: 'Kniebeuge mit Langhantel', muscle: 'Quadrizeps, Gluteus', saetze: 4, wdh: 8 },
+        { name: 'Kreuzheben', muscle: 'Beinbeuger, Gluteus', saetze: 4, wdh: 8 },
+        { name: 'Beinpresse', muscle: 'Quadrizeps, Gluteus', saetze: 3, wdh: 12 },
+        { name: 'Beinbeuger (Maschine)', muscle: 'Beinbeuger', saetze: 3, wdh: 12 },
+        { name: 'Wadenheben stehend', muscle: 'Wadenmuskulatur', saetze: 3, wdh: 15 },
+        { name: 'Plank (Unterarmst\u00fctz)', muscle: 'Gerader Bauchmuskel', saetze: 3, wdh: 60, isometric: true }
+      ]
+    };
+  }
+
+  // Periodisierung: 3 Blöcke ab KW 1
+  var periodization = {
+    active: true, startKw: 1,
+    blocks: [
+      { label: 'Akkumulation (GPP)', color: '#4cc9f0', goal: 'kraftausdauer', length: 6 },
+      { label: 'Intensifikation (SPP)', color: '#f4a261', goal: 'hypertrophie', length: 6 },
+      { label: 'Peak / Skills', color: '#9b5de5', goal: 'maximalkraft', length: 4 }
+    ]
+  };
+
+  // Max Huber – erfahrener Athlet & Trainer
+  var trainerProfile = {
+    id: 'p_demo_trainer', name: 'Max', nachname: 'Huber',
+    alter: 28, gewicht: 82, groesse: 183, hfmax: 192,
+    goal: 'hypertrophie', tage: ['Mo', 'Mi', 'Fr'],
+    isOwner: true, role: 'trainer',
+    trainerAgreementAccepted: new Date().toISOString(),
+    equipment: ['Eigengewicht', 'Langhantel', 'Kurzhanteln', 'Klimmzugstange', 'Kabelzug'],
+    regenConfig: { interval: 6, athleteCanSetRegen: true, maxAthleteRegen: 2 },
+    plans: plans, sessions: sessions, periodization: periodization
+  };
+
+  // Athleten-Profil: Lisa – Anfängerin, unregelmäßiger, leichtere Gewichte
+  var athSessions = [];
+  var athExercises = [
+    ['Kniebeuge mit Kurzhanteln', 'Quadrizeps, Gluteus', 12, 8, 1.5, false],
+    ['Bankdr\u00fccken mit Kurzhanteln', 'Gro\u00dfer Brustmuskel', 8, 6, 1, false],
+    ['Rudern mit Kurzhanteln', 'Latissimus, Bizeps', 10, 5, 1, false],
+    ['Plank (Unterarmst\u00fctz)', 'Gerader Bauchmuskel', 0, 0, 0, true]
+  ];
+  _seed = 99; // Anderer Seed für Athletin
+  for (var ak = 1; ak <= currentKw; ak++) {
+    // Lisa trainiert nur 2x/Woche, verpasst öfter was
+    var athPhase = getPhase(ak);
+    var athSkip = athPhase.skipChance + 0.15; // Grundsätzlich unzuverlässiger
+    if (ak >= 8 && ak <= 10) athSkip = 0.6; // Motivationstief
+    if (ak >= 20 && ak <= 21) athSkip = 0.9; // Urlaub
+    var athSplits = ['A', 'B'];
+    athSplits.forEach(function(sp, si) {
+      if (rand() < athSkip) return;
+      var athDayForm = 0.95 + rand() * 0.1;
+      var athExIdx = sp === 'A' ? [0, 3] : [1, 2];
+      var athExList = athExIdx.map(function(idx) {
+        var ex = athExercises[idx];
+        var sets = [];
+        var numS = ak <= 3 ? 2 : 3; // Anfangs nur 2 Sätze
+        var baseRpe = 6.5 + athPhase.rpeMod * 0.7 + rand() * 1.0;
+        baseRpe = Math.round(Math.max(5, Math.min(10, baseRpe)) * 2) / 2;
+        for (var s = 0; s < numS; s++) {
+          if (ex[5]) {
+            var sek = Math.round((20 + ak * 0.7) * athPhase.wFactor * athDayForm);
+            sets.push({ wdh: Math.max(10, Math.min(75, sek)), gewicht: null, rpe: Math.min(10, baseRpe + s*0.5) });
+          } else {
+            var kg = (ex[2] + ex[3] * ak / 52) * athPhase.wFactor * athDayForm * (1 - s*0.02);
+            kg += (rand() - 0.5) * ex[4];
+            kg = Math.round(kg * 2) / 2;
+            kg = Math.max(ex[2] * 0.5, kg);
+            var reps = ak <= 4 ? 12 : (s < 2 ? 10 : 8);
+            if (baseRpe >= 9) reps = Math.max(5, reps - 2);
+            sets.push({ wdh: reps, gewicht: kg, rpe: Math.min(10, baseRpe + s*0.5) });
+          }
+        }
+        return { name: ex[0], muscle: ex[1], isometric: ex[5], sets: sets };
+      });
+      var aDoy = (ak - 1) * 7 + (si === 0 ? 2 : 4);
+      var aD = new Date(year, 0, aDoy);
+      var aDs = (aD.getDate()<10?'0':'') + aD.getDate() + '.' + (aD.getMonth()+1<10?'0':'') + (aD.getMonth()+1) + '.' + year;
+      athSessions.push({ id:'s_ath_kw'+ak+'_'+sp, date:aDs, kw:ak, dayIdx:si, exercises:athExList });
+    });
+  }
+  athSessions.reverse();
+
+  var athleteProfile = {
+    id: 'p_demo_athlete', name: 'Lisa', nachname: 'Muster',
+    alter: 26, gewicht: 62, groesse: 168, hfmax: 194,
+    goal: 'kraftausdauer', tage: ['Di', 'Do'],
+    role: 'athlete', createdBy: 'p_demo_trainer',
+    equipment: ['Eigengewicht', 'Kurzhanteln'],
+    regenConfig: { interval: 6, athleteCanSetRegen: true, maxAthleteRegen: 2 },
+    plans: {}, sessions: athSessions
+  };
+
+  var demoProfiles = [trainerProfile, athleteProfile];
+  _decryptedCache = JSON.stringify(demoProfiles);
+  setActiveProfileId('p_demo_trainer');
+
+  // Banner anzeigen
+  document.getElementById('demoBanner').style.display = '';
+
+  // App entsperren
+  document.getElementById('appLockScreen').classList.add('hidden');
+  document.getElementById('appContent').classList.remove('locked');
+
+  // App initialisieren
+  buildProfileDropdown();
+  updateHeaderStats();
+  buildJahresplan();
+  buildPicker();
+  buildLexikon();
+  applyAccessControl();
+  _postUnlockInit();
+
+  // Trainer-Ansicht starten
+  showSection('planung', document.querySelectorAll('.tab')[0]);
+  initPlanungView();
+  refreshTplLoadSelect();
+  initBuilderAthletePicker();
+}
+
+function _exitDemoMode() {
+  _isDemoMode = false;
+  _decryptedCache = _preDemoCache;
+  _preDemoCache = null;
+  document.getElementById('demoBanner').style.display = 'none';
+  // Zurück zum Lock-Screen
+  _lockPin = '';
+  _lockStep = 0;
+  _lockUpdateDots();
+  var errEl = document.getElementById('lockError');
+  if (errEl) errEl.textContent = '';
+  document.getElementById('appLockScreen').classList.remove('hidden');
+  document.getElementById('appContent').classList.add('locked');
+  closeProfileDropdown();
+  var subEl = document.querySelector('.lock-sub');
+  if (subEl) subEl.textContent = 'PIN eingeben';
+}
+
 function _lockApp() {
   // App sperren – zurück zum PIN-Screen, Daten bleiben erhalten
+  _isDemoMode = false;
+  document.getElementById('demoBanner').style.display = 'none';
   _appPin = null;
   _decryptedCache = null;
   _lockPin = '';
