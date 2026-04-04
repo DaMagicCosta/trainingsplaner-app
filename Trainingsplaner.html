@@ -10893,16 +10893,18 @@ var _decryptedCache = null; // entschlüsselte Daten im RAM
 function _isEncryptedMode() { return !!_appPin; }
 
 // Override getProfiles/saveProfiles nach Unlock
+// WICHTIG: Function Expressions verwenden, nicht Declarations!
+// Declarations werden gehoisted und überschreiben das Original VOR der Zuweisung.
 var _origGetProfiles  = getProfiles;
 var _origSaveProfiles = saveProfiles;
 
-function getProfiles() {
+getProfiles = function() {
   if (_decryptedCache !== null) {
     try { return JSON.parse(_decryptedCache) || []; } catch(e) { return []; }
   }
   return _origGetProfiles();
-}
-function saveProfiles(profiles) {
+};
+saveProfiles = function(profiles) {
   var json = JSON.stringify(profiles);
   _decryptedCache = json;
   // Unverschlüsselt im Klartext NICHT mehr speichern
@@ -10915,7 +10917,7 @@ function saveProfiles(profiles) {
   } else {
     _origSaveProfiles(profiles);
   }
-}
+};
 
 // --- Lock Screen Logic ---
 var _lockPin = '';
