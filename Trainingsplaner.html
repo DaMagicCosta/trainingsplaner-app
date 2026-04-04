@@ -1152,6 +1152,7 @@
 <div id="appLockScreen">
   <div class="lock-icon">&#x1F512;</div>
   <div class="lock-title">Trainingsplaner</div>
+  <div id="lockWelcomeName" style="display:none;font-size:1.1rem;font-weight:700;margin-bottom:4px;color:var(--accent2);"></div>
   <div class="lock-sub">PIN eingeben</div>
   <div class="pin-dots" id="lockPinDots">
     <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
@@ -11171,6 +11172,22 @@ function _lockReset() {
       hint.innerHTML = '\u26A0\uFE0F Eingeschr\u00e4nkter Modus (file://) \u2013 PIN-Schutz aktiv, Verschl\u00fcsselung vereinfacht.';
     }
   }
+  // Name aus URL-Parameter auf dem Lock Screen anzeigen
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var pb = params.get('profile');
+    if (pb) {
+      var pData = JSON.parse(decodeURIComponent(atob(pb)));
+      if (pData && pData.name) {
+        var welcomeEl = document.getElementById('lockWelcomeName');
+        if (welcomeEl) {
+          welcomeEl.textContent = 'Willkommen, ' + pData.name + (pData.nachname ? ' ' + pData.nachname : '') + '!';
+          welcomeEl.style.display = '';
+        }
+      }
+    }
+  } catch(e) { /* URL-Parse fehlgeschlagen, ignorieren */ }
+
   var hasVerify = _lsGet(TP_VERIFY_KEY);
   if (!hasVerify) {
     // Erste Nutzung: PIN-Setup
