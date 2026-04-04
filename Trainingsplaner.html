@@ -7067,7 +7067,10 @@ function autoExportAfterSession(profileId) {
     var p = null;
     for (var i = 0; i < profiles.length; i++) { if (profiles[i].id === profileId) { p = profiles[i]; break; } }
     if (!p) return;
-    var json = JSON.stringify(p, null, 2);
+    // Sensible Daten entfernen
+    var exportData = JSON.parse(JSON.stringify(p));
+    delete exportData.pin;
+    var json = JSON.stringify(exportData, null, 2);
     var safeName = (p.name + '_' + (p.nachname||'')).replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_-]/g,'');
     var filename = 'Trainingsplaner_' + safeName + '_' + new Date().toISOString().slice(0,10) + '.json';
     var blob = new Blob([json], { type: 'application/json' });
@@ -10383,7 +10386,10 @@ function _generateProfileLink(profile) {
 function exportProfileJSON() {
   var p = getActiveProfile();
   if (!p) { alert('Kein aktives Profil gefunden.'); return; }
-  var json = JSON.stringify(p, null, 2);
+  // Sensible Daten entfernen (PIN nicht exportieren!)
+  var exportData = JSON.parse(JSON.stringify(p));
+  delete exportData.pin;
+  var json = JSON.stringify(exportData, null, 2);
   var safeName = (p.name + '_' + (p.nachname||'')).replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_-]/g,'');
   var filename = 'Trainingsplaner_' + safeName + '_' + new Date().toISOString().slice(0,10) + '.json';
 
