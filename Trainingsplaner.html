@@ -10978,29 +10978,29 @@ function _lockSubmit() {
     _appPin = _lockPin;
     errEl.textContent = 'Daten werden verschl\u00fcsselt...';
     errEl.style.color = 'var(--green)';
-    _tpEncrypt('TP_VERIFY_OK', _appPin).then(function(token) {
-      _lsSet(TP_VERIFY_KEY, token);
-      var existing = _origGetProfiles();
-      _decryptedCache = JSON.stringify(existing);
-      return _tpEncrypt(_decryptedCache, _appPin);
-    }).then(function(enc) {
-      _lsSet(TP_VAULT_KEY, enc);
-      try { localStorage.removeItem(PROFILES_KEY); } catch(e) {}
-      _unlockApp();
-    }).catch(function(err) {
-      // Crypto fehlgeschlagen (z.B. file:// in Chrome) → Fallback
-      _hasCryptoSubtle = false;
-      _tpEncrypt('TP_VERIFY_OK', _appPin).then(function(token) {
+    _doSetupEncrypt(_appPin, errEl);
+    function _doSetupEncrypt(pin, errEl) {
+      _tpEncrypt('TP_VERIFY_OK', pin).then(function(token) {
         _lsSet(TP_VERIFY_KEY, token);
         var existing = _origGetProfiles();
         _decryptedCache = JSON.stringify(existing);
-        return _tpEncrypt(_decryptedCache, _appPin);
+        return _tpEncrypt(_decryptedCache, pin);
       }).then(function(enc) {
         _lsSet(TP_VAULT_KEY, enc);
         try { localStorage.removeItem(PROFILES_KEY); } catch(e) {}
         _unlockApp();
+      }).catch(function(err) {
+        if (_hasCryptoSubtle) {
+          // AES fehlgeschlagen → Fallback auf XOR und nochmal
+          _hasCryptoSubtle = false;
+          _doSetupEncrypt(pin, errEl);
+        } else {
+          // Auch XOR fehlgeschlagen → Fehler anzeigen
+          errEl.textContent = 'Verschl\u00fcsselung fehlgeschlagen: ' + (err && err.message ? err.message : String(err));
+          errEl.style.color = 'var(--accent)';
+        }
       });
-    });
+    }
     return;
   }
 
