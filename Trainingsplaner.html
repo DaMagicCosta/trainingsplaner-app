@@ -7254,10 +7254,11 @@ function buildTrainingsplanView(kwOverride) {
     var canSetRegen3 = !isTrainer3 && regenCfg3.athleteCanSetRegen && usedRegens3 < (regenCfg3.maxAthleteRegen||2) && kw >= getISOWeek(new Date());
     html += '<div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:40px 24px;text-align:center;">'
       + '<div style="font-size:2rem;margin-bottom:12px;">📋</div>'
-      + '<div style="font-weight:600;margin-bottom:8px;">Kein Trainingsplan für KW '+kw+'</div>'
-      + '<div style="color:var(--muted);font-size:.9rem;margin-bottom:20px;">Öffne den Jahresplan, um diesen Zeitraum zu planen oder nutze die automatische Generierung.</div>'
+      + '<div style="font-weight:600;margin-bottom:8px;">Kein Plan für KW '+kw+'</div>'
+      + '<div style="color:var(--muted);font-size:.9rem;margin-bottom:20px;">'+(isTrainer3 ? 'Öffne den Jahresplan, um diesen Zeitraum zu planen oder nutze die automatische Generierung.' : 'Dein Trainer erstellt noch einen Plan für diese Woche.')+'</div>'
       + '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">'
-      + '<button class="btn btn-primary" onclick="showSection(\'jahresplan\', document.querySelectorAll(\'.tab\')[0]);buildJahresplan();">📅 Zum Jahresplan</button>'
+      + (isTrainer3 ? '<button class="btn btn-primary" onclick="showSection(\'jahresplan\', document.querySelectorAll(\'.tab\')[0]);buildJahresplan();">📅 Zum Jahresplan</button>' : '')
+      + ((!isTrainer3 && getSyncUrl()) ? '<button class="btn btn-primary" style="background:var(--green);border-color:var(--green);" onclick="_pullPlansFromSync()">🔄 Pläne vom Trainer laden</button>' : '')
       + (canSetRegen3 ? '<button class="btn btn-outline" style="border-color:#f4a261;color:#f4a261;" onclick="setAthleteRegenWeek('+kw+')">🛌 Als Regeneration setzen</button>' : '')
       + '</div></div>';
     container.innerHTML = html;
@@ -11420,43 +11421,24 @@ function _pullPlansFromSync() {
   if (!profileName) return;
   var profileId = p.id;
 
-  // Hidden-Form POST mit action=pull → Apps Script gibt HTML mit postMessage zurück
-  var iframeName = '_pullFrame_' + Date.now();
-  var iframe = document.createElement('iframe');
-  iframe.name = iframeName;
-  iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
-  document.body.appendChild(iframe);
+  // Popup öffnet Apps Script URL → postMessage schickt Daten zurück
+  var url = syncUrl + '?name=' + encodeURIComponent(profileName) + '&iframe=true';
+  var popup = window.open(url, '_blank', 'width=1,height=1,left=-100,top=-100');
 
   function onMessage(event) {
     if (!event.data || typeof event.data !== 'object') return;
-    if (event.data.status === 'not_found') { cleanup(); return; }
+    window.removeEventListener('message', onMessage);
+    if (event.data.status === 'not_found' || event.data.status === 'error') return;
     if (event.data.name || event.data.plans) {
-      window.removeEventListener('message', onMessage);
       _mergeSyncData(profileId, event.data);
-      cleanup();
     }
   }
-  function cleanup() {
-    window.removeEventListener('message', onMessage);
-    try { document.body.removeChild(iframe); } catch(e) {}
-  }
   window.addEventListener('message', onMessage);
-
-  var form = document.createElement('form');
-  form.method = 'POST';
-  form.action = syncUrl;
-  form.target = iframeName;
-  var inp1 = document.createElement('input');
-  inp1.type = 'hidden'; inp1.name = 'action'; inp1.value = 'pull';
-  var inp2 = document.createElement('input');
-  inp2.type = 'hidden'; inp2.name = 'name'; inp2.value = profileName;
-  form.appendChild(inp1);
-  form.appendChild(inp2);
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
-
-  setTimeout(cleanup, 15000);
+  // Popup nach 10s schließen falls postMessage nicht kam
+  setTimeout(function() {
+    window.removeEventListener('message', onMessage);
+    try { if (popup && !popup.closed) popup.close(); } catch(e) {}
+  }, 10000);
 }
 
 function _mergeSyncData(profileId, serverData) {

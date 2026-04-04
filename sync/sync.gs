@@ -75,8 +75,12 @@ function doGet(e) {
         .setMimeType(ContentService.MimeType.JAVASCRIPT);
     }
     if (iframe) {
-      // postMessage-Ansatz: HTML-Seite die Daten an Parent sendet
-      var html = '<html><body><script>parent.postMessage(' + json + ',"*");<\/script></body></html>';
+      // postMessage an Opener (Popup) oder Parent (iframe)
+      var html = '<html><body><script>' +
+        'var target = window.opener || window.parent;' +
+        'if(target && target !== window) target.postMessage(' + json + ',"*");' +
+        'setTimeout(function(){window.close();},500);' +
+        '<\/script><p>Daten werden geladen...</p></body></html>';
       return HtmlService.createHtmlOutput(html)
         .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     }
