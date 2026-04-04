@@ -6283,11 +6283,11 @@ function getActiveProfile() {
 function createDefaultProfile() {
   var p = {
     id: 'p_' + Date.now(),
-    name: 'Alexander', nachname: 'da Costa Amaral',
-    alter: 30, gewicht: 80, groesse: 180, hfmax: 189,
+    name: 'Mein', nachname: 'Profil',
+    alter: 25, gewicht: 75, groesse: 175, hfmax: 195,
     goal: 'hypertrophie', tage: ['Mo','Mi','Fr'],
     isOwner: true, role: 'trainer',
-    equipment: ['Eigengewicht','Langhantel','Kurzhanteln','Klimmzugstange'],
+    equipment: ['Eigengewicht'],
     plans: {}, sessions: []
   };
   saveProfiles([p]);
@@ -10049,6 +10049,13 @@ function copyInviteText() {
   profiles.push(stubProfile);
   saveProfiles(profiles);
 
+  // Einladungs-Link mit Profil generieren
+  var inviteLink = _generateProfileLink(stubProfile);
+
+  // Mail-Text mit Link ergänzen
+  text += '\n\n\u{1F517} Dein pers\u00f6nlicher Link:\n' + inviteLink +
+    '\n\nEinfach \u00f6ffnen, PIN setzen \u2013 fertig! Dein Profil ist schon hinterlegt.';
+
   // Claude-Prompt in Zwischenablage
   var prompt = 'Bitte erstelle einen Gmail-Entwurf mit folgenden Daten:\n\n' +
     'AN: ' + email + '\n' +
@@ -10070,10 +10077,34 @@ function copyInviteText() {
 
   setTimeout(function() {
     alert('\u2705 Einladung erstellt!\n\n' +
-      '\u2022 Stub-Profil f\u00fcr ' + friendFirst + ' angelegt (Status: Eingeladen)\n' +
-      '\u2022 Claude-Prompt in Zwischenablage kopiert\n\n' +
+      '\u2022 Stub-Profil f\u00fcr ' + friendFirst + ' angelegt\n' +
+      '\u2022 Claude-Prompt in Zwischenablage kopiert\n' +
+      '\u2022 Einladungs-Link mit Profil generiert\n\n' +
       'Sage Claude jetzt:\n\u201eBitte erstelle den Gmail-Entwurf \u2013 der Prompt ist in meiner Zwischenablage\u201c');
   }, 200);
+}
+
+// Einladungs-Link mit eingebettetem Profil generieren
+function _generateProfileLink(profile) {
+  // Nur relevante Felder für den Link (kein Ballast)
+  var linkProfile = {
+    id: profile.id,
+    name: profile.name,
+    nachname: profile.nachname || '',
+    alter: profile.alter || 25,
+    gewicht: profile.gewicht || 75,
+    groesse: profile.groesse || 175,
+    hfmax: profile.hfmax || 195,
+    goal: profile.goal || 'hypertrophie',
+    tage: profile.tage || ['Mo','Mi','Fr'],
+    role: profile.role || 'athlete',
+    equipment: profile.equipment || ['Eigengewicht'],
+    trainingLocation: profile.trainingLocation || 'studio'
+  };
+  var json = JSON.stringify(linkProfile);
+  var b64 = btoa(encodeURIComponent(json));
+  var base = window.location.origin + window.location.pathname;
+  return base + '?profile=' + b64;
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -11047,6 +11078,10 @@ function _lockSubmit() {
 function _unlockApp() {
   document.getElementById('appLockScreen').classList.add('hidden');
   document.getElementById('appContent').classList.remove('locked');
+
+  // URL-Parameter ?profile=BASE64 prüfen (Einladungs-Link)
+  var imported = _checkUrlProfileImport();
+
   // App initialisieren (Profile aus entschlüsseltem Cache laden)
   buildProfileDropdown();
   updateHeaderStats();
@@ -11055,7 +11090,8 @@ function _unlockApp() {
   buildLexikon();
   applyAccessControl();
   _postUnlockInit();
-  // Initiale Navigation: Trainer → Planung, Athlet → Jahresplan
+
+  // Initiale Navigation
   var p = getActiveProfile();
   if (p && p.role === 'trainer') {
     showSection('planung', document.querySelectorAll('.tab')[0]);
@@ -11065,6 +11101,43 @@ function _unlockApp() {
   } else {
     showSection('jahresplan', document.querySelectorAll('.tab')[1]);
   }
+
+  // Kein Profil vorhanden und kein Import → Profil-Modal öffnen
+  var profiles = getProfiles();
+  if (profiles.length === 0 && !imported) {
+    setTimeout(function() { openNewProfileModal(null); }, 300);
+  }
+}
+
+// Profil aus URL-Parameter importieren (?profile=BASE64)
+function _checkUrlProfileImport() {
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var profileB64 = params.get('profile');
+    if (!profileB64) return false;
+    var json = decodeURIComponent(atob(profileB64));
+    var imported = JSON.parse(json);
+    if (!imported || !imported.name) return false;
+    // Profil vorbereiten
+    imported.id = imported.id || ('p_' + Date.now());
+    if (!imported.role) imported.role = 'athlete';
+    if (!imported.plans) imported.plans = {};
+    if (!imported.sessions) imported.sessions = [];
+    // Prüfen ob Profil schon existiert (Doppel-Import verhindern)
+    var profiles = getProfiles();
+    var exists = profiles.some(function(p) { return p.id === imported.id; });
+    if (!exists) {
+      profiles.push(imported);
+      saveProfiles(profiles);
+    }
+    setActiveProfileId(imported.id);
+    // URL bereinigen (Parameter entfernen)
+    if (window.history && window.history.replaceState) {
+      var cleanUrl = window.location.pathname;
+      window.history.replaceState(null, '', cleanUrl);
+    }
+    return true;
+  } catch(e) { return false; }
 }
 
 function _lockReset() {
