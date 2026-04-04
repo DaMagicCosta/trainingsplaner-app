@@ -2159,7 +2159,7 @@
   </div>
 
   <!-- Drive Sync Panel -->
-  <div style="margin-top:32px;background:var(--card);border:1px solid rgba(69,123,157,.3);border-radius:12px;padding:18px 22px;display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
+  <div id="driveSyncPanel" style="margin-top:32px;background:var(--card);border:1px solid rgba(69,123,157,.3);border-radius:12px;padding:18px 22px;display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;">
     <div style="font-size:1.6rem;padding-top:2px;">&#x2601;&#xFE0F;</div>
     <div style="flex:1;min-width:200px;">
       <div style="font-weight:700;font-size:.95rem;margin-bottom:4px;color:var(--text);">Google Drive Sync</div>
@@ -6684,9 +6684,9 @@ function openEditProfileModal(e) {
   if (pmRegenCan) pmRegenCan.checked = regenCfg.athleteCanSetRegen !== false;
   var pmRegenSec = document.getElementById('pm_regen_section');
   if (pmRegenSec) pmRegenSec.style.display = (p.role === 'trainer') ? '' : 'none';
-  // Sync-URL laden (nur Trainer)
+  // Sync-URL laden (nur Trainer, nicht im Demo-Modus)
   var pmSyncSec = document.getElementById('pm_sync_section');
-  if (pmSyncSec) pmSyncSec.style.display = (p.role === 'trainer') ? '' : 'none';
+  if (pmSyncSec) pmSyncSec.style.display = (p.role === 'trainer' && !_isDemoMode) ? '' : 'none';
   var pmSyncUrl = document.getElementById('pm_sync_url');
   if (pmSyncUrl) pmSyncUrl.value = getSyncUrl();
   // Anamnese-Status anzeigen
@@ -10168,9 +10168,9 @@ openEditProfileModal = function(e) {
   if (ri2) ri2.value = regenCfg2.interval || 6;
   if (rm2) rm2.value = regenCfg2.athleteCanSetRegen ? (regenCfg2.maxAthleteRegen || 2) : 0;
   if (rc2) rc2.checked = regenCfg2.athleteCanSetRegen !== false;
-  // Sync-Section (nur Trainer)
+  // Sync-Section (nur Trainer, nicht im Demo-Modus)
   var pmSyncSec2 = document.getElementById('pm_sync_section');
-  if (pmSyncSec2) pmSyncSec2.style.display = (p.role === 'trainer') ? '' : 'none';
+  if (pmSyncSec2) pmSyncSec2.style.display = (p.role === 'trainer' && !_isDemoMode) ? '' : 'none';
   var pmSyncUrl2 = document.getElementById('pm_sync_url');
   if (pmSyncUrl2) pmSyncUrl2.value = getSyncUrl();
   // Regen-Section (nur Trainer)
@@ -11643,6 +11643,9 @@ function _applyDemoRestrictions() {
       }
     });
   }
+  // Drive Sync Panel ausblenden
+  var dsp = document.getElementById('driveSyncPanel');
+  if (dsp) dsp.style.display = 'none';
 }
 
 function _enterDemoMode() {
