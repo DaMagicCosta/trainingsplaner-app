@@ -58,13 +58,19 @@ function doGet(e) {
   var queryId   = (e && e.parameter && e.parameter.id)   ? e.parameter.id   : null;
   var callback  = (e && e.parameter && e.parameter.callback) ? e.parameter.callback : null;
 
-  // Hilfsfunktion: JSON oder JSONP zurückgeben
+  // Hilfsfunktion: JSON, JSONP oder postMessage zurückgeben
+  var iframe = (e && e.parameter && e.parameter.iframe) ? true : false;
   function respond(data) {
     var json = (typeof data === 'string') ? data : JSON.stringify(data);
     if (callback) {
-      // JSONP: callback(data) – umgeht CORS
       return ContentService.createTextOutput(callback + '(' + json + ')')
         .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    if (iframe) {
+      // postMessage-Ansatz: HTML-Seite die Daten an Parent sendet
+      var html = '<html><body><script>parent.postMessage(' + json + ',"*");<\/script></body></html>';
+      return HtmlService.createHtmlOutput(html)
+        .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
     }
     return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);
   }

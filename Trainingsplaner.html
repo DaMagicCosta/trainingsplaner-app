@@ -11418,20 +11418,29 @@ function _pullPlansFromSync() {
   var profileName = (p.name || '') + '_' + (p.nachname || '');
   profileName = profileName.replace(/[^a-zA-ZäöüÄÖÜß0-9_\- ]/g, '').trim();
   if (!profileName) return;
+  var profileId = p.id;
 
-  // JSONP: <script>-Tag umgeht CORS bei Google Apps Script
-  var cbName = '_syncCb_' + Date.now();
-  window[cbName] = function(serverData) {
-    delete window[cbName];
-    _mergeSyncData(p.id, serverData);
-  };
-  var script = document.createElement('script');
-  script.src = syncUrl + '?name=' + encodeURIComponent(profileName) + '&callback=' + cbName;
-  script.onerror = function() { delete window[cbName]; };
-  document.body.appendChild(script);
+  // iframe + postMessage: umgeht CORS zuverlässig
+  var iframe = document.createElement('iframe');
+  iframe.style.cssText = 'display:none;width:0;height:0;border:0;';
+  iframe.src = syncUrl + '?name=' + encodeURIComponent(profileName) + '&iframe=true';
+
+  function onMessage(event) {
+    // Nur Nachrichten von Google akzeptieren
+    if (!event.origin || event.origin.indexOf('google') < 0) return;
+    window.removeEventListener('message', onMessage);
+    try { document.body.removeChild(iframe); } catch(e) {}
+    if (event.data && typeof event.data === 'object') {
+      _mergeSyncData(profileId, event.data);
+    }
+  }
+  window.addEventListener('message', onMessage);
+  document.body.appendChild(iframe);
+
+  // Timeout: nach 15s aufräumen
   setTimeout(function() {
-    try { document.body.removeChild(script); } catch(e) {}
-    delete window[cbName];
+    window.removeEventListener('message', onMessage);
+    try { document.body.removeChild(iframe); } catch(e) {}
   }, 15000);
 }
 
