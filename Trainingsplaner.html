@@ -1409,6 +1409,118 @@ ul, ol { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
+   PLANUNG (v2.8 Stub — Trainer-only Leer-Zustand)
+   ═══════════════════════════════════════════════════════ */
+/* Trainer-only Sichtbarkeit in Sidebar und Bottom-Nav */
+body.role-athlete .nav-item-trainer-only,
+body.role-athlete .bnav-item-trainer-only {
+  display: none !important;
+}
+
+.pn-hero {
+  background:
+    radial-gradient(circle at 10% 0%, var(--accent-dim) 0%, transparent 55%),
+    var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-8);
+  margin-bottom: var(--s-6);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+.pn-hero-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-size: 30px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+.pn-hero-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+}
+.pn-hero-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+  max-width: 640px;
+}
+.pn-hero-desc strong { color: var(--text); }
+
+.pn-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+.pn-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  padding: var(--s-5) var(--s-6);
+  transition: border-color var(--ease);
+}
+.pn-card:hover { border-color: var(--border-strong); }
+.pn-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: var(--s-3);
+}
+.pn-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+  line-height: 1.3;
+}
+.pn-card-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
+.pn-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: var(--warning-dim);
+  border: 1px solid var(--warning-line);
+  border-radius: var(--r-sm);
+}
+.pn-notice-icon {
+  color: var(--warning);
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.pn-notice-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.pn-notice-text strong { color: var(--warning); }
+
+@media (max-width: 720px) {
+  .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
+  .pn-hero-icon { width: 48px; height: 48px; font-size: 22px; }
+  .pn-hero-title { font-size: 18px; }
+}
+
+/* ═══════════════════════════════════════════════════════
    INFO & EINSTELLUNGEN (v2.7)
    ═══════════════════════════════════════════════════════ */
 /* Sub-Navigation */
@@ -3921,6 +4033,11 @@ body.role-athlete .info-athletes-card { display: none; }
           <span>Cockpit</span>
           <span class="nav-kbd">G C</span>
         </button>
+        <button class="nav-item nav-item-trainer-only" data-tab="planung">
+          <span class="nav-ico">✎</span>
+          <span>Planung</span>
+          <span class="nav-kbd">G P</span>
+        </button>
         <button class="nav-item" data-tab="jahresplan">
           <span class="nav-ico">▤</span>
           <span>Jahresplan</span>
@@ -4050,6 +4167,76 @@ body.role-athlete .info-athletes-card { display: none; }
         <button class="next-action" id="cpNextAction">Einheit starten →</button>
       </div>
 
+    </section>
+
+    <!-- Planung (Trainer-only Stub, Details folgen in eigener Bau-Etappe) -->
+    <section class="page" data-page="planung">
+      <div class="page-head">
+        <div class="page-crumb">Trainer-Workflow · Wochenplan-Generator &amp; Periodisierung</div>
+        <h1 class="page-title">Planung</h1>
+      </div>
+
+      <div class="pn-hero">
+        <div class="pn-hero-icon">✎</div>
+        <div class="pn-hero-title">Wochenplan-Generator folgt</div>
+        <div class="pn-hero-desc">
+          Dieser Tab wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
+          passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
+          verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
+          steht in der nächsten Bau-Etappe auf dem Plan.
+        </div>
+      </div>
+
+      <div class="pn-grid">
+        <div class="pn-card">
+          <div class="pn-card-label">1 · Generator</div>
+          <div class="pn-card-title">Wochenplan aus Template</div>
+          <div class="pn-card-desc">
+            Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
+            Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
+            (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
+          </div>
+        </div>
+
+        <div class="pn-card">
+          <div class="pn-card-label">2 · Templates</div>
+          <div class="pn-card-title">Split-Bibliothek</div>
+          <div class="pn-card-desc">
+            Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
+            kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
+            jeder generierte Plan zusammengesetzt wird.
+          </div>
+        </div>
+
+        <div class="pn-card">
+          <div class="pn-card-label">3 · Periodisierung</div>
+          <div class="pn-card-title">13-Wochen-Zyklen</div>
+          <div class="pn-card-desc">
+            Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
+            plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
+            jederzeit möglich.
+          </div>
+        </div>
+
+        <div class="pn-card">
+          <div class="pn-card-label">4 · Ziel-Presets</div>
+          <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
+          <div class="pn-card-desc">
+            Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
+            anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
+            Einzelfall überschreiben.
+          </div>
+        </div>
+      </div>
+
+      <div class="pn-notice">
+        <div class="pn-notice-icon">◐</div>
+        <div class="pn-notice-text">
+          <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
+          Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
+          neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Tab den geplanten Funktionsumfang.
+        </div>
+      </div>
     </section>
 
     <!-- Jahresplan -->
@@ -5677,6 +5864,11 @@ function setRole(role) {
   document.body.classList.toggle('role-trainer', role === 'trainer');
   document.body.classList.toggle('role-athlete', role !== 'trainer');
 
+  // Wenn Athlet wird während Planungs-Seite offen ist: auf Cockpit umlenken
+  if (role !== 'trainer' && state.activeTab === 'planung') {
+    switchTab('cockpit');
+  }
+
   // Profil-Label im Info-Tab an neue Rolle anpassen
   const subEl = document.getElementById('infoProfileSub');
   if (subEl) {
@@ -5763,6 +5955,7 @@ const cmdkItems = [
   { group: 'Quick Actions', label: 'Sync jetzt', ico: '↺', action: () => toast('Sync kommt in v2.7') },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
+  { group: 'Navigation', label: 'Zur Planung (Trainer)', ico: '✎', kbd: ['G','P'], action: () => switchTab('planung') },
   { group: 'Navigation', label: 'Zum Jahresplan', ico: '▤', kbd: ['G','J'], action: () => switchTab('jahresplan') },
   { group: 'Navigation', label: 'Zum Trainingsplan', ico: '◯', kbd: ['G','T'], action: () => switchTab('trainingsplan') },
   { group: 'Navigation', label: 'Zum Fortschritt', ico: '↗', kbd: ['G','F'], action: () => switchTab('fortschritt') },
