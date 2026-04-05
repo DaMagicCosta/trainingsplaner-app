@@ -7366,15 +7366,16 @@ function _fpComputeOverview(sessions, exerciseMap, profile) {
   //    liegen (also in der `sessions`-Liste, die der Aufrufer übergibt).
   let prs = 0;
   if (profile) {
+    const _ts = s => _parseDE(s.date)?.getTime() || 0;
     const allSorted = (profile.sessions || [])
       .slice()
-      .sort((a, b) => _sessionTs(a) - _sessionTs(b));
+      .sort((a, b) => _ts(a) - _ts(b));
 
     const prEventKeys = new Set(); // "ts|exName" für jedes PR-Event
     const runningMax = {};         // exName → bestes bisheriges 1RM
 
     allSorted.forEach(s => {
-      const ts = _sessionTs(s);
+      const ts = _ts(s);
       (s.exercises || []).forEach(ex => {
         // Bestes 1RM dieser Session-Übung ermitteln
         let sessionBest = 0;
@@ -7394,7 +7395,7 @@ function _fpComputeOverview(sessions, exerciseMap, profile) {
 
     // Jetzt zählen, wie viele PR-Events in den gefilterten Sessions stecken
     sessions.forEach(s => {
-      const ts = _sessionTs(s);
+      const ts = _ts(s);
       (s.exercises || []).forEach(ex => {
         if (prEventKeys.has(ts + '|' + ex.name)) prs++;
       });
