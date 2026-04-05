@@ -5942,6 +5942,23 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Sidebar-Dropdown: Klick auf einen Athleten-Eintrag oeffnet dessen Profil-Edit.
+// In Variante B haben wir noch keinen echten Profilwechsel — der Klick fuehrt
+// darum ins Edit-Modal der Demo-Athletin. Wenn Multi-Profil-Persistenz kommt,
+// wird hier spaeter ein echter switchProfile() Call stehen.
+document.querySelectorAll('.role-dropdown [data-athlete]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const key = btn.dataset.athlete;
+    toggleRoleDropdown(false);
+    if (state.demoAthletes && state.demoAthletes[key]) {
+      openProfileEditModal(key);
+    } else {
+      toast('Athleten-Profil wird mit Multi-Profil-Persistenz verfuegbar');
+    }
+  });
+});
+
 /* ═══════════════════════════════════════════════════════
    COMMAND PALETTE
    ═══════════════════════════════════════════════════════ */
@@ -5950,9 +5967,9 @@ const cmdkInput = document.getElementById('cmdkInput');
 const cmdkList = document.getElementById('cmdkList');
 
 const cmdkItems = [
-  { group: 'Quick Actions', label: 'Neue Einheit loggen', ico: '+', kbd: ['⌘','N'], action: () => toast('Log-Flow kommt in v2.4') },
-  { group: 'Quick Actions', label: 'Export JSON', ico: '↗', action: () => toast('Export kommt in v2.7') },
-  { group: 'Quick Actions', label: 'Sync jetzt', ico: '↺', action: () => toast('Sync kommt in v2.7') },
+  { group: 'Quick Actions', label: 'Neue Einheit loggen', ico: '+', kbd: ['⌘','N'], action: () => startNextEinheit() },
+  { group: 'Quick Actions', label: 'Profil als JSON exportieren', ico: '↗', action: () => exportProfileJson() },
+  { group: 'Quick Actions', label: 'Demo-Profil neu laden', ico: '↓', action: () => reloadDemoProfile() },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
   { group: 'Navigation', label: 'Zur Planung (Trainer)', ico: '✎', kbd: ['G','P'], action: () => switchTab('planung') },
@@ -5963,14 +5980,15 @@ const cmdkItems = [
 
   { group: 'Modus', label: 'Zu Athlet wechseln', ico: '○', action: () => setRole('athlete') },
   { group: 'Modus', label: 'Zu Trainer wechseln', ico: '●', action: () => setRole('trainer') },
-  { group: 'Modus', label: 'Profil bearbeiten', ico: '✎', action: () => openProfileEditModal() },
+  { group: 'Modus', label: 'Eigenes Profil bearbeiten', ico: '✎', action: () => openProfileEditModal('self') },
+  { group: 'Modus', label: 'Athletin Lisa bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
 
-  { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz kommt in v2.6') },
-  { group: 'Tools', label: 'Demo-Profil laden', ico: '↓', action: () => toast('Max-Demo wird in v2.1 geladen') },
+  { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz-Modul in v2 noch nicht portiert') },
+  { group: 'Tools', label: 'Sync jetzt', ico: '↺', action: () => toast('Sync im Demo-Modus bewusst deaktiviert') },
 
-  { group: 'Einstellungen', label: 'Theme / Design', ico: '◐', action: () => toast('Theme bleibt Dark') },
-  { group: 'Einstellungen', label: 'Profil sperren', ico: '🔒', kbd: ['⌘','L'], action: () => toast('Sperre kommt später') },
-  { group: 'Einstellungen', label: 'Info / Über die App', ico: 'ⓘ', action: () => switchTab('info') },
+  { group: 'Einstellungen', label: 'Theme wechseln', ico: '◐', action: () => toast('Theme-Wechsel unten links im Sidebar-Fuss (3 Teal-Varianten)') },
+  { group: 'Einstellungen', label: 'Profil sperren', ico: '🔒', kbd: ['⌘','L'], action: () => toast('PIN-Lock im Demo-Modus bewusst deaktiviert') },
+  { group: 'Einstellungen', label: 'Info / Ueber die App', ico: 'ⓘ', action: () => switchTab('info') },
 ];
 
 function renderCmdkList(filter = '') {
@@ -6079,15 +6097,14 @@ cmdk.addEventListener('click', (e) => {
 });
 
 document.getElementById('moreBtn').addEventListener('click', openCmdk);
-document.getElementById('logBtn').addEventListener('click', () => {
-  toast('Log-Flow kommt in v2.4');
-});
+document.getElementById('logBtn').addEventListener('click', startNextEinheit);
 
 /* ═══════════════════════════════════════════════════════
    KEYBOARD SHORTCUTS
    ═══════════════════════════════════════════════════════ */
 const gMap = {
   'c': 'cockpit',
+  'p': 'planung',
   'j': 'jahresplan',
   't': 'trainingsplan',
   'f': 'fortschritt',
@@ -6115,14 +6132,14 @@ document.addEventListener('keydown', (e) => {
   // ⌘N / Ctrl+N: neue Einheit
   if (mod && e.key.toLowerCase() === 'n') {
     e.preventDefault();
-    toast('Log-Flow kommt in v2.4');
+    startNextEinheit();
     return;
   }
 
-  // ⌘L / Ctrl+L: sperren
+  // ⌘L / Ctrl+L: sperren — im Demo-Modus bewusst deaktiviert
   if (mod && e.key.toLowerCase() === 'l') {
     e.preventDefault();
-    toast('Sperre kommt später');
+    toast('PIN-Lock im Demo-Modus bewusst deaktiviert');
     return;
   }
 
@@ -6134,7 +6151,12 @@ document.addEventListener('keydown', (e) => {
     const target = gMap[e.key.toLowerCase()];
     if (target) {
       e.preventDefault();
-      switchTab(target);
+      // Planungs-Tab ist Trainer-only — Athlet darf nicht via G-P dorthin
+      if (target === 'planung' && state.role !== 'trainer') {
+        toast('Planung ist nur im Trainer-Modus verfuegbar');
+      } else {
+        switchTab(target);
+      }
     }
     clearTimeout(state.gTimeout);
     state.gSequence = false;
@@ -8966,20 +8988,27 @@ function renderAthleteRow(key, p) {
   }
 })();
 
+// Wiederverwendbare Startlogik: springt in den Trainingsplan auf die naechste
+// geplante Einheit. Einstiegspunkte: Cockpit-CTA, Bottom-Nav "+"-Button,
+// Cmdk "Neue Einheit loggen", Cmd+N-Shortcut.
+function startNextEinheit() {
+  const btn = document.getElementById('cpNextAction');
+  // Primaerquelle: das Cockpit hat beim Rendern die naechste Einheit im dataset.
+  let targetKw  = btn ? parseInt(btn.dataset.targetKw  || '0', 10) : 0;
+  let targetDay = btn ? parseInt(btn.dataset.targetDay || '0', 10) : 0;
+  if (!targetKw) { toast('Keine naechste Einheit geplant'); return; }
+  state.tpViewKw  = targetKw;
+  state.tpViewDay = targetDay;
+  state.tpEditing = null;
+  if (state.profile) renderTrainingsplan(state.profile);
+  switchTab('trainingsplan');
+}
+
 // Cockpit "Einheit starten"-Button: Deep-Link zum Trainingsplan
 (function initCpNextAction() {
   const btn = document.getElementById('cpNextAction');
   if (!btn) return;
-  btn.addEventListener('click', () => {
-    const targetKw  = parseInt(btn.dataset.targetKw || '0', 10);
-    const targetDay = parseInt(btn.dataset.targetDay || '0', 10);
-    if (!targetKw) { toast('Keine nächste Einheit geplant'); return; }
-    state.tpViewKw  = targetKw;
-    state.tpViewDay = targetDay;
-    state.tpEditing = null;
-    if (state.profile) renderTrainingsplan(state.profile);
-    switchTab('trainingsplan');
-  });
+  btn.addEventListener('click', startNextEinheit);
 })();
 
 // Trainingsplan Log-Flow (Schritt 5): delegierter Handler am Exercises-Container
