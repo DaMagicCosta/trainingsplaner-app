@@ -895,6 +895,43 @@ ul, ol { list-style: none; }
   .bal-breakdown { grid-template-columns: 1fr; }
 }
 
+/* ─── Mobile: Muskel-Balancer ─── */
+@media (max-width: 720px) {
+  /* View-Switcher horizontal scrollbar, damit "V-/H-Kette" erreichbar bleibt */
+  .view-switcher {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .view-switcher::-webkit-scrollbar { display: none; }
+  .view-switcher button {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Balance-Zeilen: schmalere Labels, Meta-Zeile stackt sauber */
+  .bal-row {
+    grid-template-columns: 72px 1fr 72px;
+    gap: 6px;
+  }
+  .bal-label { font-size: 12px; }
+  .bal-row-master .bal-label { font-size: 13px; }
+  .bal-meta {
+    flex-wrap: wrap;
+    font-size: 9px;
+    gap: 4px 8px;
+  }
+  .bal-meta .bal-meta-c {
+    order: 3;
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 2px;
+  }
+}
+
 /* ─── Solo-Muskeln (ohne Antagonist) ─── */
 .bal-divider {
   height: 1px;
