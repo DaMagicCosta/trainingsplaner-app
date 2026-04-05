@@ -2830,6 +2830,81 @@ body.role-athlete .info-section[data-section="vereinbarung"] {
 }
 
 /* ═══════════════════════════════════════════════════════
+   BUG-REPORT MODAL + FLOATER (v2.8)
+   ═══════════════════════════════════════════════════════ */
+.bug-floater {
+  position: fixed;
+  right: var(--s-5);
+  bottom: var(--s-5);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-size: 22px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  z-index: 900;
+  transition: all var(--ease);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  padding: 0;
+}
+.bug-floater:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+.bug-floater-icon { line-height: 1; pointer-events: none; }
+
+/* Am Handy: Floater über der Bottom-Nav platzieren (sonst verdeckt) */
+@media (max-width: 720px) {
+  .bug-floater {
+    right: 14px;
+    bottom: 76px; /* Bottom-Nav ~60px + 16px Abstand */
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+}
+
+/* Kontext-Grid im Bug-Report-Modal */
+.br-context {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 6px 12px;
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.br-context-key {
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.br-context-val {
+  color: var(--text);
+  word-break: break-word;
+}
+.br-description {
+  font-family: var(--font-sans);
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .br-context { grid-template-columns: 80px 1fr; font-size: 10px; }
+}
+
+/* ═══════════════════════════════════════════════════════
    ATHLETEN-VERWALTEN (Trainer-Only Card im Info-Tab)
    ═══════════════════════════════════════════════════════ */
 body.role-athlete .info-athletes-card { display: none; }
@@ -5494,6 +5569,24 @@ body.role-athlete .info-athletes-card { display: none; }
             </div>
           </div>
         </div>
+
+        <!-- Bug-Report Card (voll-breite) -->
+        <div class="info-card" style="margin-top: var(--s-4);">
+          <div class="info-card-head">
+            <div class="info-card-label">🐛 &nbsp;Bug melden</div>
+            <div class="info-card-sub">Tester-Feedback · Mail oder Zwischenablage</div>
+          </div>
+          <div class="info-text">
+            <p>Dir ist etwas Komisches aufgefallen — ein kaputtes Layout, ein Button, der nicht reagiert, eine Zahl, die nicht stimmen kann? Schreib's rein. Der Kontext (aktueller Tab, Rolle, Viewport, Browser) wird automatisch mitgeschickt, du musst nur die Beschreibung tippen.</p>
+            <p style="color:var(--text-3); font-size:12px; margin-top:var(--s-2);">Reports gehen per Mail direkt an Alexander oder landen als fertig formatierter Text in deiner Zwischenablage. Kein Backend, kein Tracking — versprochen.</p>
+          </div>
+          <div class="info-actions">
+            <button class="info-action info-action-primary" id="bugReportOpenBtn">
+              <span class="info-action-icon">🐛</span>
+              Bug melden
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- ─── Section: Über ─── -->
@@ -5646,8 +5739,58 @@ body.role-athlete .info-athletes-card { display: none; }
       </div>
     </div>
 
+    <!-- ═══════════════ BUG-REPORT MODAL (v2.8) ═══════════════ -->
+    <div class="tp-modal" id="bugReportModal" role="dialog" aria-modal="true" aria-labelledby="bugReportTitle">
+      <div class="tp-modal-backdrop" data-modal-close="bugReportModal"></div>
+      <div class="tp-modal-panel">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">🐛 &nbsp;Bug melden</div>
+            <h2 class="tp-modal-title" id="bugReportTitle">Was ist dir aufgefallen?</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="bugReportModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <div class="info-notice">
+            <div class="info-notice-icon">◐</div>
+            <div class="info-notice-text">
+              <strong>Danke fürs Melden.</strong> Dein Report wird per Mail verschickt oder landet in deiner Zwischenablage — keine Daten werden automatisch an Server gesendet. Die Kontext-Felder unten helfen beim Nachvollziehen.
+            </div>
+          </div>
+
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">Deine Beschreibung</div>
+            <textarea class="tp-field-input br-description" id="brDescription" rows="5" placeholder="Was ist passiert? Was hast du erwartet, dass passieren sollte? Schritte zum Reproduzieren, falls es komplizierter ist ..."></textarea>
+          </div>
+
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">Automatisch erfasster Kontext</div>
+            <div class="br-context" id="brContext">
+              <!-- wird beim Öffnen befüllt -->
+            </div>
+          </div>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action" data-modal-close="bugReportModal">Abbrechen</button>
+          <button class="info-action" id="brCopyBtn">
+            <span class="info-action-icon">⧉</span>
+            Text kopieren
+          </button>
+          <button class="info-action info-action-primary" id="brMailBtn">
+            <span class="info-action-icon">✉</span>
+            Per Mail senden
+          </button>
+        </div>
+      </div>
+    </div>
+
   </main>
 </div>
+
+<!-- ═══════════════ BUG-REPORT FLOATER (global) ═══════════════ -->
+<button class="bug-floater" id="bugFloaterBtn" type="button" title="Bug melden" aria-label="Bug melden">
+  <span class="bug-floater-icon">🐛</span>
+</button>
 
 <!-- ═══════════════ BOTTOM NAV (Mobile) ═══════════════ -->
 <nav class="bottom-nav">
@@ -5983,6 +6126,7 @@ const cmdkItems = [
   { group: 'Modus', label: 'Eigenes Profil bearbeiten', ico: '✎', action: () => openProfileEditModal('self') },
   { group: 'Modus', label: 'Athletin Lisa bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
 
+  { group: 'Tools', label: 'Bug melden', ico: '🐛', action: () => document.getElementById('bugFloaterBtn')?.click() },
   { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz-Modul in v2 noch nicht portiert') },
   { group: 'Tools', label: 'Sync jetzt', ico: '↺', action: () => toast('Sync im Demo-Modus bewusst deaktiviert') },
 
@@ -8886,6 +9030,135 @@ function renderAthleteRow(key, p) {
   });
   const addBtn = document.getElementById('athleteAddBtn');
   if (addBtn) addBtn.addEventListener('click', () => toast('Neuer Athlet: folgt mit Multi-Profil-Persistenz'));
+})();
+
+/* ═══════════════════════════════════════════════════════
+   BUG-REPORT (v2.8) — mailto + Clipboard, kein Backend
+   ═══════════════════════════════════════════════════════ */
+(function initBugReport() {
+  const MAIL_TO = 'Alexander.daCostaAmaral@outlook.at';
+
+  const modal    = document.getElementById('bugReportModal');
+  const descEl   = document.getElementById('brDescription');
+  const contextEl= document.getElementById('brContext');
+  const copyBtn  = document.getElementById('brCopyBtn');
+  const mailBtn  = document.getElementById('brMailBtn');
+  const floater  = document.getElementById('bugFloaterBtn');
+  const openFromInfo = document.getElementById('bugReportOpenBtn');
+  if (!modal) return;
+
+  const tabLabels = {
+    cockpit: 'Cockpit',
+    planung: 'Planung',
+    jahresplan: 'Jahresplan',
+    trainingsplan: 'Trainingsplan',
+    fortschritt: 'Fortschritt',
+    lexikon: 'Lexikon',
+    info: 'Info & Einstellungen'
+  };
+
+  function collectContext() {
+    return {
+      tab: tabLabels[state.activeTab] || state.activeTab || '—',
+      rolle: state.role === 'trainer' ? 'Trainer' : 'Athlet',
+      theme: state.theme || '—',
+      viewport: window.innerWidth + '×' + window.innerHeight,
+      browser: navigator.userAgent,
+      zeitpunkt: new Date().toLocaleString('de-DE'),
+      url: location.href
+    };
+  }
+
+  function renderContext() {
+    const c = collectContext();
+    const rows = [
+      ['Tab',       c.tab],
+      ['Rolle',     c.rolle],
+      ['Theme',     c.theme],
+      ['Viewport',  c.viewport],
+      ['Zeitpunkt', c.zeitpunkt],
+      ['Browser',   c.browser],
+      ['URL',       c.url]
+    ];
+    contextEl.innerHTML = rows.map(([k, v]) =>
+      '<div class="br-context-key">' + escapeHtml(k) + '</div>' +
+      '<div class="br-context-val">' + escapeHtml(v) + '</div>'
+    ).join('');
+  }
+
+  function buildReportText() {
+    const c = collectContext();
+    const desc = (descEl.value || '').trim() || '(keine Beschreibung angegeben)';
+    return (
+      '[Trainingsplaner v2 Bug]\n\n' +
+      'BESCHREIBUNG:\n' + desc + '\n\n' +
+      '--- KONTEXT ---\n' +
+      'Tab:        ' + c.tab       + '\n' +
+      'Rolle:      ' + c.rolle     + '\n' +
+      'Theme:      ' + c.theme     + '\n' +
+      'Viewport:   ' + c.viewport  + '\n' +
+      'Zeitpunkt:  ' + c.zeitpunkt + '\n' +
+      'Browser:    ' + c.browser   + '\n' +
+      'URL:        ' + c.url       + '\n'
+    );
+  }
+
+  function buildSubject() {
+    const desc = (descEl.value || '').trim();
+    const first = desc.split(/\s+/).slice(0, 6).join(' ');
+    return '[Trainingsplaner v2 Bug] ' + (first || 'ohne Beschreibung');
+  }
+
+  function openBugReport() {
+    descEl.value = '';
+    renderContext();
+    openModal('bugReportModal');
+    // Auto-Focus NUR am Desktop, damit am Handy nicht sofort die Tastatur kommt
+    if (window.innerWidth > 720) {
+      setTimeout(() => descEl.focus(), 100);
+    }
+  }
+
+  function sendMail() {
+    const subject = buildSubject();
+    const body = buildReportText();
+    const href = 'mailto:' + MAIL_TO +
+                 '?subject=' + encodeURIComponent(subject) +
+                 '&body=' + encodeURIComponent(body);
+    location.href = href;
+    // Modal offen lassen — falls kein Mail-Client, kann der Nutzer noch kopieren
+    toast('Mail-Client wird geöffnet …');
+  }
+
+  async function copyText() {
+    const text = buildReportText();
+    try {
+      await navigator.clipboard.writeText(text);
+      toast('Bug-Report in die Zwischenablage kopiert');
+      closeModal('bugReportModal');
+    } catch (err) {
+      // Fallback für Browser ohne Clipboard API oder http/file-Kontext ohne Permission
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        toast('Bug-Report kopiert (Fallback)');
+        closeModal('bugReportModal');
+      } catch (e2) {
+        toast('Kopieren fehlgeschlagen — bitte Mail-Button nutzen');
+      }
+      document.body.removeChild(ta);
+    }
+  }
+
+  if (floater)      floater.addEventListener('click', openBugReport);
+  if (openFromInfo) openFromInfo.addEventListener('click', openBugReport);
+  if (copyBtn)      copyBtn.addEventListener('click', copyText);
+  if (mailBtn)      mailBtn.addEventListener('click', sendMail);
 })();
 
 // Lexikon (v2.6): Suche, Kategorie-Filter, Karten-Klicks, Sheet-Handling
