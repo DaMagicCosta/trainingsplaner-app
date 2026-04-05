@@ -5366,7 +5366,7 @@ body.role-athlete .info-athletes-card { display: none; }
       <div class="tp-modal-panel">
         <div class="tp-modal-head">
           <div class="tp-modal-title-group">
-            <div class="tp-modal-label">◉ &nbsp;Profil bearbeiten</div>
+            <div class="tp-modal-label" id="profileEditLabel">◉ &nbsp;Profil bearbeiten</div>
             <h2 class="tp-modal-title" id="profileEditTitle">Stammdaten &amp; Trainingsvorlieben</h2>
           </div>
           <button class="tp-modal-close" data-modal-close="profileEditModal" title="Schließen (Esc)">✕</button>
@@ -5459,52 +5459,6 @@ body.role-athlete .info-athletes-card { display: none; }
       </div>
     </div>
 
-    <!-- ═══════════════ ATHLET-EDIT MODAL (v2.8, Stub) ═══════════════ -->
-    <div class="tp-modal" id="athleteEditModal" role="dialog" aria-modal="true" aria-labelledby="athleteEditTitle">
-      <div class="tp-modal-backdrop" data-modal-close="athleteEditModal"></div>
-      <div class="tp-modal-panel">
-        <div class="tp-modal-head">
-          <div class="tp-modal-title-group">
-            <div class="tp-modal-label">⚇ &nbsp;Athlet bearbeiten</div>
-            <h2 class="tp-modal-title" id="athleteEditTitle">Lisa Berger</h2>
-          </div>
-          <button class="tp-modal-close" data-modal-close="athleteEditModal" title="Schließen (Esc)">✕</button>
-        </div>
-        <div class="tp-modal-body">
-          <div class="info-notice">
-            <div class="info-notice-icon">◐</div>
-            <div class="info-notice-text">
-              <strong>Prototyp:</strong> Echte Athleten-Verwaltung (Anlegen, Bearbeiten, Löschen) wird mit der Multi-Profil-Persistenz in der ersten Live-Version scharfgeschaltet. Aktuell dient diese Ansicht nur der visuellen Abstimmung.
-            </div>
-          </div>
-          <div class="tp-form-group">
-            <div class="tp-form-group-title">Stammdaten (read-only Preview)</div>
-            <div class="tp-form-grid">
-              <div class="tp-field">
-                <div class="tp-field-label">Name</div>
-                <div class="tp-field-input" style="pointer-events:none;">Lisa Berger</div>
-              </div>
-              <div class="tp-field">
-                <div class="tp-field-label">Alter</div>
-                <div class="tp-field-input" style="pointer-events:none;">24</div>
-              </div>
-              <div class="tp-field">
-                <div class="tp-field-label">Rolle</div>
-                <div class="tp-field-input" style="pointer-events:none;">Athletin</div>
-              </div>
-              <div class="tp-field">
-                <div class="tp-field-label">Trainer-Zuordnung</div>
-                <div class="tp-field-input" style="pointer-events:none;">Max Mustermann (du)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tp-modal-foot">
-          <button class="info-action" data-modal-close="athleteEditModal">Schließen</button>
-        </div>
-      </div>
-    </div>
-
   </main>
 </div>
 
@@ -5582,7 +5536,24 @@ const state = {
   lxSearch: '',
   lxCategory: 'all',
   lxLocation: 'all',
-  infoSection: localStorage.getItem('tpv2_info_section') || 'profil'
+  infoSection: localStorage.getItem('tpv2_info_section') || 'profil',
+  // Demo-Athleten (RAM-only, Variante B). Erweiterbar sobald Multi-Profil-
+  // Persistenz kommt. Keys entsprechen data-athlete-edit-Werten.
+  demoAthletes: {
+    lisa: {
+      name: 'Lisa',
+      nachname: 'Berger',
+      alter: 24,
+      groesse: 168,
+      gewicht: 62,
+      hfmax: 196,
+      goal: 'kraftausdauer',
+      tage: ['Mo', 'Mi', 'Fr'],
+      trainingLocation: 'Studio · Fitness-Box Nord',
+      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange']
+    }
+  },
+  _editTarget: 'self' // 'self' oder Key aus demoAthletes
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -8564,9 +8535,25 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ─── Profil-Edit-Modal: Formular befüllen und speichern ───
-function openProfileEditModal() {
-  const p = state.profile;
+// target: 'self' (Max, state.profile) oder Key aus state.demoAthletes ('lisa')
+function openProfileEditModal(target) {
+  target = target || 'self';
+  const p = target === 'self' ? state.profile : state.demoAthletes[target];
   if (!p) { toast('Kein Profil geladen'); return; }
+
+  state._editTarget = target;
+
+  // Titel + Label an Target anpassen
+  const labelEl = document.getElementById('profileEditLabel');
+  const titleEl = document.getElementById('profileEditTitle');
+  if (target === 'self') {
+    if (labelEl) labelEl.innerHTML = '◉ &nbsp;Profil bearbeiten';
+    if (titleEl) titleEl.textContent = 'Stammdaten & Trainingsvorlieben';
+  } else {
+    const fullName = ((p.name || '') + ' ' + (p.nachname || '')).trim();
+    if (labelEl) labelEl.innerHTML = '⚇ &nbsp;Athlet bearbeiten';
+    if (titleEl) titleEl.textContent = fullName;
+  }
 
   document.getElementById('pemName').value             = p.name || '';
   document.getElementById('pemNachname').value         = p.nachname || '';
@@ -8593,7 +8580,8 @@ function openProfileEditModal() {
 }
 
 function saveProfileEdit() {
-  const p = state.profile;
+  const target = state._editTarget || 'self';
+  const p = target === 'self' ? state.profile : state.demoAthletes[target];
   if (!p) return;
 
   p.name             = document.getElementById('pemName').value.trim();
@@ -8610,13 +8598,38 @@ function saveProfileEdit() {
   p.equipment = Array.from(document.querySelectorAll('#pemEquipmentChips .tp-chip.active'))
     .map(c => c.dataset.eq);
 
-  // Re-render: Info-Tab und Sidebar-Label
-  renderInfo(p);
-  const roleNameEl = document.getElementById('roleName');
-  if (roleNameEl) roleNameEl.textContent = (p.name || '').trim() || 'Profil';
+  if (target === 'self') {
+    // Re-render: Info-Tab und Sidebar-Label
+    renderInfo(p);
+    const roleNameEl = document.getElementById('roleName');
+    if (roleNameEl) roleNameEl.textContent = (p.name || '').trim() || 'Profil';
+  } else {
+    // Athleten-Card in der Profil-Section aktualisieren
+    renderAthleteRow(target, p);
+  }
 
   closeModal('profileEditModal');
-  toast('Profil gespeichert (RAM · Variante B)');
+  toast((target === 'self' ? 'Profil' : 'Athlet') + ' gespeichert (RAM · Variante B)');
+}
+
+// Einzelne Athleten-Zeile in der Verwalten-Card neu zeichnen
+function renderAthleteRow(key, p) {
+  const row = document.querySelector('.info-athlete-row [data-athlete-edit="' + key + '"]')?.closest('.info-athlete-row');
+  if (!row) return;
+  const fullName = ((p.name || '') + ' ' + (p.nachname || '')).trim();
+  const initials = ((p.name || '?')[0] + (p.nachname || '')[0]).toUpperCase();
+  const goalLabels = {
+    hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft',
+    kraftausdauer: 'Kraftausdauer', abnehmen: 'Abnehmen', allgemein: 'Fitness'
+  };
+  const goal = goalLabels[p.goal] || p.goal;
+  const freq = (p.tage || []).length;
+  const avatarEl = row.querySelector('.info-athlete-avatar');
+  const nameEl   = row.querySelector('.info-athlete-name');
+  const metaEl   = row.querySelector('.info-athlete-meta');
+  if (avatarEl) avatarEl.textContent = initials;
+  if (nameEl)   nameEl.textContent   = fullName;
+  if (metaEl)   metaEl.textContent   = `${p.alter} J · ${goal} · ${freq}×/Woche · Demo-Athletin`;
 }
 
 (function initProfileEdit() {
@@ -8647,9 +8660,11 @@ function saveProfileEdit() {
     }
   });
 
-  // Athleten-Verwalten: Buttons
+  // Athleten-Verwalten: Bearbeiten öffnet das gleiche Profil-Edit-Modal,
+  // aber mit Lisa als Target statt Max. Save-Logik weiß anhand state._editTarget,
+  // wohin geschrieben wird.
   document.querySelectorAll('[data-athlete-edit]').forEach(btn => {
-    btn.addEventListener('click', () => openModal('athleteEditModal'));
+    btn.addEventListener('click', () => openProfileEditModal(btn.dataset.athleteEdit));
   });
   document.querySelectorAll('[data-athlete-remove]').forEach(btn => {
     btn.addEventListener('click', () => toast('Entfernen: folgt mit Multi-Profil-Persistenz'));
