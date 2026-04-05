@@ -1349,11 +1349,26 @@ ul, ol { list-style: none; }
   .jp-head { flex-direction: column; align-items: stretch; }
   .jp-head-right { justify-content: flex-end; }
   .jp-timeline-legend { font-size: 10px; gap: var(--s-2); }
+  .jp-week { padding: 10px 4px; }
+  .jp-week-block {
+    font-size: 8px;
+    padding: 2px 5px;
+    letter-spacing: 0.04em;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 @media (max-width: 520px) {
   .jp-week-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .jp-week { padding: 6px 4px; }
+  .jp-week { padding: 6px 3px; }
   .jp-week-date { display: none; }
+  .jp-week-block {
+    font-size: 7px;
+    padding: 2px 4px;
+    letter-spacing: 0.03em;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -5747,6 +5762,7 @@ const cmdkItems = [
 
   { group: 'Modus', label: 'Zu Athlet wechseln', ico: '○', action: () => setRole('athlete') },
   { group: 'Modus', label: 'Zu Trainer wechseln', ico: '●', action: () => setRole('trainer') },
+  { group: 'Modus', label: 'Profil bearbeiten', ico: '✎', action: () => openProfileEditModal() },
 
   { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz kommt in v2.6') },
   { group: 'Tools', label: 'Demo-Profil laden', ico: '↓', action: () => toast('Max-Demo wird in v2.1 geladen') },
@@ -5824,7 +5840,11 @@ function openCmdk() {
   cmdk.classList.add('open');
   cmdkInput.value = '';
   renderCmdkList('');
-  setTimeout(() => cmdkInput.focus(), 50);
+  // Am Desktop Suchfeld fokussieren. Am Handy NICHT — sonst poppt die Tastatur
+  // auf und verdeckt die Liste, obwohl der Nutzer meist nur tippen statt suchen will.
+  if (window.innerWidth > 720) {
+    setTimeout(() => cmdkInput.focus(), 50);
+  }
 }
 
 function closeCmdk() {
