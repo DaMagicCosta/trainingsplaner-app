@@ -7341,8 +7341,11 @@ function _fpAggregateByExercise(sessions) {
 }
 
 // Overview-Stats berechnen (Einheiten, Sätze, Volumen, PRs)
-function _fpComputeOverview(sessions, exerciseMap) {
-  let totalSets = 0, totalVol = 0, prs = 0;
+// WICHTIG: profile wird für die PR-Berechnung gebraucht, weil ein "echter" PR
+// ein neuer All-Time-High ist — nicht nur eine Verbesserung innerhalb des
+// Filter-Zeitraums. Dafür muss die gesamte History gesehen werden.
+function _fpComputeOverview(sessions, exerciseMap, profile) {
+  let totalSets = 0, totalVol = 0;
   sessions.forEach(s => {
     (s.exercises || []).forEach(ex => {
       (ex.sets || []).forEach(set => {
@@ -7353,11 +7356,51 @@ function _fpComputeOverview(sessions, exerciseMap) {
       });
     });
   });
-  // PR-Zählung: letzter Eintrag einer Übung > vorletztem
-  Object.values(exerciseMap).forEach(ex => {
-    const e = ex.entries;
-    if (e.length >= 2 && e[e.length - 1].maxKg > e[e.length - 2].maxKg) prs++;
-  });
+
+  // ─── PR-Zählung: All-Time-Highs im aktuellen Zeitraum ──────────────────
+  // 1. Alle Sessions der gesamten History chronologisch durchlaufen
+  // 2. Pro Übung einen Running-Max (bestes 1RM) mitführen
+  // 3. Jedes Mal, wenn eine Session das bisherige Maximum schlägt, ist das
+  //    ein PR-Event. Timestamp + Übungsname merken.
+  // 4. Am Ende zählen, wie viele dieser PR-Events im gefilterten Zeitraum
+  //    liegen (also in der `sessions`-Liste, die der Aufrufer übergibt).
+  let prs = 0;
+  if (profile) {
+    const allSorted = (profile.sessions || [])
+      .slice()
+      .sort((a, b) => _sessionTs(a) - _sessionTs(b));
+
+    const prEventKeys = new Set(); // "ts|exName" für jedes PR-Event
+    const runningMax = {};         // exName → bestes bisheriges 1RM
+
+    allSorted.forEach(s => {
+      const ts = _sessionTs(s);
+      (s.exercises || []).forEach(ex => {
+        // Bestes 1RM dieser Session-Übung ermitteln
+        let sessionBest = 0;
+        (ex.sets || []).forEach(set => {
+          const oneRM = _calc1RM(Number(set.gewicht) || 0, Number(set.wdh) || 0);
+          if (oneRM > sessionBest) sessionBest = oneRM;
+        });
+        if (sessionBest <= 0) return;
+
+        const prev = runningMax[ex.name] || 0;
+        if (sessionBest > prev + 0.01) { // kleine Epsilon gegen FP-Jitter
+          runningMax[ex.name] = sessionBest;
+          prEventKeys.add(ts + '|' + ex.name);
+        }
+      });
+    });
+
+    // Jetzt zählen, wie viele PR-Events in den gefilterten Sessions stecken
+    sessions.forEach(s => {
+      const ts = _sessionTs(s);
+      (s.exercises || []).forEach(ex => {
+        if (prEventKeys.has(ts + '|' + ex.name)) prs++;
+      });
+    });
+  }
+
   return { sessions: sessions.length, sets: totalSets, volume: totalVol, prs };
 }
 
@@ -7438,7 +7481,7 @@ function renderFortschritt(profile) {
 
   const sessions = _fpFilterSessions(profile, state.fpRange);
   const exerciseMap = _fpAggregateByExercise(sessions);
-  const overview = _fpComputeOverview(sessions, exerciseMap);
+  const overview = _fpComputeOverview(sessions, exerciseMap, profile);
   const rangeLabel = _fpRangeLabel(state.fpRange);
 
   // ─── Overview-Karten ────────────────────────────
