@@ -1412,7 +1412,7 @@ ul, ol { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
-   PLANUNGS-KARTEN (jetzt im Jahresplan Bearbeiten-Modus)
+   WOCHENPLAN-GENERATOR (Jahresplan Bearbeiten-Modus)
    ═══════════════════════════════════════════════════════ */
 
 .pn-hero {
@@ -1511,6 +1511,69 @@ ul, ol { list-style: none; }
   line-height: 1.6;
 }
 .pn-notice-text strong { color: var(--warning); }
+
+/* Generator-Formular */
+.pn-form-card { display: flex; flex-direction: column; gap: var(--s-4); }
+.pn-form-field { display: flex; flex-direction: column; gap: 6px; }
+.pn-field-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.pn-select, .pn-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  transition: border-color var(--ease);
+}
+.pn-select:focus, .pn-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px var(--accent-dim); }
+.pn-input { width: 80px; text-align: center; font-family: var(--font-mono); }
+.pn-form-row { display: flex; gap: var(--s-4); align-items: flex-end; }
+.pn-form-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: var(--s-2);
+}
+.pn-preset-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: var(--s-2);
+}
+.pn-preset-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+.pn-generate-btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: var(--r-md);
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-sans);
+  margin-top: var(--s-2);
+}
+.pn-generate-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.pn-form-action { align-items: flex-start; }
 
 @media (max-width: 720px) {
   .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
@@ -4413,69 +4476,92 @@ body.role-athlete .tp-mode { display: none; }
         </div>
       </div>
 
-      <!-- Bearbeiten-Modus: Planungs-Karten (sichtbar nur in mode-edit) -->
+      <!-- Bearbeiten-Modus: Wochenplan-Generator -->
       <div class="jp-edit-content">
         <div class="pn-hero">
           <div class="pn-hero-icon">✎</div>
           <div class="pn-hero-text">
-            <div class="pn-hero-title">Wochenplan-Generator folgt</div>
+            <div class="pn-hero-title">Wochenplan-Generator</div>
             <div class="pn-hero-desc">
-              Dieser Bereich wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
-              passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
-              verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
-              steht in der nächsten Bau-Etappe auf dem Plan.
+              Block-Phase und Zeitraum wählen, Split-Template bestimmen — der Generator baut
+              die Wochenpläne mit passenden Übungen aus dem Lexikon. Regen-Wochen werden
+              automatisch nach jedem 12-Wochen-Block gesetzt.
             </div>
           </div>
         </div>
 
+        <!-- Generator-Formular -->
         <div class="pn-grid">
-          <div class="pn-card">
-            <div class="pn-card-label">1 · Generator</div>
-            <div class="pn-card-title">Wochenplan aus Template</div>
-            <div class="pn-card-desc">
-              Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
-              Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
-              (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
+          <!-- Schritt 1: Block-Phase -->
+          <div class="pn-card pn-form-card">
+            <div class="pn-card-label">1 · Block-Phase</div>
+            <div class="pn-card-title">Periodisierung</div>
+            <div class="pn-form-field">
+              <label class="pn-field-label">Phase</label>
+              <select class="pn-select" id="genBlock">
+                <option value="gpp">GPP · Akkumulation (Kraftausdauer)</option>
+                <option value="spp">SPP · Intensifikation (Hypertrophie)</option>
+                <option value="peak">Peak · Skills (Maximalkraft)</option>
+              </select>
+            </div>
+            <div class="pn-form-row">
+              <div class="pn-form-field">
+                <label class="pn-field-label">Von KW</label>
+                <input type="number" class="pn-input" id="genKwStart" min="1" max="52" value="1">
+              </div>
+              <div class="pn-form-field">
+                <label class="pn-field-label">Bis KW</label>
+                <input type="number" class="pn-input" id="genKwEnd" min="1" max="52" value="12">
+              </div>
+            </div>
+            <div class="pn-form-hint" id="genRegenHint">→ KW 13 wird automatisch Regen-Woche</div>
+          </div>
+
+          <!-- Schritt 2: Split-Template -->
+          <div class="pn-card pn-form-card">
+            <div class="pn-card-label">2 · Split-Template</div>
+            <div class="pn-card-title">Trainings-Aufteilung</div>
+            <div class="pn-form-field">
+              <label class="pn-field-label">Template</label>
+              <select class="pn-select" id="genSplit">
+                <option value="ppl">Push / Pull / Legs (3 Tage)</option>
+                <option value="ok_uk">Oberkörper / Unterkörper (2–4 Tage)</option>
+                <option value="ganzkörper">Ganzkörper (2–3 Tage)</option>
+              </select>
+            </div>
+            <div class="pn-form-field">
+              <label class="pn-field-label">Trainingstage</label>
+              <div class="tp-chips" id="genDayChips">
+                <button type="button" class="tp-chip active" data-day="Mo">Mo</button>
+                <button type="button" class="tp-chip" data-day="Di">Di</button>
+                <button type="button" class="tp-chip active" data-day="Mi">Mi</button>
+                <button type="button" class="tp-chip" data-day="Do">Do</button>
+                <button type="button" class="tp-chip active" data-day="Fr">Fr</button>
+                <button type="button" class="tp-chip" data-day="Sa">Sa</button>
+                <button type="button" class="tp-chip" data-day="So">So</button>
+              </div>
             </div>
           </div>
 
-          <div class="pn-card">
-            <div class="pn-card-label">2 · Templates</div>
-            <div class="pn-card-title">Split-Bibliothek</div>
-            <div class="pn-card-desc">
-              Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
-              kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
-              jeder generierte Plan zusammengesetzt wird.
+          <!-- Schritt 3: Ziel-Preset -->
+          <div class="pn-card pn-form-card">
+            <div class="pn-card-label">3 · Ziel-Preset</div>
+            <div class="pn-card-title">Satz- &amp; Wdh-Schema</div>
+            <div class="pn-form-field" id="genPresetInfo">
+              <div class="pn-preset-badge" id="genPresetBadge">3 × 20 · Kraftausdauer</div>
+              <div class="pn-preset-desc" id="genPresetDesc">Hohe Wiederholungszahl, moderates Gewicht. Fokus auf Ausdauer-Adaptation und Technik-Festigung.</div>
             </div>
           </div>
 
-          <div class="pn-card">
-            <div class="pn-card-label">3 · Periodisierung</div>
-            <div class="pn-card-title">13-Wochen-Zyklen</div>
+          <!-- Schritt 4: Generieren -->
+          <div class="pn-card pn-form-card pn-form-action">
+            <div class="pn-card-label">4 · Generieren</div>
+            <div class="pn-card-title">Plan erstellen</div>
             <div class="pn-card-desc">
-              Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
-              plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
-              jederzeit möglich.
+              Erstellt Wochenpläne für den gewählten Zeitraum mit Übungen aus dem Lexikon.
+              Bestehende Pläne in den betroffenen KWs werden überschrieben.
             </div>
-          </div>
-
-          <div class="pn-card">
-            <div class="pn-card-label">4 · Ziel-Presets</div>
-            <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
-            <div class="pn-card-desc">
-              Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
-              anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
-              Einzelfall überschreiben.
-            </div>
-          </div>
-        </div>
-
-        <div class="pn-notice">
-          <div class="pn-notice-icon">◐</div>
-          <div class="pn-notice-text">
-            <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
-            Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
-            neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Bereich den geplanten Funktionsumfang.
+            <button class="pn-generate-btn" id="genSubmit">Pläne generieren</button>
           </div>
         </div>
       </div>
@@ -9886,9 +9972,247 @@ function startNextEinheit() {
       toast(mode === 'edit' ? 'Bearbeiten-Modus aktiv' : 'Ansicht-Modus');
     });
   });
-  // + Neuer Plan Button (Platzhalter-Aktion)
+  // + Neuer Plan Button → scrollt zum Generator
   const newBtn = document.getElementById('jpNewBtn');
-  if (newBtn) newBtn.addEventListener('click', () => toast('Neuer Plan · folgt in Schritt 5'));
+  if (newBtn) newBtn.addEventListener('click', () => {
+    const gen = document.querySelector('.jp-edit-content');
+    if (gen) gen.scrollIntoView({ behavior: 'smooth' });
+    // Aktiviere Edit-Modus falls noch nicht
+    if (!jp.classList.contains('mode-edit')) {
+      document.querySelector('#jpMode button[data-mode="edit"]')?.click();
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════
+   WOCHENPLAN-GENERATOR
+   ═══════════════════════════════════════════════════════ */
+(function initGenerator() {
+
+  // ── Ziel-Presets (Sätze × Wdh + Beschreibung) ──
+  const PRESETS = {
+    gpp:  { saetze: 3, wdh: 20, label: 'Kraftausdauer', desc: 'Hohe Wiederholungszahl, moderates Gewicht. Fokus auf Ausdauer-Adaptation und Technik-Festigung.' },
+    spp:  { saetze: 4, wdh: 10, label: 'Hypertrophie',  desc: 'Mittlere Wiederholungszahl, höheres Gewicht. Fokus auf Muskelaufbau und progressive Überlastung.' },
+    peak: { saetze: 5, wdh: 5,  label: 'Maximalkraft',  desc: 'Niedrige Wiederholungszahl, schweres Gewicht. Fokus auf neuronale Adaptation und Kraftspitzen.' }
+  };
+
+  // ── Split-Templates (Übungen pro Tag aus dem Lexikon) ──
+  const SPLITS = {
+    ppl: {
+      label: 'Push / Pull / Legs',
+      days: [
+        { label: 'Push', cats: ['p_brust', 'p_schulter'], extras: ['Trizepsdrücken (Kabel)'] },
+        { label: 'Pull', cats: ['p_ruecken'], extras: ['Bizeps-Curls (Langhantel)', 'Face Pulls (Kabel)'] },
+        { label: 'Legs', cats: ['p_unterkoerper'], extras: ['Wadenheben (stehend)'] }
+      ]
+    },
+    ok_uk: {
+      label: 'Oberkörper / Unterkörper',
+      days: [
+        { label: 'OK', cats: ['p_brust', 'p_schulter', 'p_ruecken', 'p_arme'], extras: [] },
+        { label: 'UK', cats: ['p_unterkoerper', 'p_bauch'], extras: [] }
+      ]
+    },
+    'ganzkörper': {
+      label: 'Ganzkörper',
+      days: [
+        { label: 'GK', cats: ['p_brust', 'p_ruecken', 'p_unterkoerper', 'p_schulter'], extras: [] }
+      ]
+    }
+  };
+
+  const blockSelect  = document.getElementById('genBlock');
+  const kwStartInput = document.getElementById('genKwStart');
+  const kwEndInput   = document.getElementById('genKwEnd');
+  const splitSelect  = document.getElementById('genSplit');
+  const presetBadge  = document.getElementById('genPresetBadge');
+  const presetDesc   = document.getElementById('genPresetDesc');
+  const regenHint    = document.getElementById('genRegenHint');
+  const submitBtn    = document.getElementById('genSubmit');
+  const dayChips     = document.getElementById('genDayChips');
+
+  if (!blockSelect || !submitBtn) return;
+
+  // ── Preset-Anzeige aktualisieren ──
+  function updatePreset() {
+    const p = PRESETS[blockSelect.value];
+    if (presetBadge) presetBadge.textContent = `${p.saetze} × ${p.wdh} · ${p.label}`;
+    if (presetDesc)  presetDesc.textContent = p.desc;
+  }
+
+  // ── Regen-Hint aktualisieren ──
+  function updateRegenHint() {
+    const end = parseInt(kwEndInput.value) || 12;
+    const regenKw = end + 1;
+    if (regenHint) {
+      regenHint.textContent = regenKw <= 52
+        ? `→ KW ${regenKw} wird automatisch Regen-Woche`
+        : '→ Keine Regen-Woche (Jahresende)';
+    }
+  }
+
+  // ── KW-Bereich anpassen wenn Block gewählt wird ──
+  function updateKwFromBlock() {
+    const block = blockSelect.value;
+    const blockIdx = block === 'gpp' ? 0 : block === 'spp' ? 1 : 2;
+    const start = blockIdx * 13 + 1;
+    const end = start + 11;
+    kwStartInput.value = start;
+    kwEndInput.value = end;
+    updateRegenHint();
+    updatePreset();
+  }
+
+  blockSelect.addEventListener('change', updateKwFromBlock);
+  kwStartInput.addEventListener('change', updateRegenHint);
+  kwEndInput.addEventListener('change', updateRegenHint);
+
+  // ── Day-Chips Toggle ──
+  if (dayChips) {
+    dayChips.querySelectorAll('.tp-chip').forEach(chip => {
+      chip.addEventListener('click', () => chip.classList.toggle('active'));
+    });
+  }
+
+  // ── Übungen aus dem Lexikon für eine Kategorie holen ──
+  function pickExercises(catKey, count, location) {
+    const pool = (LEXIKON_DATA[catKey] || []).filter(ex => {
+      const loc = ex.location || 'studio';
+      return location === 'all' || loc === location;
+    });
+    // Erste N nehmen (stabil, deterministisch)
+    return pool.slice(0, count);
+  }
+
+  // ── Plan generieren ──
+  submitBtn.addEventListener('click', () => {
+    const profile = state.profile;
+    if (!profile) { toast('Kein Profil geladen'); return; }
+
+    const block = blockSelect.value;
+    const kwStart = parseInt(kwStartInput.value) || 1;
+    const kwEnd   = parseInt(kwEndInput.value) || 12;
+    const split   = splitSelect.value;
+    const preset  = PRESETS[block];
+
+    if (kwStart > kwEnd || kwStart < 1 || kwEnd > 52) {
+      toast('KW-Bereich ungültig');
+      return;
+    }
+
+    // Gewählte Trainingstage
+    const selectedDays = [];
+    if (dayChips) {
+      dayChips.querySelectorAll('.tp-chip.active').forEach(c => selectedDays.push(c.dataset.day));
+    }
+    if (selectedDays.length === 0) {
+      toast('Mindestens einen Trainingstag wählen');
+      return;
+    }
+
+    const splitDef = SPLITS[split];
+    const location = profile.trainingLocation === 'home' ? 'home' : 'studio';
+    const exPerCat = block === 'peak' ? 2 : block === 'spp' ? 3 : 3;
+
+    if (!profile.plans) profile.plans = {};
+
+    // Pläne für jede KW im Bereich generieren
+    for (let kw = kwStart; kw <= kwEnd; kw++) {
+      const days = selectedDays.map((dayLabel, dayIdx) => {
+        // Split-Tag-Definition rotierend zuweisen
+        const splitDay = splitDef.days[dayIdx % splitDef.days.length];
+        const exercises = [];
+
+        // Übungen aus den Kategorien des Split-Tags
+        splitDay.cats.forEach(catKey => {
+          const picked = pickExercises(catKey, exPerCat, location);
+          picked.forEach(ex => {
+            exercises.push({
+              name: ex.name,
+              muscle: ex.muscle,
+              saetze: preset.saetze,
+              wdh: preset.wdh,
+              gewicht: null
+            });
+          });
+        });
+
+        // Extra-Übungen (z.B. Trizeps bei Push)
+        splitDay.extras.forEach(exName => {
+          const allEx = _lxAllExercises();
+          const found = allEx.find(e => e.name === exName);
+          if (found) {
+            exercises.push({
+              name: found.name,
+              muscle: found.muscle,
+              saetze: preset.saetze,
+              wdh: preset.wdh,
+              gewicht: null
+            });
+          }
+        });
+
+        // Max 6 Übungen pro Tag
+        return { label: dayLabel, exercises: exercises.slice(0, 6) };
+      });
+
+      const blockLabels = { gpp: 'Akkumulation', spp: 'Intensifikation', peak: 'Peak' };
+      profile.plans['w' + kw] = {
+        name: `${preset.saetze}×${preset.wdh} ${blockLabels[block]}`,
+        goal: block === 'gpp' ? 'kraftausdauer' : block === 'spp' ? 'hypertrophie' : 'maximalkraft',
+        _source: 'generator',
+        _block: block === 'gpp' ? 0 : block === 'spp' ? 1 : 2,
+        days
+      };
+    }
+
+    // Regen-Woche setzen (Periodisierung aktualisieren)
+    const regenKw = kwEnd + 1;
+    if (regenKw <= 52) {
+      if (!profile.periodization) {
+        profile.periodization = {
+          active: true, startKw: kwStart, blockLength: 4,
+          blocks: [
+            { label: 'Akkumulation (GPP)', goal: 'kraftausdauer' },
+            { label: 'Intensifikation (SPP)', goal: 'hypertrophie' },
+            { label: 'Peak / Skills', goal: 'maximalkraft' }
+          ]
+        };
+      }
+      if (!profile.regenConfig) profile.regenConfig = { interval: 13 };
+      // Regen-Woche explizit setzen
+      if (!profile.athleteRegenWeeks) profile.athleteRegenWeeks = [];
+      if (!profile.athleteRegenWeeks.includes(regenKw)) {
+        profile.athleteRegenWeeks.push(regenKw);
+      }
+      // Plan für Regen-Woche löschen
+      delete profile.plans['w' + regenKw];
+    }
+
+    // Periodisierung sicherstellen
+    if (!profile.periodization || !profile.periodization.active) {
+      profile.periodization = {
+        active: true, startKw: 1, blockLength: 4,
+        blocks: [
+          { label: 'Akkumulation (GPP)', goal: 'kraftausdauer' },
+          { label: 'Intensifikation (SPP)', goal: 'hypertrophie' },
+          { label: 'Peak / Skills', goal: 'maximalkraft' }
+        ]
+      };
+      profile.regenConfig = { interval: 13 };
+    }
+
+    // Alles neu rendern
+    renderJahresplan(profile);
+    renderTrainingsplan(profile);
+    renderCockpit(profile);
+
+    const count = kwEnd - kwStart + 1;
+    toast(`${count} Wochenpläne generiert (KW ${kwStart}–${kwEnd})`);
+  });
+
+  // Initial
+  updateKwFromBlock();
 })();
 
 /* ═══════════════════════════════════════════════════════
