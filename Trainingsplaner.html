@@ -6495,76 +6495,66 @@ const state = {
 /* ═══════════════════════════════════════════════════════
    THEMES (temporär für v2.0 — nach Entscheidung bleibt einer)
    ═══════════════════════════════════════════════════════ */
+// Dark-Mode Basis-Werte (werden von allen Teal-Themes gesetzt, damit Pastell-Reset funktioniert)
+const _darkBase = {
+  '--bg':            '#0A0B0E',
+  '--surface-1':     '#0F1014',
+  '--surface-2':     '#16181F',
+  '--surface-3':     '#1D2029',
+  '--surface-hover': '#242735',
+  '--border-subtle': 'rgba(255,255,255,0.06)',
+  '--border-strong': 'rgba(255,255,255,0.10)',
+  '--text':          '#F7F8F8',
+  '--text-2':        '#8A8F98',
+  '--text-3':        '#62666D',
+};
+
 const themes = {
-  tealLight: {
-    '--accent':        '#14B8A6',
-    '--accent-hover':  '#2DD4BF',
-    '--accent-dim':    'rgba(20,184,166,0.12)',
-    '--accent-line':   'rgba(20,184,166,0.35)',
-    '--success':       '#10B981',
-    '--success-dim':   'rgba(16,185,129,0.10)',
-    '--success-line':  'rgba(16,185,129,0.30)',
-    '--warning':       '#D4A968',
-    '--warning-dim':   'rgba(212,169,104,0.10)',
-    '--warning-line':  'rgba(212,169,104,0.30)',
-    '--danger':        '#C76A5E',
-    '--danger-dim':    'rgba(199,106,94,0.10)',
-    '--danger-line':   'rgba(199,106,94,0.30)'
+  tealLight: { ..._darkBase,
+    '--accent':'#14B8A6','--accent-hover':'#2DD4BF',
+    '--accent-dim':'rgba(20,184,166,0.12)','--accent-line':'rgba(20,184,166,0.35)',
+    '--success':'#10B981','--success-dim':'rgba(16,185,129,0.10)','--success-line':'rgba(16,185,129,0.30)',
+    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.10)','--warning-line':'rgba(212,169,104,0.30)',
+    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.10)','--danger-line':'rgba(199,106,94,0.30)'
   },
-  tealMid: {
-    '--accent':        '#0D9488',
-    '--accent-hover':  '#14B8A6',
-    '--accent-dim':    'rgba(13,148,136,0.14)',
-    '--accent-line':   'rgba(13,148,136,0.40)',
-    '--success':       '#10B981',
-    '--success-dim':   'rgba(16,185,129,0.10)',
-    '--success-line':  'rgba(16,185,129,0.30)',
-    '--warning':       '#D4A968',
-    '--warning-dim':   'rgba(212,169,104,0.10)',
-    '--warning-line':  'rgba(212,169,104,0.30)',
-    '--danger':        '#C76A5E',
-    '--danger-dim':    'rgba(199,106,94,0.10)',
-    '--danger-line':   'rgba(199,106,94,0.30)'
+  tealMid: { ..._darkBase,
+    '--accent':'#0D9488','--accent-hover':'#14B8A6',
+    '--accent-dim':'rgba(13,148,136,0.14)','--accent-line':'rgba(13,148,136,0.40)',
+    '--success':'#10B981','--success-dim':'rgba(16,185,129,0.10)','--success-line':'rgba(16,185,129,0.30)',
+    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.10)','--warning-line':'rgba(212,169,104,0.30)',
+    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.10)','--danger-line':'rgba(199,106,94,0.30)'
   },
-  tealDeep: {
-    '--accent':        '#0F766E',
-    '--accent-hover':  '#14B8A6',
-    '--accent-dim':    'rgba(15,118,110,0.16)',
-    '--accent-line':   'rgba(15,118,110,0.45)',
-    '--success':       '#10B981',
-    '--success-dim':   'rgba(16,185,129,0.10)',
-    '--success-line':  'rgba(16,185,129,0.30)',
-    '--warning':       '#D4A968',
-    '--warning-dim':   'rgba(212,169,104,0.10)',
-    '--warning-line':  'rgba(212,169,104,0.30)',
-    '--danger':        '#C76A5E',
-    '--danger-dim':    'rgba(199,106,94,0.10)',
-    '--danger-line':   'rgba(199,106,94,0.30)'
+  tealDeep: { ..._darkBase,
+    '--accent':'#0F766E','--accent-hover':'#14B8A6',
+    '--accent-dim':'rgba(15,118,110,0.16)','--accent-line':'rgba(15,118,110,0.45)',
+    '--success':'#10B981','--success-dim':'rgba(16,185,129,0.10)','--success-line':'rgba(16,185,129,0.30)',
+    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.10)','--warning-line':'rgba(212,169,104,0.30)',
+    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.10)','--danger-line':'rgba(199,106,94,0.30)'
   },
   pastell: {
-    '--bg':            '#FDF8F4',
-    '--surface-1':     '#FFF9F5',
-    '--surface-2':     '#F5EDE6',
-    '--surface-3':     '#EDE3DA',
-    '--surface-hover': '#E8DCD2',
-    '--border-subtle': 'rgba(0,0,0,0.08)',
-    '--border-strong': 'rgba(0,0,0,0.14)',
+    '--bg':            '#F0E8E0',
+    '--surface-1':     '#F5EDE5',
+    '--surface-2':     '#E8DDD4',
+    '--surface-3':     '#DDD0C5',
+    '--surface-hover': '#D4C5B8',
+    '--border-subtle': 'rgba(80,50,30,0.12)',
+    '--border-strong': 'rgba(80,50,30,0.20)',
     '--text':          '#3D2E22',
-    '--text-2':        '#7A6B5E',
-    '--text-3':        '#A39485',
-    '--accent':        '#C48B9F',
-    '--accent-hover':  '#D4A0B4',
-    '--accent-dim':    'rgba(196,139,159,0.14)',
-    '--accent-line':   'rgba(196,139,159,0.35)',
-    '--success':       '#7BAE7F',
-    '--success-dim':   'rgba(123,174,127,0.12)',
-    '--success-line':  'rgba(123,174,127,0.30)',
-    '--warning':       '#D4A968',
-    '--warning-dim':   'rgba(212,169,104,0.12)',
-    '--warning-line':  'rgba(212,169,104,0.30)',
-    '--danger':        '#C76A5E',
-    '--danger-dim':    'rgba(199,106,94,0.10)',
-    '--danger-line':   'rgba(199,106,94,0.30)'
+    '--text-2':        '#6B5A4E',
+    '--text-3':        '#9A887A',
+    '--accent':        '#B07A8E',
+    '--accent-hover':  '#C48B9F',
+    '--accent-dim':    'rgba(176,122,142,0.18)',
+    '--accent-line':   'rgba(176,122,142,0.40)',
+    '--success':       '#6B9E6F',
+    '--success-dim':   'rgba(107,158,111,0.15)',
+    '--success-line':  'rgba(107,158,111,0.35)',
+    '--warning':       '#C49A58',
+    '--warning-dim':   'rgba(196,154,88,0.15)',
+    '--warning-line':  'rgba(196,154,88,0.35)',
+    '--danger':        '#B85A50',
+    '--danger-dim':    'rgba(184,90,80,0.12)',
+    '--danger-line':   'rgba(184,90,80,0.30)'
   }
 };
 
@@ -6760,13 +6750,17 @@ async function switchProfile(key) {
     btn.querySelector('.radio')?.classList.toggle('active', isActive);
   });
 
-  // Auto-Theme: Julia bekommt Pastell, Alexander seinen gespeicherten Teal
+  // Auto-Theme: Julia bekommt Pastell, Alexander seinen Teal
   if (key !== 'self') {
+    // Alexanders Theme merken bevor wir auf Pastell wechseln
+    if (!state._savedThemeBeforeAthlete) {
+      state._savedThemeBeforeAthlete = state.theme !== 'pastell' ? state.theme : 'tealDeep';
+    }
     applyTheme('pastell');
   } else {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.theme) || 'tealDeep';
-    if (savedTheme !== 'pastell') applyTheme(savedTheme);
-    else applyTheme('tealDeep');
+    const restore = state._savedThemeBeforeAthlete || 'tealDeep';
+    state._savedThemeBeforeAthlete = null;
+    applyTheme(restore);
   }
 
   // Alles neu rendern mit dem neuen Profil
