@@ -11566,9 +11566,8 @@ function startNextEinheit() {
 
     // Summary
     const totalWeeks = blocks.reduce((s, b) => s + b.length, 0);
-    const endKw = startKw + totalWeeks + regenWeeks.length - 1;
     if (summaryEl) {
-      summaryEl.textContent = `→ ${totalWeeks} Trainingswochen · KW ${startKw}–${Math.min(endKw, 52)}` +
+      summaryEl.textContent = `→ ${totalWeeks} Trainingswochen · KW ${startKw}–${endKw}` +
         (regenWeeks.length ? ` · ${regenWeeks.length} Regen-Wo. (KW ${regenWeeks.join(', ')})` : ' · keine Regen');
     }
 
