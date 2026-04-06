@@ -6788,6 +6788,45 @@ document.querySelectorAll('[data-tab]').forEach(el => {
   el.addEventListener('click', () => switchTab(el.dataset.tab));
 });
 
+// ── Swipe-Navigation (Mobile) ──
+(function initSwipeNav() {
+  const TAB_ORDER = ['cockpit', 'jahresplan', 'trainingsplan', 'fortschritt', 'lexikon', 'info'];
+  const main = document.getElementById('mainArea');
+  if (!main) return;
+
+  let startX = 0, startY = 0, tracking = false;
+
+  main.addEventListener('touchstart', (e) => {
+    if (window.innerWidth > 860) return;
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+  }, { passive: true });
+
+  main.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    // Nur horizontale Wischgesten (min. 60px, max 30° Winkel)
+    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+
+    const idx = TAB_ORDER.indexOf(state.activeTab);
+    if (idx === -1) return;
+
+    if (dx > 0 && idx > 0) {
+      // Wisch nach rechts → vorheriger Tab
+      switchTab(TAB_ORDER[idx - 1]);
+    } else if (dx < 0 && idx < TAB_ORDER.length - 1) {
+      // Wisch nach links → nächster Tab
+      switchTab(TAB_ORDER[idx + 1]);
+    }
+  }, { passive: true });
+})();
+
 /* ═══════════════════════════════════════════════════════
    ROLE SWITCHER
    ═══════════════════════════════════════════════════════ */
