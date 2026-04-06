@@ -3808,9 +3808,10 @@ body.role-athlete .info-athletes-card { display: none; }
 body.role-athlete .tp-mode { display: none; }
 .tp-ex-edit-bar {
   display: none;
+  position: absolute;
+  top: var(--s-4);
+  right: var(--s-4);
   gap: var(--s-2);
-  margin-left: auto;
-  flex-shrink: 0;
 }
 .page[data-page="trainingsplan"].tp-edit-active .tp-ex-edit-bar { display: flex; }
 .page[data-page="trainingsplan"].tp-edit-active .tp-set-log-btn { display: none; }
@@ -3828,6 +3829,10 @@ body.role-athlete .tp-mode { display: none; }
 }
 .tp-ex-edit-btn:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-strong); }
 .tp-ex-edit-btn.tp-ex-delete:hover { color: var(--danger); border-color: var(--danger); }
+@media (max-width: 720px) {
+  .tp-ex-edit-bar { top: var(--s-3); right: var(--s-3); }
+  .tp-ex-edit-btn { width: 28px; height: 28px; font-size: 12px; }
+}
 .tp-ex-params-edit {
   display: none;
   gap: var(--s-3);
@@ -3947,7 +3952,8 @@ body.role-athlete .tp-mode { display: none; }
 /* ─── Mobile: Header stapelt, Tag-Tabs kompakter, Satz-Zeilen enger ─── */
 @media (max-width: 720px) {
   .tp-head { flex-direction: column; align-items: stretch; gap: var(--s-4); }
-  .tp-context { justify-content: center; }
+  .tp-context { justify-content: center; flex-wrap: wrap; }
+  .tp-mode { width: 100%; justify-content: center; margin-left: 0; }
   .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
   .tp-ex-plan { align-self: flex-start; }
