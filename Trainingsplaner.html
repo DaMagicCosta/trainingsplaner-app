@@ -5015,15 +5015,7 @@ body.role-athlete .tp-mode { display: none; }
                 <option value="ganzkörper">Ganzkörper (2–3 Tage)</option>
               </select>
             </div>
-            <div class="pn-form-field">
-              <label class="pn-field-label">Trainingsort</label>
-              <select class="pn-select" id="genLocation">
-                <option value="studio">◇ Studio (Maschinen + Freihantel)</option>
-                <option value="home">⌂ Zuhause (Calisthenics + Bänder)</option>
-                <option value="outdoor">✦ Outdoor / Park</option>
-                <option value="all">Alle Orte gemischt</option>
-              </select>
-            </div>
+            <!-- Trainingsort ist jetzt pro Block im Block-Row-Dropdown -->
             <div class="pn-form-field">
               <label class="pn-field-label">Trainingstage</label>
               <div class="tp-chips" id="genDayChips">
@@ -11394,13 +11386,31 @@ function startNextEinheit() {
   const dayChips     = document.getElementById('genDayChips');
   if (!submitBtn || !blockRowsEl) return;
 
+  // Default-Location aus Profil: erster hinterlegter Ort, oder 'studio'
+  const _defaultLoc = () => {
+    const locs = state.profile?.trainingLocation;
+    return (Array.isArray(locs) && locs.length) ? locs[0] : 'studio';
+  };
+
   let blocks = [
-    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
-    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
-    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
+    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0', location: _defaultLoc() },
+    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261', location: _defaultLoc() },
+    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5', location: _defaultLoc() }
   ];
 
   // ── Block-Zeile rendern ──
+  // Nur die Orte anbieten die im Profil hinterlegt sind
+  function _locOptions(selected) {
+    const locs = state.profile?.trainingLocation;
+    const all = [
+      { val: 'studio', label: '◇ Studio' },
+      { val: 'home',   label: '⌂ Home' },
+      { val: 'outdoor', label: '✦ Outdoor' }
+    ];
+    const available = (Array.isArray(locs) && locs.length) ? all.filter(o => locs.includes(o.val)) : all;
+    return available.map(o => `<option value="${o.val}"${o.val === selected ? ' selected' : ''}>${o.label}</option>`).join('');
+  }
+
   function renderBlockRow(block, idx) {
     return `
       <div class="pn-block-row" data-idx="${idx}" style="border-left: 3px solid ${block.color};">
@@ -11409,6 +11419,9 @@ function startNextEinheit() {
           <option value="hypertrophie"${block.goal==='hypertrophie'?' selected':''}>Hypertrophie</option>
           <option value="maximalkraft"${block.goal==='maximalkraft'?' selected':''}>Maximalkraft</option>
           <option value="allgemein"${block.goal==='allgemein'?' selected':''}>Allgemein</option>
+        </select>
+        <select class="pn-block-goal" data-field="location" title="Trainingsort für diesen Block">
+          ${_locOptions(block.location)}
         </select>
         <div class="pn-block-len">
           <input type="number" class="pn-input" data-field="length" min="2" max="12" value="${block.length}">
@@ -11436,6 +11449,10 @@ function startNextEinheit() {
         blocks[idx].wdh = p.wdh;
         renderAllBlocks();
       });
+      row.querySelector('[data-field="location"]').addEventListener('change', (e) => {
+        blocks[idx].location = e.target.value;
+        applyToProfile();
+      });
       row.querySelector('[data-field="length"]').addEventListener('change', (e) => {
         blocks[idx].length = parseInt(e.target.value) || 4;
         applyToProfile();
@@ -11451,7 +11468,7 @@ function startNextEinheit() {
   addBlockBtn.addEventListener('click', () => {
     if (blocks.length >= 4) return;
     const tpl = BLOCK_TEMPLATES[blocks.length] || BLOCK_TEMPLATES[0];
-    blocks.push({ ...tpl, length: 4 });
+    blocks.push({ ...tpl, length: 4, location: _defaultLoc() });
     renderAllBlocks();
   });
 
@@ -11580,8 +11597,6 @@ function startNextEinheit() {
 
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
-    const locationEl = document.getElementById('genLocation');
-    const location = locationEl ? locationEl.value : 'studio';
     const homeFallback = document.getElementById('genHomeFallback')?.checked;
     const startKw = parseInt(kwStartInput.value) || 1;
     const regen = readRegenConfig();
@@ -11596,13 +11611,15 @@ function startNextEinheit() {
     let weeksSinceRegen = 0;
 
     blocks.forEach((blockDef, blockIdx) => {
+      const blockLoc = blockDef.location || 'studio';
       for (let w = 0; w < blockDef.length && kw <= 52; w++, kw++) {
-        // Hauptplan
-        const plan = buildWeekPlan(blockDef, splitDef, selectedDays, location, blockIdx);
+        // Hauptplan (nutzt den Trainingsort des Blocks)
+        const plan = buildWeekPlan(blockDef, splitDef, selectedDays, blockLoc, blockIdx);
+        plan._location = blockLoc; // im Plan merken für Trainingsplan-Ansicht
         profile.plans['w' + kw] = plan;
 
         // Home-Ausweichplan (als _homeFallback im Plan-Objekt)
-        if (homeFallback && location !== 'home') {
+        if (homeFallback && blockLoc !== 'home') {
           const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
           profile.plans['w' + kw]._homeFallback = homePlan.days;
         }
@@ -11675,16 +11692,39 @@ function startNextEinheit() {
   let pickerCat = 'all';
   let pickerSearch = '';
 
+  // Equipment-Set für den aktuellen Plan-Block ermitteln
+  function _pickerAvailableEq() {
+    const kw = state.tpViewKw;
+    const plan = (state.profile?.plans || {})['w' + kw];
+    const loc = plan?._location || 'studio';
+    const eq = state.profile?.equipment;
+    if (!eq || Array.isArray(eq)) return null; // altes Format → kein Filter
+    const locEq = eq[loc];
+    if (!locEq) return null;
+    const avail = new Set(locEq.available || []);
+    const excl  = new Set(locEq.excluded || []);
+    avail.add('Bodyweight'); // Bodyweight immer verfügbar
+    // Ausgeschlossene entfernen
+    excl.forEach(e => avail.delete(e));
+    return avail;
+  }
+
   function renderPickerGrid() {
     const grid = document.getElementById('tpPickerGrid');
     if (!grid) return;
     const all = _lxAllExercises();
     const q = pickerSearch.toLowerCase();
+    const availEq = _pickerAvailableEq();
+
     const filtered = all.filter(ex => {
       if (pickerCat !== 'all' && ex.catKey !== pickerCat) return false;
       if (q) {
         const hay = (ex.name + ' ' + ex.muscle).toLowerCase();
         if (!hay.includes(q)) return false;
+      }
+      // Equipment-Filter: Übung braucht mindestens ein verfügbares Equipment
+      if (availEq && ex.eq && ex.eq.length > 0) {
+        if (!ex.eq.some(e => availEq.has(e))) return false;
       }
       return true;
     });
