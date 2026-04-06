@@ -1491,15 +1491,20 @@ ul, ol { list-style: none; }
 
 .pn-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--s-4);
   margin-bottom: var(--s-6);
+  align-items: start;
+}
+@media (max-width: 960px) {
+  .pn-grid { grid-template-columns: 1fr; }
+  .pn-grid > [style*="grid-column: 1 / -1"] { grid-column: 1; }
 }
 .pn-card {
   background: var(--surface-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-md);
-  padding: var(--s-5) var(--s-6);
+  padding: var(--s-6);
   transition: border-color var(--ease);
 }
 .pn-card:hover { border-color: var(--border-strong); }
