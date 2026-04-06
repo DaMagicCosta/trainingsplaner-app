@@ -7206,13 +7206,7 @@ function _groupSessionsByKw(profile, year) {
 function renderJahresplan(profile) {
   if (!profile) return;
 
-  // Referenzjahr = Jahr der neuesten Session (Prototyp-Konsistenz zum Cockpit)
-  const sessions = profile.sessions || [];
-  let anchor = new Date();
-  if (sessions.length > 0) {
-    const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
-    if (dates.length) anchor = new Date(Math.max(...dates));
-  }
+  const anchor = new Date();
   const curIso = _isoWeek(anchor);
   const year = curIso.year;
   const currentKw = curIso.week;
@@ -8551,13 +8545,8 @@ function _sundayOfIsoWeek(year, week) {
 function renderTrainingsplan(profile) {
   if (!profile) return;
 
-  // Referenz-Jahr + aktuelle KW (wie im Cockpit: neueste Session als Anker)
   const sessions = profile.sessions || [];
-  let anchor = new Date();
-  if (sessions.length > 0) {
-    const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
-    if (dates.length) anchor = new Date(Math.max(...dates));
-  }
+  const anchor = new Date();
   const anchorIso = _isoWeek(anchor);
   const year = anchorIso.year;
   const nowKw = anchorIso.week;
@@ -9468,12 +9457,7 @@ function renderCockpit(profile) {
   if (!profile) return;
   const sessions = profile.sessions || [];
 
-  // Referenz-Datum: neueste Session (Prototyp — später: new Date())
-  let refDate = new Date();
-  if (sessions.length > 0) {
-    const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
-    if (dates.length) refDate = new Date(Math.max(...dates));
-  }
+  const refDate = new Date();
 
   const iso = _isoWeek(refDate);
   const curYear = iso.year;
@@ -10387,14 +10371,7 @@ function startNextEinheit() {
     if (!plan) return null;
     const day = plan.days?.[state.tpViewDay];
     if (!day) return null;
-    // Jahr aus dem Anker (neueste Session oder jetzt)
-    const sessions = state.profile.sessions || [];
-    let anchor = new Date();
-    if (sessions.length > 0) {
-      const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
-      if (dates.length) anchor = new Date(Math.max(...dates));
-    }
-    const year = _isoWeek(anchor).year;
+    const year = _isoWeek(new Date()).year;
     return { kw, year, dayIdx: state.tpViewDay, dayLabel: day.label, day };
   }
 
@@ -10532,14 +10509,7 @@ function startNextEinheit() {
 
   function jumpToday() {
     if (!state.profile) return;
-    // "Heute" = Anker-KW (neueste Session) im Prototyp
-    const sessions = state.profile.sessions || [];
-    let anchor = new Date();
-    if (sessions.length > 0) {
-      const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
-      if (dates.length) anchor = new Date(Math.max(...dates));
-    }
-    state.tpViewKw = _isoWeek(anchor).week;
+    state.tpViewKw = _isoWeek(new Date()).week;
     state.tpViewDay = 0;
     renderTrainingsplan(state.profile);
     toast('Zurück zur aktuellen Woche');
