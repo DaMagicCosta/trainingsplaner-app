@@ -6993,89 +6993,93 @@ function renderCmdkList(filter = '') {
     return;
   }
 
+  // Lookup: filtered position → Original-cmdkItems-Index
+  const origIndices = filtered.map(i => cmdkItems.indexOf(i));
+
   let html = '';
   let currentGroup = '';
-  let idx = 0;
+  let pos = 0; // Position in filtered-Array (für Keyboard-Selection)
 
   // Mobile ohne Filter: Quick Actions als Hero-Tiles rendern
   if (isMobile && !q) {
-    const heroes = filtered.filter(i => i.group === 'Quick Actions');
-    const rest = filtered.filter(i => i.group !== 'Quick Actions');
+    const heroes = [];
+    const rest = [];
+    filtered.forEach((item, i) => {
+      (item.group === 'Quick Actions' ? heroes : rest).push({ item, origIdx: origIndices[i], pos: i });
+    });
 
     if (heroes.length) {
       html += '<div class="cmdk-hero-grid">';
-      heroes.forEach(item => {
-        const cls = idx === 0 ? 'cmdk-hero--primary' : 'cmdk-hero--secondary';
-        html += '<button class="cmdk-hero ' + cls + '" data-idx="' + idx + '">'
-              + '<span class="cmdk-hero-ico">' + item.ico + '</span>'
-              + '<span>' + item.label + '</span>'
+      heroes.forEach((h, i) => {
+        const cls = i === 0 ? 'cmdk-hero--primary' : 'cmdk-hero--secondary';
+        html += '<button class="cmdk-hero ' + cls + '" data-orig="' + h.origIdx + '" data-pos="' + h.pos + '">'
+              + '<span class="cmdk-hero-ico">' + h.item.ico + '</span>'
+              + '<span>' + h.item.label + '</span>'
               + '</button>';
-        idx++;
       });
       html += '</div>';
     }
 
-    rest.forEach(item => {
-      if (item.group !== currentGroup) {
-        html += '<div class="cmdk-group-label">' + item.group + '</div>';
-        currentGroup = item.group;
+    rest.forEach(r => {
+      if (r.item.group !== currentGroup) {
+        html += '<div class="cmdk-group-label">' + r.item.group + '</div>';
+        currentGroup = r.item.group;
       }
-      html += '<button class="cmdk-item" data-idx="' + idx + '">'
-            + '<span class="cmdk-item-ico">' + item.ico + '</span>'
-            + '<span class="cmdk-item-label">' + item.label + '</span>'
+      html += '<button class="cmdk-item" data-orig="' + r.origIdx + '" data-pos="' + r.pos + '">'
+            + '<span class="cmdk-item-ico">' + r.item.ico + '</span>'
+            + '<span class="cmdk-item-label">' + r.item.label + '</span>'
             + '</button>';
-      idx++;
     });
   } else {
     // Desktop-Layout (unverändert) + Mobile mit Suchfilter
-    filtered.forEach(item => {
+    filtered.forEach((item, i) => {
       if (item.group !== currentGroup) {
         html += '<div class="cmdk-group-label">' + item.group + '</div>';
         currentGroup = item.group;
       }
-      const selected = idx === state.cmdkSelected ? 'selected' : '';
+      const selected = i === state.cmdkSelected ? 'selected' : '';
       const kbdHtml = item.kbd
         ? '<div class="cmdk-item-kbd">' + item.kbd.map(k => '<span class="kbd">' + k + '</span>').join('') + '</div>'
         : '';
-      html += '<button class="cmdk-item ' + selected + '" data-idx="' + idx + '">'
+      html += '<button class="cmdk-item ' + selected + '" data-orig="' + origIndices[i] + '" data-pos="' + i + '">'
             + '<span class="cmdk-item-ico">' + item.ico + '</span>'
             + '<span class="cmdk-item-label">' + item.label + '</span>'
             + kbdHtml + '</button>';
-      idx++;
     });
   }
 
   cmdkList.innerHTML = html;
-  cmdkList.dataset.filtered = JSON.stringify(filtered.map(i => cmdkItems.indexOf(i)));
 
-  // Event-Handler für alle klickbaren Elemente (Items + Hero-Tiles)
+  // Event-Handler: data-orig = direkter cmdkItems-Index → kein Mapping nötig
   cmdkList.querySelectorAll('.cmdk-item, .cmdk-hero').forEach(el => {
     el.addEventListener('click', () => {
-      const i = parseInt(el.dataset.idx);
-      runCmdkItem(i);
+      const origIdx = parseInt(el.dataset.orig);
+      const item = cmdkItems[origIdx];
+      closeCmdk();
+      if (item && item.action) item.action();
     });
     el.addEventListener('mousemove', () => {
-      state.cmdkSelected = parseInt(el.dataset.idx);
+      state.cmdkSelected = parseInt(el.dataset.pos);
       updateCmdkSelection();
     });
   });
 }
 
 function updateCmdkSelection() {
-  cmdkList.querySelectorAll('.cmdk-item').forEach((el, i) => {
-    el.classList.toggle('selected', i === state.cmdkSelected);
+  cmdkList.querySelectorAll('.cmdk-item, .cmdk-hero').forEach(el => {
+    el.classList.toggle('selected', parseInt(el.dataset.pos) === state.cmdkSelected);
   });
-  const selected = cmdkList.querySelector('.cmdk-item.selected');
+  const selected = cmdkList.querySelector('.selected');
   if (selected) selected.scrollIntoView({ block: 'nearest' });
 }
 
-function runCmdkItem(filteredIdx) {
-  const indices = JSON.parse(cmdkList.dataset.filtered || '[]');
-  const originalIdx = indices[filteredIdx];
-  if (originalIdx === undefined) return;
-  const item = cmdkItems[originalIdx];
+function runCmdkSelectedItem() {
+  const el = cmdkList.querySelector('[data-pos="' + state.cmdkSelected + '"]');
+  if (!el) return;
+  const origIdx = parseInt(el.dataset.orig);
+  const item = cmdkItems[origIdx];
   closeCmdk();
-  if (item.action) item.action();
+  if (item && item.action) item.action();
 }
 
 function openCmdk() {
@@ -7102,10 +7106,10 @@ cmdkInput.addEventListener('input', (e) => {
 });
 
 cmdkInput.addEventListener('keydown', (e) => {
-  const items = cmdkList.querySelectorAll('.cmdk-item');
+  const allItems = cmdkList.querySelectorAll('.cmdk-item, .cmdk-hero');
   if (e.key === 'ArrowDown') {
     e.preventDefault();
-    state.cmdkSelected = Math.min(state.cmdkSelected + 1, items.length - 1);
+    state.cmdkSelected = Math.min(state.cmdkSelected + 1, allItems.length - 1);
     updateCmdkSelection();
   } else if (e.key === 'ArrowUp') {
     e.preventDefault();
@@ -7113,7 +7117,7 @@ cmdkInput.addEventListener('keydown', (e) => {
     updateCmdkSelection();
   } else if (e.key === 'Enter') {
     e.preventDefault();
-    runCmdkItem(state.cmdkSelected);
+    runCmdkSelectedItem();
   }
 });
 
