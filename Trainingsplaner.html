@@ -2685,8 +2685,13 @@ body.role-athlete .profile-link-vereinbarung {
   justify-content: space-between;
   align-items: center;
   gap: var(--s-4);
-  padding: var(--s-5) var(--s-6);
+  padding: var(--s-6) var(--s-8);
   border-bottom: 1px solid var(--border-subtle);
+}
+@media (max-width: 720px) {
+  .tp-modal-panel { margin: var(--s-4); border-radius: var(--r-md); }
+  .tp-modal-head { padding: var(--s-5) var(--s-6); }
+  .tp-modal-body { padding: var(--s-5) var(--s-6); }
 }
 .tp-modal-title-group { min-width: 0; }
 .tp-modal-label {
