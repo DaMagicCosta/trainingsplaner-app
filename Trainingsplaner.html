@@ -4303,6 +4303,36 @@ body.role-athlete .tp-mode { display: none; }
 .tp-picker-cat:hover { border-color: var(--border-strong); }
 .tp-picker-cat.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
 
+/* ─── Studio/Home Toggle (kompakt) ─── */
+.tp-loc-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  margin-bottom: var(--s-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.tp-loc-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+.tp-loc-toggle:active { transform: scale(0.97); }
+.tp-loc-toggle.home-active {
+  background: var(--accent-dim);
+  border-color: var(--accent-line);
+  color: var(--accent-hover);
+}
+.tp-loc-icon {
+  font-size: 14px;
+  transition: transform 300ms ease;
+}
+.tp-loc-toggle:active .tp-loc-icon { transform: rotate(180deg); }
+
 /* ─── Mobile: Header stapelt, Tag-Tabs kompakter, Satz-Zeilen enger ─── */
 @media (max-width: 720px) {
   .tp-head { flex-direction: column; align-items: center; gap: var(--s-4); }
@@ -4310,7 +4340,7 @@ body.role-athlete .tp-mode { display: none; }
   .tp-today-btn { margin-left: 0; }
   .tp-context { justify-content: center; flex-wrap: wrap; }
   .tp-mode { margin-left: 0; }
-  .tp-location { margin-left: 0; }
+  .tp-loc-toggle { margin-left: 0; }
   .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
   .tp-ex-plan { align-self: flex-start; }
@@ -5138,10 +5168,7 @@ body.role-athlete .tp-mode { display: none; }
             <span id="tpBlockLabel">GPP · W1 · Akkumulation</span>
           </span>
           <span class="tp-plan-name" id="tpPlanName">3×20 Akkumulation</span>
-          <div class="view-switcher tp-location" id="tpLocation" style="display:none;">
-            <button data-loc="studio" class="active">◇ Studio</button>
-            <button data-loc="home">⌂ Home</button>
-          </div>
+          <!-- alter Location-Toggle entfernt, jetzt als tp-loc-toggle bei den Übungen -->
           <div class="view-switcher tp-mode" id="tpMode">
             <button data-mode="view" class="active">Ansicht</button>
             <button data-mode="edit">Bearbeiten</button>
@@ -5178,6 +5205,12 @@ body.role-athlete .tp-mode { display: none; }
           <div class="tp-day-progress-fill" id="tpDayProgressFill" style="width:0%;"></div>
         </div>
       </div>
+
+      <!-- Studio/Home-Toggle (kompakt, pro Tag) -->
+      <button class="tp-loc-toggle" id="tpLocToggle" style="display:none;">
+        <span class="tp-loc-icon">⟳</span>
+        <span class="tp-loc-label" id="tpLocLabel">Studio-Plan</span>
+      </button>
 
       <!-- Übungs-Karten des aktiven Tages -->
       <div class="tp-exercises" id="tpExercises">
@@ -9067,8 +9100,13 @@ function renderTrainingsplan(profile) {
       exEl.innerHTML = _renderTpExercises(dayData, session);
 
       // Studio/Home-Toggle sichtbar wenn Fallback vorhanden
-      const locToggle = document.getElementById('tpLocation');
-      if (locToggle) locToggle.style.display = plan._homeFallback ? '' : 'none';
+      const locBtn = document.getElementById('tpLocToggle');
+      if (locBtn) {
+        locBtn.style.display = plan._homeFallback ? '' : 'none';
+        locBtn.classList.toggle('home-active', !!state.tpUseHome);
+        const locLabel = document.getElementById('tpLocLabel');
+        if (locLabel) locLabel.textContent = state.tpUseHome ? 'Home-Plan' : 'Studio-Plan';
+      }
     }
   }
 
@@ -11360,18 +11398,16 @@ function startNextEinheit() {
   const tp = document.querySelector('.page[data-page="trainingsplan"]');
   if (!tp) return;
 
-  // ── Studio/Home-Toggle ──
+  // ── Studio/Home-Toggle (bidirektional) ──
   state.tpUseHome = false;
-  document.querySelectorAll('#tpLocation button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const loc = btn.dataset.loc;
-      state.tpUseHome = loc === 'home';
-      document.querySelectorAll('#tpLocation button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  const locToggleBtn = document.getElementById('tpLocToggle');
+  if (locToggleBtn) {
+    locToggleBtn.addEventListener('click', () => {
+      state.tpUseHome = !state.tpUseHome;
       if (state.profile) renderTrainingsplan(state.profile);
-      toast(loc === 'home' ? 'Home-Ausweichplan aktiv' : 'Studio-Plan aktiv');
+      toast(state.tpUseHome ? 'Home-Ausweichplan aktiv' : 'Studio-Plan aktiv');
     });
-  });
+  }
 
   // ── Toggle Ansicht / Bearbeiten ──
   document.querySelectorAll('#tpMode button').forEach(btn => {
