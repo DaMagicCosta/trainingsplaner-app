@@ -3007,6 +3007,39 @@ body.role-athlete .profile-link-vereinbarung {
   border-color: var(--accent-line);
   color: var(--accent);
 }
+/* Drei-Zustand: ausgeschlossen (Athlet mag das Gerät nicht) */
+.tp-chip.excluded {
+  background: var(--danger-dim);
+  border-color: var(--danger-line);
+  color: var(--danger);
+  text-decoration: line-through;
+}
+/* Equipment-Gruppen pro Trainingsort */
+.pem-eq-group { display: none; margin-top: var(--s-2); }
+.pem-eq-group.visible { display: block; }
+.pem-eq-group-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--s-2);
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.pem-eq-group-label::before {
+  content: '';
+  flex: 0 0 12px;
+  height: 1px;
+  background: var(--border-subtle);
+}
+.pem-eq-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
 
 @media (max-width: 720px) {
   .tp-modal { padding: 0; }
@@ -6503,16 +6536,43 @@ body.role-athlete .tp-mode { display: none; }
                 </div>
               </div>
               <div class="tp-field" style="grid-column: 1 / -1;">
-                <label class="tp-field-label">Ausrüstung</label>
-                <div class="tp-chips" id="pemEquipmentChips">
-                  <button type="button" class="tp-chip" data-eq="Langhantel">Langhantel</button>
-                  <button type="button" class="tp-chip" data-eq="Kurzhanteln">Kurzhanteln</button>
-                  <button type="button" class="tp-chip" data-eq="Kabelzug">Kabelzug</button>
-                  <button type="button" class="tp-chip" data-eq="Maschinen">Maschinen</button>
-                  <button type="button" class="tp-chip" data-eq="Klimmzugstange">Klimmzugstange</button>
-                  <button type="button" class="tp-chip" data-eq="Dip-Station">Dip-Station</button>
-                  <button type="button" class="tp-chip" data-eq="Bänder">Bänder</button>
-                  <button type="button" class="tp-chip" data-eq="Kettlebells">Kettlebells</button>
+                <label class="tp-field-label">Ausrüstung <span style="color:var(--text-3);font-weight:400;font-size:11px">· 1× Tap = verfügbar · 2× = ausgeschlossen</span></label>
+                <div id="pemEquipmentWrap">
+                  <div class="pem-eq-group" data-eqloc="studio">
+                    <div class="pem-eq-group-label">Studio</div>
+                    <div class="tp-chips">
+                      <button type="button" class="tp-chip" data-eq="Langhantel" data-eqloc="studio">Langhantel</button>
+                      <button type="button" class="tp-chip" data-eq="SZ-Stange" data-eqloc="studio">SZ-Stange</button>
+                      <button type="button" class="tp-chip" data-eq="Kurzhanteln" data-eqloc="studio">Kurzhanteln</button>
+                      <button type="button" class="tp-chip" data-eq="Kabelzug" data-eqloc="studio">Kabelzug</button>
+                      <button type="button" class="tp-chip" data-eq="Maschinen" data-eqloc="studio">Maschinen</button>
+                      <button type="button" class="tp-chip" data-eq="Klimmzugstange" data-eqloc="studio">Klimmzugstange</button>
+                      <button type="button" class="tp-chip" data-eq="Dip-Station" data-eqloc="studio">Dip-Station</button>
+                      <button type="button" class="tp-chip" data-eq="Hantelbank" data-eqloc="studio">Hantelbank</button>
+                    </div>
+                  </div>
+                  <div class="pem-eq-group" data-eqloc="home">
+                    <div class="pem-eq-group-label">Zuhause</div>
+                    <div class="tp-chips">
+                      <button type="button" class="tp-chip" data-eq="Kurzhanteln" data-eqloc="home">Kurzhanteln</button>
+                      <button type="button" class="tp-chip" data-eq="Klimmzugstange" data-eqloc="home">Klimmzugstange</button>
+                      <button type="button" class="tp-chip" data-eq="Widerstandsbänder" data-eqloc="home">Widerstandsbänder</button>
+                      <button type="button" class="tp-chip" data-eq="Gymnastikmatte" data-eqloc="home">Gymnastikmatte</button>
+                      <button type="button" class="tp-chip" data-eq="Kettlebells" data-eqloc="home">Kettlebells</button>
+                      <button type="button" class="tp-chip" data-eq="Dip-Station" data-eqloc="home">Dip-Station</button>
+                      <button type="button" class="tp-chip" data-eq="Ab Wheel" data-eqloc="home">Ab Wheel</button>
+                    </div>
+                  </div>
+                  <div class="pem-eq-group" data-eqloc="outdoor">
+                    <div class="pem-eq-group-label">Outdoor</div>
+                    <div class="tp-chips">
+                      <button type="button" class="tp-chip" data-eq="Klimmzugstange" data-eqloc="outdoor">Klimmzugstange</button>
+                      <button type="button" class="tp-chip" data-eq="Dip-Barren" data-eqloc="outdoor">Dip-Barren</button>
+                      <button type="button" class="tp-chip" data-eq="Parallettes" data-eqloc="outdoor">Parallettes</button>
+                      <button type="button" class="tp-chip" data-eq="Ringe" data-eqloc="outdoor">Ringe</button>
+                      <button type="button" class="tp-chip" data-eq="Widerstandsbänder" data-eqloc="outdoor">Widerstandsbänder</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -6691,7 +6751,10 @@ const state = {
       geschlecht: 'weiblich',
       tage: ['Mo', 'Mi', 'Fr'],
       trainingLocation: ['studio', 'home'],
-      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder'],
+      equipment: {
+        studio: { available: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Maschinen', 'Klimmzugstange', 'Hantelbank'], excluded: [] },
+        home:   { available: ['Kurzhanteln', 'Widerstandsbänder', 'Gymnastikmatte'], excluded: [] }
+      },
       plans: {},
       sessions: [],
       periodization: { active: false, startKw: 1, blockLength: 4, blocks: [] },
@@ -7681,7 +7744,7 @@ function renderInfo(profile) {
   const goal = goalLabels[profile.goal] || profile.goal || '—';
   const tage = (profile.tage || []).join(' · ') || '—';
   const tageCount = (profile.tage || []).length;
-  const equipment = (profile.equipment || []).join(', ') || '—';
+  const equipment = _formatEquipment(profile.equipment);
   const sessions = (profile.sessions || []).length;
   const plans = Object.keys(profile.plans || {}).length;
 
@@ -7702,7 +7765,7 @@ function renderInfo(profile) {
       </div>
       <div class="info-row">
         <div class="info-row-key">Ausrüstung</div>
-        <div class="info-row-val">${escapeHtml(equipment)}</div>
+        <div class="info-row-val">${equipment}</div>
       </div>
       <div class="info-row">
         <div class="info-row-key">Sessions (Historie)</div>
@@ -10322,10 +10385,20 @@ function openProfileEditModal(target) {
     chip.classList.toggle('active', activeLocs.has(chip.dataset.loc));
   });
 
-  // Equipment-Chips: aktive markieren
-  const activeEq = new Set(p.equipment || []);
-  document.querySelectorAll('#pemEquipmentChips .tp-chip').forEach(chip => {
-    chip.classList.toggle('active', activeEq.has(chip.dataset.eq));
+  // Equipment pro Ort laden + Gruppen-Sichtbarkeit setzen
+  const eq = p.equipment || {};
+  const isOldFormat = Array.isArray(eq); // Rückwärtskompatibilität
+  document.querySelectorAll('#pemEquipmentWrap .pem-eq-group').forEach(group => {
+    const loc = group.dataset.eqloc;
+    group.classList.toggle('visible', activeLocs.has(loc));
+    const locEq = isOldFormat ? { available: eq, excluded: [] } : (eq[loc] || { available: [], excluded: [] });
+    const avail = new Set(locEq.available || []);
+    const excl  = new Set(locEq.excluded || []);
+    group.querySelectorAll('.tp-chip').forEach(chip => {
+      chip.classList.remove('active', 'excluded');
+      if (avail.has(chip.dataset.eq))     chip.classList.add('active');
+      else if (excl.has(chip.dataset.eq)) chip.classList.add('excluded');
+    });
   });
 
   openModal('profileEditModal');
@@ -10348,8 +10421,18 @@ function saveProfileEdit() {
     .map(c => c.dataset.loc);
   p.tage = Array.from(document.querySelectorAll('#pemTageChips .tp-chip.active'))
     .map(c => c.dataset.day);
-  p.equipment = Array.from(document.querySelectorAll('#pemEquipmentChips .tp-chip.active'))
-    .map(c => c.dataset.eq);
+
+  // Equipment pro Trainingsort (Drei-Zustand: available / excluded)
+  const eq = {};
+  p.trainingLocation.forEach(loc => {
+    const chips = document.querySelectorAll(`#pemEquipmentWrap .tp-chip[data-eqloc="${loc}"]`);
+    eq[loc] = { available: [], excluded: [] };
+    chips.forEach(c => {
+      if (c.classList.contains('active'))   eq[loc].available.push(c.dataset.eq);
+      if (c.classList.contains('excluded')) eq[loc].excluded.push(c.dataset.eq);
+    });
+  });
+  p.equipment = eq;
 
   if (target === 'self') {
     // Re-render: Info-Tab und Sidebar-Label
@@ -10401,11 +10484,55 @@ function _formatLocations(loc) {
   const arr = Array.isArray(loc) ? loc : _parseLocationString(loc || '');
   return arr.map(l => labels[l] || l).join(' · ') || '—';
 }
+// Equipment-Objekt → lesbarer Text (pro Ort, Excluded durchgestrichen)
+function _formatEquipment(eq) {
+  if (!eq) return '—';
+  // Altes flaches Array
+  if (Array.isArray(eq)) return eq.join(', ') || '—';
+  // Neues verschachteltes Format
+  const locLabels = { studio: 'Studio', home: 'Zuhause', outdoor: 'Outdoor' };
+  const parts = [];
+  Object.entries(eq).forEach(([loc, data]) => {
+    const avail = (data.available || []).join(', ');
+    const excl  = (data.excluded || []).map(e => '<s style="color:var(--danger)">' + e + '</s>').join(', ');
+    const items = [avail, excl].filter(Boolean).join(', ');
+    if (items) parts.push('<strong>' + (locLabels[loc] || loc) + ':</strong> ' + items);
+  });
+  return parts.join('<br>') || '—';
+}
 
 (function initProfileEdit() {
-  // Chip-Toggle (Tage + Equipment + Trainingsort)
-  document.querySelectorAll('#pemTageChips .tp-chip, #pemEquipmentChips .tp-chip, #pemLocationChips .tp-chip').forEach(chip => {
+  // Chip-Toggle: Tage (2-Zustand)
+  document.querySelectorAll('#pemTageChips .tp-chip').forEach(chip => {
     chip.addEventListener('click', () => chip.classList.toggle('active'));
+  });
+
+  // Chip-Toggle: Trainingsort (2-Zustand) + Equipment-Gruppen ein-/ausblenden
+  document.querySelectorAll('#pemLocationChips .tp-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      chip.classList.toggle('active');
+      // Equipment-Gruppen synchronisieren
+      const loc = chip.dataset.loc;
+      const group = document.querySelector(`#pemEquipmentWrap .pem-eq-group[data-eqloc="${loc}"]`);
+      if (group) group.classList.toggle('visible', chip.classList.contains('active'));
+    });
+  });
+
+  // Chip-Toggle: Equipment (3-Zustand: off → active → excluded → off)
+  document.querySelectorAll('#pemEquipmentWrap .tp-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      if (chip.classList.contains('excluded')) {
+        // excluded → off
+        chip.classList.remove('excluded');
+      } else if (chip.classList.contains('active')) {
+        // active → excluded
+        chip.classList.remove('active');
+        chip.classList.add('excluded');
+      } else {
+        // off → active
+        chip.classList.add('active');
+      }
+    });
   });
 
   // Speichern-Button
