@@ -3951,9 +3951,11 @@ body.role-athlete .tp-mode { display: none; }
 
 /* ─── Mobile: Header stapelt, Tag-Tabs kompakter, Satz-Zeilen enger ─── */
 @media (max-width: 720px) {
-  .tp-head { flex-direction: column; align-items: stretch; gap: var(--s-4); }
+  .tp-head { flex-direction: column; align-items: center; gap: var(--s-4); }
+  .tp-nav { flex-wrap: wrap; justify-content: center; }
+  .tp-today-btn { margin-left: 0; }
   .tp-context { justify-content: center; flex-wrap: wrap; }
-  .tp-mode { width: 100%; justify-content: center; margin-left: 0; }
+  .tp-mode { margin-left: 0; }
   .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
   .tp-ex-plan { align-self: flex-start; }
