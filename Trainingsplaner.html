@@ -6495,8 +6495,12 @@ body.role-athlete .tp-mode { display: none; }
                 </div>
               </div>
               <div class="tp-field" style="grid-column: 1 / -1;">
-                <label class="tp-field-label" for="pemTrainingLocation">Trainingsort</label>
-                <input type="text" class="tp-field-input" id="pemTrainingLocation" placeholder="z.B. Studio XY, Zuhause, Outdoor">
+                <label class="tp-field-label">Trainingsort</label>
+                <div class="tp-chips" id="pemLocationChips">
+                  <button type="button" class="tp-chip" data-loc="studio">Studio</button>
+                  <button type="button" class="tp-chip" data-loc="home">Zuhause</button>
+                  <button type="button" class="tp-chip" data-loc="outdoor">Outdoor</button>
+                </div>
               </div>
               <div class="tp-field" style="grid-column: 1 / -1;">
                 <label class="tp-field-label">Ausrüstung</label>
@@ -6686,7 +6690,7 @@ const state = {
       goal: 'kraftausdauer',
       geschlecht: 'weiblich',
       tage: ['Mo', 'Mi', 'Fr'],
-      trainingLocation: 'Studio + Zuhause',
+      trainingLocation: ['studio', 'home'],
       equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder'],
       plans: {},
       sessions: [],
@@ -7694,7 +7698,7 @@ function renderInfo(profile) {
       </div>
       <div class="info-row">
         <div class="info-row-key">Trainingsort</div>
-        <div class="info-row-val">${escapeHtml(profile.trainingLocation || '—')}</div>
+        <div class="info-row-val">${escapeHtml(_formatLocations(profile.trainingLocation))}</div>
       </div>
       <div class="info-row">
         <div class="info-row-key">Ausrüstung</div>
@@ -10305,12 +10309,17 @@ function openProfileEditModal(target) {
   document.getElementById('pemGewicht').value          = p.gewicht || '';
   document.getElementById('pemHfmax').value            = p.hfmax || '';
   document.getElementById('pemGoal').value             = p.goal || 'hypertrophie';
-  document.getElementById('pemTrainingLocation').value = p.trainingLocation || '';
-
   // Tage-Chips: aktive markieren
   const activeTage = new Set(p.tage || []);
   document.querySelectorAll('#pemTageChips .tp-chip').forEach(chip => {
     chip.classList.toggle('active', activeTage.has(chip.dataset.day));
+  });
+
+  // Trainingsort-Chips: aktive markieren (Rückwärtskompatibel mit String)
+  const rawLoc = p.trainingLocation || [];
+  const activeLocs = new Set(Array.isArray(rawLoc) ? rawLoc : _parseLocationString(rawLoc));
+  document.querySelectorAll('#pemLocationChips .tp-chip').forEach(chip => {
+    chip.classList.toggle('active', activeLocs.has(chip.dataset.loc));
   });
 
   // Equipment-Chips: aktive markieren
@@ -10334,8 +10343,9 @@ function saveProfileEdit() {
   p.gewicht          = parseFloat(document.getElementById('pemGewicht').value) || p.gewicht;
   p.hfmax            = parseInt(document.getElementById('pemHfmax').value, 10) || p.hfmax;
   p.goal             = document.getElementById('pemGoal').value;
-  p.trainingLocation = document.getElementById('pemTrainingLocation').value.trim();
 
+  p.trainingLocation = Array.from(document.querySelectorAll('#pemLocationChips .tp-chip.active'))
+    .map(c => c.dataset.loc);
   p.tage = Array.from(document.querySelectorAll('#pemTageChips .tp-chip.active'))
     .map(c => c.dataset.day);
   p.equipment = Array.from(document.querySelectorAll('#pemEquipmentChips .tp-chip.active'))
@@ -10375,9 +10385,26 @@ function renderAthleteRow(key, p) {
   if (metaEl)   metaEl.textContent   = `${p.alter} J · ${goal} · ${freq}×/Woche · Demo-Athletin`;
 }
 
+// Alte String-Werte wie "Studio + Zuhause" oder "outdoor" → Array ['studio','home']
+function _parseLocationString(str) {
+  if (!str || typeof str !== 'string') return [];
+  const s = str.toLowerCase();
+  const result = [];
+  if (s.includes('studio'))             result.push('studio');
+  if (s.includes('zuhause') || s.includes('home')) result.push('home');
+  if (s.includes('outdoor') || s.includes('calisthenics') || s.includes('park')) result.push('outdoor');
+  return result.length ? result : [s.trim()];
+}
+// Array/String → lesbarer Text für Anzeige
+function _formatLocations(loc) {
+  const labels = { studio: 'Studio', home: 'Zuhause', outdoor: 'Outdoor' };
+  const arr = Array.isArray(loc) ? loc : _parseLocationString(loc || '');
+  return arr.map(l => labels[l] || l).join(' · ') || '—';
+}
+
 (function initProfileEdit() {
-  // Chip-Toggle (Tage + Equipment)
-  document.querySelectorAll('#pemTageChips .tp-chip, #pemEquipmentChips .tp-chip').forEach(chip => {
+  // Chip-Toggle (Tage + Equipment + Trainingsort)
+  document.querySelectorAll('#pemTageChips .tp-chip, #pemEquipmentChips .tp-chip, #pemLocationChips .tp-chip').forEach(chip => {
     chip.addEventListener('click', () => chip.classList.toggle('active'));
   });
 
