@@ -3878,7 +3878,6 @@ body.role-athlete .tp-mode { display: none; }
   font-family: var(--font-sans);
 }
 .tp-add-exercise:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-.page[data-page="trainingsplan"].tp-edit-active .tp-add-exercise { display: flex; }
 
 /* ─── Übungspicker-Modal ─── */
 .tp-picker-grid {
@@ -8058,6 +8057,23 @@ function renderTrainingsplan(profile) {
     if (todaySub) todaySub.textContent = isOnToday ? '' : `KW ${nowKw}`;
   }
 
+  // Bearbeiten-Modus: nur für aktuelle und zukünftige Wochen erlaubt
+  const isPast = kw < nowKw;
+  const tpPage = document.querySelector('.page[data-page="trainingsplan"]');
+  const tpModeEl = document.getElementById('tpMode');
+  const addExBtn = document.getElementById('tpAddExercise');
+  if (tpModeEl) {
+    tpModeEl.style.display = (state.role === 'trainer' && !isPast) ? '' : 'none';
+  }
+  if (isPast && tpPage) {
+    tpPage.classList.remove('tp-edit-active');
+    state.tpEditMode = false;
+    if (tpModeEl) document.querySelectorAll('#tpMode button').forEach(b => b.classList.toggle('active', b.dataset.mode === 'view'));
+  }
+  if (addExBtn) {
+    addExBtn.style.display = (state.tpEditMode && !isPast) ? 'flex' : 'none';
+  }
+
   // Block-Kontext für die aktive KW
   const period = _calcPeriodization(profile);
   const pEntry = period ? period[kw] : null;
@@ -8115,6 +8131,9 @@ function renderTrainingsplan(profile) {
       exEl.innerHTML = _renderTpRegenState(kw);
     } else if (!hasPlan) {
       exEl.innerHTML = _renderTpNoPlanState(kw);
+      // "Erste Übung hinzufügen" delegiert an den regulären Add-Button
+      const emptyAdd = document.getElementById('tpEmptyAddExercise');
+      if (emptyAdd) emptyAdd.addEventListener('click', () => document.getElementById('tpAddExercise')?.click());
     } else {
       const day = plan.days[state.tpViewDay] || plan.days[0];
       const session = sessionsByDay[state.tpViewDay] || null;
@@ -8466,14 +8485,16 @@ function _renderTpRegenState(kw) {
 }
 function _renderTpNoPlanState(kw) {
   const isTrainer = state.role === 'trainer';
+  const inEdit = state.tpEditMode;
   return `
     <div class="tp-empty-state">
       <div class="tp-empty-icon">◇</div>
       <div class="tp-empty-title">Kein Plan für KW ${kw}</div>
       <div class="tp-empty-desc">
-        Für diese Kalenderwoche ist noch kein Trainingsplan hinterlegt.${isTrainer ? '' : ' Dein Trainer legt den Plan für diese Woche noch an.'}
+        Für diese Kalenderwoche ist noch kein Trainingsplan hinterlegt.${isTrainer ? (inEdit ? ' Füge die erste Übung hinzu um einen Plan zu erstellen.' : '') : ' Dein Trainer legt den Plan für diese Woche noch an.'}
       </div>
-      ${isTrainer ? `<button class="tp-empty-action" onclick="switchTab('jahresplan')">Zum Jahresplan</button>` : ''}
+      ${isTrainer && inEdit ? `<button class="tp-empty-action" id="tpEmptyAddExercise">+ Erste Übung hinzufügen</button>` : ''}
+      ${isTrainer && !inEdit ? `<button class="tp-empty-action" onclick="document.querySelector('#tpMode button[data-mode=\\'edit\\']')?.click()">Bearbeiten starten</button>` : ''}
     </div>`;
 }
 
