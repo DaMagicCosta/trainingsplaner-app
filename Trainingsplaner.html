@@ -1606,11 +1606,19 @@ ul, ol { list-style: none; }
   border-radius: var(--r-sm);
   background: var(--surface-2);
 }
-.pn-block-row:has(input[type="checkbox"]:not(:checked)) { opacity: 0.4; }
-.pn-block-check { flex: 1; min-width: 0; }
-.pn-clr-gpp  { color: #4cc9f0; }
-.pn-clr-spp  { color: #f4a261; }
-.pn-clr-peak { color: #9b5de5; }
+.pn-block-name {
+  flex: 1; min-width: 0;
+  font-size: 13px; font-weight: 600;
+}
+.pn-block-goal {
+  padding: 5px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 12px;
+  font-family: var(--font-sans);
+}
 .pn-block-len {
   display: flex;
   align-items: center;
@@ -1618,6 +1626,34 @@ ul, ol { list-style: none; }
   flex-shrink: 0;
 }
 .pn-block-len .pn-input { width: 52px; padding: 5px 6px; font-size: 13px; }
+.pn-block-remove {
+  width: 24px; height: 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all var(--ease);
+  flex-shrink: 0;
+}
+.pn-block-remove:hover { color: var(--danger); border-color: var(--danger); }
+.pn-add-block-btn {
+  padding: 8px 16px;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-sans);
+  margin-top: var(--s-2);
+}
+.pn-add-block-btn:hover { border-color: var(--accent); color: var(--accent); }
+.pn-add-block-btn:disabled { opacity: 0.3; cursor: default; }
 
 @media (max-width: 720px) {
   .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
@@ -4536,43 +4572,58 @@ body.role-athlete .tp-mode { display: none; }
 
         <!-- Generator-Formular -->
         <div class="pn-grid">
-          <!-- Schritt 1: Periodisierung (Checkboxen → Live-Timeline) -->
+          <!-- Schritt 1: Block-Definition (bis zu 4) -->
           <div class="pn-card pn-form-card" style="grid-column: 1 / -1;">
-            <div class="pn-card-label">1 · Periodisierung</div>
-            <div class="pn-card-title">Block-Phasen &amp; Regen-Wochen</div>
+            <div class="pn-card-label">1 · Block-Phasen</div>
+            <div class="pn-card-title">Trainingsblöcke definieren <span style="color:var(--text-3);font-weight:400;font-size:13px;">(bis zu 4)</span></div>
 
-            <div class="pn-form-row" style="align-items:center; gap:var(--s-4);">
-              <div class="pn-form-field">
-                <label class="pn-field-label">Start-KW</label>
-                <input type="number" class="pn-input" id="genKwStart" min="1" max="52" value="1">
-              </div>
-              <label class="pn-check"><input type="checkbox" id="genRegenBetween" checked> Regen zwischen Blöcken</label>
+            <div class="pn-block-rows" id="genBlockRows"></div>
+            <button class="pn-add-block-btn" id="genAddBlock" type="button">+ Block hinzufügen</button>
+          </div>
+
+          <!-- Schritt 2: Regen-Steuerung + Start -->
+          <div class="pn-card pn-form-card">
+            <div class="pn-card-label">2 · Regeneration &amp; Timing</div>
+            <div class="pn-card-title">Regen-Rhythmus</div>
+
+            <div class="pn-form-field">
+              <label class="pn-field-label">Regen einfügen</label>
+              <select class="pn-select" id="genRegenMode">
+                <option value="after_each">Nach jedem Block</option>
+                <option value="after_n">Nach bestimmter Anzahl Blöcke</option>
+                <option value="after_weeks">Nach bestimmter Wochen-Anzahl</option>
+                <option value="none">Keine Regen-Wochen</option>
+              </select>
             </div>
 
-            <div class="pn-block-rows" id="genBlockRows">
-              <div class="pn-block-row">
-                <label class="pn-check pn-block-check pn-clr-gpp"><input type="checkbox" data-block="0" checked> GPP · Akkumulation</label>
-                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="0" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
-                <div class="pn-preset-badge pn-preset-gpp">3×20</div>
+            <div class="pn-form-row" id="genRegenParams">
+              <div class="pn-form-field" id="genRegenAfterField" style="display:none;">
+                <label class="pn-field-label">Nach</label>
+                <div class="pn-form-row" style="gap:6px;align-items:center;">
+                  <input type="number" class="pn-input" id="genRegenAfter" min="1" max="12" value="2">
+                  <span class="pn-field-label" id="genRegenAfterUnit">Blöcken</span>
+                </div>
               </div>
-              <div class="pn-block-row">
-                <label class="pn-check pn-block-check pn-clr-spp"><input type="checkbox" data-block="1" checked> SPP · Intensifikation</label>
-                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="1" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
-                <div class="pn-preset-badge pn-preset-spp">4×10</div>
+              <div class="pn-form-field">
+                <label class="pn-field-label">Regen-Dauer</label>
+                <div class="pn-form-row" style="gap:6px;align-items:center;">
+                  <input type="number" class="pn-input" id="genRegenDuration" min="1" max="4" value="1">
+                  <span class="pn-field-label">Wo.</span>
+                </div>
               </div>
-              <div class="pn-block-row">
-                <label class="pn-check pn-block-check pn-clr-peak"><input type="checkbox" data-block="2" checked> Peak · Skills</label>
-                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="2" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
-                <div class="pn-preset-badge pn-preset-peak">5×5</div>
-              </div>
+            </div>
+
+            <div class="pn-form-field" style="margin-top:var(--s-3);">
+              <label class="pn-field-label">Start-KW</label>
+              <input type="number" class="pn-input" id="genKwStart" min="1" max="52" value="1">
             </div>
 
             <div class="pn-form-hint" id="genSummary">—</div>
           </div>
 
-          <!-- Schritt 2: Split + Tage -->
+          <!-- Schritt 3: Split + Tage -->
           <div class="pn-card pn-form-card">
-            <div class="pn-card-label">2 · Split-Template</div>
+            <div class="pn-card-label">3 · Split-Template</div>
             <div class="pn-card-title">Trainings-Aufteilung</div>
             <div class="pn-form-field">
               <label class="pn-field-label">Template</label>
@@ -4596,9 +4647,9 @@ body.role-athlete .tp-mode { display: none; }
             </div>
           </div>
 
-          <!-- Schritt 3: Generieren -->
+          <!-- Schritt 4: Generieren -->
           <div class="pn-card pn-form-card pn-form-action">
-            <div class="pn-card-label">3 · Generieren</div>
+            <div class="pn-card-label">4 · Generieren</div>
             <div class="pn-card-title">Pläne erstellen</div>
             <div class="pn-card-desc">
               Erstellt Wochenpläne für alle aktiven Blöcke mit Übungen aus dem Lexikon.
@@ -10050,11 +10101,19 @@ function startNextEinheit() {
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
 
-  const BLOCK_DEFS = [
-    { key: 'gpp',  label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', saetze: 3, wdh: 20, planName: '3×20 Akkumulation' },
-    { key: 'spp',  label: 'Intensifikation (SPP)', goal: 'hypertrophie', saetze: 4, wdh: 10, planName: '4×10 Intensifikation' },
-    { key: 'peak', label: 'Peak / Skills',         goal: 'maximalkraft', saetze: 5, wdh: 5,  planName: '5×5 Peak' }
+  // ── Vorlagen für neue Blöcke ──
+  const BLOCK_TEMPLATES = [
+    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', saetze: 4, wdh: 10, color: '#f4a261' },
+    { label: 'Peak / Skills',         goal: 'maximalkraft', saetze: 5, wdh: 5,  color: '#9b5de5' },
+    { label: 'Kraftausdauer',         goal: 'kraftausdauer', saetze: 3, wdh: 15, color: '#10B981' }
   ];
+  const GOAL_PRESETS = {
+    kraftausdauer: { saetze: 3, wdh: 20 },
+    hypertrophie:  { saetze: 4, wdh: 10 },
+    maximalkraft:  { saetze: 5, wdh: 5  },
+    allgemein:     { saetze: 3, wdh: 12 }
+  };
 
   const SPLITS = {
     ppl: { days: [
@@ -10071,92 +10130,158 @@ function startNextEinheit() {
     ]}
   };
 
-  const kwStartInput   = document.getElementById('genKwStart');
-  const regenCheckbox  = document.getElementById('genRegenBetween');
-  const summaryEl      = document.getElementById('genSummary');
-  const splitSelect    = document.getElementById('genSplit');
-  const submitBtn      = document.getElementById('genSubmit');
-  const dayChips       = document.getElementById('genDayChips');
-  const blockRowsEl    = document.getElementById('genBlockRows');
+  const blockRowsEl  = document.getElementById('genBlockRows');
+  const addBlockBtn  = document.getElementById('genAddBlock');
+  const kwStartInput = document.getElementById('genKwStart');
+  const regenModeEl  = document.getElementById('genRegenMode');
+  const regenAfterEl = document.getElementById('genRegenAfter');
+  const regenAfterField = document.getElementById('genRegenAfterField');
+  const regenAfterUnit  = document.getElementById('genRegenAfterUnit');
+  const regenDurEl   = document.getElementById('genRegenDuration');
+  const summaryEl    = document.getElementById('genSummary');
+  const splitSelect  = document.getElementById('genSplit');
+  const submitBtn    = document.getElementById('genSubmit');
+  const dayChips     = document.getElementById('genDayChips');
   if (!submitBtn || !blockRowsEl) return;
 
-  // ── Aus den Checkboxen die aktuelle Periodisierung lesen ──
-  function readConfig() {
-    const startKw = parseInt(kwStartInput.value) || 1;
-    const regenBetween = regenCheckbox.checked;
-    const blocks = [];
-    blockRowsEl.querySelectorAll('.pn-block-row').forEach((row, idx) => {
-      const cb = row.querySelector('input[type="checkbox"]');
-      const lenInput = row.querySelector('input[type="number"]');
-      if (cb && cb.checked) {
-        blocks.push({
-          ...BLOCK_DEFS[idx],
-          blockIdx: idx,
-          length: parseInt(lenInput?.value) || 4
-        });
-      }
-    });
-    return { startKw, regenBetween, blocks };
+  let blocks = [
+    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
+    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
+  ];
+
+  // ── Block-Zeile rendern ──
+  function renderBlockRow(block, idx) {
+    return `
+      <div class="pn-block-row" data-idx="${idx}" style="border-left: 3px solid ${block.color};">
+        <select class="pn-block-goal" data-field="goal">
+          <option value="kraftausdauer"${block.goal==='kraftausdauer'?' selected':''}>Kraftausdauer</option>
+          <option value="hypertrophie"${block.goal==='hypertrophie'?' selected':''}>Hypertrophie</option>
+          <option value="maximalkraft"${block.goal==='maximalkraft'?' selected':''}>Maximalkraft</option>
+          <option value="allgemein"${block.goal==='allgemein'?' selected':''}>Allgemein</option>
+        </select>
+        <div class="pn-block-len">
+          <input type="number" class="pn-input" data-field="length" min="2" max="12" value="${block.length}">
+          <span class="pn-field-label">Wo.</span>
+        </div>
+        <div class="pn-preset-badge" style="background:${block.color}22;border-color:${block.color}66;color:${block.color};">${block.saetze}×${block.wdh}</div>
+        <button class="pn-block-remove" type="button" title="Block entfernen">✕</button>
+      </div>`;
   }
 
-  // ── Periodisierung ins Profil schreiben + Timeline sofort updaten ──
+  function renderAllBlocks() {
+    blockRowsEl.innerHTML = blocks.map((b, i) => renderBlockRow(b, i)).join('');
+    addBlockBtn.disabled = blocks.length >= 4;
+    wireBlockEvents();
+    applyToProfile();
+  }
+
+  function wireBlockEvents() {
+    blockRowsEl.querySelectorAll('.pn-block-row').forEach(row => {
+      const idx = parseInt(row.dataset.idx);
+      row.querySelector('[data-field="goal"]').addEventListener('change', (e) => {
+        blocks[idx].goal = e.target.value;
+        const p = GOAL_PRESETS[blocks[idx].goal] || GOAL_PRESETS.allgemein;
+        blocks[idx].saetze = p.saetze;
+        blocks[idx].wdh = p.wdh;
+        renderAllBlocks();
+      });
+      row.querySelector('[data-field="length"]').addEventListener('change', (e) => {
+        blocks[idx].length = parseInt(e.target.value) || 4;
+        applyToProfile();
+      });
+      row.querySelector('.pn-block-remove').addEventListener('click', () => {
+        if (blocks.length <= 1) { toast('Mindestens ein Block nötig'); return; }
+        blocks.splice(idx, 1);
+        renderAllBlocks();
+      });
+    });
+  }
+
+  addBlockBtn.addEventListener('click', () => {
+    if (blocks.length >= 4) return;
+    const tpl = BLOCK_TEMPLATES[blocks.length] || BLOCK_TEMPLATES[0];
+    blocks.push({ ...tpl, length: 4 });
+    renderAllBlocks();
+  });
+
+  // ── Regen-Modus UI ──
+  function updateRegenUI() {
+    const mode = regenModeEl.value;
+    regenAfterField.style.display = (mode === 'after_n' || mode === 'after_weeks') ? '' : 'none';
+    regenAfterUnit.textContent = mode === 'after_weeks' ? 'Wochen' : 'Blöcken';
+    document.getElementById('genRegenDuration').closest('.pn-form-field').style.display = mode === 'none' ? 'none' : '';
+    applyToProfile();
+  }
+  regenModeEl.addEventListener('change', updateRegenUI);
+  regenAfterEl.addEventListener('change', applyToProfile);
+  regenDurEl.addEventListener('change', applyToProfile);
+  kwStartInput.addEventListener('change', applyToProfile);
+
+  // ── Periodisierung berechnen + Timeline sofort updaten ──
+  function readRegenConfig() {
+    const mode = regenModeEl.value;
+    const afterN = parseInt(regenAfterEl.value) || 2;
+    const duration = parseInt(regenDurEl.value) || 1;
+    return { mode, afterN, duration };
+  }
+
   function applyToProfile() {
     const profile = state.profile;
-    if (!profile) return;
-    const cfg = readConfig();
-    if (cfg.blocks.length === 0) {
-      if (summaryEl) summaryEl.textContent = 'Mindestens einen Block aktivieren';
-      return;
-    }
+    if (!profile || blocks.length === 0) return;
 
-    // Periodisierung setzen
-    const totalBlockWeeks = cfg.blocks.reduce((s, b) => s + b.length, 0);
-    const regenCount = cfg.regenBetween ? cfg.blocks.length : 0;
-    const cycleLength = totalBlockWeeks + regenCount;
+    const startKw = parseInt(kwStartInput.value) || 1;
+    const regen = readRegenConfig();
 
-    profile.periodization = {
-      active: true,
-      startKw: cfg.startKw,
-      blockLength: cfg.blocks[0].length,
-      blocks: cfg.blocks.map(b => ({
-        label: b.label,
-        goal: b.goal,
-        length: b.length
-      }))
-    };
-    profile.regenConfig = {
-      interval: cycleLength,
-      regenBetween: cfg.regenBetween
-    };
+    // Regen-Wochen berechnen basierend auf Modus
+    const regenWeeks = [];
+    let kw = startKw;
 
-    // Regen-Wochen berechnen
-    profile.athleteRegenWeeks = [];
-    if (cfg.regenBetween) {
-      let kw = cfg.startKw;
-      cfg.blocks.forEach(b => {
+    if (regen.mode === 'after_each') {
+      blocks.forEach(b => {
         kw += b.length;
-        if (kw <= 52) profile.athleteRegenWeeks.push(kw);
-        kw += 1; // Regen-Woche überspringen
+        for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
       });
+    } else if (regen.mode === 'after_n') {
+      blocks.forEach((b, i) => {
+        kw += b.length;
+        if ((i + 1) % regen.afterN === 0) {
+          for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
+        }
+      });
+    } else if (regen.mode === 'after_weeks') {
+      let weeksSinceRegen = 0;
+      blocks.forEach(b => {
+        for (let w = 0; w < b.length && kw <= 52; w++) { kw++; weeksSinceRegen++; }
+        if (weeksSinceRegen >= regen.afterN) {
+          for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
+          weeksSinceRegen = 0;
+        }
+      });
+    } else {
+      blocks.forEach(b => { kw += b.length; });
     }
 
-    // Summary aktualisieren
-    const endKw = cfg.startKw + cycleLength - 1;
-    const regenKws = profile.athleteRegenWeeks.filter(k => k <= 52);
+    // Periodisierung ins Profil schreiben
+    profile.periodization = {
+      active: true, startKw,
+      blocks: blocks.map(b => ({ label: b.label, goal: b.goal, length: b.length }))
+    };
+    profile.regenConfig = { regenBetween: regen.mode === 'after_each' };
+    profile.athleteRegenWeeks = regenWeeks;
+
+    // Summary
+    const totalWeeks = blocks.reduce((s, b) => s + b.length, 0);
+    const endKw = startKw + totalWeeks + regenWeeks.length - 1;
     if (summaryEl) {
-      summaryEl.textContent = `→ ${totalBlockWeeks} Trainingswochen · KW ${cfg.startKw}–${Math.min(endKw, 52)}` +
-        (regenKws.length ? ` · Regen: KW ${regenKws.join(', ')}` : '');
+      summaryEl.textContent = `→ ${totalWeeks} Trainingswochen · KW ${startKw}–${Math.min(endKw, 52)}` +
+        (regenWeeks.length ? ` · ${regenWeeks.length} Regen-Wo. (KW ${regenWeeks.join(', ')})` : ' · keine Regen');
     }
 
-    // Sofort Timeline + Wochen-Karten updaten
     renderJahresplan(profile);
   }
 
-  // ── Alle Inputs verdrahten → sofortiges Update ──
-  blockRowsEl.querySelectorAll('input').forEach(inp => inp.addEventListener('change', applyToProfile));
-  kwStartInput.addEventListener('change', applyToProfile);
-  regenCheckbox.addEventListener('change', applyToProfile);
-
+  // ── Day-Chips ──
   if (dayChips) {
     dayChips.querySelectorAll('.tp-chip').forEach(chip => {
       chip.addEventListener('click', () => chip.classList.toggle('active'));
@@ -10172,13 +10297,13 @@ function startNextEinheit() {
   // ── Pläne generieren ──
   submitBtn.addEventListener('click', () => {
     const profile = state.profile;
-    if (!profile) { toast('Kein Profil geladen'); return; }
-    const cfg = readConfig();
-    if (cfg.blocks.length === 0) { toast('Mindestens einen Block aktivieren'); return; }
+    if (!profile || blocks.length === 0) { toast('Keine Blöcke definiert'); return; }
 
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
     const location = profile.trainingLocation === 'home' ? 'home' : 'studio';
+    const startKw = parseInt(kwStartInput.value) || 1;
+    const regen = readRegenConfig();
 
     const selectedDays = [];
     if (dayChips) dayChips.querySelectorAll('.tp-chip.active').forEach(c => selectedDays.push(c.dataset.day));
@@ -10186,9 +10311,13 @@ function startNextEinheit() {
 
     if (!profile.plans) profile.plans = {};
 
-    let kw = cfg.startKw;
-    cfg.blocks.forEach(blockDef => {
-      const exPerCat = blockDef.key === 'peak' ? 2 : 3;
+    let kw = startKw;
+    let weeksSinceRegen = 0;
+
+    blocks.forEach((blockDef, blockIdx) => {
+      const exPerCat = blockDef.goal === 'maximalkraft' ? 2 : 3;
+      const goalLabels = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
+
       for (let w = 0; w < blockDef.length && kw <= 52; w++, kw++) {
         const days = selectedDays.map((dayLabel, dayIdx) => {
           const splitDay = splitDef.days[dayIdx % splitDef.days.length];
@@ -10205,27 +10334,38 @@ function startNextEinheit() {
           return { label: dayLabel, exercises: exercises.slice(0, 6) };
         });
         profile.plans['w' + kw] = {
-          name: blockDef.planName, goal: blockDef.goal, _source: 'generator', _block: blockDef.blockIdx, days
+          name: `${blockDef.saetze}×${blockDef.wdh} ${goalLabels[blockDef.goal] || blockDef.goal}`,
+          goal: blockDef.goal, _source: 'generator', _block: blockIdx, days
         };
+        weeksSinceRegen++;
       }
-      // Regen-Woche überspringen
-      if (cfg.regenBetween && kw <= 52) {
-        delete profile.plans['w' + kw];
-        kw++;
+
+      // Regen einfügen
+      let insertRegen = false;
+      if (regen.mode === 'after_each') insertRegen = true;
+      else if (regen.mode === 'after_n' && (blockIdx + 1) % regen.afterN === 0) insertRegen = true;
+      else if (regen.mode === 'after_weeks' && weeksSinceRegen >= regen.afterN) insertRegen = true;
+
+      if (insertRegen && regen.mode !== 'none') {
+        for (let r = 0; r < regen.duration && kw <= 52; r++) {
+          delete profile.plans['w' + kw];
+          kw++;
+        }
+        weeksSinceRegen = 0;
       }
     });
 
-    // Alles neu rendern
     applyToProfile();
     renderTrainingsplan(profile);
     renderCockpit(profile);
 
-    const totalPlans = cfg.blocks.reduce((s, b) => s + b.length, 0);
+    const totalPlans = blocks.reduce((s, b) => s + b.length, 0);
     toast(`${totalPlans} Wochenpläne generiert`);
   });
 
-  // Initial: Timeline sofort mit aktuellem Config rendern
-  applyToProfile();
+  // ── Initial ──
+  renderAllBlocks();
+  updateRegenUI();
 })();
 
 /* ═══════════════════════════════════════════════════════
