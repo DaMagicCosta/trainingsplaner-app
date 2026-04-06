@@ -4474,6 +4474,13 @@ body.role-athlete .tp-mode { display: none; }
   box-shadow: 0 6px 16px -4px var(--accent-dim), 0 0 0 4px var(--bg);
 }
 .bnav-item.primary { color: var(--text-2); }
+/* Long-Press: kein blaues Selection-Rechteck */
+.bnav-item {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  outline: none;
+}
 
 /* ═══════════════════════════════════════════════════════
    COMMAND PALETTE (⌘K)
@@ -12179,9 +12186,13 @@ loadDemoProfile();
 // ── Splash Screen ──
 const _splash = document.getElementById('splash');
 if (_splash) {
-  _splash.addEventListener('click', () => _splash.classList.add('hide'));
-  // Auto-dismiss nach 6 Sekunden falls nicht geklickt
-  setTimeout(() => _splash.classList.add('hide'), 6000);
+  function _dismissSplash() {
+    _splash.classList.add('hide');
+    // Nach Transition komplett aus dem DOM entfernen
+    setTimeout(() => _splash.remove(), 700);
+  }
+  _splash.addEventListener('click', _dismissSplash);
+  setTimeout(_dismissSplash, 6000);
 }
 </script>
 
