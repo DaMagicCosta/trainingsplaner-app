@@ -4104,6 +4104,7 @@ body.role-athlete .tp-mode { display: none; }
   .tp-today-btn { margin-left: 0; }
   .tp-context { justify-content: center; flex-wrap: wrap; }
   .tp-mode { margin-left: 0; }
+  .tp-location { margin-left: 0; }
   .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
   .tp-ex-plan { align-self: flex-start; }
@@ -4382,8 +4383,12 @@ body.role-athlete .tp-mode { display: none; }
           <span>Athlet-Modus</span>
         </button>
         <div class="dropdown-divider"></div>
-        <div class="dropdown-label" id="athleteListLabel">Athleten</div>
-        <button class="dropdown-item" data-athlete="lisa">
+        <div class="dropdown-label" id="athleteListLabel">Profil anzeigen</div>
+        <button class="dropdown-item" data-athlete-switch="self">
+          <span class="radio active"></span>
+          <span>Alexander (eigenes Profil)</span>
+        </button>
+        <button class="dropdown-item" data-athlete-switch="lisa">
           <span class="radio"></span>
           <span>Julia da Costa Amaral</span>
         </button>
@@ -4821,6 +4826,10 @@ body.role-athlete .tp-mode { display: none; }
             <span id="tpBlockLabel">GPP · W1 · Akkumulation</span>
           </span>
           <span class="tp-plan-name" id="tpPlanName">3×20 Akkumulation</span>
+          <div class="view-switcher tp-location" id="tpLocation" style="display:none;">
+            <button data-loc="studio" class="active">◇ Studio</button>
+            <button data-loc="home">⌂ Home</button>
+          </div>
           <div class="view-switcher tp-mode" id="tpMode">
             <button data-mode="view" class="active">Ansicht</button>
             <button data-mode="edit">Bearbeiten</button>
@@ -6261,10 +6270,16 @@ const state = {
       goal: 'kraftausdauer',
       tage: ['Mo', 'Mi', 'Fr'],
       trainingLocation: 'Studio + Zuhause',
-      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder']
+      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder'],
+      plans: {},
+      sessions: [],
+      periodization: { active: false, startKw: 1, blockLength: 4, blocks: [] },
+      regenConfig: { interval: 13, regenBetween: true },
+      athleteRegenWeeks: []
     }
   },
-  _editTarget: 'self' // 'self' oder Key aus demoAthletes
+  activeProfile: 'self', // 'self' = Alexander, 'lisa' = Julia
+  _editTarget: 'self'
 };
 
 /* ═══════════════════════════════════════════════════════
@@ -6423,7 +6438,7 @@ function setRole(role) {
   // Athletenliste nur im Trainer-Modus
   const showAthletes = role === 'trainer';
   athleteListLabel.style.display = showAthletes ? '' : 'none';
-  document.querySelectorAll('[data-athlete]').forEach(el => {
+  document.querySelectorAll('[data-athlete-switch]').forEach(el => {
     el.style.display = showAthletes ? '' : 'none';
   });
 
@@ -6469,20 +6484,53 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Sidebar-Dropdown: Klick auf einen Athleten-Eintrag oeffnet dessen Profil-Edit.
-// In Variante B haben wir noch keinen echten Profilwechsel — der Klick fuehrt
-// darum ins Edit-Modal der Demo-Athletin. Wenn Multi-Profil-Persistenz kommt,
-// wird hier spaeter ein echter switchProfile() Call stehen.
-document.querySelectorAll('.role-dropdown [data-athlete]').forEach(btn => {
+// ── Profil-Wechsel: zwischen Alexander (self) und Athleten wechseln ──
+// state._selfProfile speichert Alexanders Profil, damit wir zurückwechseln können
+function switchProfile(key) {
+  // Beim ersten Wechsel: Alexander sichern
+  if (!state._selfProfile && state.profile) {
+    state._selfProfile = state.profile;
+  }
+
+  if (key === 'self') {
+    state.profile = state._selfProfile || state.profile;
+    state.activeProfile = 'self';
+  } else {
+    const athlete = state.demoAthletes[key];
+    if (!athlete) { toast('Profil nicht gefunden'); return; }
+    state.profile = athlete;
+    state.activeProfile = key;
+  }
+
+  // Sidebar-Name updaten
+  const name = ((state.profile.name || '') + ' ' + (state.profile.nachname || '')).trim();
+  const roleNameEl = document.getElementById('roleName');
+  if (roleNameEl) roleNameEl.textContent = name;
+
+  // Aktiven Athleten im Dropdown markieren
+  document.querySelectorAll('.role-dropdown [data-athlete-switch]').forEach(btn => {
+    const isActive = btn.dataset.athleteSwitch === key;
+    btn.querySelector('.radio')?.classList.toggle('active', isActive);
+  });
+
+  // Alles neu rendern mit dem neuen Profil
+  state.tpViewKw = null;
+  state.tpViewDay = 0;
+  renderCockpit(state.profile);
+  renderJahresplan(state.profile);
+  renderTrainingsplan(state.profile);
+  renderFortschritt(state.profile);
+  renderInfo(state.profile);
+
+  toast(key === 'self' ? 'Eigenes Profil aktiv' : `${name} — Athleten-Profil aktiv`);
+}
+
+// Sidebar-Dropdown: Klick auf Athleten → Profil wechseln
+document.querySelectorAll('.role-dropdown [data-athlete-switch]').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    const key = btn.dataset.athlete;
     toggleRoleDropdown(false);
-    if (state.demoAthletes && state.demoAthletes[key]) {
-      openProfileEditModal(key);
-    } else {
-      toast('Athleten-Profil wird mit Multi-Profil-Persistenz verfuegbar');
-    }
+    switchProfile(btn.dataset.athleteSwitch);
   });
 });
 
@@ -8359,9 +8407,15 @@ function renderTrainingsplan(profile) {
       const emptyAdd = document.getElementById('tpEmptyAddExercise');
       if (emptyAdd) emptyAdd.addEventListener('click', () => document.getElementById('tpAddExercise')?.click());
     } else {
-      const day = plan.days[state.tpViewDay] || plan.days[0];
+      // Studio/Home-Toggle: wenn Home aktiv und Fallback vorhanden → Fallback-Übungen zeigen
+      const useHome = state.tpUseHome && plan._homeFallback;
+      const dayData = useHome ? (plan._homeFallback[state.tpViewDay] || plan._homeFallback[0]) : (plan.days[state.tpViewDay] || plan.days[0]);
       const session = sessionsByDay[state.tpViewDay] || null;
-      exEl.innerHTML = _renderTpExercises(day, session);
+      exEl.innerHTML = _renderTpExercises(dayData, session);
+
+      // Studio/Home-Toggle sichtbar wenn Fallback vorhanden
+      const locToggle = document.getElementById('tpLocation');
+      if (locToggle) locToggle.style.display = plan._homeFallback ? '' : 'none';
     }
   }
 
@@ -10407,6 +10461,19 @@ function startNextEinheit() {
 (function initTrainingsplanEditMode() {
   const tp = document.querySelector('.page[data-page="trainingsplan"]');
   if (!tp) return;
+
+  // ── Studio/Home-Toggle ──
+  state.tpUseHome = false;
+  document.querySelectorAll('#tpLocation button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const loc = btn.dataset.loc;
+      state.tpUseHome = loc === 'home';
+      document.querySelectorAll('#tpLocation button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (state.profile) renderTrainingsplan(state.profile);
+      toast(loc === 'home' ? 'Home-Ausweichplan aktiv' : 'Studio-Plan aktiv');
+    });
+  });
 
   // ── Toggle Ansicht / Bearbeiten ──
   document.querySelectorAll('#tpMode button').forEach(btn => {
