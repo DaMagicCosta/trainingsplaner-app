@@ -6722,7 +6722,9 @@ document.addEventListener('click', (e) => {
 
 // ── Profil-Wechsel: zwischen Alexander (self) und Athleten wechseln ──
 // state._selfProfile speichert Alexanders Profil, damit wir zurückwechseln können
-function switchProfile(key) {
+const JULIA_PATH = DEMO_PATH.replace('Trainingsplaner_Max_Mustermann_Demo', 'Trainingsplaner_Julia_Demo');
+
+async function switchProfile(key) {
   // Beim ersten Wechsel: Alexander sichern
   if (!state._selfProfile && state.profile) {
     state._selfProfile = state.profile;
@@ -6732,9 +6734,19 @@ function switchProfile(key) {
     state.profile = state._selfProfile || state.profile;
     state.activeProfile = 'self';
   } else {
-    const athlete = state.demoAthletes[key];
-    if (!athlete) { toast('Profil nicht gefunden'); return; }
-    state.profile = athlete;
+    // Julia-Profil laden (beim ersten Mal per fetch, danach gecacht)
+    if (!state._juliaProfile) {
+      try {
+        toast('Lade Julias Profil …');
+        const res = await fetch(JULIA_PATH, { cache: 'no-cache' });
+        if (res.ok) {
+          state._juliaProfile = await res.json();
+        }
+      } catch (e) {
+        console.warn('Julia-JSON nicht gefunden, verwende Basis-Profil', e);
+      }
+    }
+    state.profile = state._juliaProfile || state.demoAthletes[key];
     state.activeProfile = key;
   }
 
