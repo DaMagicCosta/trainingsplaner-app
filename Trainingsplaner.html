@@ -1288,6 +1288,14 @@ ul, ol { list-style: none; }
   font-weight: 600;
   color: var(--text);
   letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.jp-week-loc {
+  font-size: 10px;
+  color: var(--text-3);
+  opacity: 0.7;
 }
 .jp-week-date {
   font-family: var(--font-mono);
@@ -7673,12 +7681,16 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
   const blockCls = p ? _blockClass(p.blockIdx) : '';
   const blockLabel = p ? `${p.blockLabel} · W${p.relativeWeek}` : '—';
 
+  // Location-Icon aus dem Plan-Objekt
+  const planObj = plans['w' + kw];
+  const locIcons = { studio: '◇', home: '⌂', outdoor: '✦' };
+  const planLoc = planObj?._location;
+  const locIcon = planLoc ? locIcons[planLoc] || '' : '';
+
   // Session-Dots: Anzahl der geplanten Tage, gefüllt wenn geloggt
   const kwSessions = sessionsByKw[kw] || new Set();
   let dotsHtml = '';
   if (kw <= currentKw) {
-    // Nur Vergangenheit und aktuelle Woche zeigen Dots
-    const planObj = plans['w' + kw];
     const dayCount = planObj?.days?.length || plannedDays;
     let dotSpans = '';
     for (let i = 0; i < dayCount; i++) {
@@ -7690,7 +7702,7 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
 
   return `
     <div class="jp-week ${blockCls}${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
-      <div class="jp-week-kw">${kwStr}</div>
+      <div class="jp-week-kw">${kwStr}${locIcon ? ' <span class="jp-week-loc">' + locIcon + '</span>' : ''}</div>
       <div class="jp-week-date">${dateStr}</div>
       <div class="jp-week-block">${blockLabel}</div>
       ${dotsHtml}
@@ -9206,9 +9218,13 @@ function renderTrainingsplan(profile) {
     if (blockLabelEl) blockLabelEl.textContent = '—';
   }
 
-  // Plan-Name aus Profil
+  // Plan-Name + Trainingsort aus Profil
   const plan = (profile.plans || {})['w' + kw];
-  if (planNameEl) planNameEl.textContent = plan?.name || (pEntry?.isRegen ? 'Regeneration' : 'Kein Plan');
+  const _locLabels = { studio: '◇ Studio', home: '⌂ Zuhause', outdoor: '✦ Outdoor' };
+  const planLocLabel = plan?._location ? _locLabels[plan._location] || '' : '';
+  if (planNameEl) planNameEl.textContent =
+    (plan?.name || (pEntry?.isRegen ? 'Regeneration' : 'Kein Plan'))
+    + (planLocLabel ? ' · ' + planLocLabel : '');
 
   // ─── Schritt 3+4: Tag-Tabs + Übungs-Karten mit Session-Matching ───
   const tabsEl = document.getElementById('tpDayTabs');
