@@ -10115,8 +10115,9 @@ document.addEventListener('keydown', (e) => {
 // ─── Profil-Edit-Modal: Formular befüllen und speichern ───
 // target: 'self' (Max, state.profile) oder Key aus state.demoAthletes ('lisa')
 function _resolveProfile(key) {
-  // 'self' = immer Alexander, 'lisa' = immer Julia
-  if (key === 'self') return state._selfProfile || state.profile;
+  // 'self' = aktives Profil (wer gerade geladen ist)
+  if (key === 'self') return state.profile;
+  // 'lisa' = immer Julia (echtes JSON, nicht Mock)
   return state._juliaProfile || state.demoAthletes[key];
 }
 
