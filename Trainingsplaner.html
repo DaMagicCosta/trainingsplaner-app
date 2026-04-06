@@ -10502,6 +10502,41 @@ function renderAthleteRow(key, p) {
 })();
 
 // Fortschritt (v2.5): Range-Toggle + Exercise-Select verdrahten
+// Abhängige Filter im Fortschritt-Tab synchronisieren
+function _syncFpFilters() {
+  const range = state.fpRange;
+  const isShort = (range === '4W');
+
+  // Aggregation: bei 4W auf "Wochen" zwingen, Quartale deaktivieren
+  document.querySelectorAll('#fpAggToggle button').forEach(btn => {
+    const disabled = (btn.dataset.agg === 'quarter' && isShort);
+    btn.disabled = disabled;
+    btn.style.opacity = disabled ? '0.3' : '';
+    btn.style.pointerEvents = disabled ? 'none' : '';
+  });
+  if (isShort && state.fpAgg === 'quarter') {
+    state.fpAgg = 'week';
+    localStorage.setItem(STORAGE_KEYS.fpAgg, 'week');
+    document.querySelectorAll('#fpAggToggle button').forEach(b =>
+      b.classList.toggle('active', b.dataset.agg === 'week'));
+  }
+
+  // Zeitvergleich: bei 4W auf "Jahre" zwingen, Quartale deaktivieren
+  document.querySelectorAll('#fpCompareMode button').forEach(btn => {
+    const disabled = (btn.dataset.cmp === 'quarter' && isShort);
+    btn.disabled = disabled;
+    btn.style.opacity = disabled ? '0.3' : '';
+    btn.style.pointerEvents = disabled ? 'none' : '';
+  });
+  if (isShort) {
+    const activeCompare = document.querySelector('#fpCompareMode button.active');
+    if (activeCompare?.dataset.cmp === 'quarter') {
+      document.querySelectorAll('#fpCompareMode button').forEach(b =>
+        b.classList.toggle('active', b.dataset.cmp === 'year'));
+    }
+  }
+}
+
 (function initFortschritt() {
   // Initial aktiven Button anhand state setzen
   document.querySelectorAll('#fpRange button').forEach(btn => {
@@ -10511,6 +10546,7 @@ function renderAthleteRow(key, p) {
       localStorage.setItem(STORAGE_KEYS.fpRange, state.fpRange);
       document.querySelectorAll('#fpRange button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      _syncFpFilters();
       if (state.profile) renderFortschritt(state.profile);
     });
   });
@@ -10519,6 +10555,7 @@ function renderAthleteRow(key, p) {
   document.querySelectorAll('#fpAggToggle button').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.agg === state.fpAgg);
     btn.addEventListener('click', () => {
+      if (btn.disabled) return;
       state.fpAgg = btn.dataset.agg;
       localStorage.setItem(STORAGE_KEYS.fpAgg, state.fpAgg);
       document.querySelectorAll('#fpAggToggle button').forEach(b => b.classList.remove('active'));
@@ -10526,6 +10563,9 @@ function renderAthleteRow(key, p) {
       if (state.profile) renderFortschritt(state.profile);
     });
   });
+
+  // Initial-Sync
+  _syncFpFilters();
 
   const select = document.getElementById('fpExerciseSelect');
   if (select) {
