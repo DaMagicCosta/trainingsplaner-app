@@ -1388,7 +1388,8 @@ ul, ol { list-style: none; }
   .jp-head { flex-direction: column; align-items: stretch; }
   .jp-head-right { justify-content: flex-end; }
   .jp-timeline-legend { font-size: 10px; gap: var(--s-2); }
-  .jp-week { padding: 10px 4px; }
+  .jp-week { padding: 10px 6px; }
+  .jp-quarter { padding: var(--s-5) var(--s-6); }
   .jp-week-block {
     font-size: 8px;
     padding: 2px 5px;
@@ -1401,7 +1402,7 @@ ul, ol { list-style: none; }
 }
 @media (max-width: 520px) {
   .jp-week-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .jp-week { padding: 6px 3px; }
+  .jp-week { padding: 6px 5px; }
   .jp-week-date { display: none; }
   .jp-week-block {
     font-size: 7px;
@@ -2297,6 +2298,8 @@ body.role-athlete .profile-link-vereinbarung {
 .lx-card.lx-cat-arme,         .lx-sheet-cat.lx-cat-arme         { --lx-c: #10B981; --lx-cd: rgba(16,185,129,0.14);  --lx-cl: rgba(16,185,129,0.40);  }
 .lx-card.lx-cat-unterkoerper, .lx-sheet-cat.lx-cat-unterkoerper { --lx-c: #6B9BD4; --lx-cd: rgba(107,155,212,0.14); --lx-cl: rgba(107,155,212,0.40); }
 .lx-card.lx-cat-bauch,        .lx-sheet-cat.lx-cat-bauch        { --lx-c: #A481D4; --lx-cd: rgba(164,129,212,0.14); --lx-cl: rgba(164,129,212,0.40); }
+.lx-card.lx-cat-warmup,      .lx-sheet-cat.lx-cat-warmup      { --lx-c: #E09B4A; --lx-cd: rgba(224,155,74,0.14);  --lx-cl: rgba(224,155,74,0.40);  }
+.lx-card.lx-cat-cooldown,    .lx-sheet-cat.lx-cat-cooldown    { --lx-c: #4AB8D4; --lx-cd: rgba(74,184,212,0.14);  --lx-cl: rgba(74,184,212,0.40);  }
 
 /* ─── Filter-Zeile: Search + Count ─── */
 .lx-filters {
@@ -2369,6 +2372,8 @@ body.role-athlete .profile-link-vereinbarung {
 .lx-categories button[data-cat="p_arme"].active         { color: #10B981; box-shadow: inset 0 -2px 0 #10B981, inset 0 1px 0 rgba(255,255,255,0.04); }
 .lx-categories button[data-cat="p_unterkoerper"].active { color: #6B9BD4; box-shadow: inset 0 -2px 0 #6B9BD4, inset 0 1px 0 rgba(255,255,255,0.04); }
 .lx-categories button[data-cat="p_bauch"].active        { color: #A481D4; box-shadow: inset 0 -2px 0 #A481D4, inset 0 1px 0 rgba(255,255,255,0.04); }
+.lx-categories button[data-cat="p_warmup"].active       { color: #E09B4A; box-shadow: inset 0 -2px 0 #E09B4A, inset 0 1px 0 rgba(255,255,255,0.04); }
+.lx-categories button[data-cat="p_cooldown"].active     { color: #4AB8D4; box-shadow: inset 0 -2px 0 #4AB8D4, inset 0 1px 0 rgba(255,255,255,0.04); }
 
 /* ─── Übungs-Grid ─── */
 .lx-grid {
@@ -3802,13 +3807,13 @@ body.role-athlete .info-athletes-card { display: none; }
 @media (max-width: 720px) {
   .tp-head { flex-direction: column; align-items: stretch; gap: var(--s-4); }
   .tp-context { justify-content: center; }
-  .tp-exercise { padding: var(--s-5) var(--s-6); }
+  .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
   .tp-ex-plan { align-self: flex-start; }
   .tp-set {
     flex-wrap: wrap;
     gap: var(--s-4);
-    padding: 10px 12px;
+    padding: 10px 16px;
   }
   .tp-set-field { min-width: 60px; }
 }
@@ -4681,6 +4686,8 @@ body.role-athlete .info-athletes-card { display: none; }
         <button data-cat="p_arme">Arme</button>
         <button data-cat="p_unterkoerper">Unterkörper</button>
         <button data-cat="p_bauch">Bauch</button>
+        <button data-cat="p_warmup">Warm-up</button>
+        <button data-cat="p_cooldown">Cooldown</button>
       </div>
 
       <div class="view-switcher lx-locations" id="lxLocations">
@@ -5806,9 +5813,9 @@ body.role-athlete .info-athletes-card { display: none; }
     <div class="ico">+</div>
     <span>Log</span>
   </button>
-  <button class="bnav-item" data-tab="fortschritt">
-    <div class="ico">↗</div>
-    <span>Stats</span>
+  <button class="bnav-item" data-tab="lexikon">
+    <div class="ico">⌘</div>
+    <span>Lexikon</span>
   </button>
   <button class="bnav-item" id="moreBtn">
     <div class="ico">⌘</div>
@@ -6119,6 +6126,8 @@ const cmdkItems = [
   { group: 'Modus', label: 'Zu Trainer wechseln', ico: '●', action: () => setRole('trainer') },
   { group: 'Modus', label: 'Eigenes Profil bearbeiten', ico: '✎', action: () => openProfileEditModal('self') },
   { group: 'Modus', label: 'Athletin Lisa bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
+  { group: 'Modus', label: 'Anamnesebogen anzeigen', ico: '⚕', visible: () => state.role !== 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'anamnese')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'anamnese')); state.infoSection = 'anamnese'; localStorage.setItem('tpv2_info_section', 'anamnese'); }, 50); } },
+  { group: 'Modus', label: 'Trainer-Vereinbarung anzeigen', ico: '⚖', visible: () => state.role === 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'vereinbarung')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'vereinbarung')); state.infoSection = 'vereinbarung'; localStorage.setItem('tpv2_info_section', 'vereinbarung'); }, 50); } },
 
   { group: 'Tools', label: 'Bug melden', ico: '🐛', action: () => document.getElementById('bugFloaterBtn')?.click() },
   { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz-Modul in v2 noch nicht portiert') },
@@ -6131,9 +6140,10 @@ const cmdkItems = [
 
 function renderCmdkList(filter = '') {
   const q = filter.trim().toLowerCase();
+  const visible = cmdkItems.filter(i => !i.visible || i.visible());
   const filtered = q
-    ? cmdkItems.filter(i => i.label.toLowerCase().includes(q) || i.group.toLowerCase().includes(q))
-    : cmdkItems;
+    ? visible.filter(i => i.label.toLowerCase().includes(q) || i.group.toLowerCase().includes(q))
+    : visible;
 
   if (filtered.length === 0) {
     cmdkList.innerHTML = '<div class="cmdk-empty">Nichts gefunden für "' + escapeHtml(filter) + '"</div>';
@@ -7123,6 +7133,92 @@ const LEXIKON_DATA = {
       antagonist: 'Rückenstrecker, Großer Gesäßmuskel',
       desc: 'Intensivste Bauchrollen-Übung. Knie auf Boden, Rad langsam vorwärts rollen bis Körper flach, zurückrollen. Lendenwirbel nie durchhängen lassen. Stehend für Profis.',
       location: 'home' }
+  ],
+  p_warmup: [
+    { name: 'Jumping Jacks (Hampelmann)',
+      muscle: 'Ganzkörper-Aktivierung',
+      secondary: 'Deltamuskel, Waden, Quadrizeps, Adduktoren',
+      antagonist: '—',
+      desc: 'Klassische Ganzkörper-Aufwärmübung. Arme und Beine gleichzeitig seitlich öffnen und schließen. Leichte, federnde Landung. Steigert Herzfrequenz und Durchblutung in 1–2 Minuten.',
+      location: 'home' },
+    { name: 'Arm Circles (Armkreisen)',
+      muscle: 'Deltamuskel (alle Anteile), Rotatorenmanschette',
+      secondary: 'Trapezmuskel, Vorderer Sägemuskel',
+      antagonist: '—',
+      desc: 'Arme seitlich ausstrecken und kleine bis große Kreise zeichnen. Vorwärts und rückwärts je 15–20 Wiederholungen. Mobilisiert Schultergelenk und aktiviert Rotatorenmanschette vor Press-Übungen.',
+      location: 'home' },
+    { name: 'Hip Circles (Hüftkreisen)',
+      muscle: 'Hüftbeuger (Iliopsoas), Hüftabduktoren, Großer Gesäßmuskel',
+      secondary: 'Schräge Bauchmuskeln, Adduktoren, Querer Bauchmuskel',
+      antagonist: '—',
+      desc: 'Hände auf die Hüften, weite Kreise in beide Richtungen. Mobilisiert das Hüftgelenk und aktiviert die tiefe Hüftmuskulatur. Besonders wichtig vor Kniebeugen und Kreuzheben.',
+      location: 'home' },
+    { name: 'High Knees (Kniehebelauf)',
+      muscle: 'Hüftbeuger (Iliopsoas), Quadrizeps',
+      secondary: 'Waden, Gerader Bauchmuskel, Großer Gesäßmuskel',
+      antagonist: '—',
+      desc: 'Auf der Stelle laufen, Knie abwechselnd hoch zur Brust ziehen. Armarbeit gegengleich mitführen. Steigert Herzfrequenz, aktiviert Beinmuskulatur und Core.',
+      location: 'home' },
+    { name: 'Schulterrotation mit Widerstandsband',
+      muscle: 'Rotatorenmanschette (Infraspinatus, Teres minor)',
+      secondary: 'Deltamuskel (hinterer Anteil), Rautenmuskeln',
+      antagonist: 'Deltamuskel (vorderer Anteil), Großer Brustmuskel',
+      desc: 'Band auf Ellbogenhöhe fixieren. Oberarm anliegend, Unterarm um 90° nach außen rotieren. 15 Wiederholungen pro Seite. Schützt die Schulter vor Verletzungen bei schweren Press-Übungen.' },
+    { name: 'Cat-Cow (Katzenbuckel-Kuh)',
+      muscle: 'Rückenstrecker, Gerader Bauchmuskel',
+      secondary: 'Querer Bauchmuskel, Multifidus, Hüftbeuger',
+      antagonist: '—',
+      desc: 'Vierfüßlerstand: Rücken rund nach oben wölben (Katze), dann durchhängen lassen und Brust nach vorne schieben (Kuh). Langsam atmen, 10–12 Wiederholungen. Mobilisiert die gesamte Wirbelsäule.',
+      location: 'home' },
+    { name: 'Inchworm (Raupenlauf)',
+      muscle: 'Hintere Oberschenkelmuskulatur, Waden, Deltamuskel, Gerader Bauchmuskel',
+      secondary: 'Trizeps, Quadrizeps, Rückenstrecker',
+      antagonist: '—',
+      desc: 'Stehend nach vorne beugen, Hände aufsetzen und in die Liegestützposition wandern. Kurz halten, dann mit den Füßen zu den Händen laufen. Dynamische Ganzkörper-Mobilisation.',
+      location: 'home' }
+  ],
+  p_cooldown: [
+    { name: 'Dehnung Brustmuskulatur (Türrahmen)',
+      muscle: 'Großer Brustmuskel, Deltamuskel (vorderer Anteil)',
+      secondary: 'Bizeps, Vorderer Sägemuskel',
+      antagonist: '—',
+      desc: 'Unterarm am Türrahmen anlegen (Ellbogen auf Schulterhöhe), Oberkörper sanft nach vorne drehen bis Dehnung in der Brust spürbar. 30 Sekunden pro Seite, 2 Durchgänge. Ausgleich nach Press-Übungen.',
+      location: 'home' },
+    { name: 'Dehnung hintere Oberschenkel (stehend)',
+      muscle: 'Hintere Oberschenkelmuskulatur (Biceps femoris, Semitendinosus, Semimembranosus)',
+      secondary: 'Waden, Rückenstrecker',
+      antagonist: '—',
+      desc: 'Ein Bein gestreckt auf einer Erhöhung ablegen. Oberkörper mit geradem Rücken nach vorne neigen bis Dehnung spürbar. 30 Sekunden halten. Langsam aus der Position lösen.',
+      location: 'home' },
+    { name: 'Dehnung Hüftbeuger (Ausfallschritt)',
+      muscle: 'Hüftbeuger (Iliopsoas), Quadrizeps (Rectus femoris)',
+      secondary: 'Adduktoren, Tensor fasciae latae',
+      antagonist: '—',
+      desc: 'Tiefer Ausfallschritt, hinteres Knie am Boden. Hüfte nach vorne schieben, Oberkörper aufrecht. Arm der hinteren Seite über Kopf strecken für mehr Intensität. 30 Sekunden pro Seite.',
+      location: 'home' },
+    { name: 'Dehnung Latissimus (seitlich)',
+      muscle: 'Breiter Rückenmuskel, Schräge Bauchmuskeln',
+      secondary: 'Teres major, Vorderer Sägemuskel, Interkostalmuskeln',
+      antagonist: '—',
+      desc: 'Stehend: einen Arm über den Kopf strecken, Oberkörper zur Gegenseite neigen. Dehnung in der gesamten Flanke spüren. 20–30 Sekunden halten, langsam wechseln.',
+      location: 'home' },
+    { name: 'Child\'s Pose (Kindspose)',
+      muscle: 'Rückenstrecker, Breiter Rückenmuskel, Großer Gesäßmuskel',
+      secondary: 'Quadrizeps, Hüftbeuger, Deltamuskel',
+      antagonist: '—',
+      desc: 'Knie am Boden, Gesäß auf die Fersen setzen, Arme weit nach vorne strecken. Stirn auf den Boden. 30–60 Sekunden atmen. Beruhigt Nervensystem und dehnt die gesamte Rückseite.',
+      location: 'home' },
+    { name: 'Foam Rolling Oberschenkel (Vorderseite)',
+      muscle: 'Quadrizeps (Vastus lateralis, Rectus femoris)',
+      secondary: 'Tensor fasciae latae, IT-Band',
+      antagonist: '—',
+      desc: 'Bauchlage auf der Faszienrolle, Oberschenkel-Vorderseite langsam abrollen. Bei Schmerzpunkten 10–15 Sekunden verweilen. Löst Verklebungen und verbessert die Regeneration nach Beintraining.' },
+    { name: 'Dehnung Nacken und Trapezmuskel',
+      muscle: 'Trapezmuskel (oberer Anteil), Musculus levator scapulae',
+      secondary: 'Sternocleidomastoideus, Scaleni',
+      antagonist: '—',
+      desc: 'Kopf seitlich neigen, gegenüberliegende Hand sanft auf den Kopf legen. Kein Drücken — nur Eigengewicht des Arms nutzen. 20 Sekunden pro Seite. Löst Spannungen nach Schultertraining.',
+      location: 'home' }
   ]
 };
 
@@ -7132,7 +7228,9 @@ const LX_CATEGORIES = {
   p_ruecken:      'Rücken',
   p_arme:         'Arme',
   p_unterkoerper: 'Unterkörper',
-  p_bauch:        'Bauch'
+  p_bauch:        'Bauch',
+  p_warmup:       'Warm-up',
+  p_cooldown:     'Cooldown'
 };
 
 // p_brust → lx-cat-brust (Klassen-Namen für Farbe)
