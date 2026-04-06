@@ -10114,9 +10114,15 @@ document.addEventListener('keydown', (e) => {
 
 // ─── Profil-Edit-Modal: Formular befüllen und speichern ───
 // target: 'self' (Max, state.profile) oder Key aus state.demoAthletes ('lisa')
+function _resolveProfile(key) {
+  // 'self' = immer Alexander, 'lisa' = immer Julia
+  if (key === 'self') return state._selfProfile || state.profile;
+  return state._juliaProfile || state.demoAthletes[key];
+}
+
 function openProfileEditModal(target) {
   target = target || 'self';
-  const p = target === 'self' ? state.profile : state.demoAthletes[target];
+  const p = _resolveProfile(target);
   if (!p) { toast('Kein Profil geladen'); return; }
 
   state._editTarget = target;
@@ -10159,7 +10165,7 @@ function openProfileEditModal(target) {
 
 function saveProfileEdit() {
   const target = state._editTarget || 'self';
-  const p = target === 'self' ? state.profile : state.demoAthletes[target];
+  const p = _resolveProfile(target);
   if (!p) return;
 
   p.name             = document.getElementById('pemName').value.trim();
