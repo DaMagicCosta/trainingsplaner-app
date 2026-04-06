@@ -409,6 +409,7 @@ ul, ol { list-style: none; }
 .theme-dot[data-theme="tealLight"] { background: #14B8A6; }
 .theme-dot[data-theme="tealMid"]   { background: #0D9488; }
 .theme-dot[data-theme="tealDeep"]  { background: #0F766E; }
+.theme-dot[data-theme="pastell"]   { background: linear-gradient(135deg, #C48B9F, #D4A0B4, #E8C8D4); }
 
 /* ═══════════════════════════════════════════════════════
    MAIN AREA
@@ -4612,6 +4613,7 @@ body.role-athlete .tp-mode { display: none; }
         <button class="theme-dot" data-theme="tealLight" title="Teal hell — frisch"></button>
         <button class="theme-dot" data-theme="tealMid" title="Teal mittel — elegant"></button>
         <button class="theme-dot" data-theme="tealDeep" title="Teal tief — premium"></button>
+        <button class="theme-dot" data-theme="pastell" title="Pastell — Garten"></button>
       </div>
     </div>
   </aside>
@@ -5351,7 +5353,7 @@ body.role-athlete .tp-mode { display: none; }
               <div class="info-athlete-avatar">JC</div>
               <div class="info-athlete-info">
                 <div class="info-athlete-name">Julia da Costa Amaral</div>
-                <div class="info-athlete-meta">26 J · Kraftausdauer · 3×/Woche · Studio + Zuhause</div>
+                <div class="info-athlete-meta">38 J · Kraftausdauer · 3×/Woche · Studio + Zuhause</div>
               </div>
               <div class="info-athlete-actions">
                 <button class="info-athlete-btn" data-athlete-edit="lisa">Bearbeiten</button>
@@ -6470,11 +6472,12 @@ const state = {
     lisa: {
       name: 'Julia',
       nachname: 'da Costa Amaral',
-      alter: 26,
+      alter: 38,
       groesse: 168,
       gewicht: 62,
-      hfmax: 194,
+      hfmax: 182,
       goal: 'kraftausdauer',
+      geschlecht: 'weiblich',
       tage: ['Mo', 'Mi', 'Fr'],
       trainingLocation: 'Studio + Zuhause',
       equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder'],
@@ -6537,13 +6540,39 @@ const themes = {
     '--danger':        '#C76A5E',
     '--danger-dim':    'rgba(199,106,94,0.10)',
     '--danger-line':   'rgba(199,106,94,0.30)'
+  },
+  pastell: {
+    '--bg':            '#FDF8F4',
+    '--surface-1':     '#FFF9F5',
+    '--surface-2':     '#F5EDE6',
+    '--surface-3':     '#EDE3DA',
+    '--surface-hover': '#E8DCD2',
+    '--border-subtle': 'rgba(0,0,0,0.08)',
+    '--border-strong': 'rgba(0,0,0,0.14)',
+    '--text':          '#3D2E22',
+    '--text-2':        '#7A6B5E',
+    '--text-3':        '#A39485',
+    '--accent':        '#C48B9F',
+    '--accent-hover':  '#D4A0B4',
+    '--accent-dim':    'rgba(196,139,159,0.14)',
+    '--accent-line':   'rgba(196,139,159,0.35)',
+    '--success':       '#7BAE7F',
+    '--success-dim':   'rgba(123,174,127,0.12)',
+    '--success-line':  'rgba(123,174,127,0.30)',
+    '--warning':       '#D4A968',
+    '--warning-dim':   'rgba(212,169,104,0.12)',
+    '--warning-line':  'rgba(212,169,104,0.30)',
+    '--danger':        '#C76A5E',
+    '--danger-dim':    'rgba(199,106,94,0.10)',
+    '--danger-line':   'rgba(199,106,94,0.30)'
   }
 };
 
 const themeLabels = {
   tealLight: 'Teal hell · frisch',
   tealMid: 'Teal mittel · elegant',
-  tealDeep: 'Teal tief · premium'
+  tealDeep: 'Teal tief · premium',
+  pastell: 'Pastell · Garten'
 };
 
 function applyTheme(key) {
@@ -6719,6 +6748,15 @@ function switchProfile(key) {
     const isActive = btn.dataset.athleteSwitch === key;
     btn.querySelector('.radio')?.classList.toggle('active', isActive);
   });
+
+  // Auto-Theme: Julia bekommt Pastell, Alexander seinen gespeicherten Teal
+  if (key !== 'self') {
+    applyTheme('pastell');
+  } else {
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.theme) || 'tealDeep';
+    if (savedTheme !== 'pastell') applyTheme(savedTheme);
+    else applyTheme('tealDeep');
+  }
 
   // Alles neu rendern mit dem neuen Profil
   state.tpViewKw = null;
