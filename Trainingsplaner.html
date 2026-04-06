@@ -1513,7 +1513,14 @@ ul, ol { list-style: none; }
 .pn-notice-text strong { color: var(--warning); }
 
 /* Generator-Formular */
-.pn-form-card { display: flex; flex-direction: column; gap: var(--s-4); }
+.pn-form-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  background:
+    radial-gradient(circle at 10% 0%, var(--accent-dim) 0%, transparent 50%),
+    var(--surface-1);
+}
 .pn-form-field { display: flex; flex-direction: column; gap: 6px; }
 .pn-field-label {
   font-family: var(--font-mono);
@@ -1524,23 +1531,29 @@ ul, ol { list-style: none; }
   font-weight: 500;
 }
 .pn-select, .pn-input {
-  padding: 8px 12px;
+  padding: 10px 14px;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   background: var(--surface-2);
   color: var(--text);
   font-family: var(--font-sans);
   font-size: 13px;
-  transition: border-color var(--ease);
+  transition: all var(--ease);
 }
-.pn-select:focus, .pn-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px var(--accent-dim); }
-.pn-input { width: 80px; text-align: center; font-family: var(--font-mono); }
+.pn-select:hover, .pn-input:hover { border-color: var(--border-strong); }
+.pn-select:focus, .pn-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
+.pn-input { width: 80px; text-align: center; font-family: var(--font-mono); font-weight: 600; }
 .pn-form-row { display: flex; gap: var(--s-4); align-items: flex-end; }
 .pn-form-hint {
   font-family: var(--font-mono);
   font-size: 11px;
   color: var(--accent);
-  margin-top: var(--s-2);
+  margin-top: var(--s-3);
+  padding: 8px 12px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-sm);
+  line-height: 1.5;
 }
 .pn-preset-row {
   display: flex;
@@ -1568,19 +1581,21 @@ ul, ol { list-style: none; }
   line-height: 1.5;
 }
 .pn-generate-btn {
-  padding: 12px 24px;
+  padding: 14px 32px;
   border: none;
   border-radius: var(--r-md);
-  background: var(--accent);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--success) 100%);
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--ease);
   font-family: var(--font-sans);
-  margin-top: var(--s-2);
+  margin-top: var(--s-3);
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(15,118,110,0.3);
 }
-.pn-generate-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+.pn-generate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,118,110,0.4); }
 .pn-form-action { align-items: flex-start; }
 .pn-check {
   display: flex;
@@ -1601,24 +1616,33 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   gap: var(--s-4);
-  padding: 10px var(--s-4);
+  padding: 12px var(--s-5);
   border: 1px solid var(--border-subtle);
-  border-radius: var(--r-sm);
-  background: var(--surface-2);
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(circle at 0% 50%, var(--surface-3) 0%, transparent 40%),
+    var(--surface-2);
+  transition: all var(--ease);
 }
+.pn-block-row:hover { border-color: var(--border-strong); }
 .pn-block-name {
   flex: 1; min-width: 0;
   font-size: 13px; font-weight: 600;
 }
 .pn-block-goal {
-  padding: 5px 8px;
+  padding: 8px 12px;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   background: var(--surface-3);
   color: var(--text);
-  font-size: 12px;
+  font-size: 13px;
   font-family: var(--font-sans);
+  font-weight: 500;
+  transition: all var(--ease);
+  cursor: pointer;
 }
+.pn-block-goal:hover { border-color: var(--border-strong); }
+.pn-block-goal:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
 .pn-block-len {
   display: flex;
   align-items: center;
@@ -1641,19 +1665,20 @@ ul, ol { list-style: none; }
 }
 .pn-block-remove:hover { color: var(--danger); border-color: var(--danger); }
 .pn-add-block-btn {
-  padding: 8px 16px;
-  border: 1px dashed var(--border-subtle);
-  border-radius: var(--r-sm);
+  padding: 10px 20px;
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--r-md);
   background: transparent;
   color: var(--text-3);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
   transition: all var(--ease);
   font-family: var(--font-sans);
-  margin-top: var(--s-2);
+  margin-top: var(--s-3);
 }
-.pn-add-block-btn:hover { border-color: var(--accent); color: var(--accent); }
-.pn-add-block-btn:disabled { opacity: 0.3; cursor: default; }
+.pn-add-block-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.pn-add-block-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
 
 @media (max-width: 720px) {
   .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
@@ -4566,11 +4591,11 @@ body.role-athlete .tp-mode { display: none; }
         <div class="pn-hero">
           <div class="pn-hero-icon">✎</div>
           <div class="pn-hero-text">
-            <div class="pn-hero-title">Wochenplan-Generator</div>
+            <div class="pn-hero-title">Trainingsplanung</div>
             <div class="pn-hero-desc">
-              Block-Phase und Zeitraum wählen, Split-Template bestimmen — der Generator baut
-              die Wochenpläne mit passenden Übungen aus dem Lexikon. Regen-Wochen werden
-              automatisch nach jedem 12-Wochen-Block gesetzt.
+              Definiere bis zu vier Trainingsblöcke mit individuellen Zielen und Längen.
+              Wähle den Regenerationsrhythmus, das Split-Template und den Trainingsort —
+              der Generator erstellt die Wochenpläne mit passenden Übungen aus dem Lexikon.
             </div>
           </div>
         </div>
