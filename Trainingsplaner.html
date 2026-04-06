@@ -1093,8 +1093,10 @@ ul, ol { list-style: none; }
 }
 .jp-new-btn:hover { background: var(--accent-hover); }
 
-/* Bearbeiten-Modus aktiv: Button einblenden */
+/* Bearbeiten-Modus aktiv: Button + Planungs-Karten einblenden */
 .page[data-page="jahresplan"].mode-edit .jp-new-btn { display: inline-block; }
+.jp-edit-content { display: none; margin-top: var(--s-6); }
+.page[data-page="jahresplan"].mode-edit .jp-edit-content { display: block; }
 /* Athleten-Rolle: Toggle und Button komplett ausblenden */
 .page[data-page="jahresplan"].role-athlete .jp-mode,
 .page[data-page="jahresplan"].role-athlete .jp-new-btn { display: none; }
@@ -1409,13 +1411,8 @@ ul, ol { list-style: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
-   PLANUNG (v2.8 Stub — Trainer-only Leer-Zustand)
+   PLANUNGS-KARTEN (jetzt im Jahresplan Bearbeiten-Modus)
    ═══════════════════════════════════════════════════════ */
-/* Trainer-only Sichtbarkeit in Sidebar und Bottom-Nav */
-body.role-athlete .nav-item-trainer-only,
-body.role-athlete .bnav-item-trainer-only {
-  display: none !important;
-}
 
 .pn-hero {
   background:
@@ -1879,11 +1876,13 @@ body.role-athlete .bnav-item-trainer-only {
 
 /* ─── Rollenbasierte Sichtbarkeit: Anamnese nur Athlet, Vereinbarung nur Trainer ─── */
 body.role-trainer #infoSubnav button[data-section="anamnese"],
-body.role-trainer .info-section[data-section="anamnese"] {
+body.role-trainer .info-section[data-section="anamnese"],
+body.role-trainer .profile-link-anamnese {
   display: none !important;
 }
 body.role-athlete #infoSubnav button[data-section="vereinbarung"],
-body.role-athlete .info-section[data-section="vereinbarung"] {
+body.role-athlete .info-section[data-section="vereinbarung"],
+body.role-athlete .profile-link-vereinbarung {
   display: none !important;
 }
 
@@ -4108,11 +4107,6 @@ body.role-athlete .info-athletes-card { display: none; }
           <span>Cockpit</span>
           <span class="nav-kbd">G C</span>
         </button>
-        <button class="nav-item nav-item-trainer-only" data-tab="planung">
-          <span class="nav-ico">✎</span>
-          <span>Planung</span>
-          <span class="nav-kbd">G P</span>
-        </button>
         <button class="nav-item" data-tab="jahresplan">
           <span class="nav-ico">▤</span>
           <span>Jahresplan</span>
@@ -4242,76 +4236,6 @@ body.role-athlete .info-athletes-card { display: none; }
         <button class="next-action" id="cpNextAction">Einheit starten →</button>
       </div>
 
-    </section>
-
-    <!-- Planung (Trainer-only Stub, Details folgen in eigener Bau-Etappe) -->
-    <section class="page" data-page="planung">
-      <div class="page-head">
-        <div class="page-crumb">Trainer-Workflow · Wochenplan-Generator &amp; Periodisierung</div>
-        <h1 class="page-title">Planung</h1>
-      </div>
-
-      <div class="pn-hero">
-        <div class="pn-hero-icon">✎</div>
-        <div class="pn-hero-title">Wochenplan-Generator folgt</div>
-        <div class="pn-hero-desc">
-          Dieser Tab wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
-          passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
-          verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
-          steht in der nächsten Bau-Etappe auf dem Plan.
-        </div>
-      </div>
-
-      <div class="pn-grid">
-        <div class="pn-card">
-          <div class="pn-card-label">1 · Generator</div>
-          <div class="pn-card-title">Wochenplan aus Template</div>
-          <div class="pn-card-desc">
-            Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
-            Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
-            (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
-          </div>
-        </div>
-
-        <div class="pn-card">
-          <div class="pn-card-label">2 · Templates</div>
-          <div class="pn-card-title">Split-Bibliothek</div>
-          <div class="pn-card-desc">
-            Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
-            kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
-            jeder generierte Plan zusammengesetzt wird.
-          </div>
-        </div>
-
-        <div class="pn-card">
-          <div class="pn-card-label">3 · Periodisierung</div>
-          <div class="pn-card-title">13-Wochen-Zyklen</div>
-          <div class="pn-card-desc">
-            Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
-            plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
-            jederzeit möglich.
-          </div>
-        </div>
-
-        <div class="pn-card">
-          <div class="pn-card-label">4 · Ziel-Presets</div>
-          <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
-          <div class="pn-card-desc">
-            Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
-            anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
-            Einzelfall überschreiben.
-          </div>
-        </div>
-      </div>
-
-      <div class="pn-notice">
-        <div class="pn-notice-icon">◐</div>
-        <div class="pn-notice-text">
-          <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
-          Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
-          neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Tab den geplanten Funktionsumfang.
-        </div>
-      </div>
     </section>
 
     <!-- Jahresplan -->
@@ -4452,6 +4376,72 @@ body.role-athlete .info-athletes-card { display: none; }
         </div>
         <!-- Q2-Q4 werden in Schritt 4 dynamisch aus Profildaten gerendert -->
       </div>
+
+      <!-- Bearbeiten-Modus: Planungs-Karten (sichtbar nur in mode-edit) -->
+      <div class="jp-edit-content">
+        <div class="pn-hero">
+          <div class="pn-hero-icon">✎</div>
+          <div class="pn-hero-title">Wochenplan-Generator folgt</div>
+          <div class="pn-hero-desc">
+            Dieser Bereich wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
+            passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
+            verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
+            steht in der nächsten Bau-Etappe auf dem Plan.
+          </div>
+        </div>
+
+        <div class="pn-grid">
+          <div class="pn-card">
+            <div class="pn-card-label">1 · Generator</div>
+            <div class="pn-card-title">Wochenplan aus Template</div>
+            <div class="pn-card-desc">
+              Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
+              Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
+              (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">2 · Templates</div>
+            <div class="pn-card-title">Split-Bibliothek</div>
+            <div class="pn-card-desc">
+              Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
+              kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
+              jeder generierte Plan zusammengesetzt wird.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">3 · Periodisierung</div>
+            <div class="pn-card-title">13-Wochen-Zyklen</div>
+            <div class="pn-card-desc">
+              Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
+              plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
+              jederzeit möglich.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">4 · Ziel-Presets</div>
+            <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
+            <div class="pn-card-desc">
+              Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
+              anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
+              Einzelfall überschreiben.
+            </div>
+          </div>
+        </div>
+
+        <div class="pn-notice">
+          <div class="pn-notice-icon">◐</div>
+          <div class="pn-notice-text">
+            <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
+            Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
+            neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Bereich den geplanten Funktionsumfang.
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- Trainingsplan -->
@@ -4758,6 +4748,14 @@ body.role-athlete .info-athletes-card { display: none; }
             <button class="info-action info-action-primary" id="profileEditOpenBtn">
               <span class="info-action-icon">✎</span>
               Profil bearbeiten
+            </button>
+            <button class="info-action profile-link-anamnese" id="profileAnamneseBtn">
+              <span class="info-action-icon">⚕</span>
+              Anamnesebogen
+            </button>
+            <button class="info-action profile-link-vereinbarung" id="profileVereinbarungBtn">
+              <span class="info-action-icon">⚖</span>
+              Vereinbarung
             </button>
           </div>
         </div>
@@ -6007,11 +6005,6 @@ function setRole(role) {
   document.body.classList.toggle('role-trainer', role === 'trainer');
   document.body.classList.toggle('role-athlete', role !== 'trainer');
 
-  // Wenn Athlet wird während Planungs-Seite offen ist: auf Cockpit umlenken
-  if (role !== 'trainer' && state.activeTab === 'planung') {
-    switchTab('cockpit');
-  }
-
   // Profil-Label im Info-Tab an neue Rolle anpassen
   const subEl = document.getElementById('infoProfileSub');
   if (subEl) {
@@ -6115,7 +6108,6 @@ const cmdkItems = [
   { group: 'Quick Actions', label: 'Demo-Profil neu laden', ico: '↓', action: () => reloadDemoProfile() },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
-  { group: 'Navigation', label: 'Zur Planung (Trainer)', ico: '✎', kbd: ['G','P'], action: () => switchTab('planung') },
   { group: 'Navigation', label: 'Zum Jahresplan', ico: '▤', kbd: ['G','J'], action: () => switchTab('jahresplan') },
   { group: 'Navigation', label: 'Zum Trainingsplan', ico: '◯', kbd: ['G','T'], action: () => switchTab('trainingsplan') },
   { group: 'Navigation', label: 'Zum Fortschritt', ico: '↗', kbd: ['G','F'], action: () => switchTab('fortschritt') },
@@ -6248,7 +6240,6 @@ document.getElementById('logBtn').addEventListener('click', startNextEinheit);
    ═══════════════════════════════════════════════════════ */
 const gMap = {
   'c': 'cockpit',
-  'p': 'planung',
   'j': 'jahresplan',
   't': 'trainingsplan',
   'f': 'fortschritt',
@@ -6296,11 +6287,7 @@ document.addEventListener('keydown', (e) => {
     if (target) {
       e.preventDefault();
       // Planungs-Tab ist Trainer-only — Athlet darf nicht via G-P dorthin
-      if (target === 'planung' && state.role !== 'trainer') {
-        toast('Planung ist nur im Trainer-Modus verfuegbar');
-      } else {
-        switchTab(target);
-      }
+      switchTab(target);
     }
     clearTimeout(state.gTimeout);
     state.gSequence = false;
@@ -9049,6 +9036,22 @@ function renderAthleteRow(key, p) {
   const openBtn = document.getElementById('profileEditOpenBtn');
   if (openBtn) openBtn.addEventListener('click', openProfileEditModal);
 
+  // Schnellzugriff: Anamnesebogen / Vereinbarung direkt aus der Profil-Section
+  const anamneseBtn = document.getElementById('profileAnamneseBtn');
+  if (anamneseBtn) anamneseBtn.addEventListener('click', () => {
+    document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'anamnese'));
+    document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'anamnese'));
+    state.infoSection = 'anamnese';
+    localStorage.setItem('tpv2_info_section', 'anamnese');
+  });
+  const vereinbarungBtn = document.getElementById('profileVereinbarungBtn');
+  if (vereinbarungBtn) vereinbarungBtn.addEventListener('click', () => {
+    document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'vereinbarung'));
+    document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'vereinbarung'));
+    state.infoSection = 'vereinbarung';
+    localStorage.setItem('tpv2_info_section', 'vereinbarung');
+  });
+
   // Einstiegspunkt 2: Sidebar-Dropdown "Profil bearbeiten"
   document.querySelectorAll('.role-dropdown .dropdown-item').forEach(item => {
     const txt = item.textContent.trim();
@@ -9093,7 +9096,6 @@ function renderAthleteRow(key, p) {
 
   const tabLabels = {
     cockpit: 'Cockpit',
-    planung: 'Planung',
     jahresplan: 'Jahresplan',
     trainingsplan: 'Trainingsplan',
     fortschritt: 'Fortschritt',
