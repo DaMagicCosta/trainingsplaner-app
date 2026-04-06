@@ -4594,6 +4594,155 @@ body.role-athlete .tp-mode { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
+   SPLASH / WELCOME SCREEN (Mindmap-Style)
+   ═══════════════════════════════════════════════════════ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: opacity 600ms ease, visibility 600ms ease;
+}
+.splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Hintergrund-Glow */
+.splash::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+  opacity: 0.5;
+  animation: splashPulse 4s ease-in-out infinite alternate;
+}
+@keyframes splashPulse {
+  from { transform: scale(0.8); opacity: 0.3; }
+  to   { transform: scale(1.2); opacity: 0.6; }
+}
+
+/* Zentraler Container */
+.splash-center {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-6);
+  z-index: 1;
+}
+
+/* Portrait */
+.splash-portrait {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 40px var(--accent-dim), 0 0 80px rgba(15,118,110,0.1);
+  animation: splashFadeIn 800ms ease both;
+}
+
+/* Name + Tagline */
+.splash-name {
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  animation: splashFadeIn 800ms 200ms ease both;
+}
+.splash-tagline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: -12px;
+  animation: splashFadeIn 800ms 400ms ease both;
+}
+
+/* Mindmap-Nodes */
+.splash-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s-3);
+  max-width: 520px;
+  margin-top: var(--s-4);
+}
+.splash-node {
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-2);
+  transition: all 300ms ease;
+}
+.splash-node.accent {
+  background: var(--accent-dim);
+  border-color: var(--accent-line);
+  color: var(--accent-hover);
+}
+.splash-node.warm {
+  background: var(--warning-dim);
+  border-color: var(--warning-line);
+  color: var(--warning);
+}
+.splash-node:nth-child(1)  { animation: splashNodeIn 500ms 500ms ease both; }
+.splash-node:nth-child(2)  { animation: splashNodeIn 500ms 600ms ease both; }
+.splash-node:nth-child(3)  { animation: splashNodeIn 500ms 700ms ease both; }
+.splash-node:nth-child(4)  { animation: splashNodeIn 500ms 800ms ease both; }
+.splash-node:nth-child(5)  { animation: splashNodeIn 500ms 900ms ease both; }
+.splash-node:nth-child(6)  { animation: splashNodeIn 500ms 1000ms ease both; }
+.splash-node:nth-child(7)  { animation: splashNodeIn 500ms 1100ms ease both; }
+.splash-node:nth-child(8)  { animation: splashNodeIn 500ms 1200ms ease both; }
+
+@keyframes splashFadeIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes splashNodeIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* CTA */
+.splash-cta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: var(--s-4);
+  animation: splashFadeIn 800ms 1400ms ease both;
+  letter-spacing: 0.08em;
+}
+.splash-cta span {
+  display: inline-block;
+  animation: splashBlink 1.5s ease-in-out infinite;
+}
+@keyframes splashBlink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .splash-portrait { width: 110px; height: 110px; }
+  .splash-name { font-size: 22px; }
+  .splash-nodes { gap: var(--s-2); }
+  .splash-node { font-size: 10px; padding: 6px 12px; }
+}
+
+/* ═══════════════════════════════════════════════════════
    TOAST (für Feedback nach Shortcut)
    ═══════════════════════════════════════════════════════ */
 .toast {
@@ -4756,6 +4905,26 @@ body.role-athlete .tp-mode { display: none; }
 </style>
 </head>
 <body>
+
+<!-- ═══════════════ SPLASH / WELCOME ═══════════════ -->
+<div class="splash" id="splash">
+  <div class="splash-center">
+    <img class="splash-portrait" src="./alexander-portrait.jpg" alt="Alexander">
+    <div class="splash-name">Trainingsplaner</div>
+    <div class="splash-tagline">by Alexander da Costa Amaral</div>
+    <div class="splash-nodes">
+      <div class="splash-node accent">Periodisierung</div>
+      <div class="splash-node accent">Calisthenics</div>
+      <div class="splash-node accent">Studio</div>
+      <div class="splash-node">Muskel-Balancer</div>
+      <div class="splash-node">Fortschritt</div>
+      <div class="splash-node warm">Evidenzbasiert</div>
+      <div class="splash-node">85+ Übungen</div>
+      <div class="splash-node warm">Diplomarbeit</div>
+    </div>
+    <div class="splash-cta"><span>▸</span> Tippe um zu starten</div>
+  </div>
+</div>
 
 <div class="app">
   <!-- ═══════════════ SIDEBAR ═══════════════ -->
@@ -11988,6 +12157,14 @@ setTimeout(() => document.getElementById('toast').classList.remove('show'), 100)
 
 // Demo-Profil im Hintergrund laden
 loadDemoProfile();
+
+// ── Splash Screen ──
+const _splash = document.getElementById('splash');
+if (_splash) {
+  _splash.addEventListener('click', () => _splash.classList.add('hide'));
+  // Auto-dismiss nach 6 Sekunden falls nicht geklickt
+  setTimeout(() => _splash.classList.add('hide'), 6000);
+}
 </script>
 
 </body>
