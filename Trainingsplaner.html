@@ -5040,6 +5040,10 @@ body.role-athlete .tp-mode { display: none; }
               <input type="checkbox" id="genHomeFallback">
               Home-Ausweichplan generieren (Studio zu / schlechtes Wetter)
             </label>
+            <label class="pn-check" style="margin-top:var(--s-2);">
+              <input type="checkbox" id="genRepeatYear">
+              Ganzjährig — Blöcke wiederholen bis KW 52
+            </label>
           </div>
 
           <!-- Schritt 4: Generieren -->
@@ -11557,9 +11561,10 @@ function startNextEinheit() {
 
     // Periodisierung ins Profil schreiben
     const endKw = Math.min(kw - 1, 52); // letzte belegte KW
+    const GOAL_LABELS = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
     profile.periodization = {
       active: true, startKw, endKw,
-      blocks: blocks.map(b => ({ label: b.label, goal: b.goal, length: b.length }))
+      blocks: blocks.map(b => ({ label: b.label || GOAL_LABELS[b.goal] || b.goal, goal: b.goal, length: b.length }))
     };
     profile.regenConfig = { regenBetween: regen.mode === 'after_each' };
     profile.athleteRegenWeeks = regenWeeks;
@@ -11624,6 +11629,7 @@ function startNextEinheit() {
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
     const homeFallback = document.getElementById('genHomeFallback')?.checked;
+    const repeatYear = document.getElementById('genRepeatYear')?.checked;
     const startKw = parseInt(kwStartInput.value) || 1;
     const regen = readRegenConfig();
 
@@ -11635,46 +11641,59 @@ function startNextEinheit() {
 
     let kw = startKw;
     let weeksSinceRegen = 0;
+    let safetyLimit = 200; // Endlos-Loop-Schutz
 
-    blocks.forEach((blockDef, blockIdx) => {
-      const blockLoc = blockDef.location || 'studio';
-      for (let w = 0; w < blockDef.length && kw <= 52; w++, kw++) {
-        // Hauptplan (nutzt den Trainingsort des Blocks)
-        const plan = buildWeekPlan(blockDef, splitDef, selectedDays, blockLoc, blockIdx);
-        plan._location = blockLoc; // im Plan merken für Trainingsplan-Ansicht
-        profile.plans['w' + kw] = plan;
+    // Einmal durchlaufen oder bei "Ganzjährig" wiederholen bis KW 52
+    function generateOnePass() {
+      blocks.forEach((blockDef, blockIdx) => {
+        const blockLoc = blockDef.location || 'studio';
+        for (let w = 0; w < blockDef.length && kw <= 52 && safetyLimit-- > 0; w++, kw++) {
+          const plan = buildWeekPlan(blockDef, splitDef, selectedDays, blockLoc, blockIdx);
+          plan._location = blockLoc;
+          profile.plans['w' + kw] = plan;
 
-        // Home-Ausweichplan (als _homeFallback im Plan-Objekt)
-        if (homeFallback && blockLoc !== 'home') {
-          const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
-          profile.plans['w' + kw]._homeFallback = homePlan.days;
+          if (homeFallback && blockLoc !== 'home') {
+            const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
+            profile.plans['w' + kw]._homeFallback = homePlan.days;
+          }
+
+          weeksSinceRegen++;
         }
 
-        weeksSinceRegen++;
-      }
+        // Regen einfügen
+        let insertRegen = false;
+        if (regen.mode === 'after_each') insertRegen = true;
+        else if (regen.mode === 'after_n' && (blockIdx + 1) % regen.afterN === 0) insertRegen = true;
+        else if (regen.mode === 'after_weeks' && weeksSinceRegen >= regen.afterN) insertRegen = true;
 
-      // Regen einfügen
-      let insertRegen = false;
-      if (regen.mode === 'after_each') insertRegen = true;
-      else if (regen.mode === 'after_n' && (blockIdx + 1) % regen.afterN === 0) insertRegen = true;
-      else if (regen.mode === 'after_weeks' && weeksSinceRegen >= regen.afterN) insertRegen = true;
-
-      if (insertRegen && regen.mode !== 'none') {
-        for (let r = 0; r < regen.duration && kw <= 52; r++) {
-          delete profile.plans['w' + kw];
-          kw++;
-        }
+        if (insertRegen && regen.mode !== 'none') {
+          for (let r = 0; r < regen.duration && kw <= 52; r++) {
+            delete profile.plans['w' + kw];
+            kw++;
+          }
         weeksSinceRegen = 0;
       }
-    });
+      });
+    }
+
+    // Einmal oder ganzjährig wiederholen
+    generateOnePass();
+    if (repeatYear) {
+      while (kw <= 52 && safetyLimit > 0) {
+        generateOnePass();
+      }
+    }
 
     applyToProfile();
+    // Bei ganzjährig: endKw auf 52 setzen
+    if (repeatYear) profile.periodization.endKw = 52;
+
     renderJahresplan(profile);
     renderTrainingsplan(profile);
     renderCockpit(profile);
 
-    const totalPlans = blocks.reduce((s, b) => s + b.length, 0);
-    toast(`${totalPlans} Wochenpläne generiert`);
+    const totalPlans = Object.keys(profile.plans).filter(k => k.startsWith('w')).length;
+    toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
   });
 
   // ── Initial ──
