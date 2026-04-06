@@ -11403,31 +11403,40 @@ function startNextEinheit() {
   if (!submitBtn || !blockRowsEl) return;
 
   // Default-Location aus Profil: erster hinterlegter Ort, oder 'studio'
-  const _defaultLoc = () => {
+  function _defaultLoc() {
     const locs = state.profile?.trainingLocation;
-    return (Array.isArray(locs) && locs.length) ? locs[0] : 'studio';
-  };
+    if (Array.isArray(locs) && locs.length) return locs[0];
+    if (typeof locs === 'string' && locs) {
+      const parsed = _parseLocationString(locs);
+      return parsed[0] || 'studio';
+    }
+    return 'studio';
+  }
 
   let blocks = [
-    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0', location: _defaultLoc() },
-    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261', location: _defaultLoc() },
-    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5', location: _defaultLoc() }
+    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
+    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
   ];
 
   // ── Block-Zeile rendern ──
-  // Nur die Orte anbieten die im Profil hinterlegt sind
+  // Nur die Orte anbieten die im Profil hinterlegt sind (Fallback: alle)
   function _locOptions(selected) {
-    const locs = state.profile?.trainingLocation;
+    const rawLocs = state.profile?.trainingLocation;
+    const locs = Array.isArray(rawLocs) ? rawLocs
+               : (typeof rawLocs === 'string' ? _parseLocationString(rawLocs) : []);
     const all = [
       { val: 'studio', label: '◇ Studio' },
       { val: 'home',   label: '⌂ Home' },
       { val: 'outdoor', label: '✦ Outdoor' }
     ];
-    const available = (Array.isArray(locs) && locs.length) ? all.filter(o => locs.includes(o.val)) : all;
+    const available = locs.length ? all.filter(o => locs.includes(o.val)) : all;
     return available.map(o => `<option value="${o.val}"${o.val === selected ? ' selected' : ''}>${o.label}</option>`).join('');
   }
 
   function renderBlockRow(block, idx) {
+    // Lazy-Default: location setzen beim ersten Render wenn noch nicht vorhanden
+    if (!block.location) block.location = _defaultLoc();
     return `
       <div class="pn-block-row" data-idx="${idx}" style="border-left: 3px solid ${block.color};">
         <select class="pn-block-goal" data-field="goal">
@@ -11484,7 +11493,7 @@ function startNextEinheit() {
   addBlockBtn.addEventListener('click', () => {
     if (blocks.length >= 4) return;
     const tpl = BLOCK_TEMPLATES[blocks.length] || BLOCK_TEMPLATES[0];
-    blocks.push({ ...tpl, length: 4, location: _defaultLoc() });
+    blocks.push({ ...tpl, length: 4 }); // location wird lazy in renderBlockRow gesetzt
     renderAllBlocks();
   });
 
