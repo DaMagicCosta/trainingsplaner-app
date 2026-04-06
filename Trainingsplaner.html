@@ -3178,6 +3178,21 @@ body.role-athlete .info-athletes-card { display: none; }
 }
 
 /* ─── Overview-Stats (4 Karten) ─── */
+/* ─── Profil-Badge ─── */
+.fp-profile-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: 100px;
+  padding: 3px 10px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
 /* ─── Aggregations-Toggle ─── */
 .fp-agg-toggle {
   margin-bottom: var(--s-4);
@@ -5123,7 +5138,7 @@ body.role-athlete .tp-mode { display: none; }
       <div class="fp-head">
         <div>
           <div class="page-crumb">Charts · Entwicklung · Zeitverlauf</div>
-          <h1 class="page-title">Fortschritt</h1>
+          <h1 class="page-title">Fortschritt <span class="fp-profile-badge" id="fpProfileBadge"></span></h1>
         </div>
         <div class="chart-range" id="fpRange">
           <button data-range="4W">4W</button>
@@ -6419,9 +6434,9 @@ body.role-athlete .tp-mode { display: none; }
     <div class="ico">◈</div>
     <span>Cockpit</span>
   </button>
-  <button class="bnav-item" data-tab="trainingsplan">
-    <div class="ico">◇</div>
-    <span>Training</span>
+  <button class="bnav-item" data-tab="jahresplan">
+    <div class="ico">▤</div>
+    <span>Plan</span>
   </button>
   <button class="bnav-item primary" id="logBtn">
     <div class="ico">+</div>
@@ -8424,6 +8439,13 @@ function _fpAggregateTimeSeries(sessions, mode, profile) {
 
 function renderFortschritt(profile) {
   if (!profile) return;
+
+  // ─── Profil-Badge ──────────────────────────────
+  const badgeEl = document.getElementById('fpProfileBadge');
+  if (badgeEl) {
+    const firstName = (profile.name || 'Athlet').split(' ')[0];
+    badgeEl.textContent = firstName;
+  }
 
   const sessions = _fpFilterSessions(profile, state.fpRange);
   const exerciseMap = _fpAggregateByExercise(sessions);
