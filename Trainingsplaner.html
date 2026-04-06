@@ -1192,7 +1192,7 @@ ul, ol { list-style: none; }
   opacity: 0.55;
 }
 .jp-seg-current {
-  box-shadow: 0 0 0 2px var(--accent), 0 0 0 4px var(--bg);
+  box-shadow: 0 0 0 2px var(--danger), 0 0 8px rgba(199,106,94,0.4), 0 0 0 4px var(--bg);
   z-index: 2;
 }
 
@@ -1359,10 +1359,10 @@ ul, ol { list-style: none; }
 
 /* Aktuelle KW: dezenter Teal-Ring, kein Text-Badge (bewusst zurückhaltend) */
 .jp-week-current {
-  border-color: var(--accent);
+  border-color: var(--danger);
   box-shadow:
-    0 0 0 1px var(--accent),
-    0 0 12px -2px var(--accent-dim);
+    0 0 0 1px var(--danger),
+    0 0 16px -2px rgba(199,106,94,0.35);
 }
 /* Mini-Indikator-Dot rechts oben statt vollflächiger Pill */
 .jp-week-current::after {
@@ -1373,7 +1373,7 @@ ul, ol { list-style: none; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--danger);
   box-shadow: 0 0 0 2px var(--surface-1);
 }
 
@@ -6546,6 +6546,17 @@ function renderJahresplan(profile) {
     { label: 'Q3', start: 27, end: 39 },
     { label: 'Q4', start: 40, end: 52 }
   ];
+
+  // Aktuelles Quartal nach oben sortieren
+  const currentQIdx = quarters.findIndex(q => currentKw >= q.start && currentKw <= q.end);
+  if (currentQIdx > 0) {
+    const reordered = [
+      ...quarters.slice(currentQIdx),
+      ...quarters.slice(0, currentQIdx)
+    ];
+    quarters.length = 0;
+    quarters.push(...reordered);
+  }
 
   let qHtml = '';
   quarters.forEach(q => {
