@@ -716,6 +716,7 @@ ul, ol { list-style: none; }
   gap: var(--s-4);
   padding: var(--s-2) 0;
   min-height: 200px;
+  transition: opacity 80ms ease;
 }
 .bal-row {
   display: grid;
@@ -9913,13 +9914,14 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
     html += renderBreakdown(view.pair);
   }
 
-  // Unsichtbar swappen → nach Layout-Berechnung einblenden (kein Reflow-Flackern)
-  wrap.style.visibility = 'hidden';
+  // Alten Inhalt sofort durch neuen ersetzen, aber unsichtbar.
+  // Double-rAF: Samsung Internet braucht 2 Frames für stabiles Layout.
+  wrap.style.opacity = '0';
   wrap.innerHTML = html;
-  requestAnimationFrame(() => {
-    wrap.style.visibility = '';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    wrap.style.opacity = '1';
     wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => el.classList.add('animate'));
-  });
+  }));
 
   console.log('[Balance] gerendert', {
     view: viewKey, range,
