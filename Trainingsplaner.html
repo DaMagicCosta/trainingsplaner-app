@@ -714,6 +714,7 @@ ul, ol { list-style: none; }
   flex-direction: column;
   gap: var(--s-4);
   padding: var(--s-2) 0;
+  min-height: 200px;
 }
 .bal-row {
   display: grid;
@@ -9828,10 +9829,11 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
     html += renderBreakdown(view.pair);
   }
 
+  // Unsichtbar swappen → nach Layout-Berechnung einblenden (kein Reflow-Flackern)
+  wrap.style.visibility = 'hidden';
   wrap.innerHTML = html;
-
-  // Balken-Animation erst nach einem Frame starten (verhindert Flackern beim Swap)
   requestAnimationFrame(() => {
+    wrap.style.visibility = '';
     wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => el.classList.add('animate'));
   });
 
