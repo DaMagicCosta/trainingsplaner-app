@@ -9615,10 +9615,15 @@ const BALANCE_VIEWS = {
   }
 };
 
-// Primärmuskel einer Übung → kanonische Gruppe (oder null wenn unbekannt)
-function _primaryGroup(exercise) {
-  const raw = (exercise.muscle || '').split(',')[0].trim();
-  return MUSCLE_MAP[raw] || null;
+// Alle Muskelgruppen einer Übung → Set von kanonischen Gruppen
+function _allGroups(exercise) {
+  const parts = (exercise.muscle || '').split(',').map(s => s.trim());
+  const groups = new Set();
+  parts.forEach(raw => {
+    const g = MUSCLE_MAP[raw];
+    if (g) groups.add(g);
+  });
+  return groups;
 }
 
 function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
@@ -9651,18 +9656,21 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
   cutoff.setDate(cutoff.getDate() - n * 7);
 
   // Volumen pro kanonische Muskelgruppe im Fenster sammeln
+  // Jede Übung zählt für ALLE ihre Muskelgruppen (nicht nur die erste)
   const volByGroup = {};
   sessions.forEach(s => {
     const d = _parseDE(s.date);
     if (!d || d < cutoff || d > anchor) return;
     (s.exercises || []).forEach(ex => {
-      const group = _primaryGroup(ex);
-      if (!group) return;
+      const groups = _allGroups(ex);
+      if (groups.size === 0) return;
       let setsVol = 0;
       (ex.sets || []).forEach(set => {
         setsVol += (Number(set.wdh) || 0) * (Number(set.gewicht) || 0);
       });
-      volByGroup[group] = (volByGroup[group] || 0) + setsVol;
+      groups.forEach(g => {
+        volByGroup[g] = (volByGroup[g] || 0) + setsVol;
+      });
     });
   });
 
