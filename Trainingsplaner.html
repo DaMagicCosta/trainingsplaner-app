@@ -4520,15 +4520,120 @@ body.role-athlete .tp-mode { display: none; }
   .placeholder-title { font-size: 22px; }
 }
 
-@media (max-width: 480px) {
-  .cmdk-overlay { padding-top: 0; }
-  .cmdk {
-    max-width: 100%;
-    max-height: 100%;
-    height: 100%;
-    border-radius: 0;
-    border: none;
+@media (max-width: 860px) {
+  /* ── Mobile: Bottom Sheet statt Desktop-Dialog ── */
+  .cmdk-overlay {
+    padding-top: 0;
+    align-items: flex-end;
   }
+  .cmdk {
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    border: none;
+    border-top: 1px solid var(--border-strong);
+    animation: cmdkSlideUp 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  @keyframes cmdkSlideUp {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+
+  /* Drag-Handle */
+  .cmdk::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--text-3);
+    border-radius: 2px;
+    margin: 10px auto 4px;
+    opacity: 0.5;
+  }
+
+  /* Suchfeld: ESC-Badge & ⌘-Icon ausblenden */
+  .cmdk-esc { display: none; }
+  .cmdk-input-icon { display: none; }
+  .cmdk-input { padding: var(--s-3) var(--s-4); }
+  .cmdk-input input { font-size: 14px; }
+
+  /* Keyboard-Badges global ausblenden */
+  .cmdk-item-kbd { display: none; }
+
+  /* Items: größere Touch-Targets */
+  .cmdk-item {
+    padding: 14px var(--s-4);
+    font-size: 14px;
+    gap: var(--s-4);
+    border-radius: var(--r-md);
+  }
+  .cmdk-item-ico {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r-sm);
+    background: var(--surface-3);
+    font-size: 15px;
+  }
+
+  /* Quick-Action Hero-Tile */
+  .cmdk-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-2);
+    padding: var(--s-2) var(--s-3);
+  }
+  .cmdk-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    padding: var(--s-4) var(--s-3);
+    border-radius: var(--r-md);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--ease), transform 80ms ease;
+    text-align: center;
+    min-height: 72px;
+    border: none;
+    width: 100%;
+  }
+  .cmdk-hero:active { transform: scale(0.97); }
+  .cmdk-hero-ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+  }
+
+  /* Hero-Farben */
+  .cmdk-hero--primary {
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-line);
+  }
+  .cmdk-hero--primary .cmdk-hero-ico { background: var(--accent); color: #fff; }
+
+  .cmdk-hero--secondary {
+    background: var(--surface-3);
+    border: 1px solid var(--border-subtle);
+  }
+  .cmdk-hero--secondary .cmdk-hero-ico { background: var(--surface-hover); color: var(--text-2); }
+
+  /* Gruppen-Trennlinie statt nur Label */
+  .cmdk-group-label {
+    padding: var(--s-4) var(--s-4) var(--s-2);
+    margin-top: var(--s-2);
+    border-top: 1px solid var(--border-subtle);
+    font-size: 10px;
+  }
+  .cmdk-group-label:first-child { border-top: none; margin-top: 0; }
+
+  .cmdk-list { padding: var(--s-2) var(--s-2) var(--s-8); }
 }
 </style>
 </head>
@@ -6871,7 +6976,13 @@ const cmdkItems = [
 
 function renderCmdkList(filter = '') {
   const q = filter.trim().toLowerCase();
-  const visible = cmdkItems.filter(i => !i.visible || i.visible());
+  const isMobile = window.innerWidth <= 860;
+  const visible = cmdkItems.filter(i => {
+    if (i.visible && !i.visible()) return false;
+    // Mobile: Navigation-Gruppe ausblenden (Bottom-Nav existiert bereits)
+    if (isMobile && !q && i.group === 'Navigation') return false;
+    return true;
+  });
   const filtered = q
     ? visible.filter(i => i.label.toLowerCase().includes(q) || i.group.toLowerCase().includes(q))
     : visible;
@@ -6885,25 +6996,60 @@ function renderCmdkList(filter = '') {
   let html = '';
   let currentGroup = '';
   let idx = 0;
-  filtered.forEach(item => {
-    if (item.group !== currentGroup) {
-      html += '<div class="cmdk-group-label">' + item.group + '</div>';
-      currentGroup = item.group;
+
+  // Mobile ohne Filter: Quick Actions als Hero-Tiles rendern
+  if (isMobile && !q) {
+    const heroes = filtered.filter(i => i.group === 'Quick Actions');
+    const rest = filtered.filter(i => i.group !== 'Quick Actions');
+
+    if (heroes.length) {
+      html += '<div class="cmdk-hero-grid">';
+      heroes.forEach(item => {
+        const cls = idx === 0 ? 'cmdk-hero--primary' : 'cmdk-hero--secondary';
+        html += '<button class="cmdk-hero ' + cls + '" data-idx="' + idx + '">'
+              + '<span class="cmdk-hero-ico">' + item.ico + '</span>'
+              + '<span>' + item.label + '</span>'
+              + '</button>';
+        idx++;
+      });
+      html += '</div>';
     }
-    const selected = idx === state.cmdkSelected ? 'selected' : '';
-    const kbdHtml = item.kbd
-      ? '<div class="cmdk-item-kbd">' + item.kbd.map(k => '<span class="kbd">' + k + '</span>').join('') + '</div>'
-      : '';
-    html += '<button class="cmdk-item ' + selected + '" data-idx="' + idx + '">'
-          + '<span class="cmdk-item-ico">' + item.ico + '</span>'
-          + '<span class="cmdk-item-label">' + item.label + '</span>'
-          + kbdHtml + '</button>';
-    idx++;
-  });
+
+    rest.forEach(item => {
+      if (item.group !== currentGroup) {
+        html += '<div class="cmdk-group-label">' + item.group + '</div>';
+        currentGroup = item.group;
+      }
+      html += '<button class="cmdk-item" data-idx="' + idx + '">'
+            + '<span class="cmdk-item-ico">' + item.ico + '</span>'
+            + '<span class="cmdk-item-label">' + item.label + '</span>'
+            + '</button>';
+      idx++;
+    });
+  } else {
+    // Desktop-Layout (unverändert) + Mobile mit Suchfilter
+    filtered.forEach(item => {
+      if (item.group !== currentGroup) {
+        html += '<div class="cmdk-group-label">' + item.group + '</div>';
+        currentGroup = item.group;
+      }
+      const selected = idx === state.cmdkSelected ? 'selected' : '';
+      const kbdHtml = item.kbd
+        ? '<div class="cmdk-item-kbd">' + item.kbd.map(k => '<span class="kbd">' + k + '</span>').join('') + '</div>'
+        : '';
+      html += '<button class="cmdk-item ' + selected + '" data-idx="' + idx + '">'
+            + '<span class="cmdk-item-ico">' + item.ico + '</span>'
+            + '<span class="cmdk-item-label">' + item.label + '</span>'
+            + kbdHtml + '</button>';
+      idx++;
+    });
+  }
+
   cmdkList.innerHTML = html;
   cmdkList.dataset.filtered = JSON.stringify(filtered.map(i => cmdkItems.indexOf(i)));
 
-  cmdkList.querySelectorAll('.cmdk-item').forEach(el => {
+  // Event-Handler für alle klickbaren Elemente (Items + Hero-Tiles)
+  cmdkList.querySelectorAll('.cmdk-item, .cmdk-hero').forEach(el => {
     el.addEventListener('click', () => {
       const i = parseInt(el.dataset.idx);
       runCmdkItem(i);
