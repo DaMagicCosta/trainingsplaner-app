@@ -1494,7 +1494,6 @@ ul, ol { list-style: none; }
   grid-template-columns: repeat(3, 1fr);
   gap: var(--s-4);
   margin-bottom: var(--s-6);
-  align-items: start;
 }
 @media (max-width: 960px) {
   .pn-grid { grid-template-columns: 1fr; }
@@ -6865,21 +6864,21 @@ body.role-athlete .tp-mode { display: none; }
     <div class="ico">◈</div>
     <span>Cockpit</span>
   </button>
-  <button class="bnav-item" data-tab="fortschritt">
-    <div class="ico">↗</div>
-    <span>Stats</span>
+  <button class="bnav-item" data-tab="jahresplan">
+    <div class="ico">▤</div>
+    <span>Plan</span>
   </button>
   <button class="bnav-item primary" id="logBtn">
     <div class="ico">+</div>
     <span>Log</span>
   </button>
+  <button class="bnav-item" data-tab="fortschritt">
+    <div class="ico">↗</div>
+    <span>Stats</span>
+  </button>
   <button class="bnav-item" data-tab="lexikon">
     <div class="ico">⌘</div>
     <span>Lexikon</span>
-  </button>
-  <button class="bnav-item" id="moreBtn">
-    <div class="ico">☰</div>
-    <span>Mehr</span>
   </button>
 </nav>
 
@@ -7499,8 +7498,20 @@ cmdk.addEventListener('click', (e) => {
   if (e.target === cmdk) closeCmdk();
 });
 
-document.getElementById('moreBtn').addEventListener('click', openCmdk);
-document.getElementById('logBtn').addEventListener('click', startNextEinheit);
+// Log-Button: Tap = Einheit starten, Long-Press = Command Palette
+const _logBtn = document.getElementById('logBtn');
+if (_logBtn) {
+  let _logTimer = null;
+  _logBtn.addEventListener('pointerdown', () => {
+    _logTimer = setTimeout(() => { _logTimer = null; openCmdk(); }, 500);
+  });
+  _logBtn.addEventListener('pointerup', () => {
+    if (_logTimer) { clearTimeout(_logTimer); _logTimer = null; startNextEinheit(); }
+  });
+  _logBtn.addEventListener('pointerleave', () => {
+    if (_logTimer) { clearTimeout(_logTimer); _logTimer = null; }
+  });
+}
 
 /* ═══════════════════════════════════════════════════════
    KEYBOARD SHORTCUTS
