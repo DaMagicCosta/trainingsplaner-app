@@ -9501,27 +9501,45 @@ function calculateReadiness(profile, refDate) {
 
 // Rohnamen aus dem Profil → kanonische Muskelgruppen
 const MUSCLE_MAP = {
+  // Brust
   'Großer Brustmuskel':    'Brust',
+  'Brustmuskel':           'Brust',
+  'Brust':                 'Brust',
+  // Rücken
   'Latissimus':            'Rücken',
   'Oberer Rücken':         'Rücken',
   'Breiter Rückenmuskel':  'Rücken',
+  'Rücken':                'Rücken',
+  // Arme
   'Bizeps':                'Bizeps',
   'Trizeps':               'Trizeps',
+  // Beine
   'Quadrizeps':            'Quadrizeps',
   'Vorderer Oberschenkel': 'Quadrizeps',
   'Beinbeuger':            'Hamstrings',
+  'Beinbizeps':            'Hamstrings',
   'Gesäß':                 'Hamstrings',
   'Gesäßmuskel':           'Hamstrings',
+  'Großer Gesäßmuskel':    'Hamstrings',
   'Gluteus':               'Hamstrings',
+  // Schulter — anatomische + umgangssprachliche Namen
   'Schulter':              'Vordere Schulter',
   'Vordere Schulter':      'Vordere Schulter',
+  'Deltamuskel':           'Vordere Schulter',
+  'Vorderer Deltamuskel':  'Vordere Schulter',
   'Hintere Schulter':      'Hintere Schulter',
+  'Hinterer Deltamuskel':  'Hintere Schulter',
   'Rotatorenmanschette':   'Hintere Schulter',
-  // Nicht in der Balance-View (unpaired):
   'Seitliche Schulter':    'Seitliche Schulter',
+  'Mittlerer Deltamuskel': 'Seitliche Schulter',
+  // Solo-Gruppen (nicht in Antagonisten-Paaren)
   'Waden':                 'Waden',
+  'Wadenmuskel':           'Waden',
   'unterer Rücken':        'Unt. Rücken',
-  'Unterer Rücken':        'Unt. Rücken'
+  'Unterer Rücken':        'Unt. Rücken',
+  'Gerader Bauchmuskel':   'Bauch',
+  'Schräge Bauchmuskulatur': 'Bauch',
+  'Bauch':                 'Bauch'
 };
 
 // Klassische Antagonisten-Paare (Fein-Ansicht)
@@ -9535,6 +9553,7 @@ const ANTAGONIST_PAIRS = [
 // Solo-Muskeln in der Antagonisten-View
 const SOLO_GROUPS = [
   { label: 'Seitliche Schulter', groups: ['Seitliche Schulter'] },
+  { label: 'Bauch',              groups: ['Bauch'] },
   { label: 'Waden',              groups: ['Waden'] },
   { label: 'Unt. Rücken',        groups: ['Unt. Rücken'] }
 ];
@@ -10662,7 +10681,7 @@ function renderAthleteRow(key, p) {
       const levelClass = STD_CLASSES[level];
       const levelLabel = STD_LABELS[level];
 
-      const rmStr = rm > 0 ? `${rm.toFixed(1)} kg (${ratio.toFixed(2)}×BW) · ${levelLabel}` : 'Keine Daten';
+      const rmStr = rm > 0 ? `${Math.round(rm)} kg (${ratio.toFixed(1)}×BW) · ${levelLabel}` : 'Keine Daten';
 
       return `
         <div class="fp-std-row">
