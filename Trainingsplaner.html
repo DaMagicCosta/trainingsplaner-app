@@ -6785,6 +6785,12 @@ function applyTheme(key) {
   document.querySelectorAll('.theme-dot').forEach(d => {
     d.classList.toggle('active', d.dataset.theme === key);
   });
+
+  // Pastell/Garten: Raupe → Schmetterling 🦋
+  const bugIcon = key === 'pastell' ? '🦋' : '🐛';
+  const floaterIcon = document.querySelector('#bugFloaterBtn .bug-floater-icon');
+  if (floaterIcon) floaterIcon.textContent = bugIcon;
+
   toast('Theme: ' + themeLabels[key]);
 }
 
