@@ -6722,8 +6722,6 @@ document.addEventListener('click', (e) => {
 
 // ── Profil-Wechsel: zwischen Alexander (self) und Athleten wechseln ──
 // state._selfProfile speichert Alexanders Profil, damit wir zurückwechseln können
-const JULIA_PATH = DEMO_PATH.replace('Trainingsplaner_Max_Mustermann_Demo', 'Trainingsplaner_Julia_Demo');
-
 async function switchProfile(key) {
   // Beim ersten Wechsel: Alexander sichern
   if (!state._selfProfile && state.profile) {
@@ -6738,7 +6736,8 @@ async function switchProfile(key) {
     if (!state._juliaProfile) {
       try {
         toast('Lade Julias Profil …');
-        const res = await fetch(JULIA_PATH, { cache: 'no-cache' });
+        const juliaPath = DEMO_PATH.replace('Trainingsplaner_Max_Mustermann_Demo', 'Trainingsplaner_Julia_Demo');
+        const res = await fetch(juliaPath, { cache: 'no-cache' });
         if (res.ok) {
           state._juliaProfile = await res.json();
         }
