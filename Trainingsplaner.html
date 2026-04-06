@@ -716,7 +716,6 @@ ul, ol { list-style: none; }
   gap: var(--s-4);
   padding: var(--s-2) 0;
   min-height: 200px;
-  transition: opacity 80ms ease;
 }
 .bal-row {
   display: grid;
@@ -748,7 +747,7 @@ ul, ol { list-style: none; }
   background: var(--success);
   height: 100%;
 }
-/* Animation nur beim initialen Aufbau, nicht beim innerHTML-Swap */
+/* Balken wachsen von 0 zur Zielbreite (data-w) */
 .bal-fill-l.animate, .bal-fill-r.animate {
   transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -7107,38 +7106,35 @@ document.querySelectorAll('[data-tab]').forEach(el => {
 // ── Swipe-Navigation (Mobile) ──
 (function initSwipeNav() {
   const TAB_ORDER = ['cockpit', 'jahresplan', 'trainingsplan', 'fortschritt', 'lexikon', 'info'];
-  const main = document.getElementById('mainArea');
-  if (!main) return;
-
   let startX = 0, startY = 0, tracking = false;
 
-  main.addEventListener('touchstart', (e) => {
+  document.addEventListener('touchstart', (e) => {
     if (window.innerWidth > 860) return;
+    // Nicht swipe wenn ein Modal/Overlay offen ist
+    if (state.cmdkOpen) return;
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
-    // Vom Rand (< 30px) starten = Browser-Back-Geste, nicht abfangen
-    tracking = startX > 30 && startX < window.innerWidth - 30;
+    // Edge-Guard: vom äußersten Rand (< 15px) = Browser-Geste
+    tracking = startX > 15 && startX < window.innerWidth - 15;
   }, { passive: true });
 
-  main.addEventListener('touchend', (e) => {
+  document.addEventListener('touchend', (e) => {
     if (!tracking) return;
     tracking = false;
     const t = e.changedTouches[0];
     const dx = t.clientX - startX;
     const dy = t.clientY - startY;
 
-    // Nur horizontale Wischgesten (min. 60px, max 30° Winkel)
-    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+    // Nur horizontale Wischgesten (min. 70px, deutlich horizontaler als vertikal)
+    if (Math.abs(dx) < 70 || Math.abs(dy) > Math.abs(dx) * 0.5) return;
 
     const idx = TAB_ORDER.indexOf(state.activeTab);
     if (idx === -1) return;
 
     if (dx > 0 && idx > 0) {
-      // Wisch nach rechts → vorheriger Tab
       switchTab(TAB_ORDER[idx - 1]);
     } else if (dx < 0 && idx < TAB_ORDER.length - 1) {
-      // Wisch nach links → nächster Tab
       switchTab(TAB_ORDER[idx + 1]);
     }
   }, { passive: true });
@@ -10187,7 +10183,7 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
       return `
         <div class="${rowClass}">
           <div class="bal-label bal-label-l">${pair.l}</div>
-          <div class="bal-track"><div class="bal-fill-l" style="width:0%"></div><div class="bal-fill-r" style="width:0%"></div></div>
+          <div class="bal-track"><div class="bal-fill-l" data-w="0" style="width:0%"></div><div class="bal-fill-r" data-w="0" style="width:0%"></div></div>
           <div class="bal-label bal-label-r">${pair.r}</div>
           <div class="bal-meta">
             <span class="bal-meta-l">—</span>
@@ -10210,8 +10206,8 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
       <div class="${rowClass}">
         <div class="bal-label bal-label-l">${pair.l}</div>
         <div class="bal-track">
-          <div class="bal-fill-l" style="width:${lPct}%"></div>
-          <div class="bal-fill-r" style="width:${rPct}%"></div>
+          <div class="bal-fill-l" data-w="${lPct}" style="width:0%"></div>
+          <div class="bal-fill-r" data-w="${rPct}" style="width:0%"></div>
         </div>
         <div class="bal-label bal-label-r">${pair.r}</div>
         <div class="bal-meta">
@@ -10301,13 +10297,14 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
     html += renderBreakdown(view.pair);
   }
 
-  // Alten Inhalt sofort durch neuen ersetzen, aber unsichtbar.
+  // DOM ersetzen, dann Balken von 0 zur Zielbreite animieren.
   // Double-rAF: Samsung Internet braucht 2 Frames für stabiles Layout.
-  wrap.style.opacity = '0';
   wrap.innerHTML = html;
   requestAnimationFrame(() => requestAnimationFrame(() => {
-    wrap.style.opacity = '1';
-    wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => el.classList.add('animate'));
+    wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => {
+      el.classList.add('animate');
+      el.style.width = (el.dataset.w || 0) + '%';
+    });
   }));
 
   console.log('[Balance] gerendert', {
