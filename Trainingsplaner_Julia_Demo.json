@@ -152,6 +152,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 116.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 53.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 76.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 48.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 44.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w2": {
@@ -266,6 +388,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 21.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 119.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 54.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 77.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 46.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -408,6 +652,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 17.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 115.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 52.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 80.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 44.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w4": {
@@ -522,6 +888,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 31.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 6.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 116.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 55.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 76.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -671,6 +1159,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 117.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 78.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 54.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 34.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 49.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 12.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w6": {
@@ -792,6 +1409,135 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 31.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 26.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 117.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 80.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 54.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 31.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 49.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 45.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 15.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 10,
@@ -941,6 +1687,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 118.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 81.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 55.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 49.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 11.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w8": {
@@ -1076,6 +1951,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 120.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 80.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 53.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 32.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 52.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 43.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w9": {
@@ -1183,6 +2187,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 7.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 8.5
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 118.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 81.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 53.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 47.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -1318,6 +2437,121 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 39.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 30.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 119.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 79.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 53.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 32.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 8.0
+            }
+          ]
+        }
       ]
     },
     "w11": {
@@ -1425,6 +2659,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 5.5
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 39.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 119.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 78.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 55.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 31.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 42.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -1560,6 +2909,121 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 31.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 120.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 81.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 56.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 32.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 43.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 7.0
+            }
+          ]
+        }
       ]
     },
     "w14": {
@@ -1667,6 +3131,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 6.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 6.5
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 104.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 69.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 48.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 15.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -1809,6 +3388,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 108.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 71.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w18": {
@@ -1923,6 +3624,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 5.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 17.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 104.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 50.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 72.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 47.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -2065,6 +3888,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 106.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 48.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 73.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w20": {
@@ -2179,6 +4124,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 25.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 19.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 108.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 48.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 71.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 34.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 44.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -2328,6 +4395,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 35.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 25.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 107.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 73.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 49.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w22": {
@@ -2449,6 +4645,135 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 106.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 72.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 49.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 10,
@@ -2598,6 +4923,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 107.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 70.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 31.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 44.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 7.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 40.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w24": {
@@ -2733,6 +5187,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 20.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 109.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 73.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 48.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 43.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w25": {
@@ -2854,6 +5437,121 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 26.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 20.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 109.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 75.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 50.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 11.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 7.5
+            }
+          ]
+        }
       ]
     },
     "w27": {
@@ -2961,6 +5659,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 7.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 6.0
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 20.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 107.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 73.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 42.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -3110,6 +5923,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 31.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 4.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 92.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 64.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 33.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w29": {
@@ -3224,6 +6166,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 16.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 111.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 50.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 72.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -3366,6 +6430,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 5.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 111.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 53.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 75.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 48.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 39.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 39.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w31": {
@@ -3494,6 +6680,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 17.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 109.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 73.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 48.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w32": {
@@ -3601,6 +6909,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 10.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 6.0
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 32.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 22.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 16.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 92.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 61.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 42.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 32.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -3750,6 +7173,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 110.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 72.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 44.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w34": {
@@ -3871,6 +7423,135 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 113.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 74.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 52.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 44.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 10,
@@ -4020,6 +7701,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 26.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 20.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 111.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 76.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 52.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 31.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 48.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 44.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 15.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w36": {
@@ -4141,6 +7951,135 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 112.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 77.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 52.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 46.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 10,
@@ -4290,6 +8229,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 32.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 93.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 67.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 42.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 34.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w40": {
@@ -4404,6 +8472,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 4.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 3.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 74.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 50.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 32.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -4546,6 +8736,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 30.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 115.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 76.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 47.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 43.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 7.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w42": {
@@ -4660,6 +8972,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 5.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 111.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 50.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 75.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -4802,6 +9236,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 36.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 112.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 54.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 77.0
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 40.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 45.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 42.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 7.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w44": {
@@ -4916,6 +9472,128 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 35.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 30.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 5.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 19.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 115.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 76.5
+            },
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 38.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 23.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 3,
+              "wdh": 20,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 3,
               "wdh": 20,
@@ -5065,6 +9743,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 112.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 75.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 51.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 50.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 4.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w46": {
@@ -5186,6 +9993,135 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 12.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 56.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 77.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 52.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 10,
@@ -5335,6 +10271,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 26.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 20.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 113.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 76.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 54.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 50.5
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 42.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 41.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w48": {
@@ -5470,6 +10535,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 114.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 76.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 53.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 48.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 44.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w49": {
@@ -5577,6 +10771,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 11.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 3.5
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 21.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 114.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 25.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 15.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 43.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -5712,6 +11021,121 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 29.5
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 20.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 115.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 78.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 51.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 33.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 41.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 40.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 15.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 5.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 4.0
+            }
+          ]
+        }
       ]
     },
     "w51": {
@@ -5833,6 +11257,121 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 27.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 17.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 118.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 80.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 26.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 31.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 6.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 3.0
+            }
+          ]
+        }
       ]
     },
     "w15": {
@@ -5940,6 +11479,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 8.5
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 25.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 28.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 17.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 108.0
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 68.5
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 50.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 30.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 38.0
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,
@@ -6089,6 +11743,135 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 28.5
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Seitenheben",
+              "muscle": "Mittlerer Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 88.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 62.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 42.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 39.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 6.0
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 36.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 33.0
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w38": {
@@ -6196,6 +11979,121 @@
             },
             {
               "name": "Bizeps-Curls (Kurzhantel)",
+              "muscle": "Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Russian Twist",
+              "muscle": "Schräge Bauchmuskulatur",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 9.0
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 26.0
+            },
+            {
+              "name": "Liegestütze (eng)",
+              "muscle": "Großer Brustmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 29.0
+            },
+            {
+              "name": "Dips am Stuhl",
+              "muscle": "Trizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 21.0
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 113.5
+            },
+            {
+              "name": "Glüte Bridge (einbeinig)",
+              "muscle": "Großer Gesäßmuskel, Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 75.0
+            },
+            {
+              "name": "Einbeiniges Rumänisches Kreuzheben",
+              "muscle": "Beinbizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 51.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 31.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 44.5
+            },
+            {
+              "name": "Klimmzug (Überhand)",
+              "muscle": "Breiter Rückenmuskel, Rautenmuskeln",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 37.5
+            },
+            {
+              "name": "Reverse Fly (Theraband)",
+              "muscle": "Hinterer Deltamuskel, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 6,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Klimmzug (unterhand)",
               "muscle": "Bizeps",
               "saetze": 4,
               "wdh": 6,

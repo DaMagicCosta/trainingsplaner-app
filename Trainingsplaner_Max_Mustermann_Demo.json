@@ -149,6 +149,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w2": {
@@ -157,6 +279,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -405,6 +649,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w4": {
@@ -413,6 +779,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -661,6 +1149,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w6": {
@@ -669,6 +1279,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -917,6 +1649,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w8": {
@@ -925,6 +1779,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -1152,6 +2128,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w10": {
@@ -1160,6 +2237,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -1366,6 +2544,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 24.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w12": {
@@ -1374,6 +2653,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 25.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 10.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -1580,6 +2960,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w15": {
@@ -1687,6 +3168,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 20.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 16.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w16": {
@@ -1695,6 +3277,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 5.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 11.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -1943,6 +3647,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 20.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w18": {
@@ -1951,6 +3777,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 20.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -2199,6 +4147,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 20.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w20": {
@@ -2207,6 +4277,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 20.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -2455,6 +4647,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w22": {
@@ -2463,6 +4777,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 16.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -2711,6 +5147,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 21.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w24": {
@@ -2719,6 +5277,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 15.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 6.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 12.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -2946,6 +5626,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 21.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w27": {
@@ -2954,6 +5735,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -3160,6 +6042,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w29": {
@@ -3168,6 +6151,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -3416,6 +6521,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 21.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w31": {
@@ -3424,6 +6651,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -3672,6 +7021,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 8.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w33": {
@@ -3680,6 +7151,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -3928,6 +7521,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 13.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w35": {
@@ -3936,6 +7651,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 17.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -4184,6 +8021,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 22.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w37": {
@@ -4192,6 +8151,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 22.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -4398,6 +8458,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 22.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w40": {
@@ -4505,6 +8666,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 22.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w41": {
@@ -4513,6 +8775,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 22.5
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -4761,6 +9145,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.0
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w43": {
@@ -4769,6 +9275,128 @@
       "_source": "auto",
       "_block": 0,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 13.5
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -5017,6 +9645,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Liegestütze (klassisch)",
+              "muscle": "Großer Brustmuskel, Trizeps, Deltamuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Step-Ups (erhöht)",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Australian Pull-ups",
+              "muscle": "Breiter Rückenmuskel, Bizeps, Rautenmuskeln",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 3,
+              "wdh": 15,
+              "gewicht": ""
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 3,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w45": {
@@ -5025,6 +9775,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.0
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -5273,6 +10145,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.0
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w47": {
@@ -5281,6 +10275,128 @@
       "_source": "auto",
       "_block": 1,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -5529,6 +10645,128 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Pike Push-ups",
+              "muscle": "Deltamuskel, Trizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Hanging Leg Raises",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Wadenheben (einbeinig)",
+              "muscle": "Wadenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "L-Sit (Parallettes)",
+              "muscle": "Gerader Bauchmuskel, Hüftbeuger",
+              "saetze": 4,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 18.5
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (unterhand)",
+              "muscle": "Bizeps, Breiter Rückenmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": 14.0
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 4,
+              "wdh": 10,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w49": {
@@ -5537,6 +10775,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [
@@ -5743,6 +11082,107 @@
             }
           ]
         }
+      ],
+      "_homeFallback": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
       ]
     },
     "w51": {
@@ -5751,6 +11191,107 @@
       "_source": "auto",
       "_block": 2,
       "days": [
+        {
+          "label": "Mo",
+          "exercises": [
+            {
+              "name": "Pseudo Planche Push-ups",
+              "muscle": "Großer Brustmuskel, Deltamuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dips am Barren",
+              "muscle": "Trizeps, Brustmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 23.5
+            },
+            {
+              "name": "Handstand Push-ups (Wand)",
+              "muscle": "Deltamuskel, Trizeps, Trapezmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Archer Liegestütze",
+              "muscle": "Großer Brustmuskel, Trizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Mi",
+          "exercises": [
+            {
+              "name": "Pistol Squats",
+              "muscle": "Quadrizeps, Gesäßmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 9.5
+            },
+            {
+              "name": "Nordische Beinbeuger",
+              "muscle": "Beinbizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Bulgarische Split-Kniebeuge",
+              "muscle": "Quadrizeps, Gesäßmuskel, Hüftbeuger",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Plank (Unterarmstütz)",
+              "muscle": "Gerader Bauchmuskel, Rumpf",
+              "saetze": 5,
+              "wdh": 30,
+              "gewicht": ""
+            }
+          ]
+        },
+        {
+          "label": "Fr",
+          "exercises": [
+            {
+              "name": "Muscle-Up (Stange)",
+              "muscle": "Breiter Rückenmuskel, Trizeps, Deltamuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Klimmzug (überhand)",
+              "muscle": "Breiter Rückenmuskel, Bizeps",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": 19.0
+            },
+            {
+              "name": "Front Lever Rows",
+              "muscle": "Breiter Rückenmuskel, Gerader Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            },
+            {
+              "name": "Dragon Flag",
+              "muscle": "Gerader Bauchmuskel, Querer Bauchmuskel",
+              "saetze": 5,
+              "wdh": 5,
+              "gewicht": ""
+            }
+          ]
+        }
+      ],
+      "_homeFallback": [
         {
           "label": "Mo",
           "exercises": [

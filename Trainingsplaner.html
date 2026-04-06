@@ -9457,17 +9457,27 @@ function renderCockpit(profile) {
   if (!profile) return;
   const sessions = profile.sessions || [];
 
-  const refDate = new Date();
-
-  const iso = _isoWeek(refDate);
+  // Echtes Datum für KW-Anzeige im Header
+  const now = new Date();
+  const iso = _isoWeek(now);
   const curYear = iso.year;
   const curKw = iso.week;
 
+  // Daten-Anker für Berechnungen (neueste Session — Demo-Daten enden in der Vergangenheit)
+  let refDate = now;
+  if (sessions.length > 0) {
+    const dates = sessions.map(s => _parseDE(s.date)).filter(Boolean);
+    if (dates.length) refDate = new Date(Math.max(...dates));
+  }
+  const dataIso = _isoWeek(refDate);
+  const dataYear = dataIso.year;
+  const dataKw = dataIso.week;
+
   // ─── Header: Crumb + Begrüßung ──────────────────────
-  const dow = _DOW_DE_LONG[refDate.getDay()];
-  const dd = String(refDate.getDate()).padStart(2, '0');
-  const mon = _MONTH_DE[refDate.getMonth()];
-  const yy = refDate.getFullYear();
+  const dow = _DOW_DE_LONG[now.getDay()];
+  const dd = String(now.getDate()).padStart(2, '0');
+  const mon = _MONTH_DE[now.getMonth()];
+  const yy = now.getFullYear();
   document.getElementById('cpCrumb').textContent =
     `${dow} · ${dd} ${mon} ${yy} · KW ${curKw}`;
 
@@ -9496,16 +9506,16 @@ function renderCockpit(profile) {
     volByKw.set(key, entry);
   });
 
-  const volCur = volByKw.get(curYear + '_' + curKw)?.vol || 0;
+  const volCur = volByKw.get(dataYear + '_' + dataKw)?.vol || 0;
 
-  // Vorwoche = letzte KW mit Daten VOR der aktuellen (robust gegen Lücken/Deload)
+  // Vorwoche = letzte KW mit Daten VOR der Daten-KW (robust gegen Lücken/Deload)
   const sortedWeeks = Array.from(volByKw.values())
     .sort((a, b) => a.year !== b.year ? a.year - b.year : a.week - b.week);
-  const curIdx = sortedWeeks.findIndex(w => w.year === curYear && w.week === curKw);
+  const curIdx = sortedWeeks.findIndex(w => w.year === dataYear && w.week === dataKw);
   const prevEntry = curIdx > 0 ? sortedWeeks[curIdx - 1] : null;
   const volPrev = prevEntry ? prevEntry.vol : 0;
 
-  document.getElementById('cpVolumeLabel').innerHTML = `↗ &nbsp;Volumen KW ${curKw}`;
+  document.getElementById('cpVolumeLabel').innerHTML = `↗ &nbsp;Volumen KW ${dataKw}`;
   document.getElementById('cpVolume').textContent = _fmtNum(volCur);
 
   const deltaEl = document.getElementById('cpVolumeDelta');
@@ -9515,8 +9525,7 @@ function renderCockpit(profile) {
     deltaEl.textContent = (deltaPct >= 0 ? '↑ ' : '↓ ') + Math.abs(deltaPct) + '%';
     deltaEl.className = 'stat-delta ' + (deltaPct >= 0 ? 'up' : 'down');
     deltaEl.style.display = '';
-    // Label reflektiert, ob direkte Vorwoche oder weiter zurück
-    const isDirect = prevEntry.year === curYear && prevEntry.week === curKw - 1;
+    const isDirect = prevEntry.year === dataYear && prevEntry.week === dataKw - 1;
     metaVolEl.textContent = isDirect ? 'ggü. Vorwoche' : `ggü. KW ${prevEntry.week}`;
   } else {
     deltaEl.style.display = 'none';
@@ -9528,7 +9537,7 @@ function renderCockpit(profile) {
     const d = _parseDE(s.date);
     if (!d) return false;
     const si = _isoWeek(d);
-    return si.year === curYear && si.week === curKw;
+    return si.year === dataYear && si.week === dataKw;
   });
   const planned = (profile.tage || []).length || 0;
   const done = sessThisWeek.length;
