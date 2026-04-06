@@ -4385,7 +4385,7 @@ body.role-athlete .tp-mode { display: none; }
         <div class="dropdown-label" id="athleteListLabel">Athleten</div>
         <button class="dropdown-item" data-athlete="lisa">
           <span class="radio"></span>
-          <span>Lisa Berger</span>
+          <span>Julia da Costa Amaral</span>
         </button>
         <div class="dropdown-divider"></div>
         <button class="dropdown-item">
@@ -4621,16 +4621,25 @@ body.role-athlete .tp-mode { display: none; }
             <div class="pn-form-hint" id="genSummary">—</div>
           </div>
 
-          <!-- Schritt 3: Split + Tage -->
+          <!-- Schritt 3: Split + Tage + Ort -->
           <div class="pn-card pn-form-card">
-            <div class="pn-card-label">3 · Split-Template</div>
-            <div class="pn-card-title">Trainings-Aufteilung</div>
+            <div class="pn-card-label">3 · Split &amp; Trainingsort</div>
+            <div class="pn-card-title">Aufteilung &amp; Übungsquelle</div>
             <div class="pn-form-field">
               <label class="pn-field-label">Template</label>
               <select class="pn-select" id="genSplit">
                 <option value="ppl">Push / Pull / Legs (3 Tage)</option>
                 <option value="ok_uk">Oberkörper / Unterkörper (2–4 Tage)</option>
                 <option value="ganzkörper">Ganzkörper (2–3 Tage)</option>
+              </select>
+            </div>
+            <div class="pn-form-field">
+              <label class="pn-field-label">Trainingsort</label>
+              <select class="pn-select" id="genLocation">
+                <option value="studio">◇ Studio (Maschinen + Freihantel)</option>
+                <option value="home">⌂ Zuhause (Calisthenics + Bänder)</option>
+                <option value="outdoor">✦ Outdoor / Park</option>
+                <option value="all">Alle Orte gemischt</option>
               </select>
             </div>
             <div class="pn-form-field">
@@ -4645,6 +4654,10 @@ body.role-athlete .tp-mode { display: none; }
                 <button type="button" class="tp-chip" data-day="So">So</button>
               </div>
             </div>
+            <label class="pn-check" style="margin-top:var(--s-3);">
+              <input type="checkbox" id="genHomeFallback">
+              Home-Ausweichplan generieren (Studio zu / schlechtes Wetter)
+            </label>
           </div>
 
           <!-- Schritt 4: Generieren -->
@@ -5119,10 +5132,10 @@ body.role-athlete .tp-mode { display: none; }
           </div>
           <div class="info-athletes-list" id="infoAthletesList">
             <div class="info-athlete-row">
-              <div class="info-athlete-avatar">LB</div>
+              <div class="info-athlete-avatar">JC</div>
               <div class="info-athlete-info">
-                <div class="info-athlete-name">Lisa Berger</div>
-                <div class="info-athlete-meta">24 J · Kraftausdauer · 3×/Woche · Demo-Athletin</div>
+                <div class="info-athlete-name">Julia da Costa Amaral</div>
+                <div class="info-athlete-meta">26 J · Kraftausdauer · 3×/Woche · Studio + Zuhause</div>
               </div>
               <div class="info-athlete-actions">
                 <button class="info-athlete-btn" data-athlete-edit="lisa">Bearbeiten</button>
@@ -5596,7 +5609,7 @@ body.role-athlete .tp-mode { display: none; }
           <div class="info-text">
             <p><strong>Warum diese Parameter?</strong> Kurze Pausen bei Kraftausdauer trainieren das aerobe System und die Laktattoleranz. Lange Pausen bei Maximalkraft lassen das ATP-Kreatinphosphat-System zwischen den Sätzen voll regenerieren — Voraussetzung für echtes Maximalkraft-Training.</p>
             <p><strong>Regenerations-Wochen</strong> verhindern Übertraining und ermöglichen Superkompensation. Drei Modi im System: <em>Auto</em> (alle N Wochen), <em>Athlet</em> (manuell gesetzt), <em>Block</em> (zwischen Blöcken).</p>
-            <p><strong>Max' Standard-Zyklus:</strong> 4 Wochen GPP → 4 Wochen SPP → 4 Wochen Peak → 1 Woche Regen = 13 Wochen Gesamtzyklus. Über ein ganzes Jahr ergibt das vier vollständige Zyklen.</p>
+            <p><strong>Standard-Zyklus:</strong> 4 Wochen GPP → 4 Wochen SPP → 4 Wochen Peak → 1 Woche Regen = 13 Wochen Gesamtzyklus. Über ein ganzes Jahr ergibt das vier vollständige Zyklen.</p>
           </div>
         </div>
 
@@ -5761,7 +5774,7 @@ body.role-athlete .tp-mode { display: none; }
             </div>
             <div class="info-row">
               <div class="info-row-key">2 · Demo-Profil</div>
-              <div class="info-row-val">Das Max-Mustermann-Demo-Profil wird automatisch geladen. 3+ Jahre historische Sessions, 48 Pläne, periodisiert in 4 Zyklen — ideal um alle Features mit echten Daten zu erleben.</div>
+              <div class="info-row-val">Das Demo-Profil wird automatisch geladen. 3+ Jahre historische Sessions, 48 Pläne, periodisiert in 4 Zyklen — ideal um alle Features mit echten Daten zu erleben.</div>
             </div>
             <div class="info-row">
               <div class="info-row-key">3 · Cockpit erkunden</div>
@@ -6239,16 +6252,16 @@ const state = {
   // Persistenz kommt. Keys entsprechen data-athlete-edit-Werten.
   demoAthletes: {
     lisa: {
-      name: 'Lisa',
-      nachname: 'Berger',
-      alter: 24,
+      name: 'Julia',
+      nachname: 'da Costa Amaral',
+      alter: 26,
       groesse: 168,
       gewicht: 62,
-      hfmax: 196,
+      hfmax: 194,
       goal: 'kraftausdauer',
       tage: ['Mo', 'Mi', 'Fr'],
-      trainingLocation: 'Studio · Fitness-Box Nord',
-      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange']
+      trainingLocation: 'Studio + Zuhause',
+      equipment: ['Langhantel', 'Kurzhanteln', 'Kabelzug', 'Klimmzugstange', 'Bänder']
     }
   },
   _editTarget: 'self' // 'self' oder Key aus demoAthletes
@@ -6494,7 +6507,7 @@ const cmdkItems = [
   { group: 'Modus', label: 'Zu Athlet wechseln', ico: '○', action: () => setRole('athlete') },
   { group: 'Modus', label: 'Zu Trainer wechseln', ico: '●', action: () => setRole('trainer') },
   { group: 'Modus', label: 'Eigenes Profil bearbeiten', ico: '✎', action: () => openProfileEditModal('self') },
-  { group: 'Modus', label: 'Athletin Lisa bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
+  { group: 'Modus', label: 'Athletin Julia bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
   { group: 'Modus', label: 'Anamnesebogen anzeigen', ico: '⚕', visible: () => state.role !== 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'anamnese')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'anamnese')); state.infoSection = 'anamnese'; localStorage.setItem('tpv2_info_section', 'anamnese'); }, 50); } },
   { group: 'Modus', label: 'Trainer-Vereinbarung anzeigen', ico: '⚖', visible: () => state.role === 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'vereinbarung')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'vereinbarung')); state.infoSection = 'vereinbarung'; localStorage.setItem('tpv2_info_section', 'vereinbarung'); }, 50); } },
 
@@ -9609,7 +9622,7 @@ function renderAthleteRow(key, p) {
   });
 
   // Athleten-Verwalten: Bearbeiten öffnet das gleiche Profil-Edit-Modal,
-  // aber mit Lisa als Target statt Max. Save-Logik weiß anhand state._editTarget,
+  // aber mit Julia als Target statt Alexander. Save-Logik weiß anhand state._editTarget,
   // wohin geschrieben wird.
   document.querySelectorAll('[data-athlete-edit]').forEach(btn => {
     btn.addEventListener('click', () => openProfileEditModal(btn.dataset.athleteEdit));
@@ -10294,6 +10307,35 @@ function startNextEinheit() {
       .slice(0, count);
   }
 
+  // ── Einen Wochenplan für einen Block generieren ──
+  function buildWeekPlan(blockDef, splitDef, selectedDays, location, blockIdx) {
+    const exPerCat = blockDef.goal === 'maximalkraft' ? 2 : 3;
+    const goalLabels = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
+    const days = selectedDays.map((dayLabel, dayIdx) => {
+      const splitDay = splitDef.days[dayIdx % splitDef.days.length];
+      const exercises = [];
+      splitDay.cats.forEach(catKey => {
+        pickExercises(catKey, exPerCat, location).forEach(ex => {
+          exercises.push({ name: ex.name, muscle: ex.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+        });
+      });
+      // Extras nur für Studio (Kabelzug etc.)
+      if (location === 'studio' || location === 'all') {
+        splitDay.extras.forEach(exName => {
+          const found = _lxAllExercises().find(e => e.name === exName);
+          if (found && (location === 'all' || (found.location || 'studio') === location)) {
+            exercises.push({ name: found.name, muscle: found.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+          }
+        });
+      }
+      return { label: dayLabel, exercises: exercises.slice(0, 6) };
+    });
+    return {
+      name: `${blockDef.saetze}×${blockDef.wdh} ${goalLabels[blockDef.goal] || blockDef.goal}`,
+      goal: blockDef.goal, _source: 'generator', _block: blockIdx, days
+    };
+  }
+
   // ── Pläne generieren ──
   submitBtn.addEventListener('click', () => {
     const profile = state.profile;
@@ -10301,7 +10343,9 @@ function startNextEinheit() {
 
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
-    const location = profile.trainingLocation === 'home' ? 'home' : 'studio';
+    const locationEl = document.getElementById('genLocation');
+    const location = locationEl ? locationEl.value : 'studio';
+    const homeFallback = document.getElementById('genHomeFallback')?.checked;
     const startKw = parseInt(kwStartInput.value) || 1;
     const regen = readRegenConfig();
 
@@ -10315,28 +10359,17 @@ function startNextEinheit() {
     let weeksSinceRegen = 0;
 
     blocks.forEach((blockDef, blockIdx) => {
-      const exPerCat = blockDef.goal === 'maximalkraft' ? 2 : 3;
-      const goalLabels = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
-
       for (let w = 0; w < blockDef.length && kw <= 52; w++, kw++) {
-        const days = selectedDays.map((dayLabel, dayIdx) => {
-          const splitDay = splitDef.days[dayIdx % splitDef.days.length];
-          const exercises = [];
-          splitDay.cats.forEach(catKey => {
-            pickExercises(catKey, exPerCat, location).forEach(ex => {
-              exercises.push({ name: ex.name, muscle: ex.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
-            });
-          });
-          splitDay.extras.forEach(exName => {
-            const found = _lxAllExercises().find(e => e.name === exName);
-            if (found) exercises.push({ name: found.name, muscle: found.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
-          });
-          return { label: dayLabel, exercises: exercises.slice(0, 6) };
-        });
-        profile.plans['w' + kw] = {
-          name: `${blockDef.saetze}×${blockDef.wdh} ${goalLabels[blockDef.goal] || blockDef.goal}`,
-          goal: blockDef.goal, _source: 'generator', _block: blockIdx, days
-        };
+        // Hauptplan
+        const plan = buildWeekPlan(blockDef, splitDef, selectedDays, location, blockIdx);
+        profile.plans['w' + kw] = plan;
+
+        // Home-Ausweichplan (als _homeFallback im Plan-Objekt)
+        if (homeFallback && location !== 'home') {
+          const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
+          profile.plans['w' + kw]._homeFallback = homePlan.days;
+        }
+
         weeksSinceRegen++;
       }
 
