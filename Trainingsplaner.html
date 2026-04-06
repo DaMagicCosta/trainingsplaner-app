@@ -4254,6 +4254,73 @@ body.role-athlete .info-athletes-card { display: none; }
         </div>
       </div>
 
+      <!-- Bearbeiten-Modus: Planungs-Karten (sichtbar nur in mode-edit) -->
+      <div class="jp-edit-content">
+        <div class="pn-hero">
+          <div class="pn-hero-icon">✎</div>
+          <div class="pn-hero-text">
+            <div class="pn-hero-title">Wochenplan-Generator folgt</div>
+            <div class="pn-hero-desc">
+              Dieser Bereich wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
+              passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
+              verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
+              steht in der nächsten Bau-Etappe auf dem Plan.
+            </div>
+          </div>
+        </div>
+
+        <div class="pn-grid">
+          <div class="pn-card">
+            <div class="pn-card-label">1 · Generator</div>
+            <div class="pn-card-title">Wochenplan aus Template</div>
+            <div class="pn-card-desc">
+              Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
+              Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
+              (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">2 · Templates</div>
+            <div class="pn-card-title">Split-Bibliothek</div>
+            <div class="pn-card-desc">
+              Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
+              kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
+              jeder generierte Plan zusammengesetzt wird.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">3 · Periodisierung</div>
+            <div class="pn-card-title">13-Wochen-Zyklen</div>
+            <div class="pn-card-desc">
+              Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
+              plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
+              jederzeit möglich.
+            </div>
+          </div>
+
+          <div class="pn-card">
+            <div class="pn-card-label">4 · Ziel-Presets</div>
+            <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
+            <div class="pn-card-desc">
+              Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
+              anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
+              Einzelfall überschreiben.
+            </div>
+          </div>
+        </div>
+
+        <div class="pn-notice">
+          <div class="pn-notice-icon">◐</div>
+          <div class="pn-notice-text">
+            <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
+            Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
+            neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Bereich den geplanten Funktionsumfang.
+          </div>
+        </div>
+      </div>
+
       <!-- Block-Timeline (52 KW-Segmente) -->
       <div class="jp-timeline-wrap">
         <div class="jp-timeline-head">
@@ -4375,71 +4442,6 @@ body.role-athlete .info-athletes-card { display: none; }
           </div>
         </div>
         <!-- Q2-Q4 werden in Schritt 4 dynamisch aus Profildaten gerendert -->
-      </div>
-
-      <!-- Bearbeiten-Modus: Planungs-Karten (sichtbar nur in mode-edit) -->
-      <div class="jp-edit-content">
-        <div class="pn-hero">
-          <div class="pn-hero-icon">✎</div>
-          <div class="pn-hero-title">Wochenplan-Generator folgt</div>
-          <div class="pn-hero-desc">
-            Dieser Bereich wird der zentrale Arbeitsplatz für alles, was <strong>vor</strong> dem Training
-            passiert: Pläne für Athleten generieren, Split-Templates verwalten, Blöcke auf Jahreszyklen
-            verteilen. Für die öffentliche Demo bewusst noch nicht scharfgeschaltet — die Umsetzung
-            steht in der nächsten Bau-Etappe auf dem Plan.
-          </div>
-        </div>
-
-        <div class="pn-grid">
-          <div class="pn-card">
-            <div class="pn-card-label">1 · Generator</div>
-            <div class="pn-card-title">Wochenplan aus Template</div>
-            <div class="pn-card-desc">
-              Athlet wählen, Trainingsziel setzen, Block-Phase (GPP/SPP/Peak) bestimmen, Tage festlegen.
-              Das System baut den Wochenplan aus einem passenden Split-Template und den Ziel-Presets
-              (Satz/Wdh/RPE pro Übung). Vorschau, dann bestätigen.
-            </div>
-          </div>
-
-          <div class="pn-card">
-            <div class="pn-card-label">2 · Templates</div>
-            <div class="pn-card-title">Split-Bibliothek</div>
-            <div class="pn-card-desc">
-              Push/Pull/Legs, Ober/Unter, Antagonisten — eigene Templates anlegen, bearbeiten,
-              kopieren. Übungen tauschen, Reihenfolge ändern. Templates sind die Bausteine, aus denen
-              jeder generierte Plan zusammengesetzt wird.
-            </div>
-          </div>
-
-          <div class="pn-card">
-            <div class="pn-card-label">3 · Periodisierung</div>
-            <div class="pn-card-title">13-Wochen-Zyklen</div>
-            <div class="pn-card-desc">
-              Automatische Block-Zuordnung über das Trainingsjahr. Drei Zyklen à 12 Trainingswochen
-              plus eine Regeneration, verteilt auf die richtigen Kalenderwochen. Manuelle Anpassungen
-              jederzeit möglich.
-            </div>
-          </div>
-
-          <div class="pn-card">
-            <div class="pn-card-label">4 · Ziel-Presets</div>
-            <div class="pn-card-title">Hypertrophie · Maximalkraft · Kraftausdauer · Abnehmen</div>
-            <div class="pn-card-desc">
-              Pro Ziel eigene Satz- und Wdh.-Profile. Max-Phase anders als Volumen-Phase, Abnehmen
-              anders als Hypertrophie. Presets sind wissenschaftlich begründet und lassen sich im
-              Einzelfall überschreiben.
-            </div>
-          </div>
-        </div>
-
-        <div class="pn-notice">
-          <div class="pn-notice-icon">◐</div>
-          <div class="pn-notice-text">
-            <strong>Hinweis:</strong> Die bestehende v1 hatte diesen Workflow bereits produktiv im
-            Einsatz. Für v2 wird er neu aufgebaut, damit er zum Cockpit-Designsystem passt und die
-            neuen Datenstrukturen nutzt. Bis dahin zeigt dieser Bereich den geplanten Funktionsumfang.
-          </div>
-        </div>
       </div>
 
     </section>
