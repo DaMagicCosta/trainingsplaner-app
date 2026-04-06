@@ -1582,6 +1582,42 @@ ul, ol { list-style: none; }
 }
 .pn-generate-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
 .pn-form-action { align-items: flex-start; }
+.pn-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 500;
+}
+.pn-check input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.pn-block-rows { display: flex; flex-direction: column; gap: var(--s-3); }
+.pn-block-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 10px var(--s-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+}
+.pn-block-row:has(input[type="checkbox"]:not(:checked)) { opacity: 0.4; }
+.pn-block-check { flex: 1; min-width: 0; }
+.pn-clr-gpp  { color: #4cc9f0; }
+.pn-clr-spp  { color: #f4a261; }
+.pn-clr-peak { color: #9b5de5; }
+.pn-block-len {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.pn-block-len .pn-input { width: 52px; padding: 5px 6px; font-size: 13px; }
 
 @media (max-width: 720px) {
   .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
@@ -4500,29 +4536,41 @@ body.role-athlete .tp-mode { display: none; }
 
         <!-- Generator-Formular -->
         <div class="pn-grid">
-          <!-- Schritt 1: Block-Phase -->
-          <div class="pn-card pn-form-card">
-            <div class="pn-card-label">1 · Block-Phase</div>
-            <div class="pn-card-title">Periodisierung</div>
-            <div class="pn-form-field">
-              <label class="pn-field-label">Phase</label>
-              <select class="pn-select" id="genBlock">
-                <option value="full">Ganzer Makrozyklus (GPP → SPP → Peak)</option>
-                <option value="gpp">Nur GPP · Akkumulation</option>
-                <option value="spp">Nur SPP · Intensifikation</option>
-                <option value="peak">Nur Peak · Skills</option>
-              </select>
-            </div>
-            <div class="pn-form-row">
+          <!-- Schritt 1: Periodisierung (Checkboxen → Live-Timeline) -->
+          <div class="pn-card pn-form-card" style="grid-column: 1 / -1;">
+            <div class="pn-card-label">1 · Periodisierung</div>
+            <div class="pn-card-title">Block-Phasen &amp; Regen-Wochen</div>
+
+            <div class="pn-form-row" style="align-items:center; gap:var(--s-4);">
               <div class="pn-form-field">
                 <label class="pn-field-label">Start-KW</label>
                 <input type="number" class="pn-input" id="genKwStart" min="1" max="52" value="1">
               </div>
+              <label class="pn-check"><input type="checkbox" id="genRegenBetween" checked> Regen zwischen Blöcken</label>
             </div>
-            <div class="pn-form-hint" id="genRegenHint">→ KW 13, 26, 39 werden Regen-Wochen</div>
+
+            <div class="pn-block-rows" id="genBlockRows">
+              <div class="pn-block-row">
+                <label class="pn-check pn-block-check pn-clr-gpp"><input type="checkbox" data-block="0" checked> GPP · Akkumulation</label>
+                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="0" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
+                <div class="pn-preset-badge pn-preset-gpp">3×20</div>
+              </div>
+              <div class="pn-block-row">
+                <label class="pn-check pn-block-check pn-clr-spp"><input type="checkbox" data-block="1" checked> SPP · Intensifikation</label>
+                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="1" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
+                <div class="pn-preset-badge pn-preset-spp">4×10</div>
+              </div>
+              <div class="pn-block-row">
+                <label class="pn-check pn-block-check pn-clr-peak"><input type="checkbox" data-block="2" checked> Peak · Skills</label>
+                <div class="pn-block-len"><input type="number" class="pn-input" data-block-len="2" min="2" max="12" value="4"><span class="pn-field-label">Wo.</span></div>
+                <div class="pn-preset-badge pn-preset-peak">5×5</div>
+              </div>
+            </div>
+
+            <div class="pn-form-hint" id="genSummary">—</div>
           </div>
 
-          <!-- Schritt 2: Split-Template -->
+          <!-- Schritt 2: Split + Tage -->
           <div class="pn-card pn-form-card">
             <div class="pn-card-label">2 · Split-Template</div>
             <div class="pn-card-title">Trainings-Aufteilung</div>
@@ -4548,33 +4596,13 @@ body.role-athlete .tp-mode { display: none; }
             </div>
           </div>
 
-          <!-- Schritt 3: Ziel-Preset -->
-          <div class="pn-card pn-form-card">
-            <div class="pn-card-label">3 · Ziel-Presets</div>
-            <div class="pn-card-title">Satz- &amp; Wdh-Schema</div>
-            <div id="genPresetInfo">
-              <div class="pn-preset-row">
-                <div class="pn-preset-badge pn-preset-gpp">3 × 20 · Kraftausdauer</div>
-                <div class="pn-preset-desc">GPP: Hohe Wdh, moderates Gewicht. Technik &amp; Ausdauer.</div>
-              </div>
-              <div class="pn-preset-row">
-                <div class="pn-preset-badge pn-preset-spp">4 × 10 · Hypertrophie</div>
-                <div class="pn-preset-desc">SPP: Mittlere Wdh, höheres Gewicht. Muskelaufbau.</div>
-              </div>
-              <div class="pn-preset-row">
-                <div class="pn-preset-badge pn-preset-peak">5 × 5 · Maximalkraft</div>
-                <div class="pn-preset-desc">Peak: Niedrige Wdh, schweres Gewicht. Kraftspitzen.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Schritt 4: Generieren -->
+          <!-- Schritt 3: Generieren -->
           <div class="pn-card pn-form-card pn-form-action">
-            <div class="pn-card-label">4 · Generieren</div>
-            <div class="pn-card-title">Plan erstellen</div>
+            <div class="pn-card-label">3 · Generieren</div>
+            <div class="pn-card-title">Pläne erstellen</div>
             <div class="pn-card-desc">
-              Erstellt Wochenpläne für den gewählten Zeitraum mit Übungen aus dem Lexikon.
-              Bestehende Pläne in den betroffenen KWs werden überschrieben.
+              Erstellt Wochenpläne für alle aktiven Blöcke mit Übungen aus dem Lexikon.
+              Block-Timeline und Wochen-Karten updaten sofort.
             </div>
             <button class="pn-generate-btn" id="genSubmit">Pläne generieren</button>
           </div>
@@ -6715,55 +6743,73 @@ function _calcPeriodization(profile) {
   const period = profile?.periodization;
   if (!period || !period.active) return null;
 
-  const startKw     = period.startKw || 1;
-  const blockLength = period.blockLength || 4;
-  const blocks      = period.blocks || [];
-  const numBlocks   = blocks.length;
-  if (numBlocks === 0) return null;
+  const startKw = period.startKw || 1;
+  const blocks  = period.blocks || [];
+  if (blocks.length === 0) return null;
 
   const regenCfg      = profile.regenConfig || {};
-  const regenInterval = regenCfg.interval || 13;
-
+  const regenBetween  = regenCfg.regenBetween !== false;
   const athleteRegens = new Set(profile.athleteRegenWeeks || []);
+
+  // Zyklus-Länge berechnen (variable Block-Längen + Regen dazwischen)
+  let cycleLength = 0;
+  blocks.forEach(b => {
+    cycleLength += parseInt(b.length) || 4;
+    if (regenBetween) cycleLength += 1;
+  });
 
   const result = {};
   for (let kw = 1; kw <= 52; kw++) {
-    // Offset zur Zyklus-Startwoche
     const offset = kw - startKw;
     if (offset < 0) {
       result[kw] = { kw, isPreStart: true };
       continue;
     }
-    // Position im Zyklus (1..regenInterval)
-    const posInCycle = (offset % regenInterval) + 1;
-    const isIntervalRegen = posInCycle === regenInterval;
-    const isAthleteRegen  = athleteRegens.has(kw);
-    const isRegen = isIntervalRegen || isAthleteRegen;
 
-    if (isRegen) {
-      result[kw] = {
-        kw,
-        isRegen: true,
-        regenSource: isAthleteRegen ? 'athlete' : 'interval'
-      };
+    // Explizite Athlete-Regen
+    if (athleteRegens.has(kw)) {
+      result[kw] = { kw, isRegen: true, regenSource: 'athlete' };
       continue;
     }
 
-    // Block-Index aus Trainingswochen-Position im Zyklus
-    const blockIdx = Math.floor((posInCycle - 1) / blockLength) % numBlocks;
-    const relativeWeek = ((posInCycle - 1) % blockLength) + 1;
-    const blockDef = blocks[blockIdx] || {};
+    // Position im sich wiederholenden Zyklus
+    const cyclePos = offset % cycleLength;
+    let pos = 0;
+    let found = false;
 
-    result[kw] = {
-      kw,
-      isRegen: false,
-      blockIdx,
-      blockLabel: _abbrevBlock(blockDef.label || `Block ${blockIdx + 1}`),
-      blockFullLabel: blockDef.label || `Block ${blockIdx + 1}`,
-      blockGoal: blockDef.goal || '',
-      relativeWeek,
-      blockLength
-    };
+    for (let i = 0; i < blocks.length; i++) {
+      const blen = parseInt(blocks[i].length) || 4;
+      const blockEnd = pos + blen;
+
+      if (cyclePos >= pos && cyclePos < blockEnd) {
+        const relativeWeek = cyclePos - pos + 1;
+        result[kw] = {
+          kw, isRegen: false, blockIdx: i,
+          blockLabel: _abbrevBlock(blocks[i].label || `Block ${i + 1}`),
+          blockFullLabel: blocks[i].label || `Block ${i + 1}`,
+          blockGoal: blocks[i].goal || '',
+          relativeWeek, blockLength: blen
+        };
+        found = true;
+        break;
+      }
+
+      pos = blockEnd;
+
+      // Regen-Woche nach diesem Block?
+      if (regenBetween) {
+        if (cyclePos === pos) {
+          result[kw] = { kw, isRegen: true, regenSource: 'interval' };
+          found = true;
+          break;
+        }
+        pos++;
+      }
+    }
+
+    if (!found) {
+      result[kw] = { kw, isPreStart: true };
+    }
   }
   return result;
 }
@@ -10004,55 +10050,112 @@ function startNextEinheit() {
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
 
-  const PRESETS = {
-    gpp:  { saetze: 3, wdh: 20, label: 'Kraftausdauer', blockIdx: 0, goal: 'kraftausdauer', planName: '3×20 Akkumulation' },
-    spp:  { saetze: 4, wdh: 10, label: 'Hypertrophie',  blockIdx: 1, goal: 'hypertrophie',  planName: '4×10 Intensifikation' },
-    peak: { saetze: 5, wdh: 5,  label: 'Maximalkraft',  blockIdx: 2, goal: 'maximalkraft',  planName: '5×5 Peak' }
-  };
+  const BLOCK_DEFS = [
+    { key: 'gpp',  label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', saetze: 3, wdh: 20, planName: '3×20 Akkumulation' },
+    { key: 'spp',  label: 'Intensifikation (SPP)', goal: 'hypertrophie', saetze: 4, wdh: 10, planName: '4×10 Intensifikation' },
+    { key: 'peak', label: 'Peak / Skills',         goal: 'maximalkraft', saetze: 5, wdh: 5,  planName: '5×5 Peak' }
+  ];
 
   const SPLITS = {
-    ppl: {
-      days: [
-        { label: 'Push', cats: ['p_brust', 'p_schulter'], extras: ['Trizepsdrücken (Kabel)'] },
-        { label: 'Pull', cats: ['p_ruecken'], extras: ['Bizeps-Curls (Langhantel)', 'Face Pulls (Kabel)'] },
-        { label: 'Legs', cats: ['p_unterkoerper'], extras: ['Wadenheben (stehend)'] }
-      ]
-    },
-    ok_uk: {
-      days: [
-        { label: 'OK', cats: ['p_brust', 'p_schulter', 'p_ruecken', 'p_arme'], extras: [] },
-        { label: 'UK', cats: ['p_unterkoerper', 'p_bauch'], extras: [] }
-      ]
-    },
-    'ganzkörper': {
-      days: [
-        { label: 'GK', cats: ['p_brust', 'p_ruecken', 'p_unterkoerper', 'p_schulter'], extras: [] }
-      ]
-    }
+    ppl: { days: [
+      { label: 'Push', cats: ['p_brust', 'p_schulter'], extras: ['Trizepsdrücken (Kabel)'] },
+      { label: 'Pull', cats: ['p_ruecken'], extras: ['Bizeps-Curls (Langhantel)', 'Face Pulls (Kabel)'] },
+      { label: 'Legs', cats: ['p_unterkoerper'], extras: ['Wadenheben (stehend)'] }
+    ]},
+    ok_uk: { days: [
+      { label: 'OK', cats: ['p_brust', 'p_schulter', 'p_ruecken', 'p_arme'], extras: [] },
+      { label: 'UK', cats: ['p_unterkoerper', 'p_bauch'], extras: [] }
+    ]},
+    'ganzkörper': { days: [
+      { label: 'GK', cats: ['p_brust', 'p_ruecken', 'p_unterkoerper', 'p_schulter'], extras: [] }
+    ]}
   };
 
-  const blockSelect  = document.getElementById('genBlock');
-  const kwStartInput = document.getElementById('genKwStart');
-  const splitSelect  = document.getElementById('genSplit');
-  const regenHint    = document.getElementById('genRegenHint');
-  const submitBtn    = document.getElementById('genSubmit');
-  const dayChips     = document.getElementById('genDayChips');
-  if (!blockSelect || !submitBtn) return;
+  const kwStartInput   = document.getElementById('genKwStart');
+  const regenCheckbox  = document.getElementById('genRegenBetween');
+  const summaryEl      = document.getElementById('genSummary');
+  const splitSelect    = document.getElementById('genSplit');
+  const submitBtn      = document.getElementById('genSubmit');
+  const dayChips       = document.getElementById('genDayChips');
+  const blockRowsEl    = document.getElementById('genBlockRows');
+  if (!submitBtn || !blockRowsEl) return;
 
-  function updateHint() {
-    const mode = blockSelect.value;
-    const start = parseInt(kwStartInput.value) || 1;
-    if (mode === 'full') {
-      const r1 = start + 12, r2 = start + 25, r3 = start + 38;
-      regenHint.textContent = `→ 39 Wochen · Regen: KW ${r1}, ${r2}, ${r3}`;
-    } else {
-      const r = start + 12;
-      regenHint.textContent = r <= 52 ? `→ 12 Wochen · Regen: KW ${r}` : '→ 12 Wochen';
-    }
+  // ── Aus den Checkboxen die aktuelle Periodisierung lesen ──
+  function readConfig() {
+    const startKw = parseInt(kwStartInput.value) || 1;
+    const regenBetween = regenCheckbox.checked;
+    const blocks = [];
+    blockRowsEl.querySelectorAll('.pn-block-row').forEach((row, idx) => {
+      const cb = row.querySelector('input[type="checkbox"]');
+      const lenInput = row.querySelector('input[type="number"]');
+      if (cb && cb.checked) {
+        blocks.push({
+          ...BLOCK_DEFS[idx],
+          blockIdx: idx,
+          length: parseInt(lenInput?.value) || 4
+        });
+      }
+    });
+    return { startKw, regenBetween, blocks };
   }
 
-  blockSelect.addEventListener('change', updateHint);
-  kwStartInput.addEventListener('change', updateHint);
+  // ── Periodisierung ins Profil schreiben + Timeline sofort updaten ──
+  function applyToProfile() {
+    const profile = state.profile;
+    if (!profile) return;
+    const cfg = readConfig();
+    if (cfg.blocks.length === 0) {
+      if (summaryEl) summaryEl.textContent = 'Mindestens einen Block aktivieren';
+      return;
+    }
+
+    // Periodisierung setzen
+    const totalBlockWeeks = cfg.blocks.reduce((s, b) => s + b.length, 0);
+    const regenCount = cfg.regenBetween ? cfg.blocks.length : 0;
+    const cycleLength = totalBlockWeeks + regenCount;
+
+    profile.periodization = {
+      active: true,
+      startKw: cfg.startKw,
+      blockLength: cfg.blocks[0].length,
+      blocks: cfg.blocks.map(b => ({
+        label: b.label,
+        goal: b.goal,
+        length: b.length
+      }))
+    };
+    profile.regenConfig = {
+      interval: cycleLength,
+      regenBetween: cfg.regenBetween
+    };
+
+    // Regen-Wochen berechnen
+    profile.athleteRegenWeeks = [];
+    if (cfg.regenBetween) {
+      let kw = cfg.startKw;
+      cfg.blocks.forEach(b => {
+        kw += b.length;
+        if (kw <= 52) profile.athleteRegenWeeks.push(kw);
+        kw += 1; // Regen-Woche überspringen
+      });
+    }
+
+    // Summary aktualisieren
+    const endKw = cfg.startKw + cycleLength - 1;
+    const regenKws = profile.athleteRegenWeeks.filter(k => k <= 52);
+    if (summaryEl) {
+      summaryEl.textContent = `→ ${totalBlockWeeks} Trainingswochen · KW ${cfg.startKw}–${Math.min(endKw, 52)}` +
+        (regenKws.length ? ` · Regen: KW ${regenKws.join(', ')}` : '');
+    }
+
+    // Sofort Timeline + Wochen-Karten updaten
+    renderJahresplan(profile);
+  }
+
+  // ── Alle Inputs verdrahten → sofortiges Update ──
+  blockRowsEl.querySelectorAll('input').forEach(inp => inp.addEventListener('change', applyToProfile));
+  kwStartInput.addEventListener('change', applyToProfile);
+  regenCheckbox.addEventListener('change', applyToProfile);
 
   if (dayChips) {
     dayChips.querySelectorAll('.tp-chip').forEach(chip => {
@@ -10066,46 +10169,13 @@ function startNextEinheit() {
       .slice(0, count);
   }
 
-  function generatePhase(profile, phaseKey, kwFrom, kwTo, splitDef, selectedDays, location) {
-    const preset = PRESETS[phaseKey];
-    const exPerCat = phaseKey === 'peak' ? 2 : 3;
-
-    for (let kw = kwFrom; kw <= kwTo && kw <= 52; kw++) {
-      const days = selectedDays.map((dayLabel, dayIdx) => {
-        const splitDay = splitDef.days[dayIdx % splitDef.days.length];
-        const exercises = [];
-        splitDay.cats.forEach(catKey => {
-          pickExercises(catKey, exPerCat, location).forEach(ex => {
-            exercises.push({ name: ex.name, muscle: ex.muscle, saetze: preset.saetze, wdh: preset.wdh, gewicht: null });
-          });
-        });
-        splitDay.extras.forEach(exName => {
-          const found = _lxAllExercises().find(e => e.name === exName);
-          if (found) exercises.push({ name: found.name, muscle: found.muscle, saetze: preset.saetze, wdh: preset.wdh, gewicht: null });
-        });
-        return { label: dayLabel, exercises: exercises.slice(0, 6) };
-      });
-
-      profile.plans['w' + kw] = {
-        name: preset.planName, goal: preset.goal, _source: 'generator', _block: preset.blockIdx, days
-      };
-    }
-
-    // Regen-Woche nach dem Block
-    const regenKw = kwTo + 1;
-    if (regenKw <= 52) {
-      delete profile.plans['w' + regenKw];
-      if (!profile.athleteRegenWeeks) profile.athleteRegenWeeks = [];
-      if (!profile.athleteRegenWeeks.includes(regenKw)) profile.athleteRegenWeeks.push(regenKw);
-    }
-  }
-
+  // ── Pläne generieren ──
   submitBtn.addEventListener('click', () => {
     const profile = state.profile;
     if (!profile) { toast('Kein Profil geladen'); return; }
+    const cfg = readConfig();
+    if (cfg.blocks.length === 0) { toast('Mindestens einen Block aktivieren'); return; }
 
-    const mode = blockSelect.value;
-    const startKw = parseInt(kwStartInput.value) || 1;
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
     const location = profile.trainingLocation === 'home' ? 'home' : 'studio';
@@ -10115,41 +10185,47 @@ function startNextEinheit() {
     if (selectedDays.length === 0) { toast('Mindestens einen Trainingstag wählen'); return; }
 
     if (!profile.plans) profile.plans = {};
-    if (!profile.athleteRegenWeeks) profile.athleteRegenWeeks = [];
 
-    if (mode === 'full') {
-      // Ganzer Makrozyklus: 3 × 12 Wochen + 3 Regen
-      generatePhase(profile, 'gpp',  startKw,      startKw + 11, splitDef, selectedDays, location);
-      generatePhase(profile, 'spp',  startKw + 13,  startKw + 24, splitDef, selectedDays, location);
-      generatePhase(profile, 'peak', startKw + 26,  startKw + 37, splitDef, selectedDays, location);
-    } else {
-      generatePhase(profile, mode, startKw, startKw + 11, splitDef, selectedDays, location);
-    }
-
-    // Periodisierung setzen/aktualisieren
-    profile.periodization = {
-      active: true, startKw: startKw, blockLength: 4,
-      blocks: [
-        { label: 'Akkumulation (GPP)', goal: 'kraftausdauer' },
-        { label: 'Intensifikation (SPP)', goal: 'hypertrophie' },
-        { label: 'Peak / Skills', goal: 'maximalkraft' }
-      ]
-    };
-    profile.regenConfig = { interval: 13 };
+    let kw = cfg.startKw;
+    cfg.blocks.forEach(blockDef => {
+      const exPerCat = blockDef.key === 'peak' ? 2 : 3;
+      for (let w = 0; w < blockDef.length && kw <= 52; w++, kw++) {
+        const days = selectedDays.map((dayLabel, dayIdx) => {
+          const splitDay = splitDef.days[dayIdx % splitDef.days.length];
+          const exercises = [];
+          splitDay.cats.forEach(catKey => {
+            pickExercises(catKey, exPerCat, location).forEach(ex => {
+              exercises.push({ name: ex.name, muscle: ex.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+            });
+          });
+          splitDay.extras.forEach(exName => {
+            const found = _lxAllExercises().find(e => e.name === exName);
+            if (found) exercises.push({ name: found.name, muscle: found.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+          });
+          return { label: dayLabel, exercises: exercises.slice(0, 6) };
+        });
+        profile.plans['w' + kw] = {
+          name: blockDef.planName, goal: blockDef.goal, _source: 'generator', _block: blockDef.blockIdx, days
+        };
+      }
+      // Regen-Woche überspringen
+      if (cfg.regenBetween && kw <= 52) {
+        delete profile.plans['w' + kw];
+        kw++;
+      }
+    });
 
     // Alles neu rendern
-    renderJahresplan(profile);
+    applyToProfile();
     renderTrainingsplan(profile);
     renderCockpit(profile);
 
-    if (mode === 'full') {
-      toast(`Makrozyklus generiert: KW ${startKw}–${Math.min(startKw + 38, 52)} (3 Blöcke + 3 Regen)`);
-    } else {
-      toast(`${PRESETS[mode].label}-Block generiert: KW ${startKw}–${startKw + 11}`);
-    }
+    const totalPlans = cfg.blocks.reduce((s, b) => s + b.length, 0);
+    toast(`${totalPlans} Wochenpläne generiert`);
   });
 
-  updateHint();
+  // Initial: Timeline sofort mit aktuellem Config rendern
+  applyToProfile();
 })();
 
 /* ═══════════════════════════════════════════════════════
