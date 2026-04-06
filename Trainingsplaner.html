@@ -3178,47 +3178,55 @@ body.role-athlete .info-athletes-card { display: none; }
 }
 
 /* ─── Overview-Stats (4 Karten) ─── */
-.fp-overview {
+/* ─── Aggregations-Toggle ─── */
+.fp-agg-toggle {
+  margin-bottom: var(--s-4);
+}
+
+/* ─── Overview Chart-Cards (2×2 Grid mit Sparklines) ─── */
+.fp-overview-charts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--s-4);
   margin-bottom: var(--s-4);
 }
-.fp-stat {
+@media (max-width: 560px) {
+  .fp-overview-charts { grid-template-columns: 1fr; }
+}
+.fp-chart-card {
   background: var(--surface-1);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-lg);
   padding: var(--s-5) var(--s-6);
+  overflow: hidden;
 }
-.fp-stat-label {
+.fp-chart-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-3);
+}
+.fp-chart-card-label {
   font-family: var(--font-mono);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--text-3);
-  margin-bottom: var(--s-3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
-.fp-stat-val {
+.fp-chart-card-total {
   font-family: var(--font-mono);
-  font-size: 32px;
+  font-size: 20px;
   font-weight: 500;
   color: var(--text);
   letter-spacing: -0.01em;
-  line-height: 1;
 }
-.fp-stat-unit {
-  font-size: 18px;
-  color: var(--text-2);
-  font-weight: 400;
-  margin-left: 4px;
+.fp-chart-card-body {
+  height: 100px;
+  position: relative;
 }
-.fp-stat-meta {
-  font-size: 12px;
-  color: var(--text-2);
-  margin-top: 6px;
+.fp-chart-card-body canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* ─── Karten (Chart + Top-Liste) ─── */
@@ -3383,11 +3391,11 @@ body.role-athlete .info-athletes-card { display: none; }
   border-radius: 100px;
   transition: width 0.6s ease;
 }
-.fp-std-fill.fp-std-beginner     { background: #6B9BD4; }
-.fp-std-fill.fp-std-novice       { background: #10B981; }
-.fp-std-fill.fp-std-intermediate { background: #D4A968; }
-.fp-std-fill.fp-std-advanced     { background: #E08A7A; }
-.fp-std-fill.fp-std-elite        { background: #9b5de5; }
+.fp-std-fill.fp-std-beginner     { background: #8BB8E8; }
+.fp-std-fill.fp-std-novice       { background: #6DBFA0; }
+.fp-std-fill.fp-std-intermediate { background: #D4B87A; }
+.fp-std-fill.fp-std-advanced     { background: #D4978E; }
+.fp-std-fill.fp-std-elite        { background: #B08AD8; }
 .fp-std-marker {
   position: absolute;
   top: 0; bottom: 0;
@@ -3422,11 +3430,11 @@ body.role-athlete .info-athletes-card { display: none; }
   display: inline-block;
   margin-right: 4px;
 }
-.fp-std-dot.fp-std-beginner     { background: #6B9BD4; }
-.fp-std-dot.fp-std-novice       { background: #10B981; }
-.fp-std-dot.fp-std-intermediate { background: #D4A968; }
-.fp-std-dot.fp-std-advanced     { background: #E08A7A; }
-.fp-std-dot.fp-std-elite        { background: #9b5de5; }
+.fp-std-dot.fp-std-beginner     { background: #8BB8E8; }
+.fp-std-dot.fp-std-novice       { background: #6DBFA0; }
+.fp-std-dot.fp-std-intermediate { background: #D4B87A; }
+.fp-std-dot.fp-std-advanced     { background: #D4978E; }
+.fp-std-dot.fp-std-elite        { background: #B08AD8; }
 .fp-top-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 150px auto;
@@ -5136,27 +5144,41 @@ body.role-athlete .tp-mode { display: none; }
       <!-- ═══ View 1: Entwicklung (bestehendes Layout) ═══ -->
       <div class="fp-view fp-view-active" data-fpview="entwicklung">
 
-      <!-- Overview-Stats (Schritt 2) -->
-      <div class="fp-overview" id="fpOverview">
-        <div class="fp-stat">
-          <div class="fp-stat-label">◯ Einheiten</div>
-          <div class="fp-stat-val"><span id="fpStatSessions">—</span></div>
-          <div class="fp-stat-meta" id="fpStatSessionsMeta">im gewählten Zeitraum</div>
+      <!-- Aggregations-Toggle -->
+      <div class="view-switcher fp-agg-toggle" id="fpAggToggle">
+        <button data-agg="week" class="active">Wochen</button>
+        <button data-agg="quarter">Quartale</button>
+      </div>
+
+      <!-- Overview-Charts (4 Mini-Liniendiagramme) -->
+      <div class="fp-overview-charts" id="fpOverview">
+        <div class="fp-chart-card">
+          <div class="fp-chart-card-head">
+            <span class="fp-chart-card-label">Einheiten</span>
+            <span class="fp-chart-card-total" id="fpStatSessions">—</span>
+          </div>
+          <div class="fp-chart-card-body"><canvas id="fpChartSessions"></canvas></div>
         </div>
-        <div class="fp-stat">
-          <div class="fp-stat-label">▤ Sätze</div>
-          <div class="fp-stat-val"><span id="fpStatSets">—</span></div>
-          <div class="fp-stat-meta" id="fpStatSetsMeta">gesamt</div>
+        <div class="fp-chart-card">
+          <div class="fp-chart-card-head">
+            <span class="fp-chart-card-label">Sätze</span>
+            <span class="fp-chart-card-total" id="fpStatSets">—</span>
+          </div>
+          <div class="fp-chart-card-body"><canvas id="fpChartSets"></canvas></div>
         </div>
-        <div class="fp-stat">
-          <div class="fp-stat-label">↗ Volumen</div>
-          <div class="fp-stat-val"><span id="fpStatVolume">—</span><span class="fp-stat-unit">t</span></div>
-          <div class="fp-stat-meta" id="fpStatVolumeMeta">Tonnage gesamt</div>
+        <div class="fp-chart-card">
+          <div class="fp-chart-card-head">
+            <span class="fp-chart-card-label">Volumen</span>
+            <span class="fp-chart-card-total" id="fpStatVolume">—</span>
+          </div>
+          <div class="fp-chart-card-body"><canvas id="fpChartVolume"></canvas></div>
         </div>
-        <div class="fp-stat">
-          <div class="fp-stat-label">⚡ PRs</div>
-          <div class="fp-stat-val"><span id="fpStatPrs">—</span></div>
-          <div class="fp-stat-meta" id="fpStatPrsMeta">neue Bestleistungen</div>
+        <div class="fp-chart-card">
+          <div class="fp-chart-card-head">
+            <span class="fp-chart-card-label">PRs</span>
+            <span class="fp-chart-card-total" id="fpStatPrs">—</span>
+          </div>
+          <div class="fp-chart-card-body"><canvas id="fpChartPrs"></canvas></div>
         </div>
       </div>
 
@@ -6397,20 +6419,20 @@ body.role-athlete .tp-mode { display: none; }
     <div class="ico">◈</div>
     <span>Cockpit</span>
   </button>
-  <button class="bnav-item" data-tab="jahresplan">
-    <div class="ico">▤</div>
-    <span>Plan</span>
+  <button class="bnav-item" data-tab="trainingsplan">
+    <div class="ico">◇</div>
+    <span>Training</span>
   </button>
   <button class="bnav-item primary" id="logBtn">
     <div class="ico">+</div>
     <span>Log</span>
   </button>
-  <button class="bnav-item" data-tab="lexikon">
-    <div class="ico">⌘</div>
-    <span>Lexikon</span>
+  <button class="bnav-item" data-tab="fortschritt">
+    <div class="ico">↗</div>
+    <span>Stats</span>
   </button>
   <button class="bnav-item" id="moreBtn">
-    <div class="ico">⌘</div>
+    <div class="ico">☰</div>
     <span>Mehr</span>
   </button>
 </nav>
@@ -6443,7 +6465,8 @@ const STORAGE_KEYS = {
   balView: 'tpv2_bal_view',
   balRange: 'tpv2_bal_range',
   fpRange: 'tpv2_fp_range',
-  fpExercise: 'tpv2_fp_exercise'
+  fpExercise: 'tpv2_fp_exercise',
+  fpAgg: 'tpv2_fp_agg'
 };
 
 const state = {
@@ -6462,6 +6485,7 @@ const state = {
   tpEditing: null, // { exerciseName, setIdx } oder null — aktiv bearbeitete Satz-Zeile
   fpRange: localStorage.getItem('tpv2_fp_range') || '12W',
   fpExercise: localStorage.getItem('tpv2_fp_exercise') || '',
+  fpAgg: localStorage.getItem('tpv2_fp_agg') || 'week',
   lxSearch: '',
   lxCategory: 'all',
   lxLocation: 'all',
@@ -8279,6 +8303,124 @@ function _fpRangeLabel(range) {
 }
 
 let _fpChart = null;
+let _fpMiniCharts = { sessions: null, sets: null, volume: null, prs: null };
+
+// ─── Mini-Chart für Overview-Karten zeichnen ─────────────────
+function _fpDrawMiniChart(canvasId, labels, data, chartKey, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  if (_fpMiniCharts[chartKey]) { _fpMiniCharts[chartKey].destroy(); _fpMiniCharts[chartKey] = null; }
+
+  const ctx = canvas.getContext('2d');
+  const style = getComputedStyle(document.body);
+  const accent = color || style.getPropertyValue('--accent').trim();
+  const textCol = style.getPropertyValue('--text-3').trim();
+  const borderSub = style.getPropertyValue('--border-subtle').trim();
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement.offsetHeight || 100);
+  gradient.addColorStop(0, accent + '30');
+  gradient.addColorStop(1, accent + '05');
+
+  _fpMiniCharts[chartKey] = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: accent,
+        backgroundColor: gradient,
+        fill: true,
+        tension: 0.35,
+        borderWidth: 2,
+        pointRadius: data.length > 20 ? 0 : 2,
+        pointHoverRadius: 4,
+        pointBackgroundColor: accent,
+        pointBorderColor: 'transparent'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: {
+        backgroundColor: style.getPropertyValue('--surface-2').trim(),
+        titleColor: textCol,
+        bodyColor: style.getPropertyValue('--text').trim(),
+        borderColor: borderSub,
+        borderWidth: 1,
+        padding: 8,
+        displayColors: false,
+        callbacks: { title: items => items[0]?.label || '' }
+      }},
+      scales: {
+        x: { display: false },
+        y: { display: false, beginAtZero: true }
+      },
+      interaction: { mode: 'index', intersect: false }
+    }
+  });
+}
+
+// ─── Sessions nach Wochen/Quartalen aggregieren ─────────────
+function _fpAggregateTimeSeries(sessions, mode, profile) {
+  const buckets = new Map();
+  const _ts = s => _parseDE(s.date)?.getTime() || 0;
+
+  // PR-Events berechnen (All-Time-Highs)
+  const allSorted = (profile.sessions || []).slice().sort((a, b) => _ts(a) - _ts(b));
+  const runningMax = {};
+  const prEvents = new Set();
+  allSorted.forEach(s => {
+    const ts = _ts(s);
+    (s.exercises || []).forEach(ex => {
+      let best = 0;
+      (ex.sets || []).forEach(set => {
+        const orm = _calc1RM(Number(set.gewicht) || 0, Number(set.wdh) || 0);
+        if (orm > best) best = orm;
+      });
+      if (best <= 0) return;
+      if (!runningMax[ex.name] || best > runningMax[ex.name]) {
+        runningMax[ex.name] = best;
+        prEvents.add(ts + '|' + ex.name);
+      }
+    });
+  });
+
+  sessions.forEach(s => {
+    const d = _parseDE(s.date);
+    if (!d) return;
+    const iso = _isoWeek(d);
+    const ts = d.getTime();
+    let key, label;
+    if (mode === 'quarter') {
+      const q = Math.ceil(iso.week / 13);
+      key = iso.year + '_Q' + q;
+      label = 'Q' + q + ' ' + iso.year;
+    } else {
+      key = iso.year + '_' + String(iso.week).padStart(2, '0');
+      label = 'KW ' + iso.week;
+    }
+    if (!buckets.has(key)) buckets.set(key, { key, label, sessions: 0, sets: 0, volume: 0, prs: 0 });
+    const b = buckets.get(key);
+    b.sessions++;
+    (s.exercises || []).forEach(ex => {
+      (ex.sets || []).forEach(set => {
+        b.sets++;
+        const kg = Number(set.gewicht) || 0;
+        const wdh = Number(set.wdh) || 0;
+        if (kg > 0 && wdh > 0) b.volume += kg * wdh;
+      });
+      // PR-Check
+      let best = 0;
+      (ex.sets || []).forEach(set => {
+        const orm = _calc1RM(Number(set.gewicht) || 0, Number(set.wdh) || 0);
+        if (orm > best) best = orm;
+      });
+      if (best > 0 && prEvents.has(ts + '|' + ex.name)) b.prs++;
+    });
+  });
+
+  return Array.from(buckets.values()).sort((a, b) => a.key.localeCompare(b.key));
+}
 
 function renderFortschritt(profile) {
   if (!profile) return;
@@ -8286,18 +8428,27 @@ function renderFortschritt(profile) {
   const sessions = _fpFilterSessions(profile, state.fpRange);
   const exerciseMap = _fpAggregateByExercise(sessions);
   const overview = _fpComputeOverview(sessions, exerciseMap, profile);
-  const rangeLabel = _fpRangeLabel(state.fpRange);
+  const aggMode = state.fpAgg || 'week';
 
-  // ─── Overview-Karten ────────────────────────────
+  // ─── Overview Mini-Charts ──────────────────────
+  const timeSeries = _fpAggregateTimeSeries(sessions, aggMode, profile);
+  const labels = timeSeries.map(b => b.label);
+
   document.getElementById('fpStatSessions').textContent = _fmtNum(overview.sessions);
-  document.getElementById('fpStatSessionsMeta').textContent = rangeLabel;
   document.getElementById('fpStatSets').textContent = _fmtNum(overview.sets);
-  document.getElementById('fpStatSetsMeta').textContent = rangeLabel;
   document.getElementById('fpStatVolume').textContent =
-    overview.volume > 0 ? (Math.round(overview.volume / 1000 * 10) / 10).toLocaleString('de-DE') : '0';
-  document.getElementById('fpStatVolumeMeta').textContent = 'Tonnage · ' + rangeLabel;
+    overview.volume > 0 ? (Math.round(overview.volume / 1000 * 10) / 10).toLocaleString('de-DE') + ' t' : '0';
   document.getElementById('fpStatPrs').textContent = _fmtNum(overview.prs);
-  document.getElementById('fpStatPrsMeta').textContent = 'neue Bestleistungen · ' + rangeLabel;
+
+  const style = getComputedStyle(document.body);
+  const accent = style.getPropertyValue('--accent').trim();
+  const success = style.getPropertyValue('--success').trim();
+  const warning = style.getPropertyValue('--warning').trim();
+
+  _fpDrawMiniChart('fpChartSessions', labels, timeSeries.map(b => b.sessions), 'sessions', accent);
+  _fpDrawMiniChart('fpChartSets', labels, timeSeries.map(b => b.sets), 'sets', accent);
+  _fpDrawMiniChart('fpChartVolume', labels, timeSeries.map(b => Math.round(b.volume / 1000)), 'volume', success);
+  _fpDrawMiniChart('fpChartPrs', labels, timeSeries.map(b => b.prs), 'prs', warning);
 
   // ─── Exercise-Select befüllen ───────────────────
   const select = document.getElementById('fpExerciseSelect');
@@ -10142,6 +10293,18 @@ function renderAthleteRow(key, p) {
       state.fpRange = btn.dataset.range;
       localStorage.setItem(STORAGE_KEYS.fpRange, state.fpRange);
       document.querySelectorAll('#fpRange button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (state.profile) renderFortschritt(state.profile);
+    });
+  });
+
+  // Aggregations-Toggle (Wochen/Quartale)
+  document.querySelectorAll('#fpAggToggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.agg === state.fpAgg);
+    btn.addEventListener('click', () => {
+      state.fpAgg = btn.dataset.agg;
+      localStorage.setItem(STORAGE_KEYS.fpAgg, state.fpAgg);
+      document.querySelectorAll('#fpAggToggle button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       if (state.profile) renderFortschritt(state.profile);
     });
