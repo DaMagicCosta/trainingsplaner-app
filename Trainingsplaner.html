@@ -4619,6 +4619,9 @@ body.role-athlete .tp-mode { display: none; }
   cursor: pointer;
   overflow: hidden;
   transition: opacity 600ms ease, visibility 600ms ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 .splash.hide {
   opacity: 0;
@@ -7114,7 +7117,8 @@ document.querySelectorAll('[data-tab]').forEach(el => {
     const t = e.touches[0];
     startX = t.clientX;
     startY = t.clientY;
-    tracking = true;
+    // Vom Rand (< 30px) starten = Browser-Back-Geste, nicht abfangen
+    tracking = startX > 30 && startX < window.innerWidth - 30;
   }, { passive: true });
 
   main.addEventListener('touchend', (e) => {
