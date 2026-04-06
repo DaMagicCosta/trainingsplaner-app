@@ -8698,6 +8698,12 @@ function renderFortschritt(profile) {
     exerciseCount: Object.keys(exerciseMap).length,
     activeExercise: state.fpExercise
   });
+
+  // Aktive Sub-View (Zeitvergleich / Standards AT) neu rendern
+  const activeViewBtn = document.querySelector('#fpViews button.active');
+  if (activeViewBtn && activeViewBtn.dataset.fpview !== 'entwicklung') {
+    activeViewBtn.click();
+  }
 }
 
 // Chart für die ausgewählte Übung zeichnen
