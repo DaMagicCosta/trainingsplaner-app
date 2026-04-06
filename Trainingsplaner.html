@@ -11622,16 +11622,16 @@ function startNextEinheit() {
   // ── Block-Zeile rendern ──
   // Nur die Orte anbieten die im Profil hinterlegt sind (Fallback: alle)
   function _locOptions(selected) {
+    // Im Generator immer alle Orte anbieten — Profil-Orte werden hervorgehoben
     const rawLocs = state.profile?.trainingLocation;
-    const locs = Array.isArray(rawLocs) ? rawLocs
-               : (typeof rawLocs === 'string' ? _parseLocationString(rawLocs) : []);
+    const profileLocs = new Set(Array.isArray(rawLocs) ? rawLocs
+               : (typeof rawLocs === 'string' ? _parseLocationString(rawLocs) : []));
     const all = [
       { val: 'studio', label: '◇ Studio' },
       { val: 'home',   label: '⌂ Home' },
       { val: 'outdoor', label: '✦ Outdoor' }
     ];
-    const available = locs.length ? all.filter(o => locs.includes(o.val)) : all;
-    return available.map(o => `<option value="${o.val}"${o.val === selected ? ' selected' : ''}>${o.label}</option>`).join('');
+    return all.map(o => `<option value="${o.val}"${o.val === selected ? ' selected' : ''}>${o.label}</option>`).join('');
   }
 
   function renderBlockRow(block, idx) {
