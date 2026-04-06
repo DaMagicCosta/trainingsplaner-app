@@ -7266,6 +7266,11 @@ function _daysAgo(date, ref) {
 function _fmtNum(n) {
   return Math.round(n).toLocaleString('de-DE');
 }
+// kg smart: 60 → "60", 62.5 → "62.5", 60.0 → "60"
+function _fmtKg(n) {
+  const v = Number(n);
+  return v % 1 === 0 ? v.toFixed(0) : v.toFixed(1);
+}
 
 // Deutsche Wochentags-Abkürzungen
 const _DOW_DE_SHORT = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
@@ -8680,7 +8685,7 @@ function renderFortschritt(profile) {
               <div class="fp-top-stats">
                 <span>${_fmtNum(ex.totalSets)}<span class="fp-top-stat-unit">Sätze</span></span>
                 <span>${(ex.totalVol / 1000).toFixed(1)}<span class="fp-top-stat-unit">t</span></span>
-                <span>${lastRM > 0 ? lastRM.toFixed(1) : '—'}<span class="fp-top-stat-unit">kg 1RM</span></span>
+                <span>${lastRM > 0 ? Math.round(lastRM) : '—'}<span class="fp-top-stat-unit">kg 1RM</span></span>
               </div>
               <div class="fp-top-trend ${trendClass}" title="Trend ${trend}">${trendIcon}</div>
             </div>
@@ -8822,8 +8827,8 @@ function _fpDrawChart(exerciseMap) {
             label: item => {
               const p = points[item.dataIndex];
               return [
-                'Est. 1RM: ' + item.parsed.y.toFixed(1) + ' kg',
-                'Max: ' + p.maxKg.toFixed(1) + ' kg'
+                'Est. 1RM: ' + Math.round(item.parsed.y) + ' kg',
+                'Max: ' + _fmtKg(p.maxKg) + ' kg'
               ];
             }
           }
@@ -9296,7 +9301,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
 
   if (loggedSet) {
     const w   = loggedSet.wdh ?? '—';
-    const kg  = loggedSet.gewicht != null ? Number(loggedSet.gewicht).toFixed(1) : '—';
+    const kg  = loggedSet.gewicht != null ? _fmtKg(loggedSet.gewicht) : '—';
     const rpe = loggedSet.rpe ?? '—';
     return `
       <div class="tp-set tp-set-done" ${exAttr}>
@@ -9310,7 +9315,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
 
   // Offen: planned values + Loggen-Button
   const pw  = plannedWdh != null ? plannedWdh : '—';
-  const pkg = plannedGewicht != null ? Number(plannedGewicht).toFixed(1) : '—';
+  const pkg = plannedGewicht != null ? _fmtKg(plannedGewicht) : '—';
   return `
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
@@ -9921,7 +9926,7 @@ function renderCockpit(profile) {
   });
 
   if (best.oneRM > 0) {
-    document.getElementById('cpPrValue').textContent = best.oneRM.toFixed(1);
+    document.getElementById('cpPrValue').textContent = Math.round(best.oneRM);
     const ago = _daysAgo(best.date, refDate);
     const agoStr = ago === 0 ? 'heute' : ago === 1 ? 'gestern' : `vor ${ago} Tagen`;
     document.getElementById('cpPrMeta').textContent =
