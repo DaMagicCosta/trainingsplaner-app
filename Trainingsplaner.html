@@ -740,11 +740,13 @@ ul, ol { list-style: none; }
 .bal-fill-l {
   background: var(--accent);
   height: 100%;
-  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bal-fill-r {
   background: var(--success);
   height: 100%;
+}
+/* Animation nur beim initialen Aufbau, nicht beim innerHTML-Swap */
+.bal-fill-l.animate, .bal-fill-r.animate {
   transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* Mittellinie als Referenz */
@@ -9827,6 +9829,11 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
   }
 
   wrap.innerHTML = html;
+
+  // Balken-Animation erst nach einem Frame starten (verhindert Flackern beim Swap)
+  requestAnimationFrame(() => {
+    wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => el.classList.add('animate'));
+  });
 
   console.log('[Balance] gerendert', {
     view: viewKey, range,
