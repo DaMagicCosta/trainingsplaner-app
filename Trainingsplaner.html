@@ -3295,6 +3295,137 @@ body.role-athlete .info-athletes-card { display: none; }
   text-align: center;
   padding: var(--s-8) 0;
 }
+
+/* ─── Fortschritt Views ─── */
+.fp-views { margin-bottom: var(--s-6); }
+.fp-view { display: none; }
+.fp-view-active { display: block; }
+
+/* Zeitvergleich */
+.fp-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.fp-cmp-card {
+  padding: var(--s-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  text-align: center;
+}
+.fp-cmp-card.fp-cmp-best { border-color: var(--accent); background: var(--accent-dim); }
+.fp-cmp-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+}
+.fp-cmp-val {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+.fp-cmp-unit { font-size: 13px; color: var(--text-3); font-weight: 400; }
+.fp-cmp-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  font-size: 12px;
+  color: var(--text-2);
+}
+.fp-cmp-delta { font-size: 12px; margin-top: var(--s-2); }
+.fp-cmp-delta.up { color: var(--success); }
+.fp-cmp-delta.down { color: var(--danger); }
+
+/* Standards */
+.fp-standards-intro {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin-bottom: var(--s-6);
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+}
+.fp-standards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.fp-std-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.fp-std-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.fp-std-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.fp-std-val { font-family: var(--font-mono); font-size: 13px; color: var(--text-2); }
+.fp-std-bar {
+  height: 24px;
+  background: var(--surface-3);
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.fp-std-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+.fp-std-fill.fp-std-beginner     { background: #6B9BD4; }
+.fp-std-fill.fp-std-novice       { background: #10B981; }
+.fp-std-fill.fp-std-intermediate { background: #D4A968; }
+.fp-std-fill.fp-std-advanced     { background: #E08A7A; }
+.fp-std-fill.fp-std-elite        { background: #9b5de5; }
+.fp-std-marker {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+  z-index: 2;
+}
+.fp-std-levels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.fp-standards-legend {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  margin-top: var(--s-6);
+  font-size: 12px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+}
+.fp-std-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+.fp-std-dot.fp-std-beginner     { background: #6B9BD4; }
+.fp-std-dot.fp-std-novice       { background: #10B981; }
+.fp-std-dot.fp-std-intermediate { background: #D4A968; }
+.fp-std-dot.fp-std-advanced     { background: #E08A7A; }
+.fp-std-dot.fp-std-elite        { background: #9b5de5; }
 .fp-top-item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 150px auto;
@@ -4993,6 +5124,16 @@ body.role-athlete .tp-mode { display: none; }
         </div>
       </div>
 
+      <!-- View-Switcher -->
+      <div class="view-switcher fp-views" id="fpViews">
+        <button data-fpview="entwicklung" class="active">Entwicklung</button>
+        <button data-fpview="vergleich">Zeitvergleich</button>
+        <button data-fpview="standards">Standards AT</button>
+      </div>
+
+      <!-- ═══ View 1: Entwicklung (bestehendes Layout) ═══ -->
+      <div class="fp-view fp-view-active" data-fpview="entwicklung">
+
       <!-- Overview-Stats (Schritt 2) -->
       <div class="fp-overview" id="fpOverview">
         <div class="fp-stat">
@@ -5049,6 +5190,47 @@ body.role-athlete .tp-mode { display: none; }
           <div class="fp-top-empty">Wird in Schritt 4 befüllt.</div>
         </div>
       </div>
+      </div><!-- /fp-view entwicklung -->
+
+      <!-- ═══ View 2: Zeitvergleich ═══ -->
+      <div class="fp-view" data-fpview="vergleich">
+        <div class="fp-card">
+          <div class="card-head">
+            <div class="chart-title">Zeitvergleich <span class="chart-title-sub">· Perioden gegenüberstellen</span></div>
+            <div class="view-switcher fp-compare-mode" id="fpCompareMode">
+              <button data-cmp="year" class="active">Jahre</button>
+              <button data-cmp="quarter">Quartale</button>
+            </div>
+          </div>
+          <div class="fp-compare-grid" id="fpCompareGrid">
+            <!-- dynamisch befüllt -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ View 3: Standards AT ═══ -->
+      <div class="fp-view" data-fpview="standards">
+        <div class="fp-card">
+          <div class="card-head">
+            <div class="chart-title">Kraft-Standards <span class="chart-title-sub">· Vergleich zur österreichischen Bevölkerung</span></div>
+          </div>
+          <div class="fp-standards-intro">
+            Basierend auf trainingswissenschaftlichen Referenzwerten (NSCA/ACSM), angepasst an Alter und Körpergewicht.
+            Die Einstufung zeigt, wo deine geschätzten 1RM-Werte im Vergleich zur trainierten Bevölkerung liegen.
+          </div>
+          <div class="fp-standards-grid" id="fpStandardsGrid">
+            <!-- dynamisch befüllt -->
+          </div>
+          <div class="fp-standards-legend">
+            <span class="fp-std-dot fp-std-beginner"></span> Anfänger
+            <span class="fp-std-dot fp-std-novice"></span> Geübt
+            <span class="fp-std-dot fp-std-intermediate"></span> Fortgeschritten
+            <span class="fp-std-dot fp-std-advanced"></span> Stark
+            <span class="fp-std-dot fp-std-elite"></span> Elite
+          </div>
+        </div>
+      </div>
+
     </section>
 
     <!-- Lexikon -->
@@ -9938,6 +10120,168 @@ function renderAthleteRow(key, p) {
       if (state.profile) renderFortschritt(state.profile);
       document.getElementById('fpChartCard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+  }
+})();
+
+// Fortschritt: View-Switcher + Zeitvergleich + Standards
+(function initFortschrittViews() {
+  // ── View-Switcher ──
+  document.querySelectorAll('#fpViews button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#fpViews button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.fp-view').forEach(v => v.classList.remove('fp-view-active'));
+      const view = document.querySelector(`.fp-view[data-fpview="${btn.dataset.fpview}"]`);
+      if (view) view.classList.add('fp-view-active');
+      if (btn.dataset.fpview === 'vergleich') renderCompare();
+      if (btn.dataset.fpview === 'standards') renderStandards();
+    });
+  });
+
+  // ── Compare-Mode Toggle (Jahre/Quartale) ──
+  document.querySelectorAll('#fpCompareMode button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#fpCompareMode button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCompare();
+    });
+  });
+
+  // ── Zeitvergleich rendern ──
+  function renderCompare() {
+    const grid = document.getElementById('fpCompareGrid');
+    if (!grid || !state.profile) return;
+    const sessions = state.profile.sessions || [];
+    if (sessions.length === 0) { grid.innerHTML = '<div class="fp-top-empty">Keine Daten vorhanden.</div>'; return; }
+
+    const mode = document.querySelector('#fpCompareMode button.active')?.dataset.cmp || 'year';
+    const buckets = {};
+
+    sessions.forEach(s => {
+      const d = _parseDE(s.date);
+      if (!d) return;
+      const year = d.getFullYear();
+      const q = Math.ceil((d.getMonth() + 1) / 3);
+      const key = mode === 'year' ? String(year) : `${year} Q${q}`;
+      if (!buckets[key]) buckets[key] = { sessions: 0, sets: 0, volume: 0 };
+      buckets[key].sessions++;
+      (s.exercises || []).forEach(ex => {
+        (ex.sets || []).forEach(set => {
+          buckets[key].sets++;
+          buckets[key].volume += (set.gewicht || 0) * (set.wdh || 0);
+        });
+      });
+    });
+
+    const keys = Object.keys(buckets).sort();
+    const maxVol = Math.max(...keys.map(k => buckets[k].volume), 1);
+    const bestKey = keys.reduce((best, k) => buckets[k].volume > (buckets[best]?.volume || 0) ? k : best, keys[0]);
+
+    grid.innerHTML = keys.map(key => {
+      const b = buckets[key];
+      const isBest = key === bestKey;
+      const volT = (b.volume / 1000).toFixed(1);
+      return `
+        <div class="fp-cmp-card${isBest ? ' fp-cmp-best' : ''}">
+          <div class="fp-cmp-label">${key}</div>
+          <div class="fp-cmp-val">${volT}<span class="fp-cmp-unit">t</span></div>
+          <div class="fp-cmp-stats">
+            <span>${b.sessions} Einheiten</span>
+            <span>${b.sets} Sätze</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Kraft-Standards (österreichisch/NSCA-basiert) ──
+  // BW-Ratios für Männer (1RM/Körpergewicht): [Anfänger, Geübt, Fortgeschritten, Stark, Elite]
+  const STANDARDS_M = {
+    'Bankdrücken':  [0.50, 0.75, 1.00, 1.25, 1.50],
+    'Kniebeuge':    [0.75, 1.00, 1.25, 1.75, 2.25],
+    'Kreuzheben':   [1.00, 1.25, 1.50, 2.00, 2.50],
+    'Schulterdrücken': [0.35, 0.55, 0.70, 0.85, 1.05],
+    'Rudern':       [0.50, 0.70, 0.90, 1.10, 1.35]
+  };
+  // BW-Ratios für Frauen (~65% der Männer-Werte)
+  const STANDARDS_F = {
+    'Bankdrücken':  [0.25, 0.40, 0.60, 0.80, 1.00],
+    'Kniebeuge':    [0.50, 0.70, 0.90, 1.20, 1.50],
+    'Kreuzheben':   [0.65, 0.85, 1.10, 1.40, 1.75],
+    'Schulterdrücken': [0.20, 0.35, 0.45, 0.60, 0.75],
+    'Rudern':       [0.30, 0.45, 0.60, 0.75, 0.90]
+  };
+  const STD_LABELS = ['Anfänger', 'Geübt', 'Fortgeschr.', 'Stark', 'Elite'];
+  const STD_CLASSES = ['fp-std-beginner', 'fp-std-novice', 'fp-std-intermediate', 'fp-std-advanced', 'fp-std-elite'];
+
+  // Übungs-Matching: Demo-Übungsnamen → Standard-Kategorie
+  const EXERCISE_MAP = {
+    'Bankdrücken': ['Bankdrücken', 'Flachbankdrücken', 'Chest Press'],
+    'Kniebeuge': ['Kniebeuge', 'Kniebeugen', 'Back Squat', 'Beinpresse'],
+    'Kreuzheben': ['Kreuzheben', 'Deadlift', 'Rumänisches Kreuzheben'],
+    'Schulterdrücken': ['Military Press', 'Schulterdrücken', 'Shoulder Press'],
+    'Rudern': ['Rudern', 'Langhantelrudern', 'Latzug', 'Cable Row']
+  };
+
+  function renderStandards() {
+    const grid = document.getElementById('fpStandardsGrid');
+    if (!grid || !state.profile) return;
+
+    const bw = state.profile.gewicht || 80;
+    const isFemale = (state.profile.geschlecht || '').toLowerCase().includes('w');
+    const standards = isFemale ? STANDARDS_F : STANDARDS_M;
+    const sessions = state.profile.sessions || [];
+
+    // Bestes 1RM pro Standard-Kategorie finden
+    const best1RM = {};
+    Object.keys(EXERCISE_MAP).forEach(stdName => {
+      const aliases = EXERCISE_MAP[stdName];
+      let maxRM = 0;
+      sessions.forEach(s => {
+        (s.exercises || []).forEach(ex => {
+          const match = aliases.some(a => ex.name.includes(a));
+          if (!match) return;
+          (ex.sets || []).forEach(set => {
+            const rm = _calc1RM(set.gewicht || 0, set.wdh || 0);
+            if (rm > maxRM) maxRM = rm;
+          });
+        });
+      });
+      best1RM[stdName] = maxRM;
+    });
+
+    grid.innerHTML = Object.entries(standards).map(([name, ratios]) => {
+      const rm = best1RM[name] || 0;
+      const ratio = bw > 0 ? rm / bw : 0;
+      const eliteRatio = ratios[4];
+
+      // Position auf der Skala (0-100%)
+      const pct = Math.min(ratio / eliteRatio * 100, 100);
+
+      // Einstufung bestimmen
+      let level = 0;
+      for (let i = ratios.length - 1; i >= 0; i--) {
+        if (ratio >= ratios[i]) { level = i; break; }
+      }
+      const levelClass = STD_CLASSES[level];
+      const levelLabel = STD_LABELS[level];
+
+      const rmStr = rm > 0 ? `${rm.toFixed(1)} kg (${ratio.toFixed(2)}×BW) · ${levelLabel}` : 'Keine Daten';
+
+      return `
+        <div class="fp-std-row">
+          <div class="fp-std-head">
+            <div class="fp-std-name">${name}</div>
+            <div class="fp-std-val">${rmStr}</div>
+          </div>
+          <div class="fp-std-bar">
+            <div class="fp-std-fill ${levelClass}" style="width:${rm > 0 ? pct : 0}%"></div>
+            ${rm > 0 ? `<div class="fp-std-marker" style="left:${pct}%"></div>` : ''}
+          </div>
+          <div class="fp-std-levels">
+            ${ratios.map((r, i) => `<span>${(r * bw).toFixed(0)}kg</span>`).join('')}
+          </div>
+        </div>`;
+    }).join('');
   }
 })();
 
