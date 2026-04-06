@@ -1650,14 +1650,15 @@ ul, ol { list-style: none; }
 .pn-block-row {
   display: flex;
   align-items: center;
-  gap: var(--s-4);
-  padding: 12px var(--s-5);
+  gap: var(--s-3);
+  padding: 12px var(--s-4);
   border: 1px solid var(--border-subtle);
   border-radius: var(--r-md);
   background:
     radial-gradient(circle at 0% 50%, var(--surface-3) 0%, transparent 40%),
     var(--surface-2);
   transition: all var(--ease);
+  flex-wrap: wrap;
 }
 .pn-block-row:hover { border-color: var(--border-strong); }
 .pn-block-name {
@@ -5154,6 +5155,7 @@ body.role-athlete .tp-mode { display: none; }
           <div class="pn-card pn-form-card" style="grid-column: 1 / -1;">
             <div class="pn-card-label">1 · Block-Phasen</div>
             <div class="pn-card-title">Trainingsblöcke definieren <span style="color:var(--text-3);font-weight:400;font-size:13px;">(bis zu 4)</span></div>
+            <div class="pn-card-desc" style="margin-bottom:var(--s-3);">Jeder Block hat sein eigenes Ziel, seine Länge und seinen Trainingsort — z.B. Winter im Studio, Frühling Outdoor.</div>
 
             <div class="pn-block-rows" id="genBlockRows"></div>
             <button class="pn-add-block-btn" id="genAddBlock" type="button">+ Block hinzufügen</button>
@@ -5196,13 +5198,13 @@ body.role-athlete .tp-mode { display: none; }
               <input type="number" class="pn-input" id="genKwStart" min="1" max="52" value="1">
             </div>
 
-            <div class="pn-form-hint" id="genSummary">—</div>
+            <div class="pn-form-hint" id="genSummary">Passe die Blöcke an — die Vorschau aktualisiert sich automatisch.</div>
           </div>
 
-          <!-- Schritt 3: Split + Tage + Ort -->
+          <!-- Schritt 3: Split + Tage + Optionen -->
           <div class="pn-card pn-form-card">
-            <div class="pn-card-label">3 · Split &amp; Trainingsort</div>
-            <div class="pn-card-title">Aufteilung &amp; Übungsquelle</div>
+            <div class="pn-card-label">3 · Split &amp; Optionen</div>
+            <div class="pn-card-title">Aufteilung &amp; Einstellungen</div>
             <div class="pn-form-field">
               <label class="pn-field-label">Template</label>
               <select class="pn-select" id="genSplit">
