@@ -1188,6 +1188,25 @@ ul, ol { list-style: none; }
   transform: translateY(-2px);
   z-index: 1;
 }
+.jp-seg-qmark {
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--text-3);
+  opacity: 0.4;
+  border-radius: 0;
+  position: relative;
+}
+.jp-seg-qmark::after {
+  content: attr(title);
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
 .jp-seg-regen {
   background:
     repeating-linear-gradient(
@@ -7593,11 +7612,15 @@ function renderJahresplan(profile) {
   const plans = profile.plans || {};
   const plannedDays = (profile.tage || []).length || 3;
 
-  // ─── Block-Timeline (52 Segmente) ───────────────
+  // ─── Block-Timeline (52 Segmente + Quartals-Marker) ───────────────
   const timelineEl = document.getElementById('jpTimeline');
   if (timelineEl) {
     let tHtml = '';
     for (let kw = 1; kw <= 52; kw++) {
+      // Quartals-Trennlinie vor KW 14, 27, 40
+      if (kw === 14 || kw === 27 || kw === 40) {
+        tHtml += `<div class="jp-seg-qmark" title="Q${kw === 14 ? 2 : kw === 27 ? 3 : 4}"></div>`;
+      }
       const p = period ? period[kw] : null;
       const isCurrent = kw === currentKw;
       if (!p || p.isPreStart) {
