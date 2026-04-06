@@ -7682,9 +7682,10 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
       </div>`;
   }
 
-  // Trainingswoche
-  const blockCls = p ? _blockClass(p.blockIdx) : '';
-  const blockLabel = p ? `${p.blockLabel} · W${p.relativeWeek}` : '—';
+  // Trainingswoche (isPreStart = außerhalb des geplanten Zeitraums)
+  const hasBlock = p && !p.isPreStart && p.blockLabel;
+  const blockCls = hasBlock ? _blockClass(p.blockIdx) : '';
+  const blockLabel = hasBlock ? `${p.blockLabel} · W${p.relativeWeek}` : '—';
 
   // Location-Icon aus dem Plan-Objekt
   const planObj = plans['w' + kw];
@@ -11638,6 +11639,12 @@ function startNextEinheit() {
     if (selectedDays.length === 0) { toast('Mindestens einen Trainingstag wählen'); return; }
 
     if (!profile.plans) profile.plans = {};
+
+    // Alte generierte Pläne entfernen (nur _source: 'generator', manuelle bleiben)
+    for (let k = 1; k <= 52; k++) {
+      const key = 'w' + k;
+      if (profile.plans[key]?._source === 'generator') delete profile.plans[key];
+    }
 
     let kw = startKw;
     let weeksSinceRegen = 0;
