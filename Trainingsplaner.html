@@ -4473,37 +4473,9 @@ body.role-athlete .tp-mode { display: none; }
   box-shadow: 0 6px 16px -4px var(--accent-dim), 0 0 0 4px var(--bg);
 }
 .bnav-item.primary { color: var(--text-2); }
-/* Tab-Navigation Pfeile (Mobile) */
-.tab-nav-arrows {
-  display: none;
-  position: fixed;
-  bottom: calc(var(--bottomnav-h) + var(--s-3) + env(safe-area-inset-bottom));
-  left: var(--s-3);
-  right: var(--s-3);
-  justify-content: space-between;
-  pointer-events: none;
-  z-index: 40;
-}
-.tab-nav-arrow {
-  pointer-events: auto;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--surface-2);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-3);
-  font-size: 14px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: all var(--ease);
-  opacity: 0.7;
-}
-.tab-nav-arrow:active { background: var(--accent-dim); color: var(--accent); opacity: 1; transform: scale(0.9); }
-.tab-nav-arrow.hidden { opacity: 0; pointer-events: none; }
+/* Swipe-Navigation: Browser soll horizontal nicht eingreifen */
 @media (max-width: 860px) {
-  .tab-nav-arrows { display: flex; }
+  .main { touch-action: pan-y; }
 }
 
 /* Long-Press: kein blaues Selection-Rechteck */
@@ -7136,42 +7108,41 @@ document.querySelectorAll('[data-tab]').forEach(el => {
   el.addEventListener('click', () => switchTab(el.dataset.tab));
 });
 
-// ── Tab-Navigation Pfeile (Mobile) ──
-(function initTabArrows() {
+// ── Swipe-Navigation (Mobile) ──
+(function initSwipeNav() {
   const TAB_ORDER = ['cockpit', 'jahresplan', 'trainingsplan', 'fortschritt', 'lexikon', 'info'];
+  const main = document.getElementById('mainArea');
+  if (!main) return;
 
-  const wrap = document.createElement('div');
-  wrap.className = 'tab-nav-arrows';
-  wrap.innerHTML = '<button class="tab-nav-arrow" id="tabPrev">‹</button><button class="tab-nav-arrow" id="tabNext">›</button>';
-  document.body.appendChild(wrap);
+  let startX = 0, startY = 0, tracking = false;
 
-  const prevBtn = document.getElementById('tabPrev');
-  const nextBtn = document.getElementById('tabNext');
+  main.addEventListener('touchstart', (e) => {
+    if (window.innerWidth > 860) return;
+    if (state.cmdkOpen) return;
+    const t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+  }, { passive: true });
 
-  function updateArrows() {
+  main.addEventListener('touchend', (e) => {
+    if (!tracking) return;
+    tracking = false;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+
+    if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 0.6) return;
+
     const idx = TAB_ORDER.indexOf(state.activeTab);
-    prevBtn.classList.toggle('hidden', idx <= 0);
-    nextBtn.classList.toggle('hidden', idx >= TAB_ORDER.length - 1);
-  }
+    if (idx === -1) return;
 
-  prevBtn.addEventListener('click', () => {
-    const idx = TAB_ORDER.indexOf(state.activeTab);
-    if (idx > 0) switchTab(TAB_ORDER[idx - 1]);
-    updateArrows();
-  });
-  nextBtn.addEventListener('click', () => {
-    const idx = TAB_ORDER.indexOf(state.activeTab);
-    if (idx < TAB_ORDER.length - 1) switchTab(TAB_ORDER[idx + 1]);
-    updateArrows();
-  });
-
-  // Pfeile nach jedem Tab-Wechsel aktualisieren
-  const _origSwitchTab = switchTab;
-  switchTab = function(tabName) {
-    _origSwitchTab(tabName);
-    updateArrows();
-  };
-  updateArrows();
+    if (dx > 0 && idx > 0) {
+      switchTab(TAB_ORDER[idx - 1]);
+    } else if (dx < 0 && idx < TAB_ORDER.length - 1) {
+      switchTab(TAB_ORDER[idx + 1]);
+    }
+  }, { passive: true });
 })();
 
 /* ═══════════════════════════════════════════════════════
