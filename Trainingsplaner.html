@@ -990,6 +990,29 @@ body.role-athlete .jp-balance-preview,
 .jp-balance-preview .balance-wrap {
   min-height: auto;
 }
+@media (max-width: 720px) {
+  .jp-balance-preview .card-head {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .jp-balance-preview .card-head .chart-title::after {
+    content: '▸';
+    font-size: 12px;
+    color: var(--text-3);
+    margin-left: 8px;
+    transition: transform var(--ease);
+    display: inline-block;
+  }
+  .jp-balance-preview.pn-open .card-head .chart-title::after {
+    transform: rotate(90deg);
+    color: var(--accent);
+  }
+  .jp-balance-preview .balance-wrap,
+  .jp-balance-preview .jp-bal-landmark { display: none; }
+  .jp-balance-preview.pn-open .balance-wrap { display: flex; }
+  .jp-balance-preview.pn-open .jp-bal-landmark { display: block; }
+}
 .jp-bal-landmark {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -1753,6 +1776,8 @@ body.role-athlete .jp-balance-preview,
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
   .pn-form-card .pn-card-label::after {
     content: '▸';
@@ -11910,6 +11935,18 @@ function startNextEinheit() {
       });
     }
   });
+
+  // ── Balance-Preview Accordion auf Mobile ──
+  const balPreview = document.getElementById('jpBalPreview');
+  if (balPreview) {
+    const balHead = balPreview.querySelector('.card-head');
+    if (balHead) {
+      balHead.addEventListener('click', () => {
+        if (window.innerWidth > 720) return;
+        balPreview.classList.toggle('pn-open');
+      });
+    }
+  }
 
   // ── Vorlagen für neue Blöcke ──
   const BLOCK_TEMPLATES = [
