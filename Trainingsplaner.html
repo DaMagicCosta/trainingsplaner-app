@@ -980,6 +980,26 @@ ul, ol { list-style: none; }
   color: var(--text-3);
 }
 
+/* ─── Planungs-Balance-Vorschau ─── */
+.jp-balance-preview {
+  margin-bottom: var(--s-4);
+}
+.jp-balance-preview .balance-wrap {
+  min-height: auto;
+}
+.jp-bal-landmark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--s-3) var(--s-2) 0;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--s-3);
+  line-height: 1.6;
+}
+.jp-bal-landmark span { color: var(--text-2); }
+
 /* ─── Next Session Card ─── */
 .next-card {
   display: flex;
@@ -5279,6 +5299,14 @@ body.role-athlete .tp-mode { display: none; }
             <button class="pn-generate-btn" id="genSubmit">Pläne generieren</button>
           </div>
         </div>
+      </div>
+
+      <!-- Planungs-Balance-Vorschau (erscheint nach Generierung) -->
+      <div class="jp-balance-preview cockpit-card" id="jpBalPreview" style="display:none">
+        <div class="card-head">
+          <div class="chart-title">Geplante Balance <span class="chart-title-sub" id="jpBalSub">· Sätze pro Woche</span></div>
+        </div>
+        <div class="balance-wrap" id="jpBalContent"></div>
       </div>
 
       <!-- Block-Timeline (52 KW-Segmente) -->
@@ -10415,6 +10443,136 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
 }
 
 /* ═══════════════════════════════════════════════════════
+   PLANUNGS-BALANCE (Sätze pro Muskelgruppe pro Woche)
+   ═══════════════════════════════════════════════════════ */
+
+function buildPlanBalance(profile) {
+  const wrap = document.getElementById('jpBalContent');
+  const preview = document.getElementById('jpBalPreview');
+  const subEl = document.getElementById('jpBalSub');
+  if (!wrap || !preview) return;
+
+  const plans = profile.plans || {};
+  // Ersten generierten Plan-Zyklus finden (unique Block-Kombinationen)
+  const genPlans = [];
+  const seenBlocks = new Set();
+  for (let kw = 1; kw <= 52; kw++) {
+    const p = plans['w' + kw];
+    if (!p || p._source !== 'generator') continue;
+    const key = p._block + '_' + p.goal;
+    if (seenBlocks.has(key)) break; // Zyklus wiederholt sich
+    seenBlocks.add(key);
+    genPlans.push(p);
+  }
+
+  if (genPlans.length === 0) {
+    preview.style.display = 'none';
+    return;
+  }
+
+  // Sätze pro Muskelgruppe über einen Wochenzyklus mitteln
+  const setsByGroup = {};
+  let totalWeeks = genPlans.length;
+
+  genPlans.forEach(plan => {
+    (plan.days || []).forEach(day => {
+      (day.exercises || []).forEach(ex => {
+        const groups = _allGroups(ex);
+        const saetze = Number(ex.saetze) || 3;
+        groups.forEach(g => {
+          setsByGroup[g] = (setsByGroup[g] || 0) + saetze;
+        });
+      });
+    });
+  });
+
+  // Durchschnitt pro Woche
+  Object.keys(setsByGroup).forEach(g => {
+    setsByGroup[g] = Math.round(setsByGroup[g] / totalWeeks * 10) / 10;
+  });
+
+  if (subEl) subEl.textContent = `· ø Sätze pro Woche · ${totalWeeks} Block-Wochen`;
+
+  // Render-Helper: Balance-Row für Sätze
+  function renderPlanRow(pair, opts = {}) {
+    const lSets = pair.lGroups.reduce((a, g) => a + (setsByGroup[g] || 0), 0);
+    const rSets = pair.rGroups.reduce((a, g) => a + (setsByGroup[g] || 0), 0);
+    const total = lSets + rSets;
+    const rowClass = opts.master ? 'bal-row bal-row-master' : 'bal-row';
+    const warnAt = opts.warnAt ?? 20;
+    const dangerAt = opts.dangerAt ?? 40;
+
+    if (total === 0) {
+      return `
+        <div class="${rowClass}">
+          <div class="bal-label bal-label-l">${pair.l}</div>
+          <div class="bal-track"><div class="bal-fill-l" style="width:0"></div><div class="bal-fill-r" style="width:0"></div></div>
+          <div class="bal-label bal-label-r">${pair.r}</div>
+          <div class="bal-meta">
+            <span class="bal-meta-l">—</span>
+            <span class="bal-meta-c">keine Übungen</span>
+            <span class="bal-meta-r">—</span>
+          </div>
+        </div>`;
+    }
+
+    const lPct = Math.round((lSets / total) * 100);
+    const rPct = 100 - lPct;
+    const skew = Math.abs(lPct - rPct);
+    const skewTag =
+      skew >= dangerAt ? ' · <span class="skew-tag">Dysbalance</span>' :
+      skew >= warnAt   ? ' · <span class="skew-tag">Schieflage</span>' :
+      '';
+
+    const lFmt = lSets % 1 === 0 ? lSets : lSets.toFixed(1);
+    const rFmt = rSets % 1 === 0 ? rSets : rSets.toFixed(1);
+
+    return `
+      <div class="${rowClass}">
+        <div class="bal-label bal-label-l">${pair.l}</div>
+        <div class="bal-track">
+          <div class="bal-fill-l" style="width:${lPct}%"></div>
+          <div class="bal-fill-r" style="width:${rPct}%"></div>
+        </div>
+        <div class="bal-label bal-label-r">${pair.r}</div>
+        <div class="bal-meta">
+          <span class="bal-meta-l">${lPct}% · ${lFmt} S.</span>
+          <span class="bal-meta-c">${skew < warnAt ? 'ausgewogen' : 'Schwerpunkt: ' + (lPct > rPct ? pair.l : pair.r)}${skewTag}</span>
+          <span class="bal-meta-r">${rFmt} S. · ${rPct}%</span>
+        </div>
+      </div>`;
+  }
+
+  // Antagonisten + Ober/Unter rendern
+  let html = '';
+
+  // 4 Antagonisten-Paare
+  ANTAGONIST_PAIRS.forEach(pair => {
+    html += renderPlanRow(pair);
+  });
+
+  // Ober/Unter als Master-Row
+  const upperGroups = ['Brust', 'Rücken', 'Bizeps', 'Trizeps', 'Vordere Schulter', 'Hintere Schulter', 'Seitliche Schulter'];
+  const lowerGroups = ['Quadrizeps', 'Hamstrings', 'Waden', 'Unt. Rücken'];
+  html += '<div class="bal-divider"></div>';
+  html += renderPlanRow({
+    l: 'Oberkörper', lGroups: upperGroups,
+    r: 'Unterkörper', rGroups: lowerGroups
+  }, { master: true, warnAt: 30, dangerAt: 50 });
+
+  // Volume Landmarks Referenz
+  html += `<div class="jp-bal-landmark">
+    Volume Landmarks (Hypertrophie): <span>&lt; 10 S./Wo = wenig</span> · <span>10–20 S./Wo = optimal</span> · <span>&gt; 20 S./Wo = viel</span>
+  </div>`;
+
+  wrap.innerHTML = html;
+  void wrap.offsetHeight;
+  preview.style.display = '';
+
+  console.log('[PlanBalance] gerendert', { setsByGroup, totalWeeks });
+}
+
+/* ═══════════════════════════════════════════════════════
    COCKPIT-RENDER
    ═══════════════════════════════════════════════════════ */
 
@@ -12025,6 +12183,7 @@ function startNextEinheit() {
     renderJahresplan(profile);
     renderTrainingsplan(profile);
     renderCockpit(profile);
+    buildPlanBalance(profile);
 
     const totalPlans = Object.keys(profile.plans).filter(k => k.startsWith('w')).length;
     toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
@@ -12278,6 +12437,7 @@ async function loadDemoProfile() {
     renderTrainingsplan(profile);
     renderFortschritt(profile);
     renderInfo(profile);
+    buildPlanBalance(profile);
     return profile;
   } catch (err) {
     console.warn('[Demo] Konnte Profil nicht laden:', err.message);
