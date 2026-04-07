@@ -9358,22 +9358,33 @@ function _fpDrawChart(exerciseMap) {
   const surface1  = css.getPropertyValue('--surface-1').trim();
   const textMain  = css.getPropertyValue('--text').trim();
 
-  // Pro KW aggregieren (bester 1RM der Woche)
-  const byKw = new Map();
+  // Adaptiv aggregieren: KW bei kurzem Range, Monat bei langem
+  const chartAgg = (state.fpRange === '1J' || state.fpRange === 'all') ? 'month' : 'week';
+  const byBucket = new Map();
   ex.entries.forEach(e => {
     const d = new Date(e.ts);
     const iso = _isoWeek(d);
-    const key = iso.year * 100 + iso.week;
-    const cur = byKw.get(key);
+    let key, label, sortKey;
+    if (chartAgg === 'month') {
+      const m = d.getMonth();
+      key = d.getFullYear() + '_' + String(m + 1).padStart(2, '0');
+      label = _MONTH_SHORT[m] + ' ' + String(d.getFullYear()).slice(2);
+      sortKey = d.getFullYear() * 100 + m;
+    } else {
+      key = iso.year * 100 + iso.week;
+      label = 'KW ' + iso.week;
+      sortKey = key;
+    }
+    const cur = byBucket.get(key);
     if (!cur || e.oneRM > cur.oneRM) {
-      byKw.set(key, { year: iso.year, week: iso.week, oneRM: e.oneRM, maxKg: e.maxKg, date: e.date });
+      byBucket.set(key, { year: iso.year, week: iso.week, oneRM: e.oneRM, maxKg: e.maxKg, date: e.date, label, sortKey });
     } else if (e.oneRM === cur.oneRM && e.maxKg > cur.maxKg) {
       cur.maxKg = e.maxKg;
     }
   });
-  const points = Array.from(byKw.values()).sort((a, b) => (a.year * 100 + a.week) - (b.year * 100 + b.week));
+  const points = Array.from(byBucket.values()).sort((a, b) => a.sortKey - b.sortKey);
 
-  const labels = points.map(p => 'KW ' + p.week);
+  const labels = points.map(p => p.label);
   const data = points.map(p => p.oneRM);
 
   // Peak/Dip-Erkennung (wie bei den Balance-Peaks im Cockpit früher)
@@ -9392,7 +9403,11 @@ function _fpDrawChart(exerciseMap) {
   });
 
   const pointColors = kinds.map(k => k === 'peak' ? success : k === 'dip' ? warning : accent);
-  const pointRadii  = kinds.map(k => k === 'normal' ? 3 : 4);
+  const manyPoints = points.length > 30;
+  const pointRadii  = kinds.map(k => {
+    if (manyPoints) return k === 'normal' ? 0 : 3; // nur Peaks/Dips sichtbar
+    return k === 'normal' ? 3 : 4;
+  });
 
   const gradient = ctx.createLinearGradient(0, 0, 0, canvas.parentElement.clientHeight || 280);
   gradient.addColorStop(0, accentDim);
@@ -9464,7 +9479,8 @@ function _fpDrawChart(exerciseMap) {
             font: { family: "'JetBrains Mono', monospace", size: 10 },
             maxRotation: 0,
             autoSkip: true,
-            autoSkipPadding: 24
+            autoSkipPadding: 24,
+            maxTicksLimit: 12
           }
         },
         y: {
@@ -11493,8 +11509,10 @@ function _syncFpFilters() {
     });
   });
 
-  // ── Zeitvergleich rendern ──
-  function renderCompare() {
+})();
+
+// ── Zeitvergleich rendern (global für renderFortschritt) ──
+function renderCompare() {
     const grid = document.getElementById('fpCompareGrid');
     if (!grid || !state.profile) return;
     const sessions = state.profile.sessions || [];
@@ -11568,7 +11586,7 @@ function _syncFpFilters() {
     'Rudern': ['Rudern', 'Langhantelrudern', 'Latzug', 'Cable Row']
   };
 
-  function renderStandards() {
+function renderStandards() {
     const grid = document.getElementById('fpStandardsGrid');
     if (!grid || !state.profile) return;
 
@@ -11629,7 +11647,7 @@ function _syncFpFilters() {
         </div>`;
     }).join('');
   }
-})();
+}
 
 // Wiederverwendbare Startlogik: springt in den Trainingsplan auf die naechste
 // geplante Einheit. Einstiegspunkte: Cockpit-CTA, Bottom-Nav "+"-Button,
