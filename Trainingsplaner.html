@@ -9236,7 +9236,7 @@ function renderFortschritt(profile) {
         return `
           <div class="fp-top-item${isActive ? ' fp-top-active' : ''}" data-exercise="${escapeHtml(ex.name)}">
             <div class="fp-top-left">
-              <div class="fp-top-name">${escapeHtml(ex.name)}</div>
+              <div class="fp-top-name">${escapeHtml(ex.name)}${_getBwFactor(ex.name) ? ' <span class="tp-set-bw-tag">(BW)</span>' : ''}</div>
               ${badge}
             </div>
             <div class="fp-top-spark">${spark}</div>
@@ -9290,7 +9290,11 @@ function _fpDrawChart(exerciseMap) {
   }
   if (emptyEl) emptyEl.style.display = 'none';
   canvas.style.display = '';
-  if (subEl) subEl.textContent = '· ' + name;
+  const bwF = _getBwFactor(name);
+  if (subEl) {
+    const bwInfo = bwF ? ` · BW ${Math.round((Number(state.profile?.gewicht) || 80) * bwF)} kg (×${bwF})` : '';
+    subEl.textContent = '· ' + name + bwInfo;
+  }
 
   const ctx = canvas.getContext('2d');
   const css = getComputedStyle(document.documentElement);
@@ -9385,10 +9389,17 @@ function _fpDrawChart(exerciseMap) {
             },
             label: item => {
               const p = points[item.dataIndex];
-              return [
-                'Est. 1RM: ' + Math.round(item.parsed.y) + ' kg',
-                'Max: ' + _fmtKg(p.maxKg) + ' kg'
-              ];
+              const bwF = _getBwFactor(name);
+              const lines = ['Est. 1RM: ' + Math.round(item.parsed.y) + ' kg'];
+              if (bwF) {
+                const bw = Number(state.profile?.gewicht) || 80;
+                const bwBase = Math.round(bw * bwF);
+                const zusatz = Math.round(p.maxKg - bwBase);
+                lines.push('Max: ' + _fmtKg(p.maxKg) + ' kg (BW ' + bwBase + (zusatz > 0 ? ' + ' + zusatz : '') + ')');
+              } else {
+                lines.push('Max: ' + _fmtKg(p.maxKg) + ' kg');
+              }
+              return lines;
             }
           }
         }
