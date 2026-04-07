@@ -1744,6 +1744,44 @@ body.role-athlete .jp-balance-preview,
   .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
   .pn-hero-icon { width: 48px; height: 48px; font-size: 22px; }
   .pn-hero-title { font-size: 18px; }
+
+  /* ─── Accordion-Stepper für Generator auf Mobile ─── */
+  .pn-form-card { padding: var(--s-4); }
+  .pn-form-card .pn-card-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+  }
+  .pn-form-card .pn-card-label::after {
+    content: '▸';
+    font-size: 12px;
+    color: var(--text-3);
+    transition: transform var(--ease);
+  }
+  .pn-form-card.pn-open .pn-card-label::after {
+    transform: rotate(90deg);
+    color: var(--accent);
+  }
+  /* Alles nach dem Label verstecken wenn nicht offen */
+  .pn-form-card > *:not(.pn-card-label) {
+    display: none;
+  }
+  .pn-form-card.pn-open > * {
+    display: flex;
+  }
+  .pn-form-card.pn-open > .pn-card-label { margin-bottom: var(--s-3); }
+  .pn-form-card.pn-open > .pn-card-title,
+  .pn-form-card.pn-open > .pn-card-desc { display: block; }
+  .pn-form-card.pn-open > .pn-form-field { display: flex; }
+  .pn-form-card.pn-open > .pn-form-row { display: flex; }
+  .pn-form-card.pn-open > .pn-form-hint { display: block; }
+  .pn-form-card.pn-open > .pn-block-rows { display: flex; flex-direction: column; }
+  .pn-form-card.pn-open > .pn-add-block-btn { display: block; }
+  .pn-form-card.pn-open > .pn-generate-btn { display: block; }
+  .pn-form-card.pn-open > .tp-chips { display: flex; }
+  .pn-form-card.pn-open > label.pn-check { display: flex; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -11856,6 +11894,22 @@ function startNextEinheit() {
    WOCHENPLAN-GENERATOR
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
+
+  // ── Mobile Accordion: Schritte auf-/zuklappen ──
+  const pnCards = document.querySelectorAll('.pn-grid .pn-form-card');
+  pnCards.forEach((card, i) => {
+    // Erster Schritt initial offen
+    if (i === 0) card.classList.add('pn-open');
+    const label = card.querySelector('.pn-card-label');
+    if (label) {
+      label.addEventListener('click', () => {
+        if (window.innerWidth > 720) return; // nur Mobile
+        const wasOpen = card.classList.contains('pn-open');
+        pnCards.forEach(c => c.classList.remove('pn-open'));
+        if (!wasOpen) card.classList.add('pn-open');
+      });
+    }
+  });
 
   // ── Vorlagen für neue Blöcke ──
   const BLOCK_TEMPLATES = [
