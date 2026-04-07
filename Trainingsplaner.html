@@ -4855,205 +4855,21 @@ body.role-athlete .tp-mode { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
-   ABOUT-ME OVERLAY (Easter Egg via Portrait-Tap)
+   PORTRAIT GLOW-PULSE (Easter Egg via Portrait-Tap)
    ═══════════════════════════════════════════════════════ */
-.about-me {
-  position: fixed;
-  inset: 0;
-  z-index: 5500;
-  background: rgba(8,9,11,0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 400ms ease, visibility 400ms ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.about-me.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.about-me-inner {
-  width: 100%;
-  max-width: 440px;
-  padding: var(--s-8) var(--s-4) var(--s-16);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s-6);
-}
-
-/* Header mit Portrait */
-.about-me-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--s-3);
-  margin-bottom: var(--s-4);
-}
-.about-me-portrait {
-  width: 100px; height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 30px var(--accent-dim);
-  animation: splashFadeIn 500ms ease both;
-}
-.about-me-name {
-  font-family: var(--font-sans);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text);
-  animation: splashFadeIn 500ms 100ms ease both;
-}
-.about-me-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-3);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  animation: splashFadeIn 500ms 200ms ease both;
-}
-
-/* Close-Button */
-.about-me-close {
-  position: fixed;
-  top: var(--s-4);
-  right: var(--s-4);
-  z-index: 5600;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border-strong);
-  background: var(--surface-2);
-  color: var(--text-2);
-  font-size: 16px;
+.splash-portrait {
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 200ms ease;
+  position: relative;
+  z-index: 2;
+  transition: box-shadow 400ms ease, transform 300ms ease;
 }
-.about-me-close:hover {
-  background: var(--surface-3);
-  color: var(--text);
-  border-color: var(--accent-line);
+.splash-portrait.glow-pulse {
+  box-shadow: 0 0 50px var(--accent-dim), 0 0 100px rgba(15,118,110,0.2), 0 0 160px rgba(15,118,110,0.08);
+  animation: portraitPulse 2s ease-in-out infinite alternate;
 }
-
-/* Kategorie-Cards */
-.about-card {
-  width: 100%;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--r-lg);
-  background: var(--surface-1);
-  overflow: hidden;
-  transition: border-color 300ms ease;
-}
-.about-card.open {
-  border-color: var(--accent-line);
-}
-.about-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-4);
-  cursor: pointer;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 200ms ease;
-}
-.about-card-header:hover {
-  background: var(--surface-2);
-}
-.about-card-icon {
-  width: 36px; height: 36px;
-  border-radius: var(--r-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.about-card-icon.family   { background: rgba(168,85,247,0.15); }
-.about-card-icon.work     { background: var(--accent-dim); }
-.about-card-icon.training { background: rgba(16,185,129,0.15); }
-.about-card-icon.photo    { background: rgba(212,169,104,0.15); }
-.about-card-icon.tech     { background: rgba(59,130,246,0.15); }
-
-.about-card-title {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  flex: 1;
-}
-.about-card-chevron {
-  color: var(--text-3);
-  font-size: 12px;
-  transition: transform 300ms ease;
-  flex-shrink: 0;
-}
-.about-card.open .about-card-chevron {
-  transform: rotate(180deg);
-}
-
-.about-card-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 400ms ease;
-}
-.about-card.open .about-card-body {
-  max-height: 300px;
-}
-.about-card-content {
-  padding: 0 var(--s-4) var(--s-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-2);
-}
-.about-card-item {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-2);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-2);
-  line-height: 1.5;
-}
-.about-card-item::before {
-  content: '›';
-  color: var(--accent);
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-/* Stagger-Animation für Cards */
-.about-card:nth-child(1) { animation: splashFadeIn 400ms 200ms ease both; }
-.about-card:nth-child(2) { animation: splashFadeIn 400ms 300ms ease both; }
-.about-card:nth-child(3) { animation: splashFadeIn 400ms 400ms ease both; }
-.about-card:nth-child(4) { animation: splashFadeIn 400ms 500ms ease both; }
-.about-card:nth-child(5) { animation: splashFadeIn 400ms 600ms ease both; }
-
-/* Footer */
-.about-me-footer {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-3);
-  letter-spacing: 0.06em;
-  text-align: center;
-  margin-top: var(--s-4);
-  animation: splashFadeIn 500ms 700ms ease both;
-}
-
-@media (max-width: 480px) {
-  .about-me-inner { padding: var(--s-6) var(--s-3) var(--s-12); }
-  .about-me-portrait { width: 80px; height: 80px; }
-  .about-me-name { font-size: 19px; }
+@keyframes portraitPulse {
+  0%   { box-shadow: 0 0 40px var(--accent-dim), 0 0 80px rgba(15,118,110,0.15); transform: scale(1); }
+  100% { box-shadow: 0 0 60px var(--accent-dim), 0 0 120px rgba(15,118,110,0.25), 0 0 180px rgba(15,118,110,0.1); transform: scale(1.03); }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -5222,8 +5038,8 @@ body.role-athlete .tp-mode { display: none; }
 
 <!-- ═══════════════ SPLASH / WELCOME ═══════════════ -->
 <div class="splash" id="splash">
-  <div class="splash-center">
-    <img class="splash-portrait" src="./alexander-portrait.jpg" alt="Alexander">
+  <div class="splash-center" id="splashCenter">
+    <img class="splash-portrait" id="splashPortrait" src="./alexander-portrait.jpg" alt="Alexander">
     <div class="splash-name">Trainingsplaner</div>
     <div class="splash-tagline">by Alexander da Costa Amaral</div>
     <div class="splash-nodes">
@@ -5237,100 +5053,6 @@ body.role-athlete .tp-mode { display: none; }
       <div class="splash-node warm">Diplomarbeit</div>
     </div>
     <div class="splash-cta"><span>▸</span> Tippe um zu starten</div>
-  </div>
-</div>
-
-<!-- ═══════════════ ABOUT ME (Easter Egg) ═══════════════ -->
-<div class="about-me" id="aboutMe">
-  <button class="about-me-close" id="aboutMeClose">✕</button>
-  <div class="about-me-inner">
-    <div class="about-me-header">
-      <img class="about-me-portrait" src="./alexander-portrait.jpg" alt="Alexander">
-      <div class="about-me-name">Alexander da Costa Amaral</div>
-      <div class="about-me-sub">Graz · Jahrgang 1986</div>
-    </div>
-
-    <div class="about-card open">
-      <div class="about-card-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="about-card-icon family">👨‍👩‍👦</div>
-        <div class="about-card-title">Familie & Zuhause</div>
-        <span class="about-card-chevron">▾</span>
-      </div>
-      <div class="about-card-body">
-        <div class="about-card-content">
-          <div class="about-card-item">Julia da Costa Amaral — seit 2003 an meiner Seite</div>
-          <div class="about-card-item">Drei Buben: 7, 5 und 2 Jahre</div>
-          <div class="about-card-item">Eigenheim mit ~2.000 m² Garten in der Steiermark</div>
-          <div class="about-card-item">Wachteln im Außengehege & Meerschweinchen</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="about-card-icon work">⚕</div>
-        <div class="about-card-title">Beruf</div>
-        <span class="about-card-chevron">▾</span>
-      </div>
-      <div class="about-card-body">
-        <div class="about-card-content">
-          <div class="about-card-item">LKH-Univ. Klinikum Graz, Bereich Technik</div>
-          <div class="about-card-item">Key User SAP/TIS — Brücke zwischen Technik, IT & Management</div>
-          <div class="about-card-item">Ursprung: Medizintechnik & Röntgentechnik</div>
-          <div class="about-card-item">Mitentwickler der TECH|Suite</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="about-card-icon training">💪</div>
-        <div class="about-card-title">Training</div>
-        <span class="about-card-chevron">▾</span>
-      </div>
-      <div class="about-card-body">
-        <div class="about-card-content">
-          <div class="about-card-item">Calisthenics & Studio — das Beste aus beiden Welten</div>
-          <div class="about-card-item">Evidenzbasiert, nicht Bro-Science</div>
-          <div class="about-card-item">Diplomarbeit über diesen Trainingsplaner</div>
-          <div class="about-card-item">85+ Übungen · Periodisierung · Muskel-Balancer</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="about-card-icon photo">📷</div>
-        <div class="about-card-title">Fotografie</div>
-        <span class="about-card-chevron">▾</span>
-      </div>
-      <div class="about-card-body">
-        <div class="about-card-content">
-          <div class="about-card-item">Makrofotografie — Kugelspringer & Insekten</div>
-          <div class="about-card-item">Canon 6D Mark II + Godox MF12 Blitze</div>
-          <div class="about-card-item">Focus Stacking mit Zerene Stacker</div>
-          <div class="about-card-item">Expeditionstagebuch für jeden Fund</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-card">
-      <div class="about-card-header" onclick="this.parentElement.classList.toggle('open')">
-        <div class="about-card-icon tech">🔧</div>
-        <div class="about-card-title">Technik & Tüfteln</div>
-        <span class="about-card-chevron">▾</span>
-      </div>
-      <div class="about-card-body">
-        <div class="about-card-content">
-          <div class="about-card-item">Diesen Trainingsplaner komplett selbst gebaut</div>
-          <div class="about-card-item">Smart Home — TP-Link Tapo Ökosystem</div>
-          <div class="about-card-item">KI-Enthusiast — Claude Code als tägliches Werkzeug</div>
-          <div class="about-card-item">Napoletanischer Pizzateig mit Gärbox 🍕</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-me-footer">Danke fürs Reinschauen ✦</div>
   </div>
 </div>
 
@@ -12829,44 +12551,43 @@ const _splash = document.getElementById('splash');
 if (_splash) {
   if (sessionStorage.getItem('tpv2_splash_seen')) {
     _splash.remove();
-    document.getElementById('aboutMe')?.remove();
   } else {
     sessionStorage.setItem('tpv2_splash_seen', '1');
-    const _aboutMe = document.getElementById('aboutMe');
-    const _aboutClose = document.getElementById('aboutMeClose');
+    const _portrait = document.getElementById('splashPortrait');
     let _splashDismissTimer;
+    let _glowActive = false;
 
     function _dismissSplash() {
+      if (_glowActive) return;
       _splash.classList.add('hide');
       setTimeout(() => _splash.remove(), 700);
-      if (_aboutMe && !_aboutMe.classList.contains('show')) {
-        setTimeout(() => _aboutMe.remove(), 700);
-      }
     }
 
-    // Portrait-Tap → About-Me öffnen (Splash-Timer pausieren)
-    const _portrait = _splash.querySelector('.splash-portrait');
+    // Portrait-Tap → Glow-Pulse toggle
     if (_portrait) {
-      _portrait.style.cursor = 'zoom-in';
       _portrait.addEventListener('click', function(e) {
         e.stopPropagation();
-        clearTimeout(_splashDismissTimer);
-        _aboutMe.classList.add('show');
+        if (!_glowActive) {
+          _glowActive = true;
+          clearTimeout(_splashDismissTimer);
+          _portrait.classList.add('glow-pulse');
+        } else {
+          _glowActive = false;
+          _portrait.classList.remove('glow-pulse');
+          _splashDismissTimer = setTimeout(_dismissSplash, 4000);
+        }
       });
     }
 
-    // About-Me schließen → zurück zum Splash, Timer neu starten
-    function _closeAboutMe() {
-      _aboutMe.classList.remove('show');
-      _splashDismissTimer = setTimeout(_dismissSplash, 4000);
-    }
-    if (_aboutClose) _aboutClose.addEventListener('click', _closeAboutMe);
-    _aboutMe.addEventListener('click', function(e) {
-      if (e.target === _aboutMe) _closeAboutMe();
+    _splash.addEventListener('click', function() {
+      if (_glowActive) {
+        _glowActive = false;
+        _portrait.classList.remove('glow-pulse');
+        _splashDismissTimer = setTimeout(_dismissSplash, 4000);
+      } else {
+        _dismissSplash();
+      }
     });
-
-    // Splash normal: Tap irgendwo (außer Portrait) → Dismiss
-    _splash.addEventListener('click', _dismissSplash);
     _splashDismissTimer = setTimeout(_dismissSplash, 6000);
   }
 }
