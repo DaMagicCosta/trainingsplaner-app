@@ -10541,19 +10541,17 @@ function buildPlanBalance(profile) {
   // Antagonisten + Ober/Unter rendern
   let html = '';
 
-  // 4 Antagonisten-Paare
+  // 4 Antagonisten-Paare + Ober/Unter in einer Rubrik
+  const upperGroups = ['Brust', 'Rücken', 'Bizeps', 'Trizeps', 'Vordere Schulter', 'Hintere Schulter', 'Seitliche Schulter'];
+  const lowerGroups = ['Quadrizeps', 'Hamstrings', 'Waden', 'Unt. Rücken'];
+
   ANTAGONIST_PAIRS.forEach(pair => {
     html += renderPlanRow(pair);
   });
-
-  // Ober/Unter als Master-Row
-  const upperGroups = ['Brust', 'Rücken', 'Bizeps', 'Trizeps', 'Vordere Schulter', 'Hintere Schulter', 'Seitliche Schulter'];
-  const lowerGroups = ['Quadrizeps', 'Hamstrings', 'Waden', 'Unt. Rücken'];
-  html += '<div class="bal-divider"></div>';
   html += renderPlanRow({
     l: 'Oberkörper', lGroups: upperGroups,
     r: 'Unterkörper', rGroups: lowerGroups
-  }, { master: true, warnAt: 30, dangerAt: 50 });
+  }, { warnAt: 30, dangerAt: 50 });
 
   // Volume Landmarks Referenz
   html += `<div class="jp-bal-landmark">
