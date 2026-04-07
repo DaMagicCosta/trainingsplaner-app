@@ -6652,7 +6652,7 @@ body.role-athlete .tp-mode { display: none; }
               <div class="info-card-sub">JSON</div>
             </div>
             <div class="info-text">
-              <p>Lädt das aktuelle Profil (inklusive aller im RAM geloggten Sätze) als JSON-Datei herunter. Dateiname wird automatisch aus Name + heutigem Datum generiert.</p>
+              <p>Lädt das aktuelle Profil als JSON-Datei herunter. Dateiname wird automatisch aus Name + Datum generiert. Regelmäßig exportieren als Backup!</p>
             </div>
             <div class="info-actions">
               <button class="info-action info-action-primary" id="infoExportBtn">
@@ -6665,13 +6665,12 @@ body.role-athlete .tp-mode { display: none; }
           <div class="info-card">
             <div class="info-card-head">
               <div class="info-card-label">↑ &nbsp;Import</div>
-              <div class="info-card-sub">demnächst</div>
             </div>
             <div class="info-text">
-              <p>Lädt ein zuvor exportiertes JSON-Profil und ersetzt damit das aktuelle RAM-Profil. In einer späteren Version — aktuell noch Platzhalter.</p>
+              <p>Lädt ein zuvor exportiertes JSON-Profil. Ersetzt das aktuelle Profil und speichert es lokal im Browser.</p>
             </div>
             <div class="info-actions">
-              <button class="info-action" disabled>
+              <button class="info-action" id="infoImportBtn">
                 <span class="info-action-icon">↑</span>
                 Profil importieren
               </button>
@@ -6684,7 +6683,7 @@ body.role-athlete .tp-mode { display: none; }
               <div class="info-card-sub">Demo neu laden</div>
             </div>
             <div class="info-text">
-              <p>Verwirft alle RAM-Änderungen und lädt das Original-Demo-Profil frisch vom Server. Praktisch, wenn du während des Testens einen sauberen Zustand brauchst.</p>
+              <p>Löscht gespeicherte Daten und lädt das Original-Demo-Profil frisch vom Server. Alle eigenen Änderungen gehen verloren!</p>
             </div>
             <div class="info-actions">
               <button class="info-action" id="infoReloadBtn">
@@ -7038,6 +7037,36 @@ const STORAGE_KEYS = {
   fpExercise: 'tpv2_fp_exercise',
   fpAgg: 'tpv2_fp_agg'
 };
+
+// ─── Profil-Persistenz (localStorage) ───
+function _saveProfile() {
+  if (!state.profile) return;
+  try {
+    localStorage.setItem('tpv2_profile_data', JSON.stringify(state.profile));
+    console.log('[Persist] Profil gespeichert ·', (state.profile.sessions?.length || 0), 'Sessions');
+  } catch (e) {
+    console.warn('[Persist] Speichern fehlgeschlagen:', e.message);
+    if (e.name === 'QuotaExceededError') toast('Speicher voll — Profil exportieren und Browser-Daten prüfen');
+  }
+}
+
+function _loadSavedProfile() {
+  try {
+    const raw = localStorage.getItem('tpv2_profile_data');
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    console.log('[Persist] Profil aus localStorage geladen ·', p.name, '·', (p.sessions?.length || 0), 'Sessions');
+    return p;
+  } catch (e) {
+    console.warn('[Persist] Laden fehlgeschlagen:', e.message);
+    return null;
+  }
+}
+
+function _clearSavedProfile() {
+  localStorage.removeItem('tpv2_profile_data');
+  console.log('[Persist] localStorage gelöscht');
+}
 
 const state = {
   activeTab: localStorage.getItem(STORAGE_KEYS.tab) || 'cockpit',
@@ -8178,9 +8207,32 @@ function exportProfileJson() {
 }
 
 // Demo-Profil neu laden (verwirft alle RAM-Mutationen)
+function importProfileJson() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const profile = JSON.parse(text);
+      if (!profile.name) { toast('Ungültiges Profil — "name" fehlt'); return; }
+      if (!profile.sessions) profile.sessions = [];
+      if (!profile.plans) profile.plans = {};
+      _applyProfile(profile, 'Import');
+      _saveProfile();
+    } catch (err) {
+      toast('Import fehlgeschlagen: ' + err.message);
+    }
+  });
+  input.click();
+}
+
 async function reloadDemoProfile() {
-  toast('Lade Demo-Profil neu …');
-  await loadDemoProfile();
+  _clearSavedProfile();
+  toast('Demo zurückgesetzt …');
+  await _loadDemoFromFetch();
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -9788,6 +9840,7 @@ function _logSet(profile, kw, year, dayIdx, dayLabel, planEx, setData) {
   }
   if (!exercise.sets) exercise.sets = [];
   exercise.sets.push(newSet);
+  _saveProfile();
 
   return session;
 }
@@ -10954,8 +11007,10 @@ document.querySelectorAll('.tp-day-tab').forEach(tab => {
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation
 (function initInfo() {
   const exportBtn = document.getElementById('infoExportBtn');
+  const importBtn = document.getElementById('infoImportBtn');
   const reloadBtn = document.getElementById('infoReloadBtn');
   if (exportBtn) exportBtn.addEventListener('click', exportProfileJson);
+  if (importBtn) importBtn.addEventListener('click', importProfileJson);
   if (reloadBtn) reloadBtn.addEventListener('click', reloadDemoProfile);
 
   // Anamnese & Trainer-Vereinbarung Buttons (Platzhalter)
@@ -11127,7 +11182,8 @@ function saveProfileEdit() {
   }
 
   closeModal('profileEditModal');
-  toast((target === 'self' ? 'Profil' : 'Athlet') + ' gespeichert (RAM · Variante B)');
+  _saveProfile();
+  toast((target === 'self' ? 'Profil' : 'Athlet') + ' gespeichert');
 }
 
 // Einzelne Athleten-Zeile in der Verwalten-Card neu zeichnen
@@ -12288,6 +12344,7 @@ function startNextEinheit() {
     renderTrainingsplan(profile);
     renderCockpit(profile);
     buildPlanBalance(profile);
+    _saveProfile();
 
     const totalPlans = Object.keys(profile.plans).filter(k => k.startsWith('w')).length;
     toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
@@ -12452,6 +12509,7 @@ function startNextEinheit() {
         name, muscle, saetze: 3, wdh: 10, gewicht: null
       });
       closeModal('exercisePickerModal');
+      _saveProfile();
       renderTrainingsplan(state.profile);
       toast(name + ' hinzugefügt');
     });
@@ -12471,6 +12529,7 @@ function startNextEinheit() {
         const day = plan.days[state.tpViewDay];
         if (!day) return;
         day.exercises = day.exercises.filter(ex => ex.name !== exName);
+        _saveProfile();
         renderTrainingsplan(state.profile);
         toast('Übung entfernt');
         return;
@@ -12492,7 +12551,7 @@ function startNextEinheit() {
       const ex = day.exercises.find(e => e.name === exName);
       if (!ex) return;
       ex[field] = val;
-      // Re-render um Satz-Zeilen-Anzahl zu aktualisieren
+      _saveProfile();
       renderTrainingsplan(state.profile);
     });
   }
@@ -12503,49 +12562,46 @@ function startNextEinheit() {
    ═══════════════════════════════════════════════════════ */
 const DEMO_PATH = './Trainingsplaner_Max_Mustermann_Demo.json';
 
+function _applyProfile(profile, source) {
+  // Equipment-Format migrieren (altes Array → neues Objekt)
+  if (Array.isArray(profile.equipment)) {
+    const loc = Array.isArray(profile.trainingLocation) ? profile.trainingLocation[0]
+              : (_parseLocationString(profile.trainingLocation || '')[0] || 'studio');
+    profile.equipment = { [loc]: { available: profile.equipment, excluded: [] } };
+  }
+  state.profile = profile;
+  window._profile = profile;
+
+  const sessions = profile.sessions || [];
+  console.log(`[${source}] Profil geladen:`, profile.name, '·', sessions.length, 'Sessions');
+
+  toast(`${profile.name || 'Profil'} geladen · ${sessions.length} Einheiten`);
+  renderCockpit(profile);
+  renderJahresplan(profile);
+  renderTrainingsplan(profile);
+  renderFortschritt(profile);
+  renderInfo(profile);
+  buildPlanBalance(profile);
+  return profile;
+}
+
 async function loadDemoProfile() {
+  // 1. localStorage prüfen (gespeichertes Profil)
+  const saved = _loadSavedProfile();
+  if (saved) return _applyProfile(saved, 'Persist');
+
+  // 2. Fallback: Demo-JSON laden
+  return _loadDemoFromFetch();
+}
+
+async function _loadDemoFromFetch() {
   try {
     const res = await fetch(DEMO_PATH, { cache: 'no-cache' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const profile = await res.json();
-    // Equipment-Format migrieren (altes Array → neues Objekt)
-    if (Array.isArray(profile.equipment)) {
-      const loc = Array.isArray(profile.trainingLocation) ? profile.trainingLocation[0]
-                : (_parseLocationString(profile.trainingLocation || '')[0] || 'studio');
-      profile.equipment = { [loc]: { available: profile.equipment, excluded: [] } };
-    }
-    state.profile = profile;
-    window._profile = profile; // Debug-Zugriff in DevTools
-
-    const sessions = profile.sessions || [];
-    const plans = profile.plans || {};
-    const first = sessions[sessions.length - 1]?.date || '—';
-    const last  = sessions[0]?.date || '—';
-
-    console.log('[Demo] Profil geladen:', {
-      name: profile.name + ' ' + profile.nachname,
-      sessions: sessions.length,
-      plaene: Object.keys(plans).length,
-      zeitraum: first + ' → ' + last,
-      stammdaten: {
-        alter: profile.alter,
-        gewicht: profile.gewicht,
-        groesse: profile.groesse,
-        goal: profile.goal
-      }
-    });
-
-    toast('Demo geladen · ' + sessions.length + ' Einheiten');
-    renderCockpit(profile);
-    renderJahresplan(profile);
-    renderTrainingsplan(profile);
-    renderFortschritt(profile);
-    renderInfo(profile);
-    buildPlanBalance(profile);
-    return profile;
+    return _applyProfile(profile, 'Demo');
   } catch (err) {
     console.warn('[Demo] Konnte Profil nicht laden:', err.message);
-    console.warn('[Demo] Hinweis: Diese Seite muss über einen HTTP-Server geöffnet werden (z.B. VS Code Live Server). file:// blockiert fetch().');
     toast('Demo nicht geladen – Live Server starten');
     return null;
   }
