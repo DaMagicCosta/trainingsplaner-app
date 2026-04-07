@@ -12167,15 +12167,18 @@ function startNextEinheit() {
       toast(mode === 'edit' ? 'Bearbeiten-Modus aktiv' : 'Ansicht-Modus');
     });
   });
-  // + Neuer Plan Button → scrollt zum Generator
+  // + Neuer Plan Button → Toast-Hinweis auf Plan-Arsenal (kommt mit Persistenz)
   const newBtn = document.getElementById('jpNewBtn');
   if (newBtn) newBtn.addEventListener('click', () => {
-    const gen = document.querySelector('.jp-edit-content');
-    if (gen) gen.scrollIntoView({ behavior: 'smooth' });
-    // Aktiviere Edit-Modus falls noch nicht
+    toast('Plan-Vorlagen & Arsenal — kommt mit der Persistenz-Etappe. Nutze den Generator im Bearbeiten-Modus.');
+    // Aktiviere Edit-Modus und scrolle zum Generator
     if (!jp.classList.contains('mode-edit')) {
       document.querySelector('#jpMode button[data-mode="edit"]')?.click();
     }
+    setTimeout(() => {
+      const gen = document.querySelector('.jp-edit-content');
+      if (gen) gen.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
   });
 })();
 
