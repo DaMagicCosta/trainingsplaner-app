@@ -734,8 +734,6 @@ ul, ol { list-style: none; }
   gap: var(--s-4);
   padding: var(--s-2) 0;
   min-height: 200px;
-  opacity: 0;
-  transition: opacity 80ms ease;
 }
 .bal-row {
   display: grid;
@@ -766,10 +764,6 @@ ul, ol { list-style: none; }
 .bal-fill-r {
   background: var(--success);
   height: 100%;
-}
-/* Balken wachsen von 0 zur Zielbreite (data-w) */
-.bal-fill-l.animate, .bal-fill-r.animate {
-  transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* Mittellinie als Referenz */
 .bal-track::after {
@@ -10208,7 +10202,7 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
       return `
         <div class="${rowClass}">
           <div class="bal-label bal-label-l">${pair.l}</div>
-          <div class="bal-track"><div class="bal-fill-l" data-w="0" style="width:0%"></div><div class="bal-fill-r" data-w="0" style="width:0%"></div></div>
+          <div class="bal-track"><div class="bal-fill-l" style="width:0"></div><div class="bal-fill-r" style="width:0"></div></div>
           <div class="bal-label bal-label-r">${pair.r}</div>
           <div class="bal-meta">
             <span class="bal-meta-l">—</span>
@@ -10231,8 +10225,8 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
       <div class="${rowClass}">
         <div class="bal-label bal-label-l">${pair.l}</div>
         <div class="bal-track">
-          <div class="bal-fill-l" data-w="${lPct}" style="width:0%"></div>
-          <div class="bal-fill-r" data-w="${rPct}" style="width:0%"></div>
+          <div class="bal-fill-l" style="width:${lPct}%"></div>
+          <div class="bal-fill-r" style="width:${rPct}%"></div>
         </div>
         <div class="bal-label bal-label-r">${pair.r}</div>
         <div class="bal-meta">
@@ -10322,16 +10316,7 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
     html += renderBreakdown(view.pair);
   }
 
-  // DOM ersetzen, dann Balken von 0 zur Zielbreite animieren.
-  // Double-rAF: Samsung Internet braucht 2 Frames für stabiles Layout.
   wrap.innerHTML = html;
-  requestAnimationFrame(() => requestAnimationFrame(() => {
-    wrap.style.opacity = '1';
-    wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => {
-      el.classList.add('animate');
-      el.style.width = (el.dataset.w || 0) + '%';
-    });
-  }));
 
   console.log('[Balance] gerendert', {
     view: viewKey, range,
