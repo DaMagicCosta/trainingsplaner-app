@@ -984,7 +984,9 @@ ul, ol { list-style: none; }
 .jp-balance-preview {
   margin-bottom: var(--s-4);
 }
-body.role-athlete .jp-balance-preview { display: none !important; }
+body.role-athlete .jp-balance-preview,
+.jp-balance-preview { display: none !important; }
+.page[data-page="jahresplan"].mode-edit .jp-balance-preview[data-has-data] { display: block !important; }
 .jp-balance-preview .balance-wrap {
   min-height: auto;
 }
@@ -5303,7 +5305,7 @@ body.role-athlete .tp-mode { display: none; }
       </div>
 
       <!-- Planungs-Balance-Vorschau (erscheint nach Generierung) -->
-      <div class="jp-balance-preview cockpit-card" id="jpBalPreview" style="display:none">
+      <div class="jp-balance-preview cockpit-card" id="jpBalPreview">
         <div class="card-head">
           <div class="chart-title">Geplante Balance <span class="chart-title-sub" id="jpBalSub">· Sätze pro Woche</span></div>
         </div>
@@ -10462,7 +10464,7 @@ function buildPlanBalance(profile) {
   }
 
   if (genPlans.length === 0) {
-    preview.style.display = 'none';
+    preview.removeAttribute('data-has-data');
     return;
   }
 
@@ -10561,7 +10563,7 @@ function buildPlanBalance(profile) {
 
   wrap.innerHTML = html;
   void wrap.offsetHeight;
-  preview.style.display = '';
+  preview.setAttribute('data-has-data', '');
 
   console.log('[PlanBalance] gerendert', { setsByGroup, totalWeeks });
 }
