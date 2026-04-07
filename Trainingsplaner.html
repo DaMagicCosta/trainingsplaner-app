@@ -7095,6 +7095,7 @@ function switchTab(tabName) {
     if (isTarget) {
       void p.offsetHeight;
       p.classList.add('page-enter');
+      p.addEventListener('animationend', () => p.classList.remove('page-enter'), { once: true });
     }
   });
   // Sidebar nav
