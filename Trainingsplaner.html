@@ -444,6 +444,24 @@ ul, ol { list-style: none; }
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
+.info-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-3);
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.info-close-btn:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-strong); }
 .page-sub {
   font-size: 15px;
   color: var(--text-2);
@@ -5746,9 +5764,10 @@ body.role-athlete .tp-mode { display: none; }
 
     <!-- Info -->
     <section class="page" data-page="info">
-      <div class="page-head">
+      <div class="page-head" style="position:relative;">
         <div class="page-crumb">Profil · Einstellungen · Daten · Über</div>
         <h1 class="page-title">Info &amp; Einstellungen</h1>
+        <button class="info-close-btn" onclick="switchTab('cockpit')" title="Schließen → Cockpit">✕</button>
       </div>
 
       <!-- Sub-Navigation -->
@@ -12189,16 +12208,20 @@ setTimeout(() => document.getElementById('toast').classList.remove('show'), 100)
 // Demo-Profil im Hintergrund laden
 loadDemoProfile();
 
-// ── Splash Screen ──
+// ── Splash Screen (nur beim allerersten Besuch dieser Session) ──
 const _splash = document.getElementById('splash');
 if (_splash) {
-  function _dismissSplash() {
-    _splash.classList.add('hide');
-    // Nach Transition komplett aus dem DOM entfernen
-    setTimeout(() => _splash.remove(), 700);
+  if (sessionStorage.getItem('tpv2_splash_seen')) {
+    _splash.remove();
+  } else {
+    sessionStorage.setItem('tpv2_splash_seen', '1');
+    function _dismissSplash() {
+      _splash.classList.add('hide');
+      setTimeout(() => _splash.remove(), 700);
+    }
+    _splash.addEventListener('click', _dismissSplash);
+    setTimeout(_dismissSplash, 6000);
   }
-  _splash.addEventListener('click', _dismissSplash);
-  setTimeout(_dismissSplash, 6000);
 }
 </script>
 
