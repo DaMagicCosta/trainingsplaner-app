@@ -10326,6 +10326,7 @@ function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
   // Double-rAF: Samsung Internet braucht 2 Frames für stabiles Layout.
   wrap.innerHTML = html;
   requestAnimationFrame(() => requestAnimationFrame(() => {
+    wrap.style.opacity = '1';
     wrap.querySelectorAll('.bal-fill-l, .bal-fill-r').forEach(el => {
       el.classList.add('animate');
       el.style.width = (el.dataset.w || 0) + '%';
