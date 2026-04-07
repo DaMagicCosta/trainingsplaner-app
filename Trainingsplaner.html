@@ -10453,16 +10453,11 @@ function buildPlanBalance(profile) {
   if (!wrap || !preview) return;
 
   const plans = profile.plans || {};
-  // Ersten generierten Plan-Zyklus finden (unique Block-Kombinationen)
+  // Alle Pläne mit Übungen sammeln (Durchschnitt über gesamten Planzeitraum)
   const genPlans = [];
-  const seenBlocks = new Set();
   for (let kw = 1; kw <= 52; kw++) {
     const p = plans['w' + kw];
-    if (!p || p._source !== 'generator') continue;
-    const key = p._block + '_' + p.goal;
-    if (seenBlocks.has(key)) break; // Zyklus wiederholt sich
-    seenBlocks.add(key);
-    genPlans.push(p);
+    if (p && p.days && p.days.length > 0) genPlans.push(p);
   }
 
   if (genPlans.length === 0) {
@@ -10470,7 +10465,7 @@ function buildPlanBalance(profile) {
     return;
   }
 
-  // Sätze pro Muskelgruppe über einen Wochenzyklus mitteln
+  // Sätze pro Muskelgruppe über alle geplanten Wochen mitteln
   const setsByGroup = {};
   let totalWeeks = genPlans.length;
 
@@ -10491,7 +10486,7 @@ function buildPlanBalance(profile) {
     setsByGroup[g] = Math.round(setsByGroup[g] / totalWeeks * 10) / 10;
   });
 
-  if (subEl) subEl.textContent = `· ø Sätze pro Woche · ${totalWeeks} Block-Wochen`;
+  if (subEl) subEl.textContent = `· ø Sätze pro Woche · ${totalWeeks} geplante Wochen`;
 
   // Render-Helper: Balance-Row für Sätze
   function renderPlanRow(pair, opts = {}) {
