@@ -1056,6 +1056,7 @@ ul, ol { list-style: none; }
 .jp-block-gpp   { --block-color: var(--accent);  --block-dim: rgba(20,184,166,0.22);  --block-line: rgba(20,184,166,0.50); }
 .jp-block-spp   { --block-color: var(--success); --block-dim: rgba(16,185,129,0.22);  --block-line: rgba(16,185,129,0.50); }
 .jp-block-peak  { --block-color: var(--warning); --block-dim: rgba(212,169,104,0.22); --block-line: rgba(212,169,104,0.50); }
+.jp-block-aux   { --block-color: var(--danger);  --block-dim: rgba(199,106,94,0.22);  --block-line: rgba(199,106,94,0.50); }
 
 /* Chip für GPP: hellerer Teal-Medium für Text, weil Teal-Deep
    auf dunklem Surface zu schwach leuchtet. Border und Dots der Karte
@@ -7695,8 +7696,8 @@ function _abbrevBlock(label) {
 
 // blockIdx → CSS-Klasse für die Block-Farbe
 function _blockClass(idx) {
-  const map = ['jp-block-gpp', 'jp-block-spp', 'jp-block-peak'];
-  return map[idx] || 'jp-block-gpp';
+  const map = ['jp-block-gpp', 'jp-block-spp', 'jp-block-peak', 'jp-block-aux'];
+  return map[idx] || 'jp-block-aux';
 }
 
 // Monday-Date einer ISO-Woche berechnen
@@ -7842,6 +7843,18 @@ function renderJahresplan(profile) {
       tHtml += `<div class="jp-seg ${cls}${isCurrent ? ' jp-seg-current' : ''}" title="${title}"></div>`;
     }
     timelineEl.innerHTML = tHtml;
+  }
+
+  // ─── Legende dynamisch aus Periodisierungs-Blöcken ───────────────
+  const legendEl = document.querySelector('.jp-timeline-legend');
+  if (legendEl && profile.periodization?.blocks?.length) {
+    let lHtml = profile.periodization.blocks.map((b, i) => {
+      const cls = _blockClass(i);
+      const label = b.label || `Block ${i + 1}`;
+      return `<span class="jp-legend-item ${cls}"><span class="jp-legend-dot"></span>${label}</span>`;
+    }).join('');
+    lHtml += '<span class="jp-legend-item"><span class="jp-legend-dot jp-legend-regen"></span>Regen</span>';
+    legendEl.innerHTML = lHtml;
   }
 
   // ─── Quartals-Grids (4 Quartale) ────────────────
@@ -9439,7 +9452,7 @@ function renderTrainingsplan(profile) {
   const planNameEl = document.getElementById('tpPlanName');
 
   if (blockBadge) {
-    blockBadge.classList.remove('jp-block-gpp', 'jp-block-spp', 'jp-block-peak');
+    blockBadge.classList.remove('jp-block-gpp', 'jp-block-spp', 'jp-block-peak', 'jp-block-aux');
   }
 
   if (pEntry && pEntry.isRegen) {
