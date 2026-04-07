@@ -1034,8 +1034,8 @@ body.role-athlete .jp-balance-preview,
   gap: var(--s-4);
   padding: var(--s-4) var(--s-5);
   margin-bottom: var(--s-4);
-  background: var(--accent-dim);
-  border: 1px solid var(--accent-line);
+  background: rgba(199,106,94,0.10);
+  border: 2px solid var(--danger);
   border-radius: var(--r-md);
   flex-wrap: wrap;
 }
@@ -1047,7 +1047,7 @@ body.role-athlete .jp-balance-preview,
   min-width: 200px;
 }
 .cp-demo-banner-text strong {
-  color: var(--accent);
+  color: var(--danger);
 }
 .cp-demo-banner-actions {
   display: flex;
@@ -12778,15 +12778,28 @@ loadDemoProfile().then(() => {
   // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
   const createBtn = document.getElementById('cpDemoCreate');
   if (createBtn) createBtn.addEventListener('click', () => {
-    // Profil auf Minimum zurücksetzen
+    // Profil komplett auf Null zurücksetzen
     if (state.profile) {
       state.profile.name = '';
       state.profile.nachname = '';
       state.profile.alter = '';
       state.profile.gewicht = '';
       state.profile.groesse = '';
+      state.profile.hfmax = '';
+      state.profile.goal = 'hypertrophie';
+      state.profile.tage = [];
+      state.profile.trainingLocation = '';
+      state.profile.equipment = {};
       state.profile.sessions = [];
       state.profile.plans = {};
+      state.profile.periodization = null;
+      state.profile.athleteRegenWeeks = [];
+      // Alle Views neu rendern (leerer Zustand)
+      renderCockpit(state.profile);
+      renderJahresplan(state.profile);
+      renderTrainingsplan(state.profile);
+      renderFortschritt(state.profile);
+      buildPlanBalance(state.profile);
     }
     if (banner) banner.style.display = 'none';
     openProfileEditModal('self');
