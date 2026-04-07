@@ -717,7 +717,6 @@ ul, ol { list-style: none; }
   gap: var(--s-4);
   padding: var(--s-2) 0;
   min-height: 200px;
-  outline: 2px dashed magenta; /* DEBUG: Container sichtbar machen */
 }
 .bal-row {
   display: grid;
@@ -4926,7 +4925,7 @@ body.role-athlete .tp-mode { display: none; }
 <!-- ═══════════════ SPLASH / WELCOME ═══════════════ -->
 <div class="splash" id="splash">
   <div class="splash-center">
-    <img class="splash-portrait" src="../alexander-portrait.jpg" alt="Alexander">
+    <img class="splash-portrait" src="./alexander-portrait.jpg" alt="Alexander">
     <div class="splash-name">Trainingsplaner</div>
     <div class="splash-tagline">by Alexander da Costa Amaral</div>
     <div class="splash-nodes">
@@ -10568,39 +10567,6 @@ document.querySelectorAll('#cpBalRange button').forEach(btn => {
     document.querySelectorAll('#cpBalRange button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     if (state.profile) buildMuscleBalance(state.profile, state.balView, state.balRange);
-    // DEBUG: Balance-Status sofort + verzögert prüfen
-    function _dbgSnap(label) {
-      const w = document.getElementById('cpBalance');
-      const p = w?.closest('.page');
-      const card = w?.closest('.balance-card');
-      const main = document.getElementById('mainArea');
-      const wRect = w?.getBoundingClientRect();
-      return label + ' → ' + [
-        'ch:' + w?.children.length,
-        'wH:' + w?.offsetHeight,
-        'cH:' + card?.offsetHeight,
-        'wD:' + getComputedStyle(w).display,
-        'wV:' + getComputedStyle(w).visibility,
-        'wO:' + getComputedStyle(w).opacity,
-        'cD:' + getComputedStyle(card).display,
-        'cO:' + getComputedStyle(card).opacity,
-        'pO:' + getComputedStyle(p).opacity,
-        'pAnim:' + getComputedStyle(p).animationName,
-        'scroll:' + Math.round(main?.scrollTop),
-        'wTop:' + Math.round(wRect?.top),
-        'wBot:' + Math.round(wRect?.bottom),
-        'vpH:' + window.innerHeight
-      ].join(' | ');
-    }
-    let _dbgEl = document.getElementById('_balDebug');
-    if (!_dbgEl) { _dbgEl = document.createElement('div'); _dbgEl.id = '_balDebug'; _dbgEl.style.cssText = 'position:fixed;bottom:60px;left:8px;right:8px;background:red;color:white;font:10px monospace;padding:8px;z-index:9999;border-radius:8px;word-break:break-all;max-height:40vh;overflow:auto;'; document.body.appendChild(_dbgEl); }
-    const snap0 = _dbgSnap('T0');
-    _dbgEl.textContent = snap0;
-    // Nach 500ms nochmal messen
-    setTimeout(() => {
-      const snap1 = _dbgSnap('T500');
-      _dbgEl.textContent = snap0 + '\n' + snap1;
-    }, 500);
   });
 });
 
