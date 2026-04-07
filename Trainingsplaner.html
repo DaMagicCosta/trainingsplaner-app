@@ -3370,10 +3370,6 @@ body.role-athlete .info-athletes-card { display: none; }
 }
 
 /* ─── Aggregations-Toggle ─── */
-.fp-agg-toggle {
-  margin-bottom: var(--s-4);
-}
-
 /* ─── Overview Chart-Cards (2×2 Grid mit Sparklines) ─── */
 .fp-overview-charts {
   display: grid;
@@ -3497,9 +3493,6 @@ body.role-athlete .info-athletes-card { display: none; }
 }
 
 /* ─── Fortschritt Views ─── */
-.fp-views { margin-bottom: var(--s-6); }
-.fp-view { display: none; }
-.fp-view-active { display: block; }
 
 /* Zeitvergleich */
 .fp-compare-grid {
@@ -5656,7 +5649,7 @@ body.role-athlete .tp-mode { display: none; }
     <section class="page" data-page="fortschritt">
       <div class="fp-head">
         <div>
-          <div class="page-crumb">Charts · Entwicklung · Zeitverlauf</div>
+          <div class="page-crumb">Overview · 1RM · Zeitvergleich · Standards</div>
           <h1 class="page-title">Fortschritt <span class="fp-profile-badge" id="fpProfileBadge"></span></h1>
         </div>
       </div>
@@ -5670,21 +5663,7 @@ body.role-athlete .tp-mode { display: none; }
         </div>
       </div>
 
-      <!-- View-Switcher -->
-      <div class="view-switcher fp-views" id="fpViews">
-        <button data-fpview="entwicklung" class="active">Entwicklung</button>
-        <button data-fpview="vergleich">Zeitvergleich</button>
-        <button data-fpview="standards">Standards AT</button>
-      </div>
-
-      <!-- ═══ View 1: Entwicklung (bestehendes Layout) ═══ -->
-      <div class="fp-view fp-view-active" data-fpview="entwicklung">
-
-      <!-- Aggregations-Toggle -->
-      <div class="view-switcher fp-agg-toggle" id="fpAggToggle">
-        <button data-agg="week" class="active">Wochen</button>
-        <button data-agg="quarter">Quartale</button>
-      </div>
+      <!-- ═══ Dashboard (alle Bereiche scrollbar) ═══ -->
 
       <!-- Overview-Charts (4 Mini-Liniendiagramme) -->
       <div class="fp-overview-charts" id="fpOverview">
@@ -5750,44 +5729,33 @@ body.role-athlete .tp-mode { display: none; }
           <div class="fp-top-empty">Wird in Schritt 4 befüllt.</div>
         </div>
       </div>
-      </div><!-- /fp-view entwicklung -->
-
-      <!-- ═══ View 2: Zeitvergleich ═══ -->
-      <div class="fp-view" data-fpview="vergleich">
-        <div class="fp-card">
-          <div class="card-head">
-            <div class="chart-title">Zeitvergleich <span class="chart-title-sub">· Perioden gegenüberstellen</span></div>
-            <div class="view-switcher fp-compare-mode" id="fpCompareMode">
-              <button data-cmp="year" class="active">Jahre</button>
-              <button data-cmp="quarter">Quartale</button>
-            </div>
-          </div>
-          <div class="fp-compare-grid" id="fpCompareGrid">
-            <!-- dynamisch befüllt -->
+      <!-- Zeitvergleich -->
+      <div class="fp-card">
+        <div class="card-head">
+          <div class="chart-title">Zeitvergleich <span class="chart-title-sub">· Perioden gegenüberstellen</span></div>
+          <div class="view-switcher fp-compare-mode" id="fpCompareMode">
+            <button data-cmp="year" class="active">Jahre</button>
+            <button data-cmp="quarter">Quartale</button>
           </div>
         </div>
+        <div class="fp-compare-grid" id="fpCompareGrid"></div>
       </div>
 
-      <!-- ═══ View 3: Standards AT ═══ -->
-      <div class="fp-view" data-fpview="standards">
-        <div class="fp-card">
-          <div class="card-head">
-            <div class="chart-title">Kraft-Standards <span class="chart-title-sub">· Vergleich zur österreichischen Bevölkerung</span></div>
-          </div>
-          <div class="fp-standards-intro">
-            Basierend auf trainingswissenschaftlichen Referenzwerten (NSCA/ACSM), angepasst an Alter und Körpergewicht.
-            Die Einstufung zeigt, wo deine geschätzten 1RM-Werte im Vergleich zur trainierten Bevölkerung liegen.
-          </div>
-          <div class="fp-standards-grid" id="fpStandardsGrid">
-            <!-- dynamisch befüllt -->
-          </div>
-          <div class="fp-standards-legend">
-            <span class="fp-std-dot fp-std-beginner"></span> Anfänger
-            <span class="fp-std-dot fp-std-novice"></span> Geübt
-            <span class="fp-std-dot fp-std-intermediate"></span> Fortgeschritten
-            <span class="fp-std-dot fp-std-advanced"></span> Stark
-            <span class="fp-std-dot fp-std-elite"></span> Elite
-          </div>
+      <!-- Kraft-Standards AT -->
+      <div class="fp-card">
+        <div class="card-head">
+          <div class="chart-title">Kraft-Standards <span class="chart-title-sub">· NSCA/ACSM</span></div>
+        </div>
+        <div class="fp-standards-intro">
+          Basierend auf trainingswissenschaftlichen Referenzwerten, angepasst an Alter und Körpergewicht.
+        </div>
+        <div class="fp-standards-grid" id="fpStandardsGrid"></div>
+        <div class="fp-standards-legend">
+          <span class="fp-std-dot fp-std-beginner"></span> Anfänger
+          <span class="fp-std-dot fp-std-novice"></span> Geübt
+          <span class="fp-std-dot fp-std-intermediate"></span> Fortgeschritten
+          <span class="fp-std-dot fp-std-advanced"></span> Stark
+          <span class="fp-std-dot fp-std-elite"></span> Elite
         </div>
       </div>
 
@@ -9152,7 +9120,21 @@ function _fpDrawMiniChart(canvasId, labels, data, chartKey, color) {
   });
 }
 
-// ─── Sessions nach Wochen/Quartalen aggregieren ─────────────
+// ─── Auto-Aggregation je nach Range ─────────────
+function _fpAutoAgg(range) {
+  switch (range) {
+    case '4W':  return 'day';
+    case '12W': return 'week';
+    case '6M':  return 'week';
+    case '1J':  return 'month';
+    case 'all': return 'quarter';
+    default:    return 'week';
+  }
+}
+
+const _MONTH_SHORT = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+// ─── Sessions nach Tagen/Wochen/Monaten/Quartalen aggregieren ─────────────
 function _fpAggregateTimeSeries(sessions, mode, profile) {
   const buckets = new Map();
   const _ts = s => _parseDE(s.date)?.getTime() || 0;
@@ -9183,7 +9165,15 @@ function _fpAggregateTimeSeries(sessions, mode, profile) {
     const iso = _isoWeek(d);
     const ts = d.getTime();
     let key, label;
-    if (mode === 'quarter') {
+    if (mode === 'day') {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      key = d.getFullYear() + '_' + mm + '_' + dd;
+      label = dd + '.' + mm + '.';
+    } else if (mode === 'month') {
+      key = d.getFullYear() + '_' + String(d.getMonth() + 1).padStart(2, '0');
+      label = _MONTH_SHORT[d.getMonth()] + ' ' + String(d.getFullYear()).slice(2);
+    } else if (mode === 'quarter') {
       const q = Math.ceil(iso.week / 13);
       key = iso.year + '_Q' + q;
       label = 'Q' + q + ' ' + iso.year;
@@ -9227,7 +9217,7 @@ function renderFortschritt(profile) {
   const sessions = _fpFilterSessions(profile, state.fpRange);
   const exerciseMap = _fpAggregateByExercise(sessions);
   const overview = _fpComputeOverview(sessions, exerciseMap, profile);
-  const aggMode = state.fpAgg || 'week';
+  const aggMode = _fpAutoAgg(state.fpRange);
 
   // ─── Overview Mini-Charts ──────────────────────
   const timeSeries = _fpAggregateTimeSeries(sessions, aggMode, profile);
@@ -9326,11 +9316,9 @@ function renderFortschritt(profile) {
     activeExercise: state.fpExercise
   });
 
-  // Aktive Sub-View (Zeitvergleich / Standards AT) neu rendern
-  const activeViewBtn = document.querySelector('#fpViews button.active');
-  if (activeViewBtn && activeViewBtn.dataset.fpview !== 'entwicklung') {
-    activeViewBtn.click();
-  }
+  // Zeitvergleich + Standards immer rendern (Dashboard-Flow)
+  renderCompare();
+  renderStandards();
 }
 
 // Chart für die ausgewählte Übung zeichnen
@@ -11465,26 +11453,9 @@ function _syncFpFilters() {
       localStorage.setItem(STORAGE_KEYS.fpRange, state.fpRange);
       document.querySelectorAll('#fpRange button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      _syncFpFilters();
       if (state.profile) renderFortschritt(state.profile);
     });
   });
-
-  // Aggregations-Toggle (Wochen/Quartale)
-  document.querySelectorAll('#fpAggToggle button').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.agg === state.fpAgg);
-    btn.addEventListener('click', () => {
-      if (btn.disabled) return;
-      state.fpAgg = btn.dataset.agg;
-      localStorage.setItem(STORAGE_KEYS.fpAgg, state.fpAgg);
-      document.querySelectorAll('#fpAggToggle button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (state.profile) renderFortschritt(state.profile);
-    });
-  });
-
-  // Initial-Sync
-  _syncFpFilters();
 
   const select = document.getElementById('fpExerciseSelect');
   if (select) {
@@ -11511,21 +11482,8 @@ function _syncFpFilters() {
   }
 })();
 
-// Fortschritt: View-Switcher + Zeitvergleich + Standards
+// Fortschritt: Zeitvergleich + Standards
 (function initFortschrittViews() {
-  // ── View-Switcher ──
-  document.querySelectorAll('#fpViews button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#fpViews button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.fp-view').forEach(v => v.classList.remove('fp-view-active'));
-      const view = document.querySelector(`.fp-view[data-fpview="${btn.dataset.fpview}"]`);
-      if (view) view.classList.add('fp-view-active');
-      if (btn.dataset.fpview === 'vergleich') renderCompare();
-      if (btn.dataset.fpview === 'standards') renderStandards();
-    });
-  });
-
   // ── Compare-Mode Toggle (Jahre/Quartale) ──
   document.querySelectorAll('#fpCompareMode button').forEach(btn => {
     btn.addEventListener('click', () => {
