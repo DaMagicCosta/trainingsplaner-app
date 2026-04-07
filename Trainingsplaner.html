@@ -4044,6 +4044,22 @@ body.role-athlete .info-athletes-card { display: none; }
   font-weight: 700;
   margin-left: auto;
 }
+.tp-set-bw-hint {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  padding: 0 4px;
+  margin-top: -2px;
+}
+.tp-set-bw-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
 
 /* Offener Satz — hebt sich kaum ab */
 .tp-set-open {
@@ -8119,21 +8135,21 @@ const LEXIKON_DATA = {
       antagonist: 'Breiter Rückenmuskel, Bizeps, Deltamuskel (hinterer Anteil)',
       desc: 'Grundlage aller Push-Bewegungen. Hände schulterbreit, Körper als gerade Linie von Kopf bis Ferse. Brust bis zur Matte absenken, vollständig drücken. Zuhause ohne Equipment sofort umsetzbar.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.65 },
     { name: 'Archer Liegestütze',
       muscle: 'Großer Brustmuskel, Trizeps, Deltamuskel (vorderer Anteil)',
       secondary: 'Vorderer Sägemuskel, Gerader Bauchmuskel, Schräge Bauchmuskeln, Querer Bauchmuskel',
       antagonist: 'Breiter Rückenmuskel, Bizeps, Deltamuskel (hinterer Anteil)',
       desc: 'Ein Arm weit seitlich gestreckt, das Körpergewicht auf den anderen verlagern. Wechselseitig. Fortgeschrittener Schritt zum einarmigen Liegestütz. Kontrolliert und langsam ausführen.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.65 },
     { name: 'Pseudo Planche Push-ups',
       muscle: 'Großer Brustmuskel, Deltamuskel (vorderer Anteil), Trizeps',
       secondary: 'Vorderer Sägemuskel, Bizeps, Hakenarmmuskel, Gerader Bauchmuskel, Querer Bauchmuskel',
       antagonist: 'Breiter Rückenmuskel, Deltamuskel (hinterer Anteil), Rautenmuskeln',
       desc: 'Hände auf Hüfthöhe, Finger zeigen nach hinten. Körper weit nach vorne lehnen bevor das Absenken beginnt. Fortgeschritten – Vorstufe zur echten Planche. Intensive Schulterbelastung.',
       location: 'home',
-      eq: ['Bodyweight'] }
+      eq: ['Bodyweight'], bwFactor: 0.65 }
   ],
   p_schulter: [
     { name: 'Shoulder Press – Nackendrückmaschine',
@@ -8190,7 +8206,7 @@ const LEXIKON_DATA = {
       antagonist: 'Breiter Rückenmuskel, Bizeps, Deltamuskel (hinterer Anteil)',
       desc: 'Hüfte hoch wie beim Downward Dog, Kopf zeigt nach unten. Senkrecht drücken statt horizontal. Direkter Vorgänger des Handstand Push-ups. Je steiler der Winkel, desto mehr Schulter.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.70 },
     { name: 'Face Pulls (Widerstandsband)',
       muscle: 'Deltamuskel (hinterer Anteil), Trapezmuskel (mittlerer Anteil), Rautenmuskeln',
       secondary: 'Trapezmuskel (unterer Anteil), Bizeps, Unterarmbeuger, Untergrätenmuskel',
@@ -8211,7 +8227,7 @@ const LEXIKON_DATA = {
       antagonist: 'Breiter Rückenmuskel, Bizeps, Deltamuskel (hinterer Anteil)',
       desc: 'Liegend starten, mit den Füßen die Wand hochlaufen bis zur senkrechten Position. Dann wieder runter. Kombiniert Schulterstärkung, Rumpfstabilität und schrittweise Gewöhnung ans Invertieren.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.70 },
     { name: 'Chest-to-Wall Handstand',
       muscle: 'Deltamuskel (vorderer Anteil), Deltamuskel (mittlerer Anteil), Trapezmuskel (oberer Anteil)',
       secondary: 'Trizeps, Vorderer Sägemuskel, Gerader Bauchmuskel, Querer Bauchmuskel, Rückenstrecker, Schräge Bauchmuskeln, Großer Gesäßmuskel',
@@ -8225,7 +8241,7 @@ const LEXIKON_DATA = {
       antagonist: 'Breiter Rückenmuskel, Bizeps, Deltamuskel (hinterer Anteil)',
       desc: 'Vertikaldrücken mit dem eigenen Körpergewicht. Kopf zur Matte absenken (Dreipunktkontakt), dann drücken. Sehr hohe Schulter-/Trizepskraft. Erst sicheren Wandhandstand festigen.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.70 },
     { name: 'Freistehender Handstand',
       muscle: 'Deltamuskel (vorderer Anteil), Deltamuskel (mittlerer Anteil), Trapezmuskel (oberer Anteil)',
       secondary: 'Trizeps, Vorderer Sägemuskel, Gerader Bauchmuskel, Querer Bauchmuskel, Schräge Bauchmuskeln, Rückenstrecker, Großer Gesäßmuskel, Unterarmbeuger',
@@ -8239,7 +8255,7 @@ const LEXIKON_DATA = {
       antagonist: 'Rautenmuskeln, Trapezmuskel (mittlerer Anteil)',
       desc: 'Arme gestreckt lassen, nur die Schulterblätter bewegen (protrahieren/retrahieren). Fundamental für Planche und Handstand. Häufig übersehen – schützt vor Schulterimpingement.',
       location: 'home',
-      eq: ['Bodyweight'] }
+      eq: ['Bodyweight'], bwFactor: 0.65 }
   ],
   p_ruecken: [
     { name: 'Rudern eng mit Kurzhantel',
@@ -8265,7 +8281,7 @@ const LEXIKON_DATA = {
       secondary: 'Großer Brustmuskel (unterer Bereich), kleiner Rundmuskel, Rautenmuskel, Oberarmspeichenmuskel, Trapezmuskel (unterer Teil), Bizeps (langer Kopf), Deltamuskel',
       antagonist: 'Deltamuskel, großer Brustmuskel (oberer Anteil), Trizeps',
       desc: 'Königsklasse für den Rücken. Breiter Griff = mehr Lat, enger Griff = mehr Bizeps. Über die Stange kommen, langsam absenken. Assistenz-Band oder Negativen trainieren für Einsteiger.',
-      eq: ['Klimmzugstange'] },
+      eq: ['Klimmzugstange'], bwFactor: 1.0 },
     { name: 'Latzug zur Brust am hohen Kabelzug',
       muscle: 'Breiter Rückenmuskel, Armbeuger, Bizeps (kurzer Kopf), großer Rundmuskel',
       secondary: 'Großer Brustmuskel (unterer Bereich), kleiner Rundmuskel, Rautenmuskel, Oberarmspeichenmuskel, Trapezmuskel (unterer Teil), Bizeps (langer Kopf)',
@@ -8296,28 +8312,28 @@ const LEXIKON_DATA = {
       antagonist: 'Großer Brustmuskel, Trizeps, Deltamuskel (vorderer Anteil)',
       desc: 'Breiter Überhandgriff = mehr Lat-Beteiligung. Kinn über die Stange, langsam absenken (negativ). Für Einsteiger: Assistenz-Band oder negative Wdh. üben bis zur ersten sauberen Wdh.',
       location: 'outdoor',
-      eq: ['Klimmzugstange'] },
+      eq: ['Klimmzugstange'], bwFactor: 1.0 },
     { name: 'Chin-up (unterhand)',
       muscle: 'Breiter Rückenmuskel, Bizeps, Hakenarmmuskel',
       secondary: 'Großer Brustmuskel (unterer Anteil), Trapezmuskel (unterer Anteil), Rautenmuskeln, Deltamuskel (hinterer Anteil)',
       antagonist: 'Trizeps, Deltamuskel (vorderer Anteil), Großer Brustmuskel',
       desc: 'Unterhandgriff betont den Bizeps stärker. Für die meisten etwas leichter als der Klimmzug. Schulterblatt nach unten ziehen als Startbewegung, dann hochziehen.',
       location: 'outdoor',
-      eq: ['Klimmzugstange'] },
+      eq: ['Klimmzugstange'], bwFactor: 1.0 },
     { name: 'Australian Pull-up',
       muscle: 'Breiter Rückenmuskel, Trapezmuskel (mittlerer Anteil), Rautenmuskeln, Bizeps',
       secondary: 'Deltamuskel (hinterer Anteil), Unterarmbeuger, Gerader Bauchmuskel',
       antagonist: 'Großer Brustmuskel, Trizeps, Deltamuskel (vorderer Anteil)',
       desc: 'Stange auf Hüfthöhe, Körper schräg (Fersen am Boden), horizontal ziehen. Perfekter Einstieg zum Klimmzug. Schwierigkeit variieren durch Winkel des Körpers.',
       location: 'outdoor',
-      eq: ['Klimmzugstange'] },
+      eq: ['Klimmzugstange'], bwFactor: 0.65 },
     { name: 'Muscle-Up',
       muscle: 'Breiter Rückenmuskel, Großer Brustmuskel, Trizeps, Bizeps',
       secondary: 'Deltamuskel (vorderer Anteil), Deltamuskel (hinterer Anteil), Vorderer Sägemuskel, Trapezmuskel (unterer Anteil), Unterarmbeuger',
       antagonist: 'Rückenstrecker, Rautenmuskeln',
       desc: 'Klimmzug + Übergang + Dip in einer Bewegung. Saubere Technik üben: schneller Zug bis Brust an die Stange, dann Ellbogen über die Stange drücken. Sehr fortgeschritten.',
       location: 'outdoor',
-      eq: ['Klimmzugstange'] }
+      eq: ['Klimmzugstange'], bwFactor: 1.0 }
   ],
   p_arme: [
     { name: 'Langhantelcurls',
@@ -8355,21 +8371,21 @@ const LEXIKON_DATA = {
       secondary: 'Kleiner Brustmuskel, vorderer Sägemuskel, Hakenarmmuskel, Unterschulterblattmuskel, Knorrenmuskel',
       antagonist: 'Breiter Rückenmuskel, Bizeps, hinterer Teil Deltamuskel',
       desc: 'Körper aufrecht = Trizepsfokus; nach vorne gelehnt = Brustfokus. Kontrolliert absenken bis Ellbogen 90°, drücken bis kurz vor dem Strecken. Große Belastung auf die Schulter – Einwärmung ist Pflicht.',
-      eq: ['Dip-Station'] },
+      eq: ['Dip-Station'], bwFactor: 1.0 },
     { name: 'Enge Liegestütze (Diamond)',
       muscle: 'Trizeps, Großer Brustmuskel (innerer Anteil), Deltamuskel (vorderer Anteil)',
       secondary: 'Vorderer Sägemuskel, Gerader Bauchmuskel, Querer Bauchmuskel',
       antagonist: 'Bizeps, Breiter Rückenmuskel, Deltamuskel (hinterer Anteil)',
       desc: 'Hände eng unter der Brust, Daumen und Zeigefinger berühren sich (Diamantform). Starker Trizepsfokus. Schultern bleiben über den Händen, Ellbogen nah am Körper.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.65 },
     { name: 'Dips (Stuhl-Variante)',
       muscle: 'Großer Brustmuskel (unterer Anteil), Trizeps, Deltamuskel (vorderer Anteil)',
       secondary: 'Vorderer Sägemuskel, Rautenmuskeln, Gerader Bauchmuskel',
       antagonist: 'Bizeps, Breiter Rückenmuskel, Deltamuskel (hinterer Anteil)',
       desc: 'Finger zeigen vorwärts auf einem stabilen Stuhl. Aufrechter Körper = Trizeps, vorgelehnt = Brust. Bis 90° Ellbogen absenken, kontrolliert drücken. Schultereinwärmung davor wichtig.',
       location: 'home',
-      eq: ['Bodyweight'] }
+      eq: ['Bodyweight'], bwFactor: 1.0 }
   ],
   p_unterkoerper: [
     { name: 'Kniebeugen mit LH',
@@ -8444,42 +8460,42 @@ const LEXIKON_DATA = {
       antagonist: 'Hüftbeuger (Iliopsoas), Beinbeugemuskulatur',
       desc: 'Füße schulterbreit, Zehen leicht auswärts, Arme vor dem Körper als Gegengewicht. Knie folgen den Fußspitzen, Rücken aufrecht. Basis aller Kniebeuge-Varianten.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 1.0 },
     { name: 'Pistol Squat',
       muscle: 'Quadrizeps, Großer Gesäßmuskel',
       secondary: 'Beinbeugemuskulatur, Hüftbeuger (Iliopsoas), Zwillingswadenmuskel, Schollenmuskel, Gerader Bauchmuskel, Schräge Bauchmuskeln',
       antagonist: 'Hüftbeuger (Iliopsoas), Beinbeugemuskulatur',
       desc: 'Einbeinige Kniebeuge bis zum Boden – hohe Balance- und Kraftanforderung. Einstieg über Stuhl-Squat, TRX oder mit Gegengewicht. Ferse muss aufgesetzt bleiben.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 1.0 },
     { name: 'Ausfallschritte (Bodyweight)',
       muscle: 'Quadrizeps, Großer Gesäßmuskel',
       secondary: 'Beinbeugemuskulatur, Zwillingswadenmuskel, Schollenmuskel, Gerader Bauchmuskel',
       antagonist: 'Hüftbeuger (Iliopsoas), Beinbeugemuskulatur',
       desc: 'Großer Schritt nach vorne, beide Knie auf 90°. Hinteres Knie knapp über dem Boden. Rücken aufrecht. Vorwärts laufen oder zurücktreten je nach Variante.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.85 },
     { name: 'Bulgarian Split Squat',
       muscle: 'Quadrizeps, Großer Gesäßmuskel',
       secondary: 'Beinbeugemuskulatur, Hüftbeuger (Iliopsoas), Zwillingswadenmuskel, Gerader Bauchmuskel, Schräge Bauchmuskeln',
       antagonist: 'Hüftbeuger (Iliopsoas), Beinbeugemuskulatur',
       desc: 'Hinterer Fuß erhöht auf Bank oder Sofa. Maximum an Einbeinbelastung plus Hüftbeuger-Dehnung. Knie des hinteren Beins nah an den Boden. Oberkörper aufrecht oder leicht vorgelehnt.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 1.0 },
     { name: 'Glute Bridge / Hip Thrust',
       muscle: 'Großer Gesäßmuskel, Beinbeugemuskulatur',
       secondary: 'Rückenstrecker, Quadrizeps, Gerader Bauchmuskel, Querer Bauchmuskel',
       antagonist: 'Hüftbeuger (Iliopsoas), Gerader Bauchmuskel',
       desc: 'Schulterblätter auf Bank oder Boden, Becken heben bis gerade Linie. Oben kurz halten und Gesäß maximal anspannen. Einbeinig für mehr Intensität. Einfach zuhause umsetzbar.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.70 },
     { name: 'Nordic Curl',
       muscle: 'Beinbeugemuskulatur',
       secondary: 'Zwillingswadenmuskel, Großer Gesäßmuskel, Rückenstrecker',
       antagonist: 'Quadrizeps, Hüftbeuger (Iliopsoas)',
       desc: 'Füße fixieren (Partner oder Sofa), von aufrecht so langsam wie möglich vorneigen. Arme fangen auf. Exzentrische Kniebeuger-Kraft – eine der wirksamsten Präventionsübungen.',
       location: 'home',
-      eq: ['Bodyweight'] }
+      eq: ['Bodyweight'], bwFactor: 1.0 }
   ],
   p_bauch: [
     { name: 'Crunches gerade auf der Bank',
@@ -8533,7 +8549,7 @@ const LEXIKON_DATA = {
       antagonist: 'Rückenstrecker, Großer Gesäßmuskel',
       desc: 'Schulterblätter auf Bank, Arme fixieren. Körper gestreckt senkrecht hochheben, dann kontrolliert in die Waagrechte absenken. Fortgeschritten – Bruce-Lee-Übung. Langsam = schwerer.',
       location: 'home',
-      eq: ['Bodyweight'] },
+      eq: ['Bodyweight'], bwFactor: 0.80 },
     { name: 'Ab Wheel Rollout',
       muscle: 'Gerader Bauchmuskel, Querer Bauchmuskel',
       secondary: 'Breiter Rückenmuskel, Schräge Bauchmuskeln, Deltamuskel (vorderer Anteil), Trizeps, Hüftbeuger (Iliopsoas), Vorderer Sägemuskel',
@@ -9625,6 +9641,9 @@ function _logSet(profile, kw, year, dayIdx, dayLabel, planEx, setData) {
   if (setData.rpe != null && setData.rpe !== '') {
     newSet.rpe = Number(setData.rpe);
   }
+  if (setData._bwZusatz !== undefined) {
+    newSet._bwZusatz = Number(setData._bwZusatz) || 0;
+  }
   if (!exercise.sets) exercise.sets = [];
   exercise.sets.push(newSet);
 
@@ -9789,14 +9808,23 @@ function _renderTpExercises(day, session) {
 function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, exerciseName) {
   const num = String(idx).padStart(2, '0');
   const exAttr = `data-ex="${escapeHtml(exerciseName || '')}" data-set="${idx - 1}"`;
+  const bwF = _getBwFactor(exerciseName);
+  const bw = Number(state.profile?.gewicht) || 80;
+  const bwBase = bwF ? Math.round(bw * bwF) : 0;
 
   // Edit-Modus: Eingabefelder statt Werte
   if (isEditing) {
     const prefillWdh = loggedSet?.wdh ?? (plannedWdh ?? '');
-    const prefillKg  = loggedSet?.gewicht ?? (plannedGewicht ?? '');
+    // BW-Übungen: Zusatzgewicht anzeigen (nicht Totalgewicht)
+    const prefillKg  = bwF
+      ? (loggedSet?._bwZusatz ?? 0)
+      : (loggedSet?.gewicht ?? (plannedGewicht ?? ''));
     const prefillRpe = loggedSet?.rpe ?? '';
+    const kgLabel = bwF ? 'Zusatz' : 'kg';
+    const kgPlaceholder = bwF ? '0' : 'kg';
+    const bwHint = bwF ? `<div class="tp-set-bw-hint">${bwBase} kg BW${prefillKg ? ' + ' + prefillKg : ''} = ${bwBase + (Number(prefillKg) || 0)} kg</div>` : '';
     return `
-      <div class="tp-set tp-set-editing" ${exAttr}>
+      <div class="tp-set tp-set-editing" ${exAttr} ${bwF ? 'data-bw="1"' : ''}>
         <div class="tp-set-num">${num}</div>
         <div class="tp-set-field tp-set-field-edit">
           <input type="number" class="tp-set-input" data-field="wdh"
@@ -9805,14 +9833,15 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
         </div>
         <div class="tp-set-field tp-set-field-edit">
           <input type="number" class="tp-set-input" data-field="gewicht"
-                 value="${prefillKg}" placeholder="kg" step="0.5" min="0" inputmode="decimal">
-          <span class="tp-set-unit">kg</span>
+                 value="${prefillKg}" placeholder="${kgPlaceholder}" step="0.5" min="0" inputmode="decimal">
+          <span class="tp-set-unit">${kgLabel}</span>
         </div>
         <div class="tp-set-field tp-set-field-edit">
           <input type="number" class="tp-set-input" data-field="rpe"
                  value="${prefillRpe}" placeholder="RPE" step="0.5" min="1" max="10" inputmode="decimal">
           <span class="tp-set-unit">RPE</span>
         </div>
+        ${bwHint}
         <div class="tp-set-edit-actions">
           <button class="tp-set-cancel" type="button">Abbrechen</button>
           <button class="tp-set-save" type="button">Speichern</button>
@@ -9824,11 +9853,15 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
     const w   = loggedSet.wdh ?? '—';
     const kg  = loggedSet.gewicht != null ? _fmtKg(loggedSet.gewicht) : '—';
     const rpe = loggedSet.rpe ?? '—';
+    // BW-Übungen: (BW) oder (BW+10) anzeigen
+    const bwTag = (bwF && loggedSet._bwZusatz !== undefined)
+      ? ` <span class="tp-set-bw-tag">(BW${loggedSet._bwZusatz ? '+' + loggedSet._bwZusatz : ''})</span>`
+      : '';
     return `
       <div class="tp-set tp-set-done" ${exAttr}>
         <div class="tp-set-num">${num}</div>
         <div class="tp-set-field"><span class="tp-set-val">${w}</span><span class="tp-set-unit">Wdh</span></div>
-        <div class="tp-set-field"><span class="tp-set-val">${kg}</span><span class="tp-set-unit">kg</span></div>
+        <div class="tp-set-field"><span class="tp-set-val">${kg}${bwTag}</span><span class="tp-set-unit">kg</span></div>
         <div class="tp-set-field"><span class="tp-set-val">${rpe}</span><span class="tp-set-unit">RPE</span></div>
         <div class="tp-set-check">✓</div>
       </div>`;
@@ -10145,6 +10178,20 @@ function _allGroups(exercise) {
     if (g) groups.add(g);
   });
   return groups;
+}
+
+// BW-Faktor einer Übung aus dem Lexikon (0 = kein Bodyweight)
+function _getBwFactor(exerciseName) {
+  const ex = _lxAllExercises().find(e => e.name === exerciseName);
+  return ex?.bwFactor ?? 0;
+}
+
+// Effektives Gewicht: BW × Faktor + Zusatzgewicht (oder nur Gewicht wenn kein BW)
+function _effectiveWeight(exerciseName, zusatz, profile) {
+  const factor = _getBwFactor(exerciseName);
+  if (!factor) return Number(zusatz) || 0;
+  const bw = Number(profile?.gewicht) || 80;
+  return Math.round(bw * factor + (Number(zusatz) || 0));
 }
 
 function buildMuscleBalance(profile, viewKey = 'antagonists', range = '12W') {
@@ -11433,13 +11480,22 @@ function startNextEinheit() {
     const wdh = parseFloat(vals.wdh);
     const kg  = parseFloat(vals.gewicht);
     if (!wdh || wdh < 1) { toast('Wdh muss mindestens 1 sein'); return; }
-    if (isNaN(kg)) { toast('Gewicht fehlt'); return; }
 
-    _logSet(state.profile, ctx.kw, ctx.year, ctx.dayIdx, ctx.dayLabel, planEx, {
-      wdh: vals.wdh,
-      gewicht: vals.gewicht,
-      rpe: vals.rpe
-    });
+    // BW-Übungen: Effektivgewicht berechnen (Eingabe = Zusatzgewicht)
+    const bwF = _getBwFactor(exerciseName);
+    let effectiveKg, bwZusatz;
+    if (bwF) {
+      bwZusatz = Number(vals.gewicht) || 0;
+      effectiveKg = _effectiveWeight(exerciseName, bwZusatz, state.profile);
+    } else {
+      if (isNaN(kg)) { toast('Gewicht fehlt'); return; }
+      effectiveKg = vals.gewicht;
+    }
+
+    const setData = { wdh: vals.wdh, gewicht: effectiveKg, rpe: vals.rpe };
+    if (bwF) setData._bwZusatz = bwZusatz;
+
+    _logSet(state.profile, ctx.kw, ctx.year, ctx.dayIdx, ctx.dayLabel, planEx, setData);
 
     // Nächsten offenen Satz DERSELBEN Übung suchen → Auto-Fokus (Power-User-Tempo)
     // Sessions neu laden, weil _logSet grade mutiert hat
