@@ -1026,6 +1026,55 @@ body.role-athlete .jp-balance-preview,
 }
 .jp-bal-landmark span { color: var(--text-2); }
 
+/* ─── Demo-Banner ─── */
+.cp-demo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  margin-bottom: var(--s-4);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-md);
+  flex-wrap: wrap;
+}
+.cp-demo-banner-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+  min-width: 200px;
+}
+.cp-demo-banner-text strong {
+  color: var(--accent);
+}
+.cp-demo-banner-actions {
+  display: flex;
+  gap: var(--s-2);
+  flex-shrink: 0;
+}
+.cp-demo-banner-btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.cp-demo-banner-btn:hover { background: var(--surface-3); color: var(--text); }
+.cp-demo-banner-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.cp-demo-banner-primary:hover { background: var(--accent-hover); }
+
 /* ─── Next Session Card ─── */
 .next-card {
   display: flex;
@@ -5189,6 +5238,17 @@ body.role-athlete .tp-mode { display: none; }
         <div class="page-crumb" id="cpCrumb">—</div>
         <h1 class="page-title" id="cpGreeting">Guten Morgen.</h1>
         <p class="page-sub">Dein Tag auf einen Blick — Readiness, Wochenvolumen und was als Nächstes ansteht.</p>
+      </div>
+
+      <!-- Demo-Banner: fordert zum Erstellen eines eigenen Profils auf -->
+      <div class="cp-demo-banner" id="cpDemoBanner" style="display:none">
+        <div class="cp-demo-banner-text">
+          <strong>Demo-Profil aktiv</strong> — erstelle dein eigenes Profil um deine Trainingsdaten dauerhaft zu speichern.
+        </div>
+        <div class="cp-demo-banner-actions">
+          <button class="cp-demo-banner-btn cp-demo-banner-primary" id="cpDemoCreate">Eigenes Profil erstellen</button>
+          <button class="cp-demo-banner-btn" id="cpDemoDismiss">Später</button>
+        </div>
       </div>
 
       <!-- Hero-Zeile: Readiness + Stat-Stack -->
@@ -12617,7 +12677,37 @@ setRole(state.role);
 setTimeout(() => document.getElementById('toast').classList.remove('show'), 100);
 
 // Demo-Profil im Hintergrund laden
-loadDemoProfile();
+loadDemoProfile().then(() => {
+  // Demo-Banner zeigen wenn kein eigenes Profil gespeichert ist
+  const hasSaved = !!localStorage.getItem('tpv2_profile_data');
+  const dismissed = sessionStorage.getItem('tpv2_demo_banner_dismissed');
+  const banner = document.getElementById('cpDemoBanner');
+  if (banner && !hasSaved && !dismissed) {
+    banner.style.display = '';
+  }
+  // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
+  const createBtn = document.getElementById('cpDemoCreate');
+  if (createBtn) createBtn.addEventListener('click', () => {
+    // Profil auf Minimum zurücksetzen
+    if (state.profile) {
+      state.profile.name = '';
+      state.profile.nachname = '';
+      state.profile.alter = '';
+      state.profile.gewicht = '';
+      state.profile.groesse = '';
+      state.profile.sessions = [];
+      state.profile.plans = {};
+    }
+    if (banner) banner.style.display = 'none';
+    openProfileEditModal('self');
+  });
+  // "Später" → Banner ausblenden für diese Session
+  const dismissBtn = document.getElementById('cpDemoDismiss');
+  if (dismissBtn) dismissBtn.addEventListener('click', () => {
+    if (banner) banner.style.display = 'none';
+    sessionStorage.setItem('tpv2_demo_banner_dismissed', '1');
+  });
+});
 
 // ── Splash Screen (nur beim allerersten Besuch dieser Session) ──
 const _splash = document.getElementById('splash');
