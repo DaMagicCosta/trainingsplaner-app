@@ -444,24 +444,6 @@ ul, ol { list-style: none; }
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
-.info-close-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--surface-2);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-3);
-  font-size: 14px;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  transition: all var(--ease);
-  -webkit-tap-highlight-color: transparent;
-}
-.info-close-btn:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-strong); }
 .page-sub {
   font-size: 15px;
   color: var(--text-2);
@@ -6956,6 +6938,8 @@ const state = {
   tpViewKw: null, // aktiv ausgewählte KW im Trainingsplan-Tab
   tpViewDay: 0,   // aktiv ausgewählter Tag-Index
   tpEditing: null, // { exerciseName, setIdx } oder null — aktiv bearbeitete Satz-Zeile
+  tpEditMode: false, // Trainingsplan Bearbeiten-Modus (Trainer-only)
+  tpUseHome: false,  // Studio/Home-Toggle im Trainingsplan
   fpRange: localStorage.getItem('tpv2_fp_range') || '12W',
   fpExercise: localStorage.getItem('tpv2_fp_exercise') || '',
   fpAgg: localStorage.getItem('tpv2_fp_agg') || 'week',
@@ -10532,12 +10516,12 @@ function renderCockpit(profile) {
   const readiness = calculateReadiness(profile, refDate);
   const rdNumEl   = document.getElementById('cpReadiness');
   const rdStateEl = document.getElementById('cpReadinessState');
-  const rdPillEl  = rdStateEl.closest('.hero-state');
-  const rdHeroNum = rdNumEl.closest('.hero-number');
+  const rdPillEl  = rdStateEl?.closest('.hero-state');
+  const rdHeroNum = rdNumEl?.closest('.hero-number');
 
   // State-Klassen zurücksetzen
-  rdPillEl.classList.remove('state-warn', 'state-danger');
-  rdHeroNum.classList.remove('state-warn', 'state-danger');
+  if (rdPillEl)  rdPillEl.classList.remove('state-warn', 'state-danger');
+  if (rdHeroNum) rdHeroNum.classList.remove('state-warn', 'state-danger');
 
   if (readiness) {
     rdNumEl.textContent = readiness.score;
@@ -10821,8 +10805,8 @@ function _formatEquipment(eq) {
   const locLabels = { studio: 'Studio', home: 'Zuhause', outdoor: 'Outdoor' };
   const parts = [];
   Object.entries(eq).forEach(([loc, data]) => {
-    const avail = (data.available || []).join(', ');
-    const excl  = (data.excluded || []).map(e => '<s style="color:var(--danger)">' + e + '</s>').join(', ');
+    const avail = (data.available || []).map(e => escapeHtml(e)).join(', ');
+    const excl  = (data.excluded || []).map(e => '<s style="color:var(--danger)">' + escapeHtml(e) + '</s>').join(', ');
     const items = [avail, excl].filter(Boolean).join(', ');
     if (items) parts.push('<strong>' + (locLabels[loc] || loc) + ':</strong> ' + items);
   });
@@ -12147,6 +12131,12 @@ async function loadDemoProfile() {
     const res = await fetch(DEMO_PATH, { cache: 'no-cache' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const profile = await res.json();
+    // Equipment-Format migrieren (altes Array → neues Objekt)
+    if (Array.isArray(profile.equipment)) {
+      const loc = Array.isArray(profile.trainingLocation) ? profile.trainingLocation[0]
+                : (_parseLocationString(profile.trainingLocation || '')[0] || 'studio');
+      profile.equipment = { [loc]: { available: profile.equipment, excluded: [] } };
+    }
     state.profile = profile;
     window._profile = profile; // Debug-Zugriff in DevTools
 
