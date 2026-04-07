@@ -4473,17 +4473,38 @@ body.role-athlete .tp-mode { display: none; }
   box-shadow: 0 6px 16px -4px var(--accent-dim), 0 0 0 4px var(--bg);
 }
 .bnav-item.primary { color: var(--text-2); }
-/* Swipe-Zones: unsichtbare Touch-Bereiche am Bildschirmrand */
-.swipe-zone {
+/* Tab-Navigation Pfeile (Mobile) */
+.tab-nav-arrows {
+  display: none;
   position: fixed;
-  top: 0;
-  width: 28px;
-  height: calc(100% - var(--bottomnav-h));
+  bottom: calc(var(--bottomnav-h) + var(--s-3) + env(safe-area-inset-bottom));
+  left: var(--s-3);
+  right: var(--s-3);
+  justify-content: space-between;
+  pointer-events: none;
   z-index: 40;
-  -webkit-tap-highlight-color: transparent;
 }
-.swipe-zone-left  { left: 0; }
-.swipe-zone-right { right: 0; }
+.tab-nav-arrow {
+  pointer-events: auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-3);
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: all var(--ease);
+  opacity: 0.7;
+}
+.tab-nav-arrow:active { background: var(--accent-dim); color: var(--accent); opacity: 1; transform: scale(0.9); }
+.tab-nav-arrow.hidden { opacity: 0; pointer-events: none; }
+@media (max-width: 860px) {
+  .tab-nav-arrows { display: flex; }
+}
 
 /* Long-Press: kein blaues Selection-Rechteck */
 .bnav-item {
@@ -7115,36 +7136,42 @@ document.querySelectorAll('[data-tab]').forEach(el => {
   el.addEventListener('click', () => switchTab(el.dataset.tab));
 });
 
-// ── Swipe-Navigation (Mobile) ──
-// Samsung Internet schluckt Touch-Events für eigene Gestensteuerung.
-// Workaround: dedizierte Swipe-Zones links/rechts am Bildschirmrand.
-(function initSwipeNav() {
-  if (window.innerWidth > 860) return;
+// ── Tab-Navigation Pfeile (Mobile) ──
+(function initTabArrows() {
   const TAB_ORDER = ['cockpit', 'jahresplan', 'trainingsplan', 'fortschritt', 'lexikon', 'info'];
 
-  function createZone(side) {
-    const zone = document.createElement('div');
-    zone.className = 'swipe-zone swipe-zone-' + side;
-    document.body.appendChild(zone);
+  const wrap = document.createElement('div');
+  wrap.className = 'tab-nav-arrows';
+  wrap.innerHTML = '<button class="tab-nav-arrow" id="tabPrev">‹</button><button class="tab-nav-arrow" id="tabNext">›</button>';
+  document.body.appendChild(wrap);
 
-    let startY = 0;
-    zone.addEventListener('touchstart', (e) => {
-      startY = e.touches[0].clientY;
-    }, { passive: true });
-    zone.addEventListener('touchend', (e) => {
-      if (state.cmdkOpen) return;
-      const dy = Math.abs(e.changedTouches[0].clientY - startY);
-      if (dy > 80) return; // zu viel vertikal → war ein Scroll
+  const prevBtn = document.getElementById('tabPrev');
+  const nextBtn = document.getElementById('tabNext');
 
-      const idx = TAB_ORDER.indexOf(state.activeTab);
-      if (idx === -1) return;
-      if (side === 'left' && idx > 0) switchTab(TAB_ORDER[idx - 1]);
-      if (side === 'right' && idx < TAB_ORDER.length - 1) switchTab(TAB_ORDER[idx + 1]);
-    }, { passive: true });
+  function updateArrows() {
+    const idx = TAB_ORDER.indexOf(state.activeTab);
+    prevBtn.classList.toggle('hidden', idx <= 0);
+    nextBtn.classList.toggle('hidden', idx >= TAB_ORDER.length - 1);
   }
 
-  createZone('left');
-  createZone('right');
+  prevBtn.addEventListener('click', () => {
+    const idx = TAB_ORDER.indexOf(state.activeTab);
+    if (idx > 0) switchTab(TAB_ORDER[idx - 1]);
+    updateArrows();
+  });
+  nextBtn.addEventListener('click', () => {
+    const idx = TAB_ORDER.indexOf(state.activeTab);
+    if (idx < TAB_ORDER.length - 1) switchTab(TAB_ORDER[idx + 1]);
+    updateArrows();
+  });
+
+  // Pfeile nach jedem Tab-Wechsel aktualisieren
+  const _origSwitchTab = switchTab;
+  switchTab = function(tabName) {
+    _origSwitchTab(tabName);
+    updateArrows();
+  };
+  updateArrows();
 })();
 
 /* ═══════════════════════════════════════════════════════
