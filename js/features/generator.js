@@ -216,7 +216,7 @@ import { renderCockpit } from '../pages/cockpit.js';
     return { mode, afterN, duration };
   }
 
-  function applyToProfile() {
+  function applyToProfile(repeatYear) {
     const profile = state.profile;
     if (!profile || blocks.length === 0) return;
 
@@ -403,7 +403,7 @@ import { renderCockpit } from '../pages/cockpit.js';
       }
     }
 
-    applyToProfile();
+    applyToProfile(repeatYear);
     dbg('applyToProfile OK');
     if (repeatYear) profile.periodization.endKw = 52;
 
