@@ -13,7 +13,7 @@ import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.js';
 import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
 import { reloadDemoProfile } from './demo-loader.js';
-import { openProfileEditModal } from './features/profile-edit.js';
+import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { _getBwFactor, _effectiveWeight } from './features/muscle-balance.js';
 
 // ── Info-Tab Event-Handler ──
