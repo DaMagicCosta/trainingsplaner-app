@@ -83967,19 +83967,19 @@
     "blockLength": 4,
     "blocks": [
       {
-        "label": "Akkumulation (GPP)",
+        "label": "Grundlagen & Ausdauer",
         "color": "#4cc9f0",
         "goal": "kraftausdauer",
         "length": 4
       },
       {
-        "label": "Intensifikation (SPP)",
+        "label": "Muskelaufbau",
         "color": "#f4a261",
         "goal": "hypertrophie",
         "length": 4
       },
       {
-        "label": "Peak / Skills",
+        "label": "Maximalkraft",
         "color": "#9b5de5",
         "goal": "maximalkraft",
         "length": 4

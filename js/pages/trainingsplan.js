@@ -86,7 +86,7 @@ function renderTrainingsplan(profile) {
   }
 
   if (pEntry && pEntry.isRegen) {
-    if (blockLabelEl) blockLabelEl.textContent = 'Regen-Woche';
+    if (blockLabelEl) blockLabelEl.textContent = 'Erholungswoche';
     if (blockBadge) blockBadge.classList.add('jp-block-peak'); // honig als "warnung"
   } else if (pEntry && !pEntry.isPreStart) {
     if (blockLabelEl) blockLabelEl.textContent =

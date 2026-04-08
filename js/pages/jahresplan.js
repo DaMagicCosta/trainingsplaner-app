@@ -157,7 +157,7 @@ function renderJahresplan(profile) {
         continue;
       }
       if (p.isRegen) {
-        tHtml += `<div class="jp-seg jp-seg-regen${isCurrent ? ' jp-seg-current' : ''}" title="KW ${kw} · Regen"></div>`;
+        tHtml += `<div class="jp-seg jp-seg-regen${isCurrent ? ' jp-seg-current' : ''}" title="KW ${kw} · Erholung"></div>`;
         continue;
       }
       const cls = _blockClass(p.blockIdx);
@@ -242,7 +242,7 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
       <div class="jp-week jp-week-regen${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
         <div class="jp-week-kw">${kwStr}</div>
         <div class="jp-week-date">${dateStr}</div>
-        <div class="jp-week-block">Regen</div>
+        <div class="jp-week-block">Erholung</div>
       </div>`;
   }
 

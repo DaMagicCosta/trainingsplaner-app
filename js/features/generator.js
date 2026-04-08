@@ -43,9 +43,9 @@ import { renderCockpit } from '../pages/cockpit.js';
 
   // ── Vorlagen für neue Blöcke ──
   const BLOCK_TEMPLATES = [
-    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', saetze: 3, wdh: 20, color: '#4cc9f0' },
-    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', saetze: 4, wdh: 10, color: '#f4a261' },
-    { label: 'Peak / Skills',         goal: 'maximalkraft', saetze: 5, wdh: 5,  color: '#9b5de5' },
+    { label: 'Grundlagen & Ausdauer',    goal: 'kraftausdauer', saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Muskelaufbau', goal: 'hypertrophie', saetze: 4, wdh: 10, color: '#f4a261' },
+    { label: 'Maximalkraft',         goal: 'maximalkraft', saetze: 5, wdh: 5,  color: '#9b5de5' },
     { label: 'Kraftausdauer',         goal: 'kraftausdauer', saetze: 3, wdh: 15, color: '#10B981' }
   ];
   const GOAL_PRESETS = {
@@ -96,9 +96,9 @@ import { renderCockpit } from '../pages/cockpit.js';
   }
 
   let blocks = [
-    { label: 'Akkumulation (GPP)',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
-    { label: 'Intensifikation (SPP)', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
-    { label: 'Peak / Skills',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
+    { label: 'Grundlagen & Ausdauer',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Muskelaufbau', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
+    { label: 'Maximalkraft',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
   ];
 
   // ── Block-Zeile rendern ──
