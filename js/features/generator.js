@@ -1,8 +1,8 @@
-import { state, _saveProfile } from './state.js';
-import { toast } from './utils.js';
-import { LEXIKON_DATA, _lxAllExercises } from './data/lexikon-data.js';
-import { _allGroups } from './features/muscle-balance.js';
-import { buildPlanBalance } from './features/plan-balance.js';
+import { state, _saveProfile } from '../state.js';
+import { toast } from '../utils.js';
+import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
+import { _allGroups } from './muscle-balance.js';
+import { buildPlanBalance } from './plan-balance.js';
 
 export { initGenerator };
 

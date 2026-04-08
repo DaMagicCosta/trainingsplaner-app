@@ -1,6 +1,6 @@
-import { _fmtKg } from './utils.js';
-import { MUSCLE_MAP } from './data/muscle-map.js';
-import { _allGroups } from './features/muscle-balance.js';
+import { _fmtKg } from '../utils.js';
+import { MUSCLE_MAP } from '../data/muscle-map.js';
+import { _allGroups } from './muscle-balance.js';
 
 export { buildPlanBalance };
 

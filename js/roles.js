@@ -6,7 +6,6 @@ import { renderJahresplan } from './pages/jahresplan.js';
 import { renderTrainingsplan } from './pages/trainingsplan.js';
 import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo } from './pages/info.js';
-import { DEMO_PATH } from './demo-loader.js';
 
 /* ═══════════════════════════════════════════════════════
    ROLE SWITCHER
@@ -122,7 +121,7 @@ export async function switchProfile(key) {
     if (!state._juliaProfile) {
       try {
         toast('Lade Julias Profil …');
-        const juliaPath = DEMO_PATH.replace('Trainingsplaner_Max_Mustermann_Demo', 'Trainingsplaner_Julia_Demo');
+        const juliaPath = './Trainingsplaner_Julia_Demo.json';
         const res = await fetch(juliaPath, { cache: 'no-cache' });
         if (res.ok) {
           state._juliaProfile = await res.json();

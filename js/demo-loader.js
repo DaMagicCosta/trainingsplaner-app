@@ -2,7 +2,6 @@ import { state, _saveProfile, _loadSavedProfile, _clearSavedProfile } from './st
 import { toast } from './utils.js';
 import { applyTheme } from './themes.js';
 import { switchTab } from './tabs.js';
-import { setRole } from './roles.js';
 import { renderCockpit } from "./pages/cockpit.js";
 import { renderJahresplan } from "./pages/jahresplan.js";
 import { renderTrainingsplan } from "./pages/trainingsplan.js";

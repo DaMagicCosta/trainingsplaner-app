@@ -1,6 +1,6 @@
-import { state, STORAGE_KEYS, _saveProfile, _clearSavedProfile } from './state.js';
-import { toast, _fmtKg } from './utils.js';
-import { switchTab } from './tabs.js';
+import { state, STORAGE_KEYS, _saveProfile, _clearSavedProfile } from '../state.js';
+import { toast, _fmtKg } from '../utils.js';
+import { switchTab } from '../tabs.js';
 
 export { renderInfo, exportProfileJson, importProfileJson };
 

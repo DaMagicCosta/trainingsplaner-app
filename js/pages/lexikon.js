@@ -1,6 +1,6 @@
-import { state } from './state.js';
-import { toast, escapeHtml } from './utils.js';
-import { LEXIKON_DATA, LX_CATEGORIES, LX_LOCATIONS, _lxCatClass, _lxAllExercises } from './data/lexikon-data.js';
+import { state } from '../state.js';
+import { toast, escapeHtml } from '../utils.js';
+import { LEXIKON_DATA, LX_CATEGORIES, LX_LOCATIONS, _lxCatClass, _lxAllExercises } from '../data/lexikon-data.js';
 
 export { renderLexikon, openLexikonSheet, closeLexikonSheet };
 
