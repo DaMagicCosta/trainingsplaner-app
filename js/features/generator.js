@@ -264,8 +264,21 @@ import { renderCockpit } from '../pages/cockpit.js';
   }
 
   function pickExercises(catKey, count, location) {
+    // Equipment des Athleten für diesen Trainingsort
+    const eq = state.profile?.equipment;
+    const locEq = eq && !Array.isArray(eq) ? eq[location] : null;
+    const availEq = locEq ? new Set([...(locEq.available || []), 'Bodyweight']) : null;
+    if (availEq && locEq?.excluded) locEq.excluded.forEach(e => availEq.delete(e));
+
     return (LEXIKON_DATA[catKey] || [])
-      .filter(ex => location === 'all' || (ex.location || 'studio') === location)
+      .filter(ex => {
+        // Wenn Athlet Equipment für diesen Ort hat → danach filtern
+        if (availEq && ex.eq) {
+          return ex.eq.some(e => availEq.has(e));
+        }
+        // Fallback: nach Location filtern
+        return location === 'all' || (ex.location || 'studio') === location;
+      })
       .slice(0, count);
   }
 
