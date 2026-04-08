@@ -402,15 +402,25 @@ import { renderCockpit } from '../pages/cockpit.js';
       }
     }
 
-    applyToProfile();
-    // Bei ganzjährig: endKw auf 52 setzen
-    if (repeatYear) profile.periodization.endKw = 52;
+    try {
+      applyToProfile();
+      dbg('applyToProfile OK');
+      if (repeatYear) profile.periodization.endKw = 52;
 
-    renderJahresplan(profile);
-    renderTrainingsplan(profile);
-    renderCockpit(profile);
-    buildPlanBalance(profile);
-    _saveProfile();
+      dbg('Plans: ' + Object.keys(profile.plans).length);
+      renderJahresplan(profile);
+      dbg('renderJahresplan OK');
+      renderTrainingsplan(profile);
+      dbg('renderTrainingsplan OK');
+      renderCockpit(profile);
+      dbg('renderCockpit OK');
+      buildPlanBalance(profile);
+      dbg('buildPlanBalance OK');
+      _saveProfile();
+      dbg('ALLES OK — gespeichert');
+    } catch (e) {
+      dbg('FEHLER: ' + e.message + ' @ ' + e.stack?.split('\n')[1]);
+    }
 
     const totalPlans = Object.keys(profile.plans).filter(k => k.startsWith('w')).length;
     toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
