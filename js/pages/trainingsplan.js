@@ -450,6 +450,8 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   const bwF = _getBwFactor(exerciseName);
   const bw = Number(state.profile?.gewicht) || 80;
   const bwBase = bwF ? Math.round(bw * bwF) : 0;
+  const isBand = (exerciseName || '').toLowerCase().includes('widerstandsband') ||
+                 (exerciseName || '').toLowerCase().includes('band');
 
   // Edit-Modus: Eingabefelder statt Werte
   if (isEditing) {
@@ -511,7 +513,9 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   // Offen: planned values + Loggen-Button
   const pw  = plannedWdh != null ? plannedWdh : '—';
   const pkg = plannedGewicht != null ? _fmtKg(plannedGewicht) : '—';
-  const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg · nur Zusatzgewicht eingeben</div>` : '';
+  const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg · nur Zusatzgewicht eingeben</div>`
+    : isBand ? `<div class="tp-set-bw-hint">Bandstärke eintragen (leicht=5, mittel=10, schwer=20 kg)</div>`
+    : '';
   return `
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
