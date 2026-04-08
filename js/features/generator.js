@@ -43,7 +43,7 @@ import { renderCockpit } from '../pages/cockpit.js';
 
   // ── Vorlagen für neue Blöcke ──
   const BLOCK_TEMPLATES = [
-    { label: 'Grundlagen & Ausdauer',    goal: 'kraftausdauer', saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Grundlagen',    goal: 'kraftausdauer', saetze: 3, wdh: 20, color: '#4cc9f0' },
     { label: 'Muskelaufbau', goal: 'hypertrophie', saetze: 4, wdh: 10, color: '#f4a261' },
     { label: 'Maximalkraft',         goal: 'maximalkraft', saetze: 5, wdh: 5,  color: '#9b5de5' },
     { label: 'Kraftausdauer',         goal: 'kraftausdauer', saetze: 3, wdh: 15, color: '#10B981' }
@@ -96,7 +96,7 @@ import { renderCockpit } from '../pages/cockpit.js';
   }
 
   let blocks = [
-    { label: 'Grundlagen & Ausdauer',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
+    { label: 'Grundlagen',    goal: 'kraftausdauer', length: 4, saetze: 3, wdh: 20, color: '#4cc9f0' },
     { label: 'Muskelaufbau', goal: 'hypertrophie', length: 4, saetze: 4, wdh: 10, color: '#f4a261' },
     { label: 'Maximalkraft',         goal: 'maximalkraft', length: 4, saetze: 5, wdh: 5,  color: '#9b5de5' }
   ];
