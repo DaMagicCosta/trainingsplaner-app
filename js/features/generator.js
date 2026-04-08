@@ -12,7 +12,13 @@ import { renderCockpit } from '../pages/cockpit.js';
    WOCHENPLAN-GENERATOR
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
-  console.log('[Generator] IIFE gestartet');
+  // Debug-Box für Mobile (temporär)
+  const _dbg = document.createElement('div');
+  _dbg.id = 'genDebug';
+  _dbg.style.cssText = 'position:fixed;bottom:70px;left:8px;right:8px;background:#1a1a2e;color:#0f0;font:11px monospace;padding:8px;border-radius:6px;z-index:9999;max-height:120px;overflow:auto;border:1px solid #333;display:none;';
+  document.body.appendChild(_dbg);
+  function dbg(msg) { _dbg.style.display = 'block'; _dbg.textContent += msg + '\n'; console.log('[Generator]', msg); }
+  dbg('IIFE gestartet');
 
   // ── Mobile Accordion: Schritte auf-/zuklappen ──
   const pnCards = document.querySelectorAll('.pn-grid .pn-form-card');
@@ -90,8 +96,9 @@ import { renderCockpit } from '../pages/cockpit.js';
   const splitSelect  = document.getElementById('genSplit');
   const submitBtn    = document.getElementById('genSubmit');
   const dayChips     = document.getElementById('genDayChips');
-  console.log('[Generator] submitBtn:', !!submitBtn, 'blockRowsEl:', !!blockRowsEl);
-  if (!submitBtn || !blockRowsEl) { console.warn('[Generator] DOM-Elemente nicht gefunden — ABBRUCH'); return; }
+  dbg('submitBtn: ' + !!submitBtn + ' blockRowsEl: ' + !!blockRowsEl);
+  if (!submitBtn || !blockRowsEl) { dbg('ABBRUCH: DOM fehlt'); return; }
+  dbg('Event-Handler werden registriert...');
 
   // Default-Location aus Profil: erster hinterlegter Ort, oder 'studio'
   function _defaultLoc() {
@@ -321,8 +328,9 @@ import { renderCockpit } from '../pages/cockpit.js';
 
   // ── Pläne generieren ──
   submitBtn.addEventListener('click', () => {
+    dbg('CLICK! blocks: ' + blocks.length + ' profile: ' + !!state.profile);
     const profile = state.profile;
-    if (!profile || blocks.length === 0) { toast('Keine Blöcke definiert'); return; }
+    if (!profile || blocks.length === 0) { dbg('ABBRUCH: kein Profil oder keine Blöcke'); toast('Keine Blöcke definiert'); return; }
 
     const split = splitSelect.value;
     const splitDef = SPLITS[split];
