@@ -2,7 +2,7 @@ import { state, STORAGE_KEYS } from '../state.js';
 import { toast, _parseDE, _isoWeek, _sessionVolume, _calc1RM, _fmtNum, _fmtKg, _MONTH_DE } from '../utils.js';
 import { MUSCLE_MAP } from '../data/muscle-map.js';
 import { _effectiveWeight, _getBwFactor } from '../features/muscle-balance.js';
-export { renderFortschritt };
+export { renderFortschritt, renderCompare, renderStandards };
 
 /* ═══════════════════════════════════════════════════════
    FORTSCHRITT (v2.5) — Render-Logik

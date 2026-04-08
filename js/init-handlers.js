@@ -8,12 +8,13 @@ import { toast, _isoWeek, _fmtKg } from './utils.js';
 import { switchTab } from './tabs.js';
 import { renderCockpit } from './pages/cockpit.js';
 import { renderJahresplan } from './pages/jahresplan.js';
-import { renderTrainingsplan } from './pages/trainingsplan.js';
-import { renderFortschritt } from './pages/fortschritt.js';
+import { renderTrainingsplan, _logSet, _getSessionsByDay } from './pages/trainingsplan.js';
+import { renderFortschritt, renderCompare, renderStandards } from './pages/fortschritt.js';
 import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.js';
-import { renderLexikon } from './pages/lexikon.js';
+import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
 import { reloadDemoProfile } from './demo-loader.js';
 import { openProfileEditModal } from './features/profile-edit.js';
+import { _getBwFactor, _effectiveWeight } from './features/muscle-balance.js';
 
 // ── Info-Tab Event-Handler ──
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation

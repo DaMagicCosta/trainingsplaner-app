@@ -192,6 +192,22 @@ function _formatLocations(loc) {
   return arr.map(l => labels[l] || l).join(' · ') || '—';
 }
 // Equipment-Objekt → lesbarer Text (pro Ort, Excluded durchgestrichen)
+// Verfügbares Equipment für den aktuellen Plan-Block (Übungspicker)
+function _pickerAvailableEq() {
+  const kw = state.tpViewKw;
+  const plan = (state.profile?.plans || {})['w' + kw];
+  const loc = plan?._location || 'studio';
+  const eq = state.profile?.equipment;
+  if (!eq || Array.isArray(eq)) return null;
+  const locEq = eq[loc];
+  if (!locEq) return null;
+  const avail = new Set(locEq.available || []);
+  const excl  = new Set(locEq.excluded || []);
+  avail.add('Bodyweight');
+  excl.forEach(e => avail.delete(e));
+  return avail;
+}
+
 function _formatEquipment(eq) {
   if (!eq) return '—';
   // Altes flaches Array
