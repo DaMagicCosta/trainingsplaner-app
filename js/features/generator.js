@@ -4,8 +4,6 @@ import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
 import { _allGroups } from './muscle-balance.js';
 import { buildPlanBalance } from './plan-balance.js';
 
-export { initGenerator };
-
 /* ═══════════════════════════════════════════════════════
    WOCHENPLAN-GENERATOR
    ═══════════════════════════════════════════════════════ */
