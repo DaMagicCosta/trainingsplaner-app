@@ -329,6 +329,7 @@ import { renderCockpit } from '../pages/cockpit.js';
   // ── Pläne generieren ──
   submitBtn.addEventListener('click', () => {
     dbg('CLICK! blocks: ' + blocks.length + ' profile: ' + !!state.profile);
+    try {
     const profile = state.profile;
     if (!profile || blocks.length === 0) { dbg('ABBRUCH: kein Profil oder keine Blöcke'); toast('Keine Blöcke definiert'); return; }
 
@@ -419,11 +420,14 @@ import { renderCockpit } from '../pages/cockpit.js';
       _saveProfile();
       dbg('ALLES OK — gespeichert');
     } catch (e) {
-      dbg('FEHLER: ' + e.message + ' @ ' + e.stack?.split('\n')[1]);
+      dbg('FEHLER: ' + e.message + ' @ ' + (e.stack?.split('\n').slice(0,3).join(' | ')));
     }
 
-    const totalPlans = Object.keys(profile.plans).filter(k => k.startsWith('w')).length;
+    const totalPlans = Object.keys(profile.plans || {}).filter(k => k.startsWith('w')).length;
     toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
+    } catch (outerErr) {
+      dbg('OUTER FEHLER: ' + outerErr.message + ' @ ' + (outerErr.stack?.split('\n').slice(0,3).join(' | ')));
+    }
   });
 
   // ── Initial ──
