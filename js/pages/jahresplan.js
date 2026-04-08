@@ -36,7 +36,7 @@ function _isoWeekToMonday(year, week) {
 }
 
 // Berechnet für jede KW 1..52 den Block + relative Woche + Regen-Status
-// anhand profile.periodization + profile.regenConfig
+// Nutzt die vom Generator gespeicherten regenWeeks statt eigene Berechnung
 function _calcPeriodization(profile) {
   const period = profile?.periodization;
   if (!period || !period.active) return null;
@@ -46,68 +46,45 @@ function _calcPeriodization(profile) {
   const blocks  = period.blocks || [];
   if (blocks.length === 0) return null;
 
-  const regenCfg      = profile.regenConfig || {};
-  const regenBetween  = regenCfg.regenBetween !== false;
-  const athleteRegens = new Set(profile.athleteRegenWeeks || []);
+  const regenSet = new Set(profile.athleteRegenWeeks || []);
 
-  // Zyklus-Länge berechnen (variable Block-Längen + Regen dazwischen)
-  let cycleLength = 0;
-  blocks.forEach(b => {
-    cycleLength += parseInt(b.length) || 4;
-    if (regenBetween) cycleLength += 1;
-  });
-
+  // Trainingswochen linear durchgehen: Block für Block ab startKw
   const result = {};
-  for (let kw = 1; kw <= 52; kw++) {
-    const offset = kw - startKw;
-    if (offset < 0 || kw > endKw) {
-      result[kw] = { kw, isPreStart: true };
-      continue;
-    }
+  let kw = startKw;
 
-    // Explizite Athlete-Regen
-    if (athleteRegens.has(kw)) {
-      result[kw] = { kw, isRegen: true, regenSource: 'athlete' };
-      continue;
-    }
-
-    // Position innerhalb des geplanten Zeitraums (kein Zyklus-Repeat)
-    const cyclePos = offset % cycleLength;
-    let pos = 0;
-    let found = false;
-
-    for (let i = 0; i < blocks.length; i++) {
-      const blen = parseInt(blocks[i].length) || 4;
-      const blockEnd = pos + blen;
-
-      if (cyclePos >= pos && cyclePos < blockEnd) {
-        const relativeWeek = cyclePos - pos + 1;
-        result[kw] = {
-          kw, isRegen: false, blockIdx: i,
-          blockLabel: _abbrevBlock(blocks[i].label || `Block ${i + 1}`),
-          blockFullLabel: blocks[i].label || `Block ${i + 1}`,
-          blockGoal: blocks[i].goal || '',
-          relativeWeek, blockLength: blen
-        };
-        found = true;
-        break;
+  // Erst alle Blöcke auf KWs mappen (Regen-Wochen überspringen)
+  for (let i = 0; i < blocks.length && kw <= endKw; i++) {
+    const blen = parseInt(blocks[i].length) || 4;
+    for (let w = 0; w < blen && kw <= endKw; w++) {
+      // Regen-Wochen überspringen
+      while (regenSet.has(kw) && kw <= endKw) {
+        result[kw] = { kw, isRegen: true, regenSource: 'interval' };
+        kw++;
       }
-
-      pos = blockEnd;
-
-      // Regen-Woche nach diesem Block?
-      if (regenBetween) {
-        if (cyclePos === pos) {
-          result[kw] = { kw, isRegen: true, regenSource: 'interval' };
-          found = true;
-          break;
-        }
-        pos++;
-      }
+      if (kw > endKw) break;
+      result[kw] = {
+        kw, isRegen: false, blockIdx: i,
+        blockLabel: _abbrevBlock(blocks[i].label || `Block ${i + 1}`),
+        blockFullLabel: blocks[i].label || `Block ${i + 1}`,
+        blockGoal: blocks[i].goal || '',
+        relativeWeek: w + 1, blockLength: blen
+      };
+      kw++;
     }
+  }
 
-    if (!found) {
-      result[kw] = { kw, isPreStart: true };
+  // Verbleibende Regen-Wochen nach dem letzten Block
+  while (kw <= endKw) {
+    if (regenSet.has(kw)) {
+      result[kw] = { kw, isRegen: true, regenSource: 'interval' };
+    }
+    kw++;
+  }
+
+  // Wochen vor Start und nach Ende markieren
+  for (let k = 1; k <= 52; k++) {
+    if (!result[k]) {
+      result[k] = { kw: k, isPreStart: true };
     }
   }
   return result;
@@ -177,7 +154,7 @@ function renderJahresplan(profile) {
       const label = b.label || `Block ${i + 1}`;
       return `<span class="jp-legend-item ${cls}"><span class="jp-legend-dot"></span>${label}</span>`;
     }).join('');
-    lHtml += '<span class="jp-legend-item"><span class="jp-legend-dot jp-legend-regen"></span>Regen</span>';
+    lHtml += '<span class="jp-legend-item"><span class="jp-legend-dot jp-legend-regen"></span>Erholung</span>';
     legendEl.innerHTML = lHtml;
   }
 
