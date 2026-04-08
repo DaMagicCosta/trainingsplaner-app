@@ -94,6 +94,27 @@
 }
 
 /* ─── Info-Rows (Key-Value-Listen) ─── */
+/* ── Inline Theme-Picker (Info > Einstellungen) ── */
+.theme-picker-inline {
+  display: flex;
+  gap: var(--s-3);
+  padding: var(--s-1) 0;
+}
+.theme-picker-inline .theme-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--ease);
+}
+.theme-picker-inline .theme-dot:hover { transform: scale(1.15); }
+.theme-picker-inline .theme-dot.active { border-color: var(--text); }
+.theme-picker-inline .theme-dot[data-theme="tealLight"] { background: #14B8A6; }
+.theme-picker-inline .theme-dot[data-theme="tealMid"]   { background: #0D9488; }
+.theme-picker-inline .theme-dot[data-theme="tealDeep"]  { background: #0F766E; }
+.theme-picker-inline .theme-dot[data-theme="pastell"]   { background: linear-gradient(135deg, #C48B9F, #D4A0B4, #E8C8D4); }
+
 .info-rows {
   display: flex;
   flex-direction: column;

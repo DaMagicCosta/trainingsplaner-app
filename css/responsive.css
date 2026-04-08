@@ -14,6 +14,21 @@
   .placeholder { padding: var(--s-12) var(--s-4); }
   .placeholder-title { font-size: 22px; }
 
+  /* ── Info-Tab: Abstände + Grid auf Mobile ── */
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: var(--s-1);
+  }
+  .info-card {
+    margin-bottom: var(--s-4);
+  }
+  .info-card-head {
+    margin-bottom: var(--s-3);
+  }
+  .info-rows {
+    gap: var(--s-1);
+  }
+
   /* ── Solo-Muskelgruppen: 2er-Grid statt 3er auf Mobile ── */
   .bal-solo {
     grid-template-columns: repeat(2, 1fr);
