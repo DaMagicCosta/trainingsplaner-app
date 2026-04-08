@@ -10,9 +10,10 @@ export { renderJahresplan, _calcPeriodization, _isoWeekToMonday, _groupSessionsB
 // Block-Label abkürzen: "Akkumulation (GPP)" → "GPP", "Peak / Skills" → "Peak"
 function _abbrevBlock(label) {
   if (!label) return '';
-  const paren = label.match(/\(([^)]+)\)/);
-  if (paren) return paren[1];
-  return label.split(/[\s\/]/)[0];
+  // Klammer-Inhalt entfernen, Hauptbegriff behalten
+  // "Akkumulation (GPP)" → "Akkumulation", "Peak / Skills" → "Peak"
+  const clean = label.replace(/\s*\([^)]*\)\s*/g, '').trim();
+  return clean.split(/\s*\/\s*/)[0];
 }
 
 // blockIdx → CSS-Klasse für die Block-Farbe
