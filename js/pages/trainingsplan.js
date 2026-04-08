@@ -528,10 +528,23 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
 
   // Offen: planned values + Loggen-Button
   const pw  = plannedWdh != null ? plannedWdh : '—';
-  // Gewicht: geplant > letztes geloggtes > —
+  // Gewicht: BW-Übungen → Zusatz zeigen, sonst geplant > letztes > —
   let pkg = '—';
   let kgHint = '';
-  if (plannedGewicht != null) {
+  let kgUnit = 'kg';
+  if (bwF) {
+    // BW-Übung: letztes Zusatzgewicht oder 0
+    const last = _lastLoggedWeight(exerciseName);
+    const zusatz = last?._bwZusatz ?? 0;
+    pkg = zusatz ? _fmtKg(zusatz) : '0';
+    kgUnit = 'Zusatz';
+    if (zusatz) kgHint = ' <span style="color:var(--text-3);font-size:10px">letztes</span>';
+  } else if (isBand) {
+    const last = _lastLoggedWeight(exerciseName);
+    pkg = last?.kg != null ? _fmtKg(last.kg) : '—';
+    kgUnit = 'Band';
+    if (last) kgHint = ' <span style="color:var(--text-3);font-size:10px">letztes</span>';
+  } else if (plannedGewicht != null) {
     pkg = _fmtKg(plannedGewicht);
   } else {
     const last = _lastLoggedWeight(exerciseName);
@@ -547,7 +560,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
       <div class="tp-set-field"><span class="tp-set-planned">${pw}</span><span class="tp-set-unit">Wdh</span></div>
-      <div class="tp-set-field"><span class="tp-set-planned">${pkg}${kgHint}</span><span class="tp-set-unit">kg</span></div>
+      <div class="tp-set-field"><span class="tp-set-planned">${pkg}${kgHint}</span><span class="tp-set-unit">${kgUnit}</span></div>
       <div class="tp-set-field"><span class="tp-set-planned">—</span><span class="tp-set-unit">RPE</span></div>
       <button class="tp-set-log-btn" type="button">+ Loggen</button>
       ${bwOpenHint}
