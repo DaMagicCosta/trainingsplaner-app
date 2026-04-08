@@ -691,14 +691,17 @@
     user-select: none;
   }
   .pn-form-card .pn-card-label::after {
-    content: '▸';
-    font-size: 12px;
+    content: 'öffnen ▸';
+    font-size: 11px;
     color: var(--text-3);
-    transition: transform var(--ease);
   }
   .pn-form-card.pn-open .pn-card-label::after {
-    transform: rotate(90deg);
+    content: '▾';
     color: var(--accent);
+  }
+  .pn-form-card.pn-done .pn-card-label::after {
+    content: 'fertig ✓';
+    color: var(--success);
   }
   /* Alles nach dem Label verstecken wenn nicht offen */
   .pn-form-card > *:not(.pn-card-label) {

@@ -23,7 +23,11 @@ import { renderCockpit } from '../pages/cockpit.js';
       label.addEventListener('click', () => {
         if (window.innerWidth > 720) return; // nur Mobile
         const wasOpen = card.classList.contains('pn-open');
-        pnCards.forEach(c => c.classList.remove('pn-open'));
+        // Alle schließen, vorherige als "erledigt" markieren
+        pnCards.forEach((c, j) => {
+          c.classList.remove('pn-open');
+          if (j < i) c.classList.add('pn-done');
+        });
         if (!wasOpen) {
           card.classList.add('pn-open');
           setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
