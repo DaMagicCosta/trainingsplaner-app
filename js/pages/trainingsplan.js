@@ -438,7 +438,9 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
     const prefillRpe = loggedSet?.rpe ?? '';
     const kgLabel = bwF ? 'Zusatz' : 'kg';
     const kgPlaceholder = bwF ? '0' : 'kg';
-    const bwHint = bwF ? `<div class="tp-set-bw-hint">${bwBase} kg BW${prefillKg ? ' + ' + prefillKg : ''} = ${bwBase + (Number(prefillKg) || 0)} kg</div>` : '';
+    const zusatz = Number(prefillKg) || 0;
+    const total = bwBase + zusatz;
+    const bwHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg${zusatz ? ' + ' + zusatz + ' kg Zusatz = ' + total + ' kg' : ''}</div>` : '';
     return `
       <div class="tp-set tp-set-editing" ${exAttr} ${bwF ? 'data-bw="1"' : ''}>
         <div class="tp-set-num">${num}</div>
@@ -469,9 +471,9 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
     const w   = loggedSet.wdh ?? '—';
     const kg  = loggedSet.gewicht != null ? _fmtKg(loggedSet.gewicht) : '—';
     const rpe = loggedSet.rpe ?? '—';
-    // BW-Übungen: (BW) oder (BW+10) anzeigen
-    const bwTag = (bwF && loggedSet._bwZusatz !== undefined)
-      ? ` <span class="tp-set-bw-tag">(BW${loggedSet._bwZusatz ? '+' + loggedSet._bwZusatz : ''})</span>`
+    // BW-Übungen: Berechnung anzeigen (z.B. "80kg × 0.65 = 52kg + 10kg")
+    const bwTag = bwF
+      ? ` <span class="tp-set-bw-tag">(${bw}kg × ${bwF}${loggedSet._bwZusatz ? ' + ' + loggedSet._bwZusatz : ''})</span>`
       : '';
     return `
       <div class="tp-set tp-set-done" ${exAttr}>
@@ -486,6 +488,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   // Offen: planned values + Loggen-Button
   const pw  = plannedWdh != null ? plannedWdh : '—';
   const pkg = plannedGewicht != null ? _fmtKg(plannedGewicht) : '—';
+  const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg · nur Zusatzgewicht eingeben</div>` : '';
   return `
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
@@ -493,6 +496,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
       <div class="tp-set-field"><span class="tp-set-planned">${pkg}</span><span class="tp-set-unit">kg</span></div>
       <div class="tp-set-field"><span class="tp-set-planned">—</span><span class="tp-set-unit">RPE</span></div>
       <button class="tp-set-log-btn" type="button">+ Loggen</button>
+      ${bwOpenHint}
     </div>`;
 }
 
