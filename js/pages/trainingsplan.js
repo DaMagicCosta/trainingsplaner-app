@@ -461,11 +461,13 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
       ? (loggedSet?._bwZusatz ?? 0)
       : (loggedSet?.gewicht ?? (plannedGewicht ?? ''));
     const prefillRpe = loggedSet?.rpe ?? '';
-    const kgLabel = bwF ? 'Zusatz' : 'kg';
-    const kgPlaceholder = bwF ? '0' : 'kg';
+    const kgLabel = bwF ? 'Zusatz' : isBand ? 'Band' : 'kg';
+    const kgPlaceholder = bwF ? '0' : isBand ? 'Stärke' : 'kg';
     const zusatz = Number(prefillKg) || 0;
     const total = bwBase + zusatz;
-    const bwHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg${zusatz ? ' + ' + zusatz + ' kg Zusatz = ' + total + ' kg' : ''}</div>` : '';
+    const bwHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg${zusatz ? ' + ' + zusatz + ' kg Zusatz = ' + total + ' kg' : ''}</div>`
+      : isBand ? `<div class="tp-set-bw-hint">Bandstärke: leicht≈5 · mittel≈10 · schwer≈20 kg</div>`
+      : '';
     return `
       <div class="tp-set tp-set-editing" ${exAttr} ${bwF ? 'data-bw="1"' : ''}>
         <div class="tp-set-num">${num}</div>
