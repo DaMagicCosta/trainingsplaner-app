@@ -122,8 +122,8 @@ import { renderCockpit } from '../pages/cockpit.js';
     return `
       <div class="pn-block-row" data-idx="${idx}" style="border-left: 3px solid ${block.color};">
         <select class="pn-block-goal" data-field="goal">
-          <option value="kraftausdauer"${block.goal==='kraftausdauer'?' selected':''}>Kraftausdauer</option>
-          <option value="hypertrophie"${block.goal==='hypertrophie'?' selected':''}>Hypertrophie</option>
+          <option value="kraftausdauer"${block.goal==='kraftausdauer'?' selected':''}>Grundlagen</option>
+          <option value="hypertrophie"${block.goal==='hypertrophie'?' selected':''}>Muskelaufbau</option>
           <option value="maximalkraft"${block.goal==='maximalkraft'?' selected':''}>Maximalkraft</option>
           <option value="allgemein"${block.goal==='allgemein'?' selected':''}>Allgemein</option>
         </select>
@@ -238,7 +238,7 @@ import { renderCockpit } from '../pages/cockpit.js';
 
     // Periodisierung ins Profil schreiben
     const endKw = Math.min(kw - 1, 52); // letzte belegte KW
-    const GOAL_LABELS = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
+    const GOAL_LABELS = { kraftausdauer: 'Grundlagen', hypertrophie: 'Muskelaufbau', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
     profile.periodization = {
       active: true, startKw, endKw,
       blocks: blocks.map(b => ({ label: b.label || GOAL_LABELS[b.goal] || b.goal, goal: b.goal, length: b.length }))
@@ -272,7 +272,7 @@ import { renderCockpit } from '../pages/cockpit.js';
   // ── Einen Wochenplan für einen Block generieren ──
   function buildWeekPlan(blockDef, splitDef, selectedDays, location, blockIdx) {
     const exPerCat = blockDef.goal === 'maximalkraft' ? 2 : 3;
-    const goalLabels = { kraftausdauer: 'Kraftausdauer', hypertrophie: 'Hypertrophie', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
+    const goalLabels = { kraftausdauer: 'Grundlagen', hypertrophie: 'Muskelaufbau', maximalkraft: 'Maximalkraft', allgemein: 'Allgemein' };
     const days = selectedDays.map((dayLabel, dayIdx) => {
       const splitDay = splitDef.days[dayIdx % splitDef.days.length];
       const exercises = [];
