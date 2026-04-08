@@ -5109,7 +5109,7 @@ body.role-athlete .tp-mode { display: none; }
 <!-- ═══════════════ SPLASH / WELCOME ═══════════════ -->
 <div class="splash" id="splash">
   <div class="splash-center" id="splashCenter">
-    <img class="splash-portrait" id="splashPortrait" src="./alexander-portrait.jpg" alt="Alexander">
+    <img class="splash-portrait" id="splashPortrait" src="../alexander-portrait.jpg" alt="Alexander">
     <div class="splash-name">Trainingsplaner</div>
     <div class="splash-tagline">by Alexander da Costa Amaral</div>
     <div class="splash-nodes">
@@ -11326,6 +11326,12 @@ function saveProfileEdit() {
     renderInfo(p);
     const roleNameEl = document.getElementById('roleName');
     if (roleNameEl) roleNameEl.textContent = (p.name || '').trim() || 'Profil';
+    // Dropdown-Eintrag "eigenes Profil" mit neuem Namen aktualisieren
+    const selfSwitch = document.querySelector('[data-athlete-switch="self"] span:last-child');
+    if (selfSwitch) {
+      const displayName = ((p.name || '') + ' ' + (p.nachname || '')).trim() || 'Mein Profil';
+      selfSwitch.textContent = displayName + ' (eigenes Profil)';
+    }
   } else {
     // Athleten-Card in der Profil-Section aktualisieren
     renderAthleteRow(target, p);
@@ -12794,13 +12800,39 @@ loadDemoProfile().then(() => {
       state.profile.plans = {};
       state.profile.periodization = null;
       state.profile.athleteRegenWeeks = [];
-      // Alle Views neu rendern (leerer Zustand)
+    }
+
+    // Demo-Athleten-State komplett aufräumen (Julia-Fragmente entfernen)
+    state._juliaProfile = null;
+    state._selfProfile = null;
+    state._savedThemeBeforeAthlete = null;
+    state.activeProfile = 'self';
+    state.demoAthletes = {};
+
+    // Julia aus Sidebar-Dropdown entfernen
+    const juliaSwitch = document.querySelector('[data-athlete-switch="lisa"]');
+    if (juliaSwitch) juliaSwitch.remove();
+
+    // Julia aus Athleten-Verwaltung (Info-Tab) entfernen
+    const athletesList = document.getElementById('infoAthletesList');
+    if (athletesList) athletesList.innerHTML = '';
+
+    // Sidebar-Name auf "self" Radio zurücksetzen
+    document.querySelectorAll('.role-dropdown [data-athlete-switch]').forEach(btn => {
+      const isActive = btn.dataset.athleteSwitch === 'self';
+      btn.querySelector('.radio')?.classList.toggle('active', isActive);
+    });
+
+    // Alle Views neu rendern (leerer Zustand)
+    if (state.profile) {
       renderCockpit(state.profile);
       renderJahresplan(state.profile);
       renderTrainingsplan(state.profile);
       renderFortschritt(state.profile);
+      renderInfo(state.profile);
       buildPlanBalance(state.profile);
     }
+
     if (banner) banner.style.display = 'none';
     openProfileEditModal('self');
   });
