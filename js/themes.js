@@ -19,20 +19,44 @@ const _darkBase = {
 };
 
 const themes = {
-  tealLight: { ..._darkBase,
-    '--accent':'#14B8A6','--accent-hover':'#2DD4BF',
-    '--accent-dim':'rgba(20,184,166,0.12)','--accent-line':'rgba(20,184,166,0.35)',
-    '--success':'#10B981','--success-dim':'rgba(16,185,129,0.10)','--success-line':'rgba(16,185,129,0.30)',
-    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.10)','--warning-line':'rgba(212,169,104,0.30)',
-    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.10)','--danger-line':'rgba(199,106,94,0.30)',
+  midnight: {
+    '--bg':            '#080A12',
+    '--surface-1':     '#0C0F1A',
+    '--surface-2':     '#131825',
+    '--surface-3':     '#1A2030',
+    '--surface-hover': '#222A3D',
+    '--border-subtle': 'rgba(100,140,255,0.08)',
+    '--border-strong': 'rgba(100,140,255,0.15)',
+    '--text':          '#E8ECF4',
+    '--text-2':        '#8892A8',
+    '--text-3':        '#5A6480',
+    '--accent':        '#4A7CFF',
+    '--accent-hover':  '#6B96FF',
+    '--accent-dim':    'rgba(74,124,255,0.14)',
+    '--accent-line':   'rgba(74,124,255,0.35)',
+    '--success':'#34D399','--success-dim':'rgba(52,211,153,0.12)','--success-line':'rgba(52,211,153,0.30)',
+    '--warning':'#FBBF24','--warning-dim':'rgba(251,191,36,0.12)','--warning-line':'rgba(251,191,36,0.30)',
+    '--danger':'#F87171','--danger-dim':'rgba(248,113,113,0.12)','--danger-line':'rgba(248,113,113,0.30)',
     '--on-accent':'#ffffff'
   },
-  tealMid: { ..._darkBase,
-    '--accent':'#0D9488','--accent-hover':'#14B8A6',
-    '--accent-dim':'rgba(13,148,136,0.14)','--accent-line':'rgba(13,148,136,0.40)',
-    '--success':'#10B981','--success-dim':'rgba(16,185,129,0.10)','--success-line':'rgba(16,185,129,0.30)',
-    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.10)','--warning-line':'rgba(212,169,104,0.30)',
-    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.10)','--danger-line':'rgba(199,106,94,0.30)',
+  ember: {
+    '--bg':            '#0E0B08',
+    '--surface-1':     '#141110',
+    '--surface-2':     '#1C1816',
+    '--surface-3':     '#25201C',
+    '--surface-hover': '#302A24',
+    '--border-subtle': 'rgba(200,140,80,0.08)',
+    '--border-strong': 'rgba(200,140,80,0.15)',
+    '--text':          '#F5EDE6',
+    '--text-2':        '#A08E7C',
+    '--text-3':        '#6E5E50',
+    '--accent':        '#C47830',
+    '--accent-hover':  '#DB8E42',
+    '--accent-dim':    'rgba(196,120,48,0.16)',
+    '--accent-line':   'rgba(196,120,48,0.40)',
+    '--success':'#6B9E6F','--success-dim':'rgba(107,158,111,0.12)','--success-line':'rgba(107,158,111,0.30)',
+    '--warning':'#D4A968','--warning-dim':'rgba(212,169,104,0.12)','--warning-line':'rgba(212,169,104,0.30)',
+    '--danger':'#C76A5E','--danger-dim':'rgba(199,106,94,0.12)','--danger-line':'rgba(199,106,94,0.30)',
     '--on-accent':'#ffffff'
   },
   tealDeep: { ..._darkBase,
@@ -72,9 +96,9 @@ const themes = {
 };
 
 export const themeLabels = {
-  tealLight: 'Teal hell · frisch',
-  tealMid: 'Teal mittel · elegant',
-  tealDeep: 'Teal tief · premium',
+  midnight: 'Midnight · kühl',
+  ember: 'Ember · warm',
+  tealDeep: 'Teal · premium',
   pastell: 'Pastell · Garten'
 };
 

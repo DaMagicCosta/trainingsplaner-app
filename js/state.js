@@ -46,7 +46,7 @@ export function _clearSavedProfile() {
 export const state = {
   activeTab: localStorage.getItem(STORAGE_KEYS.tab) || 'cockpit',
   role: localStorage.getItem(STORAGE_KEYS.role) || 'trainer',
-  theme: (() => { const t = localStorage.getItem(STORAGE_KEYS.theme); return t && t !== 'pastell' ? t : 'tealDeep'; })(),
+  theme: (() => { const t = localStorage.getItem(STORAGE_KEYS.theme); const valid = ['midnight','ember','tealDeep','pastell']; return valid.includes(t) ? t : 'tealDeep'; })(),
   balView: localStorage.getItem(STORAGE_KEYS.balView) || 'antagonists',
   balRange: localStorage.getItem(STORAGE_KEYS.balRange) || '12W',
   gSequence: false,

@@ -110,8 +110,8 @@
 }
 .theme-picker-inline .theme-dot:hover { transform: scale(1.15); }
 .theme-picker-inline .theme-dot.active { border-color: var(--text); }
-.theme-picker-inline .theme-dot[data-theme="tealLight"] { background: #14B8A6; }
-.theme-picker-inline .theme-dot[data-theme="tealMid"]   { background: #0D9488; }
+.theme-picker-inline .theme-dot[data-theme="midnight"]  { background: linear-gradient(135deg, #2A3A6E, #4A7CFF); }
+.theme-picker-inline .theme-dot[data-theme="ember"]     { background: linear-gradient(135deg, #8B4513, #C47830, #DB8E42); }
 .theme-picker-inline .theme-dot[data-theme="tealDeep"]  { background: #0F766E; }
 .theme-picker-inline .theme-dot[data-theme="pastell"]   { background: linear-gradient(135deg, #C48B9F, #D4A0B4, #E8C8D4); }
 
