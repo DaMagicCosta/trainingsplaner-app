@@ -708,8 +708,23 @@
     display: none;
   }
   .pn-form-card.pn-open > * {
-    display: flex;
+    display: revert;
   }
+  .pn-form-card.pn-open > .pn-form-field,
+  .pn-form-card.pn-open > .pn-form-row,
+  .pn-form-card.pn-open > .pn-form-hint,
+  .pn-form-card.pn-open > .pn-check,
+  .pn-form-card.pn-open > .pn-block-rows,
+  .pn-form-card.pn-open > .pn-add-block-btn,
+  .pn-form-card.pn-open > .tp-chips,
+  .pn-form-card.pn-open > .pn-generate-btn,
+  .pn-form-card.pn-open > .pn-card-desc {
+    display: block;
+  }
+  /* Generieren-Button (Schritt 4) immer sichtbar */
+  .pn-form-action { background: transparent; padding: var(--s-3) 0; }
+  .pn-form-action > * { display: block !important; }
+  .pn-form-action .pn-card-label { display: none !important; }
   .pn-form-card.pn-open > .pn-card-label { margin-bottom: var(--s-3); }
   .pn-form-card.pn-open > .pn-card-title,
   .pn-form-card.pn-open > .pn-card-desc { display: block; }
