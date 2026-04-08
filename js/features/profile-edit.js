@@ -1,6 +1,7 @@
 import { state, _saveProfile } from '../state.js';
 import { toast, escapeHtml, _fmtKg } from '../utils.js';
 import { switchTab } from '../tabs.js';
+import { renderInfo } from '../pages/info.js';
 
 export { openProfileEditModal, saveProfileEdit, renderAthleteRow, openModal, closeModal,
          _resolveProfile, _formatLocations, _formatEquipment, _parseLocationString, _pickerAvailableEq };

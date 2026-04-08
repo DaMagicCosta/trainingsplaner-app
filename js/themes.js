@@ -71,7 +71,7 @@ const themes = {
   }
 };
 
-const themeLabels = {
+export const themeLabels = {
   tealLight: 'Teal hell · frisch',
   tealMid: 'Teal mittel · elegant',
   tealDeep: 'Teal tief · premium',

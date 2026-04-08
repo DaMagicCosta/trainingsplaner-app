@@ -1,3 +1,7 @@
+import { state } from '../state.js';
+import { toast, escapeHtml } from '../utils.js';
+import { openModal, closeModal } from './profile-edit.js';
+
 /* ═══════════════════════════════════════════════════════
    BUG-REPORT (v2.8) — mailto + Clipboard, kein Backend
    ═══════════════════════════════════════════════════════ */

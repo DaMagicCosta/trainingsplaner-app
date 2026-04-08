@@ -3,6 +3,10 @@ import { toast } from '../utils.js';
 import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
 import { _allGroups } from './muscle-balance.js';
 import { buildPlanBalance } from './plan-balance.js';
+import { _parseLocationString } from './profile-edit.js';
+import { renderJahresplan } from '../pages/jahresplan.js';
+import { renderTrainingsplan } from '../pages/trainingsplan.js';
+import { renderCockpit } from '../pages/cockpit.js';
 
 /* ═══════════════════════════════════════════════════════
    WOCHENPLAN-GENERATOR

@@ -3,6 +3,7 @@ import { toast } from './utils.js';
 import { switchTab } from './tabs.js';
 import { toggleRoleDropdown } from './roles.js';
 import { openCmdk, closeCmdk } from './command-palette.js';
+const roleDropdown = document.getElementById('roleDropdown');
 import { startNextEinheit } from './features/log-session.js';
 
 /* ═══════════════════════════════════════════════════════
