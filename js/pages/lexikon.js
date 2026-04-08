@@ -105,4 +105,3 @@ function closeLexikonSheet() {
   if (sheet) sheet.classList.remove('open');
 }
 
-/* ═══════════════════════════════════════════════════════
