@@ -71,7 +71,25 @@ function openProfileEditModal(target) {
   document.getElementById('pemAlter').value            = p.alter || '';
   document.getElementById('pemGroesse').value          = p.groesse || '';
   document.getElementById('pemGewicht').value          = p.gewicht || '';
-  document.getElementById('pemHfmax').value            = p.hfmax || '';
+  const hfmaxInput = document.getElementById('pemHfmax');
+  const hfmaxHint = document.getElementById('pemHfmaxHint');
+  const alterInput = document.getElementById('pemAlter');
+  const calcHfmax = () => {
+    const alter = parseInt(alterInput.value, 10);
+    if (alter > 0) {
+      const berechnet = 220 - alter;
+      if (hfmaxHint) hfmaxHint.textContent = `(berechnet: ${berechnet})`;
+      if (!hfmaxInput.value || hfmaxInput.dataset.autoFilled === '1') {
+        hfmaxInput.value = berechnet;
+        hfmaxInput.dataset.autoFilled = '1';
+      }
+    }
+  };
+  alterInput.addEventListener('input', calcHfmax);
+  hfmaxInput.addEventListener('input', () => { hfmaxInput.dataset.autoFilled = '0'; });
+  hfmaxInput.value = p.hfmax || '';
+  if (p.hfmax) hfmaxInput.dataset.autoFilled = '0';
+  calcHfmax();
   document.getElementById('pemGoal').value             = p.goal || 'hypertrophie';
   // Tage-Chips: aktive markieren
   const activeTage = new Set(p.tage || []);
