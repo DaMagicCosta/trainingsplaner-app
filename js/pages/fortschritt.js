@@ -4,6 +4,7 @@ import { MUSCLE_MAP } from '../data/muscle-map.js';
 import { _effectiveWeight, _getBwFactor } from '../features/muscle-balance.js';
 export { renderFortschritt };
 
+/* ═══════════════════════════════════════════════════════
    FORTSCHRITT (v2.5) — Render-Logik
    ═══════════════════════════════════════════════════════ */
 
