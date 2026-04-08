@@ -1,0 +1,722 @@
+/* ═══════════════════════════════════════════════════════
+   JAHRESPLAN (v2.3)
+   Block-Farben im Cockpit-System: Temperatur-Gradient
+   GPP (Akkumulation)    → accent  (Teal-Deep,  cool)
+   SPP (Intensifikation) → success (Emerald,    mid)
+   Peak                  → warning (Honig,      warm)
+   Regen                 → text-3  (neutral, gestreift)
+   ═══════════════════════════════════════════════════════ */
+/* GPP bleibt beim Cockpit-Accent Teal-Deep für die strukturellen Elemente
+   (Border, Dots), aber der Chip bekommt einen brighteren Teal-Medium-Tint
+   nur für Chip-Background/Text, damit er auf dunklem BG lesbar ist.
+   SPP und Peak nutzen ihre Cockpit-Farben direkt mit 22% Opacity. */
+.jp-block-gpp   { --block-color: var(--accent);  --block-dim: rgba(20,184,166,0.22);  --block-line: rgba(20,184,166,0.50); }
+.jp-block-spp   { --block-color: var(--success); --block-dim: rgba(16,185,129,0.22);  --block-line: rgba(16,185,129,0.50); }
+.jp-block-peak  { --block-color: var(--warning); --block-dim: rgba(212,169,104,0.22); --block-line: rgba(212,169,104,0.50); }
+.jp-block-aux   { --block-color: var(--danger);  --block-dim: rgba(199,106,94,0.22);  --block-line: rgba(199,106,94,0.50); }
+
+/* Chip für GPP: hellerer Teal-Medium für Text, weil Teal-Deep
+   auf dunklem Surface zu schwach leuchtet. Border und Dots der Karte
+   bleiben im Original-Accent (=Teal-Deep) für Cockpit-Konsistenz.
+   Die .jp-block-gpp-Klasse setzt --block-color=var(--accent) für Border,
+   dieser Override setzt nur die Chip-Text-Farbe auf accent-hover. */
+.jp-block-gpp .jp-week-block {
+  color: var(--accent-hover);
+}
+
+.jp-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+.jp-head-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+.jp-mode {
+  margin: 0; /* override view-switcher default */
+}
+.jp-new-btn {
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-sans);
+  display: none; /* nur im Bearbeiten-Modus */
+}
+.jp-new-btn:hover { background: var(--accent-hover); }
+
+/* Bearbeiten-Modus aktiv: Button + Planungs-Karten einblenden */
+.page[data-page="jahresplan"].mode-edit .jp-new-btn { display: inline-block; }
+.jp-edit-content { display: none; margin-top: var(--s-6); }
+.page[data-page="jahresplan"].mode-edit .jp-edit-content { display: block; }
+/* Athleten-Rolle: Toggle und Button komplett ausblenden */
+.page[data-page="jahresplan"].role-athlete .jp-mode,
+.page[data-page="jahresplan"].role-athlete .jp-new-btn { display: none; }
+
+/* ─── Block-Timeline (52 Segmente) ─── */
+.jp-timeline-wrap {
+  background:
+    radial-gradient(circle at 20% 0%, var(--accent-dim) 0%, transparent 60%),
+    var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-6);
+  margin-bottom: var(--s-6);
+  position: relative;
+  overflow: hidden;
+}
+.jp-timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-3);
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.jp-timeline-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+}
+.jp-timeline-legend {
+  display: flex;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+.jp-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.jp-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  background: var(--block-color, var(--text-3));
+  box-shadow: 0 0 0 2px var(--block-dim, transparent);
+}
+.jp-legend-regen {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--text-3) 0,
+      var(--text-3) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+}
+.jp-timeline {
+  display: flex;
+  gap: 2px;
+  height: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.jp-seg {
+  flex: 1;
+  min-width: 6px;
+  height: 100%;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform var(--ease), opacity var(--ease);
+  position: relative;
+  background: var(--block-color, var(--text-3));
+}
+.jp-seg:hover {
+  transform: translateY(-2px);
+  z-index: 1;
+}
+.jp-seg-qmark {
+  width: 1px;
+  flex-shrink: 0;
+  background: var(--text-3);
+  opacity: 0.4;
+  border-radius: 0;
+  position: relative;
+}
+.jp-seg-qmark::after {
+  content: attr(title);
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.jp-seg-regen {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      var(--text-3) 0,
+      var(--text-3) 3px,
+      var(--surface-2) 3px,
+      var(--surface-2) 6px
+    );
+  opacity: 0.55;
+}
+.jp-seg-current {
+  box-shadow: 0 0 0 2px var(--danger), 0 0 8px rgba(199,106,94,0.4), 0 0 0 4px var(--bg);
+  z-index: 2;
+}
+
+/* ─── Quartale (als Cockpit-Style Karten) ─── */
+.jp-quarters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+.jp-quarter {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-8);
+  /* kein overflow:hidden — würde das JETZT-Badge in Q2 auf KW 14 abschneiden */
+}
+.jp-quarter-head {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-2);
+  font-weight: 500;
+  margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.jp-quarter-head::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+.jp-week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: var(--s-3);
+}
+
+/* ─── Week-Card ─── */
+.jp-week {
+  /* --block-color/dim/line werden von .jp-block-* oder .jp-week-regen gesetzt.
+     Keine Defaults hier, weil gleiche Specificity diese sonst überschreiben würde. */
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-top: 4px solid var(--block-color, var(--text-3));
+  border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-3) var(--s-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all var(--ease);
+  min-width: 0;
+  position: relative;
+  /* kein overflow:hidden — würde das "JETZT"-Badge abschneiden */
+}
+.jp-week::before {
+  /* Cockpit-Stil radialer Glow in der Block-Farbe, nur auf Hover sichtbar */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, var(--block-dim) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--ease);
+  pointer-events: none;
+}
+.jp-week:hover {
+  border-color: var(--block-color);
+  transform: translateY(-2px);
+}
+.jp-week:hover::before { opacity: 1; }
+.jp-week > * { position: relative; z-index: 1; }
+
+.jp-week-kw {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.jp-week-loc {
+  font-size: 10px;
+  color: var(--text-3);
+  opacity: 0.7;
+}
+.jp-week-date {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.jp-week-block {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--block-color);
+  background: var(--block-dim);
+  border: 1px solid var(--block-line);
+  padding: 3px 9px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+.jp-week-dots {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+.jp-week-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--text-3);
+  transition: all var(--ease);
+}
+.jp-week-dots span.done {
+  background: var(--block-color);
+  border-color: var(--block-color);
+}
+
+/* Regen-Woche: distinkter Slate-Blue Ton als "Zyklus-Ende"-Marker,
+   gestrichelte Top-Border + echter Streifen-Kontrast */
+.jp-week-regen {
+  --block-color: #7C8DB5;
+  --block-dim: rgba(124,141,181,0.18);
+  --block-line: rgba(124,141,181,0.45);
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(124,141,181,0.04) 0,
+      rgba(124,141,181,0.04) 5px,
+      rgba(124,141,181,0.14) 5px,
+      rgba(124,141,181,0.14) 10px
+    );
+  border-top-style: dashed;
+  border-top-width: 4px;
+  border-top-color: #7C8DB5;
+  opacity: 0.95;
+}
+.jp-week-regen .jp-week-block {
+  color: #7C8DB5;
+  background: rgba(124,141,181,0.18);
+  border-color: rgba(124,141,181,0.45);
+}
+.jp-week-regen:hover {
+  border-color: #7C8DB5;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      rgba(124,141,181,0.06) 0,
+      rgba(124,141,181,0.06) 5px,
+      rgba(124,141,181,0.20) 5px,
+      rgba(124,141,181,0.20) 10px
+    );
+  transform: translateY(-2px);
+}
+
+/* Aktuelle KW: dezenter Teal-Ring, kein Text-Badge (bewusst zurückhaltend) */
+.jp-week-current {
+  border-color: var(--danger);
+  box-shadow:
+    0 0 0 1px var(--danger),
+    0 0 16px -2px rgba(199,106,94,0.35);
+}
+/* Mini-Indikator-Dot rechts oben statt vollflächiger Pill */
+.jp-week-current::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 0 2px var(--surface-1);
+}
+
+/* Bearbeiten-Modus: Karten bekommen Edit-Hover-Indikator */
+.page[data-page="jahresplan"].mode-edit .jp-week:hover {
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Mobile: weniger Spalten, kompaktere Karten */
+@media (max-width: 900px) {
+  .jp-week-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .jp-head { flex-direction: column; align-items: stretch; }
+  .jp-head-right { justify-content: flex-end; }
+  .jp-timeline-legend { font-size: 10px; gap: var(--s-2); }
+  .jp-week { padding: var(--s-2) var(--s-3); }
+  .jp-quarter { padding: var(--s-5) var(--s-6); }
+  .jp-week-block {
+    font-size: 8px;
+    padding: 2px 5px;
+    letter-spacing: 0.04em;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+@media (max-width: 520px) {
+  .jp-week-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .jp-week { padding: var(--s-2); }
+  .jp-week-date { display: none; }
+  .jp-week-block {
+    font-size: 7px;
+    padding: 2px 4px;
+    letter-spacing: 0.03em;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   WOCHENPLAN-GENERATOR (Jahresplan Bearbeiten-Modus)
+   ═══════════════════════════════════════════════════════ */
+
+.pn-hero {
+  background:
+    radial-gradient(circle at 10% 0%, var(--accent-dim) 0%, transparent 55%),
+    var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-8);
+  margin-bottom: var(--s-6);
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+.pn-hero-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-size: 30px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+.pn-hero-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+}
+.pn-hero-desc {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.65;
+  max-width: 640px;
+}
+.pn-hero-desc strong { color: var(--text); }
+
+.pn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+}
+@media (max-width: 960px) {
+  .pn-grid { grid-template-columns: 1fr; }
+  .pn-grid > [style*="grid-column: 1 / -1"] { grid-column: 1; }
+}
+.pn-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  padding: var(--s-6);
+  transition: border-color var(--ease);
+}
+.pn-card:hover { border-color: var(--border-strong); }
+.pn-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: var(--s-3);
+}
+.pn-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--s-3);
+  line-height: 1.3;
+}
+.pn-card-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.6;
+}
+
+.pn-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: var(--warning-dim);
+  border: 1px solid var(--warning-line);
+  border-radius: var(--r-sm);
+}
+.pn-notice-icon {
+  color: var(--warning);
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.pn-notice-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.pn-notice-text strong { color: var(--warning); }
+
+/* Generator-Formular */
+.pn-form-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  background:
+    radial-gradient(circle at 10% 0%, var(--accent-dim) 0%, transparent 50%),
+    var(--surface-1);
+}
+.pn-form-field { display: flex; flex-direction: column; gap: 6px; }
+.pn-field-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.pn-select, .pn-input {
+  padding: 10px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  transition: all var(--ease);
+}
+.pn-select:hover, .pn-input:hover { border-color: var(--border-strong); }
+.pn-select:focus, .pn-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
+.pn-input { width: 80px; text-align: center; font-family: var(--font-mono); font-weight: 600; }
+.pn-form-row { display: flex; gap: var(--s-4); align-items: flex-end; }
+.pn-form-hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: var(--s-3);
+  padding: 8px 12px;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-sm);
+  line-height: 1.5;
+}
+.pn-preset-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 8px 0;
+}
+.pn-preset-row + .pn-preset-row { border-top: 1px solid var(--border-subtle); }
+.pn-preset-badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pn-preset-gpp  { background: rgba(76,201,240,0.15); border: 1px solid rgba(76,201,240,0.4); color: #4cc9f0; }
+.pn-preset-spp  { background: rgba(244,162,97,0.15); border: 1px solid rgba(244,162,97,0.4); color: #f4a261; }
+.pn-preset-peak { background: rgba(155,93,229,0.15); border: 1px solid rgba(155,93,229,0.4); color: #9b5de5; }
+.pn-preset-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.pn-generate-btn {
+  padding: 14px 32px;
+  border: none;
+  border-radius: var(--r-md);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--success) 100%);
+  color: var(--on-accent, #fff);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-sans);
+  margin-top: var(--s-3);
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(15,118,110,0.3);
+}
+.pn-generate-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,118,110,0.4); }
+.pn-form-action { align-items: flex-start; }
+.pn-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 500;
+}
+.pn-check input[type="checkbox"] {
+  width: 16px; height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.pn-block-rows { display: flex; flex-direction: column; gap: var(--s-3); }
+.pn-block-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 12px var(--s-4);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(circle at 0% 50%, var(--surface-3) 0%, transparent 40%),
+    var(--surface-2);
+  transition: all var(--ease);
+  flex-wrap: wrap;
+}
+.pn-block-row:hover { border-color: var(--border-strong); }
+.pn-block-name {
+  flex: 1; min-width: 0;
+  font-size: 13px; font-weight: 600;
+}
+.pn-block-goal {
+  padding: 8px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-3);
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  transition: all var(--ease);
+  cursor: pointer;
+}
+.pn-block-goal:hover { border-color: var(--border-strong); }
+.pn-block-goal:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
+.pn-block-len {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.pn-block-len .pn-input { width: 52px; padding: 5px 6px; font-size: 13px; }
+.pn-block-remove {
+  width: 24px; height: 24px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all var(--ease);
+  flex-shrink: 0;
+}
+.pn-block-remove:hover { color: var(--danger); border-color: var(--danger); }
+.pn-add-block-btn {
+  padding: 10px 20px;
+  border: 2px dashed var(--border-subtle);
+  border-radius: var(--r-md);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+  font-family: var(--font-sans);
+  margin-top: var(--s-3);
+}
+.pn-add-block-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.pn-add-block-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+@media (max-width: 720px) {
+  .pn-hero { grid-template-columns: 1fr; padding: var(--s-6); }
+  .pn-hero-icon { width: 48px; height: 48px; font-size: 22px; }
+  .pn-hero-title { font-size: 18px; }
+
+  /* ─── Accordion-Stepper für Generator auf Mobile ─── */
+  .pn-form-card { padding: var(--s-4); }
+  .pn-form-card .pn-card-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .pn-form-card .pn-card-label::after {
+    content: '▸';
+    font-size: 12px;
+    color: var(--text-3);
+    transition: transform var(--ease);
+  }
+  .pn-form-card.pn-open .pn-card-label::after {
+    transform: rotate(90deg);
+    color: var(--accent);
+  }
+  /* Alles nach dem Label verstecken wenn nicht offen */
+  .pn-form-card > *:not(.pn-card-label) {
+    display: none;
+  }
+  .pn-form-card.pn-open > * {
+    display: flex;
+  }
+  .pn-form-card.pn-open > .pn-card-label { margin-bottom: var(--s-3); }
+  .pn-form-card.pn-open > .pn-card-title,
+  .pn-form-card.pn-open > .pn-card-desc { display: block; }
+  .pn-form-card.pn-open > .pn-form-field { display: flex; }
+  .pn-form-card.pn-open > .pn-form-row { display: flex; }
+  .pn-form-card.pn-open > .pn-form-hint { display: block; }
+  .pn-form-card.pn-open > .pn-block-rows { display: flex; flex-direction: column; }
+  .pn-form-card.pn-open > .pn-add-block-btn { display: block; }
+  .pn-form-card.pn-open > .pn-generate-btn { display: block; }
+  .pn-form-card.pn-open > .tp-chips { display: flex; }
+  .pn-form-card.pn-open > label.pn-check { display: flex; }
+}
+

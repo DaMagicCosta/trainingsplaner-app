@@ -1,0 +1,65 @@
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS — Single Source of Truth
+   Direkt aus Moodboard.html übernommen (v1, Variante B)
+   ═══════════════════════════════════════════════════════ */
+:root {
+  /* Fundament */
+  --bg:            #08090B;
+  --surface-1:     #0F1014;
+  --surface-2:     #16181F;
+  --surface-3:     #1D2029;
+  --surface-hover: #242735;
+
+  /* Linien & Tiefe */
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.10);
+
+  /* Text */
+  --text:          #F7F8F8;
+  --text-2:        #8A8F98;
+  --text-3:        #62666D;
+
+  /* Akzent (Teal tief — premium) */
+  --accent:        #0F766E;
+  --accent-hover:  #14B8A6;
+  --accent-dim:    rgba(15,118,110,0.16);
+  --accent-line:   rgba(15,118,110,0.45);
+
+  /* Semantik — harmonisch zum Teal */
+  --success:       #10B981;
+  --success-dim:   rgba(16,185,129,0.10);
+  --success-line:  rgba(16,185,129,0.30);
+  --warning:       #D4A968;
+  --warning-dim:   rgba(212,169,104,0.10);
+  --warning-line:  rgba(212,169,104,0.30);
+  --danger:        #C76A5E;
+  --danger-dim:    rgba(199,106,94,0.10);
+  --danger-line:   rgba(199,106,94,0.30);
+
+  /* Typo */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+
+  /* Spacing-Skala */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  /* Radius-Skala */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+
+  /* Transitions */
+  --ease: 150ms ease;
+  --ease-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Layout */
+  --sidebar-w: 232px;
+  --bottomnav-h: 64px;
+}

@@ -1,0 +1,441 @@
+/* ═══════════════════════════════════════════════════════
+   FORTSCHRITT (v2.5)
+   ═══════════════════════════════════════════════════════ */
+.fp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--s-4);
+  margin-bottom: var(--s-6);
+  flex-wrap: wrap;
+}
+.fp-head .chart-range {
+  margin-top: var(--s-3);
+}
+
+/* Fortschritt Range-Bar: sticky beim Scrollen */
+.fp-range-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  padding: var(--s-2) 0 var(--s-3);
+  margin: 0 calc(-1 * var(--s-4));
+  padding-left: var(--s-4);
+  padding-right: var(--s-4);
+  background: var(--bg);
+}
+@media (min-width: 861px) {
+  .fp-range-sticky {
+    margin: 0 calc(-1 * var(--s-8));
+    padding-left: var(--s-8);
+    padding-right: var(--s-8);
+  }
+}
+
+/* ─── Overview-Stats (4 Karten) ─── */
+/* ─── Profil-Badge ─── */
+.fp-profile-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  border-radius: 100px;
+  padding: 3px 10px;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+/* ─── Aggregations-Toggle ─── */
+/* ─── Overview Chart-Cards (2×2 Grid mit Sparklines) ─── */
+.fp-overview-charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+@media (max-width: 560px) {
+  .fp-overview-charts { grid-template-columns: 1fr; }
+}
+.fp-chart-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-5) var(--s-6);
+  overflow: hidden;
+}
+.fp-chart-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-3);
+}
+.fp-chart-card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+}
+.fp-chart-card-total {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.fp-chart-card-body {
+  height: 100px;
+  position: relative;
+}
+.fp-chart-card-body canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ─── Karten (Chart + Top-Liste) ─── */
+.fp-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-8);
+  margin-bottom: var(--s-4);
+}
+.fp-card .card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-4);
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+
+/* ─── Exercise-Selector ─── */
+.fp-exercise-select {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all var(--ease);
+  min-width: 220px;
+}
+.fp-exercise-select:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+.fp-exercise-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-dim);
+}
+
+/* ─── Chart-Wrap ─── */
+.fp-chart-wrap {
+  position: relative;
+  height: 280px;
+}
+.fp-chart-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.fp-chart-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--text-3);
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--r-md);
+  pointer-events: none;
+}
+
+/* ─── Top-Liste mit Sparklines, PR-Badges, Trend-Pfeilen ─── */
+.fp-top-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.fp-top-empty {
+  color: var(--text-3);
+  font-size: 13px;
+  text-align: center;
+  padding: var(--s-8) 0;
+}
+
+/* ─── Fortschritt Views ─── */
+
+/* Zeitvergleich */
+.fp-compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.fp-cmp-card {
+  padding: var(--s-5);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  text-align: center;
+}
+.fp-cmp-card.fp-cmp-best { border-color: var(--accent); background: var(--accent-dim); }
+.fp-cmp-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: var(--s-3);
+}
+.fp-cmp-val {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+.fp-cmp-unit { font-size: 13px; color: var(--text-3); font-weight: 400; }
+.fp-cmp-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  font-size: 12px;
+  color: var(--text-2);
+}
+.fp-cmp-delta { font-size: 12px; margin-top: var(--s-2); }
+.fp-cmp-delta.up { color: var(--success); }
+.fp-cmp-delta.down { color: var(--danger); }
+
+/* Standards */
+.fp-standards-intro {
+  font-size: 13px;
+  color: var(--text-3);
+  line-height: 1.6;
+  margin-bottom: var(--s-6);
+  padding: var(--s-4);
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+}
+.fp-standards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+.fp-std-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.fp-std-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.fp-std-name { font-size: 14px; font-weight: 600; color: var(--text); }
+.fp-std-val { font-family: var(--font-mono); font-size: 13px; color: var(--text-2); }
+.fp-std-bar {
+  height: 24px;
+  background: var(--surface-3);
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.fp-std-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s ease;
+}
+.fp-std-fill.fp-std-beginner     { background: #8BB8E8; }
+.fp-std-fill.fp-std-novice       { background: #6DBFA0; }
+.fp-std-fill.fp-std-intermediate { background: #D4B87A; }
+.fp-std-fill.fp-std-advanced     { background: #D4978E; }
+.fp-std-fill.fp-std-elite        { background: #B08AD8; }
+.fp-std-marker {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 3px;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.5);
+  z-index: 2;
+}
+.fp-std-levels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+.fp-standards-legend {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  margin-top: var(--s-6);
+  font-size: 12px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+}
+.fp-std-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+}
+.fp-std-dot.fp-std-beginner     { background: #8BB8E8; }
+.fp-std-dot.fp-std-novice       { background: #6DBFA0; }
+.fp-std-dot.fp-std-intermediate { background: #D4B87A; }
+.fp-std-dot.fp-std-advanced     { background: #D4978E; }
+.fp-std-dot.fp-std-elite        { background: #B08AD8; }
+.fp-top-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px auto;
+  align-items: center;
+  gap: var(--s-5);
+  padding: 14px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.fp-top-item:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+  transform: translateX(2px);
+}
+.fp-top-item.fp-top-active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.fp-top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.fp-top-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* PR- und Stagnations-Badges */
+.fp-pr-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  width: fit-content;
+  border: 1px solid transparent;
+}
+.fp-pr-new {
+  background: var(--success-dim);
+  border-color: var(--success-line);
+  color: var(--success);
+}
+.fp-pr-stag {
+  background: var(--warning-dim);
+  border-color: var(--warning-line);
+  color: var(--warning);
+}
+
+/* Sparkline-Container */
+.fp-top-spark {
+  height: 32px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+.fp-sparkline {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Stat-Block rechts */
+.fp-top-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  justify-content: flex-end;
+}
+.fp-top-stats {
+  display: flex;
+  gap: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+.fp-top-stats > span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.fp-top-stat-unit {
+  font-size: 9px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+/* Trend-Pfeile */
+.fp-top-trend {
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-weight: 600;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.fp-trend-up   { color: var(--success); background: var(--success-dim); }
+.fp-trend-down { color: var(--danger);  background: var(--danger-dim);  }
+.fp-trend-flat { color: var(--text-3);  background: var(--surface-3);   }
+
+@media (max-width: 900px) {
+  .fp-top-item { grid-template-columns: minmax(0, 1fr) 110px auto; gap: var(--s-3); }
+}
+@media (max-width: 720px) {
+  .fp-top-item { grid-template-columns: minmax(0, 1fr) auto; }
+  .fp-top-spark { display: none; }
+  .fp-top-right { justify-self: end; }
+  .fp-top-stats { font-size: 12px; }
+}
+
+@media (max-width: 720px) {
+  .fp-head { flex-direction: column; align-items: stretch; }
+  .fp-card .card-head { flex-direction: column; align-items: flex-start; }
+  .fp-exercise-select { width: 100%; min-width: 0; }
+}
+

@@ -1,0 +1,635 @@
+/* ═══════════════════════════════════════════════════════
+   COCKPIT
+   ═══════════════════════════════════════════════════════ */
+.cockpit-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+.cockpit-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-8);
+  position: relative;
+  overflow: hidden;
+}
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── Hero Card (Readiness) ─── */
+.hero-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 260px;
+  background:
+    radial-gradient(circle at 20% 0%, var(--accent-dim) 0%, transparent 55%),
+    var(--surface-1);
+}
+.hero-number {
+  font-family: var(--font-mono);
+  font-size: 128px;
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-top: var(--s-4);
+}
+.hero-number .hero-max {
+  font-size: 36px;
+  color: var(--text-3);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.hero-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+}
+.hero-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 100px;
+  font-weight: 500;
+  transition: all var(--ease);
+  /* Default / Fit */
+  color: var(--success);
+  background: var(--success-dim);
+  border: 1px solid var(--success-line);
+}
+.hero-state.state-warn {
+  color: var(--warning);
+  background: var(--warning-dim);
+  border-color: var(--warning-line);
+}
+.hero-state.state-danger {
+  color: var(--danger);
+  background: var(--danger-dim);
+  border-color: var(--danger-line);
+}
+.hero-state-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+}
+/* Readiness-Zahl folgt dem State */
+.hero-number.state-warn   { color: var(--warning); }
+.hero-number.state-danger { color: var(--danger); }
+.hero-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+}
+
+/* ─── Stat Stack ─── */
+.stat-stack {
+  display: flex;
+  flex-direction: column;
+}
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--s-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.stat-item:last-child { border-bottom: none; }
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: var(--s-2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.stat-value .stat-unit {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.stat-meta {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+.stat-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: var(--s-2);
+}
+.stat-delta.up   { color: var(--success); background: var(--success-dim); }
+.stat-delta.down { color: var(--danger);  background: var(--danger-dim);  }
+
+/* ─── Chart / Balance Card ─── */
+.chart-card, .balance-card {
+  margin-bottom: var(--s-4);
+}
+.chart-card .card-head, .balance-card .card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--s-4);
+}
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.chart-range {
+  display: flex;
+  gap: 4px;
+  background: var(--surface-2);
+  padding: 3px;
+  border-radius: var(--r-sm);
+}
+.chart-range button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.chart-range button:hover { color: var(--text-2); }
+.chart-range button.active {
+  background: var(--accent-dim);
+  color: var(--accent-hover);
+  border: 1px solid var(--accent-line);
+  font-weight: 600;
+}
+.chart-title-sub {
+  color: var(--text-3);
+  font-weight: 400;
+  font-size: 13px;
+  margin-left: 4px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Muskel-Balance Bars ─── */
+.balance-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-2) 0;
+  min-height: 200px;
+}
+.bal-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 110px;
+  align-items: center;
+  gap: var(--s-3);
+}
+.bal-label {
+  font-size: 13px;
+  color: var(--text);
+  font-weight: 500;
+}
+.bal-label-l { text-align: right; }
+.bal-label-r { text-align: left; }
+.bal-track {
+  position: relative;
+  height: 12px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  border: 1px solid var(--border-subtle);
+}
+.bal-fill-l {
+  background: var(--accent);
+  height: 100%;
+}
+.bal-fill-r {
+  background: var(--success);
+  height: 100%;
+}
+/* Mittellinie als Referenz */
+.bal-track::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  bottom: -2px;
+  width: 1px;
+  background: var(--text-3);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.bal-meta {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 2px;
+  margin-top: -4px;
+}
+.bal-meta .bal-meta-l { text-align: left; }
+.bal-meta .bal-meta-c { text-align: center; }
+.bal-meta .bal-meta-r { text-align: right; }
+.bal-meta .skew-tag {
+  color: var(--warning);
+  font-weight: 500;
+}
+.bal-empty {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+  padding: var(--s-8) 0;
+  font-family: var(--font-mono);
+}
+/* ─── View-Switcher (Antagonisten / Ober-Unter / Push-Pull / V-H-Kette) ─── */
+.view-switcher {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-2);
+  padding: 3px;
+  border-radius: var(--r-sm);
+  margin: var(--s-3) 0 var(--s-4);
+  width: fit-content;
+}
+.view-switcher button {
+  background: transparent;
+  border: none;
+  color: var(--text-3);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all var(--ease);
+  white-space: nowrap;
+}
+.view-switcher button:hover { color: var(--text-2); }
+.view-switcher button.active {
+  background: var(--surface-3);
+  color: var(--text);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+/* ─── Master-Row (einzelne große Balance-Zeile in Ober/Unter, Push/Pull, V/H) ─── */
+.bal-row-master .bal-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.bal-row-master .bal-track {
+  height: 18px;
+  border-radius: 9px;
+}
+.bal-row-master .bal-meta {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* ─── View-Hint (erklärender Untertitel unter Master-Zeile) ─── */
+.bal-hint {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  border-left: 2px solid var(--accent-line);
+  background: var(--accent-dim);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+
+/* ─── Breakdown-Section (zeigt Muskeln je Seite) ─── */
+.bal-breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+  margin-top: var(--s-6);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--border-subtle);
+}
+.bal-bd-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bal-bd-head {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: var(--s-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.bal-bd-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.bal-bd-dot.l { background: var(--accent); }
+.bal-bd-dot.r { background: var(--success); }
+.bal-bd-head-total {
+  color: var(--text-2);
+  font-weight: 500;
+}
+.bal-bd-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+  font-size: 13px;
+}
+.bal-bd-item-name {
+  color: var(--text);
+}
+.bal-bd-item-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+}
+@media (max-width: 640px) {
+  .bal-breakdown { grid-template-columns: 1fr; }
+}
+
+/* ─── Mobile: Muskel-Balancer ─── */
+@media (max-width: 720px) {
+  /* View-Switcher horizontal scrollbar, damit "V-/H-Kette" erreichbar bleibt */
+  .view-switcher {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .view-switcher::-webkit-scrollbar { display: none; }
+  .view-switcher button {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Balance-Zeilen: schmalere Labels, Meta-Zeile stackt sauber */
+  .bal-row {
+    grid-template-columns: 72px 1fr 72px;
+    gap: 6px;
+  }
+  .bal-label { font-size: 12px; }
+  .bal-row-master .bal-label { font-size: 13px; }
+  .bal-meta {
+    flex-wrap: wrap;
+    font-size: 9px;
+    gap: 4px 8px;
+  }
+  .bal-meta .bal-meta-c {
+    order: 3;
+    flex-basis: 100%;
+    text-align: center;
+    margin-top: 2px;
+  }
+}
+
+/* ─── Solo-Muskeln (ohne Antagonist) ─── */
+.bal-divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--s-3) 0 var(--s-2);
+}
+.bal-solo-head {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: var(--s-2);
+}
+.bal-solo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-4);
+  padding: 2px 0 var(--s-2);
+}
+.bal-solo-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 6px 0;
+}
+.bal-solo-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+.bal-solo-value {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--text);
+  font-weight: 500;
+}
+.bal-solo-sub {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+/* ─── Planungs-Balance-Vorschau ─── */
+.jp-balance-preview {
+  margin-bottom: var(--s-4);
+}
+body.role-athlete .jp-balance-preview,
+.jp-balance-preview { display: none !important; }
+.page[data-page="jahresplan"].mode-edit .jp-balance-preview[data-has-data] { display: block !important; }
+.jp-balance-preview .balance-wrap {
+  min-height: auto;
+}
+@media (max-width: 720px) {
+  .jp-balance-preview .card-head {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+  .jp-balance-preview .card-head .chart-title::after {
+    content: '▸';
+    font-size: 12px;
+    color: var(--text-3);
+    margin-left: 8px;
+    transition: transform var(--ease);
+    display: inline-block;
+  }
+  .jp-balance-preview.pn-open .card-head .chart-title::after {
+    transform: rotate(90deg);
+    color: var(--accent);
+  }
+  .jp-balance-preview .balance-wrap,
+  .jp-balance-preview .jp-bal-landmark { display: none; }
+  .jp-balance-preview.pn-open .balance-wrap { display: flex; }
+  .jp-balance-preview.pn-open .jp-bal-landmark { display: block; }
+}
+.jp-bal-landmark {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: var(--s-3) var(--s-2) 0;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: var(--s-3);
+  line-height: 1.6;
+}
+.jp-bal-landmark span { color: var(--text-2); }
+
+/* ─── Demo-Banner ─── */
+.cp-demo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  margin-bottom: var(--s-4);
+  background: rgba(199,106,94,0.10);
+  border: 2px solid var(--danger);
+  border-radius: var(--r-md);
+  flex-wrap: wrap;
+}
+.cp-demo-banner-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  flex: 1;
+  min-width: 200px;
+}
+.cp-demo-banner-text strong {
+  color: var(--danger);
+}
+.cp-demo-banner-actions {
+  display: flex;
+  gap: var(--s-2);
+  flex-shrink: 0;
+}
+.cp-demo-banner-btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.cp-demo-banner-btn:hover { background: var(--surface-3); color: var(--text); }
+.cp-demo-banner-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+.cp-demo-banner-primary:hover { background: var(--accent-hover); }
+
+/* ─── Next Session Card ─── */
+.next-card {
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  padding: var(--s-6) var(--s-8);
+}
+.next-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--r-md);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  flex-direction: column;
+  line-height: 1.2;
+  gap: 2px;
+}
+.next-badge-day {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+.next-content { flex: 1; min-width: 0; }
+.next-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+.next-meta {
+  font-size: 13px;
+  color: var(--text-2);
+  display: flex;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+}
+.next-meta span { display: inline-flex; align-items: center; gap: 5px; }
+.next-action {
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  border: none;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--ease);
+  white-space: nowrap;
+}
+.next-action:hover { background: var(--accent-hover); }
+

@@ -1,0 +1,850 @@
+/* ═══════════════════════════════════════════════════════
+   INFO & EINSTELLUNGEN (v2.7)
+   ═══════════════════════════════════════════════════════ */
+/* Sub-Navigation */
+.info-subnav {
+  margin-bottom: var(--s-8);
+}
+
+/* Sections werden per .active ein-/ausgeblendet */
+.info-section { display: none; }
+.info-section.active { display: block; }
+
+/* 2×2 Grid für die Daten-Aktionen */
+.info-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4);
+}
+@media (max-width: 900px) {
+  .info-grid-2 { grid-template-columns: 1fr; }
+}
+
+.info-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-lg);
+  padding: var(--s-6) var(--s-8);
+  margin-bottom: var(--s-4);
+}
+.info-card-compact {
+  padding: var(--s-4) var(--s-6);
+}
+@media (max-width: 720px) {
+  .info-card { padding: var(--s-5) var(--s-5); }
+  .info-card-compact { padding: var(--s-3) var(--s-4); }
+}
+/* Nur das erste Card in Profil-Section bekommt den Hero-Glow */
+.info-section[data-section="profil"] .info-card {
+  background:
+    radial-gradient(circle at 20% 0%, var(--accent-dim) 0%, transparent 55%),
+    var(--surface-1);
+}
+/* Karten innerhalb des 2×2 Grids haben kein Bottom-Margin */
+.info-grid-2 .info-card {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+.info-grid-2 .info-card .info-text { flex: 1; }
+.info-grid-2 .info-card .info-actions { margin-top: auto; }
+.info-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-5);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--border-subtle);
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.info-card-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+}
+.info-card-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ─── Profil-Hero ─── */
+.info-profile-hero {
+  margin-bottom: var(--s-5);
+}
+.info-profile-name {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--s-2);
+  line-height: 1.1;
+}
+.info-profile-stats {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+}
+
+/* ─── Info-Rows (Key-Value-Listen) ─── */
+.info-rows {
+  display: flex;
+  flex-direction: column;
+}
+.info-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--s-4);
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  align-items: baseline;
+}
+.info-row:last-child { border-bottom: none; }
+.info-row-key {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.info-row-val {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+}
+.info-row-val code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+/* ─── Info-Text Block ─── */
+.info-text {
+  margin-bottom: var(--s-5);
+}
+.info-text p {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin: 0;
+}
+.info-text strong { color: var(--text); }
+
+/* ─── Notice-Block (für Hinweise/Warnings) ─── */
+.info-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: var(--warning-dim);
+  border: 1px solid var(--warning-line);
+  border-radius: var(--r-sm);
+  margin-bottom: var(--s-5);
+}
+.info-notice-icon {
+  color: var(--warning);
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.info-notice-text {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.info-notice-text strong { color: var(--warning); }
+
+/* ─── Action-Buttons (info-action, nicht info-btn — das ist der Sidebar-Info-Button) ─── */
+.info-actions {
+  display: flex;
+  gap: var(--s-3);
+  flex-wrap: wrap;
+}
+.info-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.info-action:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+}
+.info-action-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent, #fff);
+}
+.info-action-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+.info-action-danger {
+  background: transparent;
+  border-color: var(--danger-line);
+  color: var(--danger);
+}
+.info-action-danger:hover {
+  background: var(--danger-dim);
+  border-color: var(--danger);
+}
+
+/* ─── Form-Status-Zeile (Anamnese / Vereinbarung) ─── */
+.info-form-status {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  margin: var(--s-5) 0;
+}
+.info-form-status-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.info-form-status-value {
+  font-size: 12px;
+  color: var(--text-2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+@media (max-width: 720px) {
+  .info-form-status { grid-template-columns: 1fr; }
+}
+
+/* ─── Legal-Sektionen (nummerierte Abschnitte für Vereinbarung + Anamnese) ─── */
+.info-legal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  margin: var(--s-5) 0;
+}
+.info-legal-section {
+  padding-left: var(--s-8);
+  padding-top: var(--s-2);
+  padding-bottom: var(--s-2);
+  border-left: 2px solid var(--border-subtle);
+  position: relative;
+}
+.info-legal-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.info-legal-num {
+  position: absolute;
+  left: -15px;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 12px;
+  display: grid;
+  place-items: center;
+}
+.info-legal-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: var(--s-3);
+}
+.info-legal-body {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+.info-legal-body strong { color: var(--text); }
+.info-legal-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--s-3) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.info-legal-list li {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+  padding-left: var(--s-5);
+  position: relative;
+}
+.info-legal-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ─── Form-Rows (für Anamnese-Fragen) ─── */
+.info-form-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+.info-form-row {
+  padding: var(--s-2) 0;
+  border-bottom: 1px dashed var(--border-subtle);
+}
+.info-form-row:last-child { border-bottom: none; }
+.info-form-q {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.info-form-a {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.55;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.info-form-a-empty {
+  color: var(--text-3);
+  font-style: italic;
+}
+
+/* Muted Chips (für Vorerkrankungs-Liste, keine aktiv) */
+.info-chip-muted {
+  display: inline-block;
+  padding: 3px 9px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 100px;
+  color: var(--text-3);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* ─── Rollenbasierte Sichtbarkeit: Anamnese nur Athlet, Vereinbarung nur Trainer ─── */
+body.role-trainer #infoSubnav button[data-section="anamnese"],
+body.role-trainer .info-section[data-section="anamnese"],
+body.role-trainer .profile-link-anamnese {
+  display: none !important;
+}
+body.role-athlete #infoSubnav button[data-section="vereinbarung"],
+body.role-athlete .info-section[data-section="vereinbarung"],
+body.role-athlete .profile-link-vereinbarung {
+  display: none !important;
+}
+
+/* ─── Flex-Layout für Formular-Karten (Anamnese + Vereinbarung) ─── */
+/* Verhindert Margin-Collapsing zwischen Notice, Status, Legal-Block, Confirm, Actions */
+.info-section[data-section="anamnese"] .info-card,
+.info-section[data-section="vereinbarung"] .info-card {
+  padding: var(--s-6) var(--s-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-6);
+}
+.info-section[data-section="anamnese"] .info-card-head,
+.info-section[data-section="vereinbarung"] .info-card-head {
+  margin-bottom: 0;
+  padding-bottom: var(--s-5);
+}
+.info-section[data-section="anamnese"] .info-card > *,
+.info-section[data-section="vereinbarung"] .info-card > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.info-section[data-section="anamnese"] .info-actions,
+.info-section[data-section="vereinbarung"] .info-actions {
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ─── Bestätigungs-Block ─── */
+.info-confirm-box {
+  background:
+    radial-gradient(circle at 10% 0%, var(--success-dim) 0%, transparent 60%),
+    var(--surface-2);
+  border: 1px solid var(--success-line);
+  border-radius: var(--r-md);
+  padding: var(--s-5);
+  margin-top: var(--s-5);
+}
+.info-confirm-check {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.info-confirm-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--on-accent, #fff);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.info-confirm-check strong {
+  font-size: 13px;
+  color: var(--success);
+  display: block;
+  margin-bottom: 4px;
+}
+.info-confirm-check span {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+  font-style: italic;
+}
+.info-action-icon {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+.info-action:disabled,
+.info-action[disabled] {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Keyboard-Shortcut-Tags */
+.info-row-val kbd {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+
+/* Info-Tabelle (für strukturierte Darstellungen wie die RPE-Skala) */
+.info-table {
+  margin: var(--s-4) 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.info-table-row {
+  display: grid;
+  grid-template-columns: 80px 80px 1fr;
+  gap: var(--s-3);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
+  align-items: center;
+}
+.info-table-row:last-child { border-bottom: none; }
+.info-table-head {
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.info-table-row:not(.info-table-head) > div:first-child {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+.info-table-row:not(.info-table-head) > div:nth-child(2) {
+  font-family: var(--font-mono);
+  color: var(--text-2);
+}
+.info-table-row:not(.info-table-head) > div:last-child {
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Info-Pills (für Zonen-Indikatoren in der Readiness-Erklärung) */
+.info-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid;
+  margin-right: 6px;
+}
+.info-pill-success {
+  color: var(--success);
+  background: var(--success-dim);
+  border-color: var(--success-line);
+}
+.info-pill-warning {
+  color: var(--warning);
+  background: var(--warning-dim);
+  border-color: var(--warning-line);
+}
+.info-pill-danger {
+  color: var(--danger);
+  background: var(--danger-dim);
+  border-color: var(--danger-line);
+}
+.info-text code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  color: var(--accent);
+}
+
+/* Gruppen-Header in der Hilfe-Sektion */
+.info-group-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: var(--s-8) 0 var(--s-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-3);
+  font-weight: 500;
+}
+.info-group-head:first-child { margin-top: 0; }
+.info-group-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* Formel-Box (für Readiness, 1RM, Aktive Analyse) */
+.info-formula {
+  background:
+    radial-gradient(circle at 20% 0%, var(--accent-dim) 0%, transparent 70%),
+    var(--surface-2);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--r-md);
+  padding: var(--s-4) var(--s-5);
+  margin: var(--s-4) 0;
+  position: relative;
+}
+.info-formula-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.info-formula-code {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+.info-formula-example {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--text-2);
+}
+.info-formula-example strong { color: var(--text); }
+
+/* Block-Parameter-Karten (3 Blöcke in Reihe) */
+.info-block-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-4) 0;
+}
+.info-block-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--block-c, var(--accent));
+  border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-4);
+}
+.info-block-card.ibc-gpp  { --block-c: var(--accent); }
+.info-block-card.ibc-spp  { --block-c: var(--success); }
+.info-block-card.ibc-peak { --block-c: var(--warning); }
+.info-block-card-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--block-c);
+  margin-bottom: 4px;
+}
+.info-block-card-goal {
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 2px;
+}
+.info-block-card-scheme {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text);
+}
+
+/* Readiness-Zonen-Leiste (wie im Original, aber Cockpit-Farben) */
+.info-zones {
+  display: flex;
+  height: 32px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin: var(--s-4) 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+}
+.info-zones > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--s-2);
+  text-align: center;
+}
+.info-zone-danger  { flex: 4; background: var(--danger-dim);  color: var(--danger);  border-right: 1px solid var(--surface-1); }
+.info-zone-warning { flex: 3; background: var(--warning-dim); color: var(--warning); border-right: 1px solid var(--surface-1); }
+.info-zone-success { flex: 3; background: var(--success-dim); color: var(--success); }
+
+/* Komponenten-Grid (für Fatigue-Score 4 Komponenten) */
+.info-components {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-3);
+  margin: var(--s-4) 0;
+}
+.info-component {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--comp-c, var(--accent));
+  border-radius: var(--r-sm);
+  padding: var(--s-3) var(--s-4);
+}
+.info-component-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+.info-component-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.info-component-weight {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--comp-c, var(--accent));
+  background: var(--surface-3);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.info-component-desc {
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.info-component-values {
+  font-size: 11px;
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  line-height: 1.5;
+}
+.info-component-values .up { color: var(--success); }
+.info-component-values .down { color: var(--danger); }
+.info-component.cmp-1 { --comp-c: var(--danger); }
+.info-component.cmp-2 { --comp-c: var(--accent); }
+.info-component.cmp-3 { --comp-c: var(--success); }
+.info-component.cmp-4 { --comp-c: var(--warning); }
+
+/* Glossar (2-spaltig mit Begriffs-Liste) */
+.info-glossary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0 var(--s-6);
+}
+.info-glossary-term {
+  display: flex;
+  gap: var(--s-3);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
+  align-items: baseline;
+}
+.info-glossary-term strong {
+  min-width: 110px;
+  flex-shrink: 0;
+  font-weight: 600;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.info-glossary-term span {
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* Quellen-Box am Ende der Hilfe */
+.info-sources {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  padding: var(--s-4) var(--s-5);
+  margin-top: var(--s-4);
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+.info-sources-title {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-3);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.info-sources strong { color: var(--text); }
+
+@media (max-width: 720px) {
+  .info-card { padding: var(--s-5) var(--s-6); }
+  .info-row { grid-template-columns: 1fr; gap: 4px; }
+  .info-profile-name { font-size: 22px; }
+  .info-actions { flex-direction: column; }
+  .info-action { width: 100%; justify-content: center; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ATHLETEN-VERWALTEN (Trainer-Only Card im Info-Tab)
+   ═══════════════════════════════════════════════════════ */
+body.role-athlete .info-athletes-card { display: none; }
+.info-athletes-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.info-athlete-row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  transition: border-color var(--ease);
+}
+.info-athlete-row:hover { border-color: var(--border-strong); }
+.info-athlete-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.info-athlete-info { flex: 1; min-width: 0; }
+.info-athlete-name {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+.info-athlete-meta {
+  font-size: 11px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+.info-athlete-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.info-athlete-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-2);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.info-athlete-btn:hover {
+  background: var(--surface-1);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.info-athlete-btn-danger:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  background: var(--danger-dim);
+}
+.info-athletes-foot {
+  margin-top: var(--s-4);
+  padding-top: var(--s-4);
+  border-top: 1px dashed var(--border-subtle);
+  display: flex;
+  justify-content: flex-start;
+}
+
