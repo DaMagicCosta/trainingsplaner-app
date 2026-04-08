@@ -9,7 +9,7 @@ import { switchTab } from './tabs.js';
 import { renderCockpit } from './pages/cockpit.js';
 import { renderJahresplan } from './pages/jahresplan.js';
 import { renderTrainingsplan, _logSet, _getSessionsByDay } from './pages/trainingsplan.js';
-import { renderFortschritt, renderCompare, renderStandards } from './pages/fortschritt.js';
+import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.js';
 import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
 import { reloadDemoProfile } from './demo-loader.js';
@@ -248,7 +248,7 @@ import { _getBwFactor, _effectiveWeight } from './features/muscle-balance.js';
     btn.addEventListener('click', () => {
       document.querySelectorAll('#fpCompareMode button').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderCompare();
+      if (state.profile) renderFortschritt(state.profile);
     });
   });
 
