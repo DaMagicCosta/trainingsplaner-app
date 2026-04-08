@@ -41,9 +41,9 @@ const cmdkItems = [
   { group: 'Tools', label: 'Quiz starten', ico: '?', action: () => toast('Quiz-Modul in v2 noch nicht portiert') },
   { group: 'Tools', label: 'Sync jetzt', ico: '↺', action: () => toast('Sync im Demo-Modus bewusst deaktiviert') },
 
-  { group: 'Einstellungen', label: 'Theme wechseln', ico: '◐', action: () => toast('Theme-Wechsel unten links im Sidebar-Fuss (3 Teal-Varianten)') },
+  { group: 'Einstellungen', label: 'Theme wechseln', ico: '◐', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'einstellungen')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'einstellungen')); }, 50); } },
   { group: 'Einstellungen', label: 'Profil sperren', ico: '🔒', kbd: ['⌘','L'], action: () => toast('PIN-Lock im Demo-Modus bewusst deaktiviert') },
-  { group: 'Einstellungen', label: 'Info / Ueber die App', ico: 'ⓘ', action: () => switchTab('info') },
+  { group: 'Einstellungen', label: 'Info / Ueber die App', ico: 'ⓘ', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'ueber')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'ueber')); }, 50); } },
 ];
 
 function renderCmdkList(filter = '') {
