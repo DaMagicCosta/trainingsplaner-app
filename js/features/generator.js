@@ -335,9 +335,15 @@ import { renderCockpit } from '../pages/cockpit.js';
           plan._location = blockLoc;
           profile.plans['w' + kw] = plan;
 
-          if (homeFallback && blockLoc !== 'home') {
-            const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
-            profile.plans['w' + kw]._homeFallback = homePlan.days;
+          if (homeFallback) {
+            if (blockLoc !== 'home') {
+              const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
+              profile.plans['w' + kw]._homeFallback = homePlan.days;
+            }
+            if (blockLoc !== 'studio') {
+              const studioPlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'studio', blockIdx);
+              profile.plans['w' + kw]._studioFallback = studioPlan.days;
+            }
           }
 
           weeksSinceRegen++;

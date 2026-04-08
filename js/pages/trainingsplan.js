@@ -140,19 +140,42 @@ function renderTrainingsplan(profile) {
       const emptyAdd = document.getElementById('tpEmptyAddExercise');
       if (emptyAdd) emptyAdd.addEventListener('click', () => document.getElementById('tpAddExercise')?.click());
     } else {
-      // Studio/Home-Toggle: wenn Home aktiv und Fallback vorhanden → Fallback-Übungen zeigen
-      const useHome = state.tpUseHome && plan._homeFallback;
-      const dayData = useHome ? (plan._homeFallback[state.tpViewDay] || plan._homeFallback[0]) : (plan.days[state.tpViewDay] || plan.days[0]);
+      // Studio/Home-Toggle: Ausweichplan wenn vorhanden
+      const hasFallback = plan._homeFallback || plan._studioFallback;
+      const planLoc = plan._location || 'studio';
+      let useFallback = false;
+      let fallbackDays = null;
+      let fallbackLabel = '';
+
+      if (state.tpUseHome && plan._homeFallback) {
+        useFallback = true;
+        fallbackDays = plan._homeFallback;
+        fallbackLabel = 'Home-Plan';
+      } else if (!state.tpUseHome && plan._studioFallback) {
+        useFallback = true;
+        fallbackDays = plan._studioFallback;
+        fallbackLabel = 'Studio-Plan';
+      }
+
+      const dayData = useFallback
+        ? (fallbackDays[state.tpViewDay] || fallbackDays[0])
+        : (plan.days[state.tpViewDay] || plan.days[0]);
       const session = sessionsByDay[state.tpViewDay] || null;
       exEl.innerHTML = _renderTpExercises(dayData, session);
 
       // Studio/Home-Toggle sichtbar wenn Fallback vorhanden
       const locBtn = document.getElementById('tpLocToggle');
       if (locBtn) {
-        locBtn.style.display = plan._homeFallback ? '' : 'none';
+        locBtn.style.display = hasFallback ? '' : 'none';
         locBtn.classList.toggle('home-active', !!state.tpUseHome);
         const locLabel = document.getElementById('tpLocLabel');
-        if (locLabel) locLabel.textContent = state.tpUseHome ? 'Home-Plan' : 'Studio-Plan';
+        if (locLabel) {
+          if (useFallback) {
+            locLabel.textContent = fallbackLabel;
+          } else {
+            locLabel.textContent = planLoc === 'home' ? 'Home-Plan' : 'Studio-Plan';
+          }
+        }
       }
     }
   }
