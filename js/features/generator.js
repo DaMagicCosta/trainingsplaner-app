@@ -12,6 +12,7 @@ import { renderCockpit } from '../pages/cockpit.js';
    WOCHENPLAN-GENERATOR
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
+  console.log('[Generator] IIFE gestartet');
 
   // ── Mobile Accordion: Schritte auf-/zuklappen ──
   const pnCards = document.querySelectorAll('.pn-grid .pn-form-card');
@@ -89,7 +90,8 @@ import { renderCockpit } from '../pages/cockpit.js';
   const splitSelect  = document.getElementById('genSplit');
   const submitBtn    = document.getElementById('genSubmit');
   const dayChips     = document.getElementById('genDayChips');
-  if (!submitBtn || !blockRowsEl) return;
+  console.log('[Generator] submitBtn:', !!submitBtn, 'blockRowsEl:', !!blockRowsEl);
+  if (!submitBtn || !blockRowsEl) { console.warn('[Generator] DOM-Elemente nicht gefunden — ABBRUCH'); return; }
 
   // Default-Location aus Profil: erster hinterlegter Ort, oder 'studio'
   function _defaultLoc() {
