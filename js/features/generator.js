@@ -403,30 +403,26 @@ import { renderCockpit } from '../pages/cockpit.js';
       }
     }
 
-    try {
-      applyToProfile();
-      dbg('applyToProfile OK');
-      if (repeatYear) profile.periodization.endKw = 52;
+    applyToProfile();
+    dbg('applyToProfile OK');
+    if (repeatYear) profile.periodization.endKw = 52;
 
-      dbg('Plans: ' + Object.keys(profile.plans).length);
-      renderJahresplan(profile);
-      dbg('renderJahresplan OK');
-      renderTrainingsplan(profile);
-      dbg('renderTrainingsplan OK');
-      renderCockpit(profile);
-      dbg('renderCockpit OK');
-      buildPlanBalance(profile);
-      dbg('buildPlanBalance OK');
-      _saveProfile();
-      dbg('ALLES OK — gespeichert');
-    } catch (e) {
-      dbg('FEHLER: ' + e.message + ' @ ' + (e.stack?.split('\n').slice(0,3).join(' | ')));
-    }
+    dbg('Plans: ' + Object.keys(profile.plans).length);
+    renderJahresplan(profile);
+    dbg('renderJahresplan OK');
+    renderTrainingsplan(profile);
+    dbg('renderTrainingsplan OK');
+    renderCockpit(profile);
+    dbg('renderCockpit OK');
+    buildPlanBalance(profile);
+    dbg('buildPlanBalance OK');
+    _saveProfile();
+    dbg('ALLES OK — gespeichert');
 
     const totalPlans = Object.keys(profile.plans || {}).filter(k => k.startsWith('w')).length;
     toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
-    } catch (outerErr) {
-      dbg('OUTER FEHLER: ' + outerErr.message + ' @ ' + (outerErr.stack?.split('\n').slice(0,3).join(' | ')));
+    } catch (e) {
+      dbg('FEHLER: ' + e.message + ' @ ' + (e.stack?.split('\n').slice(0,3).join(' | ')));
     }
   });
 
