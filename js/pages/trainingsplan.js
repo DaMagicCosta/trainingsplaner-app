@@ -441,6 +441,19 @@ function _renderTpExercises(day, session) {
   }).join('');
 }
 
+// Letztes geloggtes Gewicht einer Übung aus den Sessions holen
+function _lastLoggedWeight(exerciseName) {
+  const sessions = state.profile?.sessions || [];
+  for (let i = sessions.length - 1; i >= 0; i--) {
+    const ex = (sessions[i].exercises || []).find(e => e.name === exerciseName);
+    if (ex?.sets?.length) {
+      const lastSet = ex.sets[ex.sets.length - 1];
+      if (lastSet.gewicht != null) return { kg: lastSet.gewicht, bwZusatz: lastSet._bwZusatz };
+    }
+  }
+  return null;
+}
+
 // ─── Einzelne Satz-Zeile (geloggt, offen, oder in Bearbeitung) ───
 // loggedSet: { wdh, gewicht, rpe } wenn geloggt, sonst null
 // isEditing: true wenn diese Zeile gerade bearbeitet wird → zeigt Input-Formular
@@ -457,9 +470,10 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   if (isEditing) {
     const prefillWdh = loggedSet?.wdh ?? (plannedWdh ?? '');
     // BW-Übungen: Zusatzgewicht anzeigen (nicht Totalgewicht)
+    const lastLogged = _lastLoggedWeight(exerciseName);
     const prefillKg  = bwF
-      ? (loggedSet?._bwZusatz ?? 0)
-      : (loggedSet?.gewicht ?? (plannedGewicht ?? ''));
+      ? (loggedSet?._bwZusatz ?? lastLogged?._bwZusatz ?? 0)
+      : (loggedSet?.gewicht ?? plannedGewicht ?? lastLogged?.kg ?? '');
     const prefillRpe = loggedSet?.rpe ?? '';
     const kgLabel = bwF ? 'Zusatz' : isBand ? 'Band' : 'kg';
     const kgPlaceholder = bwF ? '0' : isBand ? 'Stärke' : 'kg';
@@ -514,7 +528,18 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
 
   // Offen: planned values + Loggen-Button
   const pw  = plannedWdh != null ? plannedWdh : '—';
-  const pkg = plannedGewicht != null ? _fmtKg(plannedGewicht) : '—';
+  // Gewicht: geplant > letztes geloggtes > —
+  let pkg = '—';
+  let kgHint = '';
+  if (plannedGewicht != null) {
+    pkg = _fmtKg(plannedGewicht);
+  } else {
+    const last = _lastLoggedWeight(exerciseName);
+    if (last && last.kg != null) {
+      pkg = _fmtKg(last.kg);
+      kgHint = ' <span style="color:var(--text-3);font-size:10px">letztes</span>';
+    }
+  }
   const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg · nur Zusatzgewicht eingeben</div>`
     : isBand ? `<div class="tp-set-bw-hint">Bandstärke eintragen (leicht=5, mittel=10, schwer=20 kg)</div>`
     : '';
@@ -522,7 +547,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
       <div class="tp-set-field"><span class="tp-set-planned">${pw}</span><span class="tp-set-unit">Wdh</span></div>
-      <div class="tp-set-field"><span class="tp-set-planned">${pkg}</span><span class="tp-set-unit">kg</span></div>
+      <div class="tp-set-field"><span class="tp-set-planned">${pkg}${kgHint}</span><span class="tp-set-unit">kg</span></div>
       <div class="tp-set-field"><span class="tp-set-planned">—</span><span class="tp-set-unit">RPE</span></div>
       <button class="tp-set-log-btn" type="button">+ Loggen</button>
       ${bwOpenHint}
