@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { escapeHtml } from './utils.js';
+import { toast, escapeHtml } from './utils.js';
 import { switchTab } from './tabs.js';
 import { setRole, switchProfile, toggleRoleDropdown } from './roles.js';
 import { startNextEinheit } from "./features/log-session.js";

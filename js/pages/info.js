@@ -1,5 +1,5 @@
 import { state, STORAGE_KEYS, _saveProfile, _clearSavedProfile } from '../state.js';
-import { toast, escapeHtml, _fmtKg } from '../utils.js';
+import { toast, escapeHtml, _fmtKg, _fmtNum } from '../utils.js';
 import { _formatEquipment, _formatLocations } from '../features/profile-edit.js';
 import { switchTab } from '../tabs.js';
 import { themeLabels } from '../themes.js';

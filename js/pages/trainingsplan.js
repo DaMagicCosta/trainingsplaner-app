@@ -1,5 +1,5 @@
 import { state, STORAGE_KEYS, _saveProfile } from '../state.js';
-import { toast, _parseDE, _isoWeek, _fmtKg, _DOW_DE_SHORT, _DOW_DE_LONG, _MONTH_DE } from '../utils.js';
+import { toast, escapeHtml, _parseDE, _isoWeek, _fmtKg, _DOW_DE_SHORT, _DOW_DE_LONG, _MONTH_DE } from '../utils.js';
 import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
 import { _isoWeekToMonday, _calcPeriodization, _blockClass } from './jahresplan.js';
 

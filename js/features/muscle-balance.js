@@ -1,6 +1,7 @@
 import { state } from '../state.js';
-import { toast, _parseDE, _fmtKg } from '../utils.js';
+import { toast, _parseDE, _fmtKg, _fmtNum } from '../utils.js';
 import { MUSCLE_MAP, ANTAGONIST_PAIRS, SOLO_GROUPS, BALANCE_VIEWS } from '../data/muscle-map.js';
+import { _lxAllExercises } from '../data/lexikon-data.js';
 
 export { _allGroups, _getBwFactor, _effectiveWeight, buildMuscleBalance };
 

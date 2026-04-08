@@ -1,5 +1,5 @@
 import { state, STORAGE_KEYS, _saveProfile } from '../state.js';
-import { toast, _parseDE, _isoWeek, _fmtKg, _fmtNum, _DOW_DE_SHORT } from '../utils.js';
+import { toast, _parseDE, _isoWeek, _fmtKg, _fmtNum, _DOW_DE_SHORT, _MONTH_DE } from '../utils.js';
 
 export { renderJahresplan, _calcPeriodization, _isoWeekToMonday, _groupSessionsByKw, _blockClass, _abbrevBlock };
 
