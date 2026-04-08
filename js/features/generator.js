@@ -207,33 +207,32 @@ import { renderCockpit } from '../pages/cockpit.js';
     const startKw = parseInt(kwStartInput.value) || 1;
     const regen = readRegenConfig();
 
-    // Regen-Wochen berechnen basierend auf Modus
+    // Regen-Wochen berechnen basierend auf Modus (inkl. Ganzjährig-Wiederholung)
     const regenWeeks = [];
     let kw = startKw;
+    let safetyCalc = 200;
 
-    if (regen.mode === 'after_each') {
-      blocks.forEach(b => {
-        kw += b.length;
-        for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
-      });
-    } else if (regen.mode === 'after_n') {
+    function calcOnePass() {
+      let weeksSinceRegen = 0;
       blocks.forEach((b, i) => {
         kw += b.length;
-        if ((i + 1) % regen.afterN === 0) {
-          for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
-        }
-      });
-    } else if (regen.mode === 'after_weeks') {
-      let weeksSinceRegen = 0;
-      blocks.forEach(b => {
-        for (let w = 0; w < b.length && kw <= 52; w++) { kw++; weeksSinceRegen++; }
-        if (weeksSinceRegen >= regen.afterN) {
+        weeksSinceRegen += b.length;
+
+        let insertRegen = false;
+        if (regen.mode === 'after_each') insertRegen = true;
+        else if (regen.mode === 'after_n' && (i + 1) % regen.afterN === 0) insertRegen = true;
+        else if (regen.mode === 'after_weeks' && weeksSinceRegen >= regen.afterN) insertRegen = true;
+
+        if (insertRegen && regen.mode !== 'none') {
           for (let r = 0; r < regen.duration && kw <= 52; r++) { regenWeeks.push(kw); kw++; }
           weeksSinceRegen = 0;
         }
       });
-    } else {
-      blocks.forEach(b => { kw += b.length; });
+    }
+
+    calcOnePass();
+    if (repeatYear) {
+      while (kw <= 52 && safetyCalc-- > 0) calcOnePass();
     }
 
     // Periodisierung ins Profil schreiben
