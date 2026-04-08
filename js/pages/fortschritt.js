@@ -467,6 +467,132 @@ function renderFortschritt(profile) {
   renderStandards();
 }
 
+// ── Perioden-Gegenüberstellung (Jahre/Quartale) ──
+function renderCompare() {
+  const grid = document.getElementById('fpCompareGrid');
+  if (!grid || !state.profile) return;
+  const sessions = state.profile.sessions || [];
+  if (sessions.length === 0) { grid.innerHTML = '<div class="fp-top-empty">Keine Daten vorhanden.</div>'; return; }
+
+  const mode = document.querySelector('#fpCompareMode button.active')?.dataset.cmp || 'year';
+  const buckets = {};
+
+  sessions.forEach(s => {
+    const d = _parseDE(s.date);
+    if (!d) return;
+    const year = d.getFullYear();
+    const q = Math.ceil((d.getMonth() + 1) / 3);
+    const key = mode === 'year' ? String(year) : `${year} Q${q}`;
+    if (!buckets[key]) buckets[key] = { sessions: 0, sets: 0, volume: 0 };
+    buckets[key].sessions++;
+    (s.exercises || []).forEach(ex => {
+      (ex.sets || []).forEach(set => {
+        buckets[key].sets++;
+        buckets[key].volume += (set.gewicht || 0) * (set.wdh || 0);
+      });
+    });
+  });
+
+  const keys = Object.keys(buckets).sort();
+  const maxVol = Math.max(...keys.map(k => buckets[k].volume), 1);
+  const bestKey = keys.reduce((best, k) => buckets[k].volume > (buckets[best]?.volume || 0) ? k : best, keys[0]);
+
+  grid.innerHTML = keys.map(key => {
+    const b = buckets[key];
+    const isBest = key === bestKey;
+    const volT = (b.volume / 1000).toFixed(1);
+    return `
+      <div class="fp-cmp-card${isBest ? ' fp-cmp-best' : ''}">
+        <div class="fp-cmp-label">${key}</div>
+        <div class="fp-cmp-val">${volT}<span class="fp-cmp-unit">t</span></div>
+        <div class="fp-cmp-stats">
+          <span>${b.sessions} Einheiten</span>
+          <span>${b.sets} Sätze</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── Kraft-Standards (NSCA/ACSM-basiert, geschlechtsdifferenziert) ──
+function renderStandards() {
+  const STANDARDS_M = {
+    'Bankdrücken':  [0.50, 0.75, 1.00, 1.25, 1.50],
+    'Kniebeuge':    [0.75, 1.00, 1.25, 1.75, 2.25],
+    'Kreuzheben':   [1.00, 1.25, 1.50, 2.00, 2.50],
+    'Schulterdrücken': [0.35, 0.55, 0.70, 0.85, 1.05],
+    'Rudern':       [0.50, 0.70, 0.90, 1.10, 1.35]
+  };
+  const STANDARDS_F = {
+    'Bankdrücken':  [0.25, 0.40, 0.60, 0.80, 1.00],
+    'Kniebeuge':    [0.50, 0.70, 0.90, 1.20, 1.50],
+    'Kreuzheben':   [0.65, 0.85, 1.10, 1.40, 1.75],
+    'Schulterdrücken': [0.20, 0.35, 0.45, 0.60, 0.75],
+    'Rudern':       [0.30, 0.45, 0.60, 0.75, 0.90]
+  };
+  const STD_LABELS = ['Anfänger', 'Geübt', 'Fortgeschr.', 'Stark', 'Elite'];
+  const STD_CLASSES = ['fp-std-beginner', 'fp-std-novice', 'fp-std-intermediate', 'fp-std-advanced', 'fp-std-elite'];
+  const EXERCISE_MAP = {
+    'Bankdrücken': ['Bankdrücken', 'Flachbankdrücken', 'Chest Press'],
+    'Kniebeuge': ['Kniebeuge', 'Kniebeugen', 'Back Squat', 'Beinpresse'],
+    'Kreuzheben': ['Kreuzheben', 'Deadlift', 'Rumänisches Kreuzheben'],
+    'Schulterdrücken': ['Military Press', 'Schulterdrücken', 'Shoulder Press'],
+    'Rudern': ['Rudern', 'Langhantelrudern', 'Latzug', 'Cable Row']
+  };
+  const grid = document.getElementById('fpStandardsGrid');
+  if (!grid || !state.profile) return;
+
+  const bw = state.profile.gewicht || 80;
+  const isFemale = (state.profile.geschlecht || '').toLowerCase().includes('w');
+  const standards = isFemale ? STANDARDS_F : STANDARDS_M;
+  const sessions = state.profile.sessions || [];
+
+  const best1RM = {};
+  Object.keys(EXERCISE_MAP).forEach(stdName => {
+    const aliases = EXERCISE_MAP[stdName];
+    let maxRM = 0;
+    sessions.forEach(s => {
+      (s.exercises || []).forEach(ex => {
+        const match = aliases.some(a => ex.name.includes(a));
+        if (!match) return;
+        (ex.sets || []).forEach(set => {
+          const rm = _calc1RM(set.gewicht || 0, set.wdh || 0);
+          if (rm > maxRM) maxRM = rm;
+        });
+      });
+    });
+    best1RM[stdName] = maxRM;
+  });
+
+  grid.innerHTML = Object.entries(standards).map(([name, ratios]) => {
+    const rm = best1RM[name] || 0;
+    const ratio = bw > 0 ? rm / bw : 0;
+    const eliteRatio = ratios[4];
+    const pct = Math.min(ratio / eliteRatio * 100, 100);
+    let level = 0;
+    for (let i = ratios.length - 1; i >= 0; i--) {
+      if (ratio >= ratios[i]) { level = i; break; }
+    }
+    const levelClass = STD_CLASSES[level];
+    const levelLabel = STD_LABELS[level];
+    const rmStr = rm > 0 ? `${Math.round(rm)} kg (${ratio.toFixed(1)}×BW) · ${levelLabel}` : 'Keine Daten';
+
+    return `
+      <div class="fp-std-row">
+        <div class="fp-std-head">
+          <div class="fp-std-name">${name}</div>
+          <div class="fp-std-val">${rmStr}</div>
+        </div>
+        <div class="fp-std-bar">
+          <div class="fp-std-fill ${levelClass}" style="width:${rm > 0 ? pct : 0}%"></div>
+          ${rm > 0 ? `<div class="fp-std-marker" style="left:${pct}%"></div>` : ''}
+        </div>
+        <div class="fp-std-levels">
+          ${ratios.map((r, i) => `<span>${(r * bw).toFixed(0)}kg</span>`).join('')}
+        </div>
+      </div>`;
+  }).join('');
+}
+
 // Chart für die ausgewählte Übung zeichnen
 function _fpDrawChart(exerciseMap) {
   const canvas = document.getElementById('fpChart');
