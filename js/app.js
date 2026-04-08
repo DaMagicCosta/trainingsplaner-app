@@ -95,6 +95,7 @@ loadDemoProfile().then(() => {
     });
 
     if (state.profile) {
+      _saveProfile();
       renderCockpit(state.profile);
       renderJahresplan(state.profile);
       renderTrainingsplan(state.profile);
