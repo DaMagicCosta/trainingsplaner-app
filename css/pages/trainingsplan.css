@@ -567,6 +567,7 @@ body.role-athlete .tp-mode { display: none; }
   gap: var(--s-2);
 }
 .page[data-page="trainingsplan"].tp-edit-active .tp-ex-edit-bar { display: flex; }
+.page[data-page="trainingsplan"].tp-edit-active .tp-ex-plan { display: none; }
 .page[data-page="trainingsplan"].tp-edit-active .tp-set-log-btn { display: none; }
 .tp-ex-edit-btn {
   width: 32px; height: 32px;
