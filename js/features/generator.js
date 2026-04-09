@@ -285,7 +285,10 @@ import { renderCockpit } from '../pages/cockpit.js';
         if (availEq && ex.eq) {
           return ex.eq.some(e => availEq.has(e));
         }
-        // Fallback: nach Location filtern
+        // Fallback: Home/Outdoor ohne Equipment → nur Bodyweight
+        if (location === 'home' || location === 'outdoor') {
+          return ex.eq?.includes('Bodyweight') || (ex.location || 'studio') === location;
+        }
         return location === 'all' || (ex.location || 'studio') === location;
       })
       .slice(0, count);
