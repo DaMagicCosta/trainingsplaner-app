@@ -12,13 +12,7 @@ import { renderCockpit } from '../pages/cockpit.js';
    WOCHENPLAN-GENERATOR
    ═══════════════════════════════════════════════════════ */
 (function initGenerator() {
-  // Debug-Box für Mobile (temporär)
-  const _dbg = document.createElement('div');
-  _dbg.id = 'genDebug';
-  _dbg.style.cssText = 'position:fixed;bottom:70px;left:8px;right:8px;background:#1a1a2e;color:#0f0;font:11px monospace;padding:8px;border-radius:6px;z-index:9999;max-height:120px;overflow:auto;border:1px solid #333;display:none;';
-  document.body.appendChild(_dbg);
-  function dbg(msg) { _dbg.style.display = 'block'; _dbg.textContent += msg + '\n'; console.log('[Generator]', msg); }
-  dbg('IIFE gestartet');
+  function dbg(msg) { console.log('[Generator]', msg); }
 
   // ── Mobile Accordion: Schritte auf-/zuklappen ──
   const pnCards = document.querySelectorAll('.pn-grid .pn-form-card');
@@ -354,7 +348,7 @@ import { renderCockpit } from '../pages/cockpit.js';
 
     let kw = startKw;
     let weeksSinceRegen = 0;
-    let safetyLimit = 200; // Endlos-Loop-Schutz
+    let safetyLimit = 520; // Endlos-Loop-Schutz (10× max KWs)
 
     // Einmal durchlaufen oder bei "Ganzjährig" wiederholen bis KW 52
     function generateOnePass() {
