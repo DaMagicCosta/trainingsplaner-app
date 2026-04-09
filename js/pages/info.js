@@ -118,21 +118,32 @@ function exportProfileJson() {
 function importProfileJson() {
   const input = document.createElement('input');
   input.type = 'file';
-  input.accept = '.json';
-  input.addEventListener('change', async (e) => {
+  input.accept = '.json,application/json';
+  input.style.display = 'none';
+  document.body.appendChild(input);
+  input.addEventListener('change', (e) => {
     const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const text = await file.text();
-      const profile = JSON.parse(text);
-      if (!profile.name) { toast('Ungültiges Profil — "name" fehlt'); return; }
-      if (!profile.sessions) profile.sessions = [];
-      if (!profile.plans) profile.plans = {};
-      _applyProfile(profile, 'Import');
-      _saveProfile();
-    } catch (err) {
-      toast('Import fehlgeschlagen: ' + err.message);
-    }
+    if (!file) { toast('Keine Datei ausgewählt'); input.remove(); return; }
+    toast('Lade ' + file.name + ' …');
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const profile = JSON.parse(reader.result);
+        if (!profile.name) { toast('Ungültiges Profil — "name" fehlt'); input.remove(); return; }
+        if (!profile.sessions) profile.sessions = [];
+        if (!profile.plans) profile.plans = {};
+        state.profile = profile;
+        _saveProfile();
+        toast('✓ ' + profile.name + ' importiert · ' + (profile.sessions?.length || 0) + ' Sessions');
+        // Seite neu laden um alles sauber zu rendern
+        setTimeout(() => location.reload(), 500);
+      } catch (err) {
+        toast('Import fehlgeschlagen: ' + err.message);
+      }
+      input.remove();
+    };
+    reader.onerror = () => { toast('Datei konnte nicht gelesen werden'); input.remove(); };
+    reader.readAsText(file);
   });
   input.click();
 }
