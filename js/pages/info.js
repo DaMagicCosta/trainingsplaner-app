@@ -3,6 +3,7 @@ import { toast, escapeHtml, _fmtKg, _fmtNum } from '../utils.js';
 import { _formatEquipment, _formatLocations } from '../features/profile-edit.js';
 import { switchTab } from '../tabs.js';
 import { themeLabels } from '../themes.js';
+import { _applyProfile, _loadDemoFromFetch } from '../demo-loader.js';
 
 export { renderInfo, exportProfileJson, importProfileJson };
 

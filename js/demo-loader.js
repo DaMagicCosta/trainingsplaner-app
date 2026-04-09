@@ -10,7 +10,7 @@ import { renderInfo } from "./pages/info.js";
 import { buildPlanBalance } from "./features/plan-balance.js";
 import { _parseLocationString } from "./features/profile-edit.js";
 
-export { DEMO_PATH, _applyProfile, loadDemoProfile, reloadDemoProfile };
+export { DEMO_PATH, _applyProfile, _loadDemoFromFetch, loadDemoProfile, reloadDemoProfile };
 
 /* ═══════════════════════════════════════════════════════
    DEMO PROFILE LOADER
