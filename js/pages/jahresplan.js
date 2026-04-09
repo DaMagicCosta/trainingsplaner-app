@@ -52,24 +52,27 @@ function _calcPeriodization(profile) {
   const result = {};
   let kw = startKw;
 
-  // Erst alle Blöcke auf KWs mappen (Regen-Wochen überspringen)
-  for (let i = 0; i < blocks.length && kw <= endKw; i++) {
-    const blen = parseInt(blocks[i].length) || 4;
-    for (let w = 0; w < blen && kw <= endKw; w++) {
-      // Regen-Wochen überspringen
-      while (regenSet.has(kw) && kw <= endKw) {
-        result[kw] = { kw, isRegen: true, regenSource: 'interval' };
+  // Blöcke auf KWs mappen — wiederholt bis endKw (Ganzjährig)
+  let safety = 520;
+  while (kw <= endKw && safety-- > 0) {
+    for (let i = 0; i < blocks.length && kw <= endKw; i++) {
+      const blen = parseInt(blocks[i].length) || 4;
+      for (let w = 0; w < blen && kw <= endKw; w++) {
+        // Regen-Wochen überspringen
+        while (regenSet.has(kw) && kw <= endKw) {
+          result[kw] = { kw, isRegen: true, regenSource: 'interval' };
+          kw++;
+        }
+        if (kw > endKw) break;
+        result[kw] = {
+          kw, isRegen: false, blockIdx: i % 4,
+          blockLabel: _abbrevBlock(blocks[i].label || `Block ${i + 1}`),
+          blockFullLabel: blocks[i].label || `Block ${i + 1}`,
+          blockGoal: blocks[i].goal || '',
+          relativeWeek: w + 1, blockLength: blen
+        };
         kw++;
       }
-      if (kw > endKw) break;
-      result[kw] = {
-        kw, isRegen: false, blockIdx: i,
-        blockLabel: _abbrevBlock(blocks[i].label || `Block ${i + 1}`),
-        blockFullLabel: blocks[i].label || `Block ${i + 1}`,
-        blockGoal: blocks[i].goal || '',
-        relativeWeek: w + 1, blockLength: blen
-      };
-      kw++;
     }
   }
 

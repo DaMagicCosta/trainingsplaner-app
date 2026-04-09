@@ -17,7 +17,7 @@ import './keyboard.js';
 // ── Features ──
 import { buildPlanBalance } from './features/plan-balance.js';
 import { openProfileEditModal } from './features/profile-edit.js';
-import './features/generator.js?v=20260409a';
+import './features/generator.js?v=20260409b';
 
 // ── Pages ──
 import { renderCockpit } from './pages/cockpit.js';
