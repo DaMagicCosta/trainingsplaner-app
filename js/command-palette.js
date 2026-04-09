@@ -3,7 +3,7 @@ import { toast, escapeHtml } from './utils.js';
 import { switchTab } from './tabs.js';
 import { setRole, switchProfile, toggleRoleDropdown } from './roles.js';
 import { startNextEinheit } from "./features/log-session.js";
-import { exportProfileJson } from "./pages/info.js";
+import { exportProfileJson, importProfileJson } from "./pages/info.js";
 import { reloadDemoProfile } from "./demo-loader.js";
 import { openProfileEditModal } from "./features/profile-edit.js";
 
@@ -19,8 +19,9 @@ const cmdkList = document.getElementById('cmdkList');
 
 const cmdkItems = [
   { group: 'Quick Actions', label: 'Neue Einheit loggen', ico: '+', kbd: ['⌘','N'], action: () => startNextEinheit() },
-  { group: 'Quick Actions', label: 'Profil als JSON exportieren', ico: '↗', action: () => exportProfileJson() },
   { group: 'Quick Actions', label: 'Demo-Profil neu laden', ico: '↓', action: () => reloadDemoProfile() },
+  { group: 'Quick Actions', label: 'Profil importieren', ico: '↑', action: () => importProfileJson() },
+  { group: 'Quick Actions', label: 'Profil exportieren', ico: '↗', action: () => exportProfileJson() },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
   { group: 'Navigation', label: 'Zum Jahresplan', ico: '▤', kbd: ['G','J'], action: () => switchTab('jahresplan') },
