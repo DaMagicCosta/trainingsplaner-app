@@ -31,10 +31,10 @@ const cmdkItems = [
 
   { group: 'Modus', label: 'Zu Athlet wechseln', ico: '○', action: () => setRole('athlete') },
   { group: 'Modus', label: 'Zu Trainer wechseln', ico: '●', action: () => setRole('trainer') },
-  { group: 'Modus', label: 'Zu Alexander wechseln', ico: '◉', visible: () => state.activeProfile !== 'self', action: () => switchProfile('self') },
-  { group: 'Modus', label: 'Zu Julia wechseln', ico: '◉', visible: () => state.activeProfile === 'self', action: () => switchProfile('lisa') },
+  { group: 'Modus', label: 'Zu Alexander wechseln', ico: '◉', visible: () => state.activeProfile !== 'self' && state._juliaProfile, action: () => switchProfile('self') },
+  { group: 'Modus', label: 'Zu Julia wechseln', ico: '◉', visible: () => state.activeProfile === 'self' && (state._juliaProfile || state.demoAthletes?.lisa), action: () => switchProfile('lisa') },
   { group: 'Modus', label: 'Eigenes Profil bearbeiten', ico: '✎', action: () => openProfileEditModal('self') },
-  { group: 'Modus', label: 'Athletin Julia bearbeiten', ico: '⚇', action: () => openProfileEditModal('lisa') },
+  { group: 'Modus', label: 'Athletin Julia bearbeiten', ico: '⚇', visible: () => !!(state._juliaProfile || state.demoAthletes?.lisa), action: () => openProfileEditModal('lisa') },
   { group: 'Modus', label: 'Anamnesebogen anzeigen', ico: '⚕', visible: () => state.role !== 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'anamnese')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'anamnese')); state.infoSection = 'anamnese'; localStorage.setItem('tpv2_info_section', 'anamnese'); }, 50); } },
   { group: 'Modus', label: 'Trainer-Vereinbarung anzeigen', ico: '⚖', visible: () => state.role === 'trainer', action: () => { switchTab('info'); setTimeout(() => { document.querySelectorAll('#infoSubnav button').forEach(b => b.classList.toggle('active', b.dataset.section === 'vereinbarung')); document.querySelectorAll('.info-section').forEach(s => s.classList.toggle('active', s.dataset.section === 'vereinbarung')); state.infoSection = 'vereinbarung'; localStorage.setItem('tpv2_info_section', 'vereinbarung'); }, 50); } },
 
