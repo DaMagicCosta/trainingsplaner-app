@@ -7,10 +7,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <title>Trainingsplaner v2 — Shell</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2308090B'/%3E%3Crect x='6' y='10' width='5' height='12' rx='1.5' fill='%230F766E'/%3E%3Crect x='21' y='10' width='5' height='12' rx='1.5' fill='%230F766E'/%3E%3Crect x='11' y='13' width='10' height='6' rx='1' fill='%2314B8A6'/%3E%3Crect x='3' y='12' width='3' height='8' rx='1' fill='%230F766E' opacity='.6'/%3E%3Crect x='26' y='12' width='3' height='8' rx='1' fill='%230F766E' opacity='.6'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="css/fonts.css">
+<script src="js/lib/chart.umd.min.js"></script>
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/layout.css">
 <link rel="stylesheet" href="css/components.css">
@@ -853,6 +851,7 @@
         <button data-section="einstellungen">Einstellungen</button>
         <button data-section="hilfe">Hilfe</button>
         <button data-section="daten">Daten</button>
+        <button data-section="recht">Recht</button>
         <button data-section="ueber">Über</button>
       </div>
 
@@ -1805,6 +1804,242 @@
         </div>
       </div>
 
+      <!-- ─── Section: Recht ─── -->
+      <div class="info-section" data-section="recht">
+
+        <!-- ── Impressum ── -->
+        <div class="info-card">
+          <div class="info-card-head">
+            <div class="info-card-label">§ &nbsp;Impressum</div>
+            <div class="info-card-sub">Angaben gem. § 25 MedienG (AT) · § 5 ECG (AT) · § 5 DDG (DE)</div>
+          </div>
+          <div class="info-rows">
+            <div class="info-row">
+              <div class="info-row-key">Verantwortlich</div>
+              <div class="info-row-val">Alexander da Costa Amaral<br>Graz, Österreich</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Kontakt</div>
+              <div class="info-row-val">trainingsplaner@dacostaamaral.at</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Art des Angebots</div>
+              <div class="info-row-val">Privates, nicht-kommerzielles Trainingsplanungs-Tool für den persönlichen Gebrauch sowie für den Einsatz in der Diplomarbeit „Trainingsplangestaltung" (WIFI Steiermark).</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Haftung Inhalte</div>
+              <div class="info-row-val">Die Inhalte dieser Anwendung wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität wird jedoch keine Gewähr übernommen. Trainingsempfehlungen ersetzen keine ärztliche oder physiotherapeutische Beratung.</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Haftung Links</div>
+              <div class="info-row-val">Die App enthält keine Verlinkungen zu externen Inhalten und übermittelt keine Daten an Dritte.</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Stand</div>
+              <div class="info-row-val">10.04.2026</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Datenschutzerklärung ── -->
+        <div class="info-card">
+          <div class="info-card-head">
+            <div class="info-card-label">⛨ &nbsp;Datenschutzerklärung</div>
+            <div class="info-card-sub">DSGVO · alle Daten bleiben auf deinem Gerät</div>
+          </div>
+          <div class="info-notice">
+            <div class="info-notice-icon">◐</div>
+            <div class="info-notice-text">
+              <strong>Kurzfassung:</strong> Diese App speichert <strong>alle Daten ausschließlich lokal</strong> in deinem Browser (localStorage). Es gibt keinen Server, kein Tracking, keine Cookies und keine Übertragung an Dritte. Auch externe Schriften und Bibliotheken werden lokal aus dem App-Verzeichnis geladen.
+            </div>
+          </div>
+
+          <div class="info-legal">
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">1</span>
+                <span class="info-legal-title">Verantwortlicher</span>
+              </div>
+              <div class="info-text">
+                <p>Alexander da Costa Amaral, Graz, Österreich · trainingsplaner@dacostaamaral.at</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">2</span>
+                <span class="info-legal-title">Welche Daten werden verarbeitet?</span>
+              </div>
+              <div class="info-text">
+                <p>Die App verarbeitet folgende Daten ausschließlich lokal in deinem Browser:</p>
+                <ul style="margin:8px 0 0 20px;line-height:1.7;">
+                  <li><strong>Stammdaten:</strong> Vorname, Nachname, Alter, Geschlecht, Größe, Gewicht, HFmax</li>
+                  <li><strong>Gesundheitsdaten (besondere Kategorie nach Art. 9 DSGVO):</strong> Anamnese-Angaben, Vorerkrankungen, Medikamente, Beschwerden — sofern du diese eingibst</li>
+                  <li><strong>Trainingsdaten:</strong> Sessions, Sätze, Wiederholungen, Gewichte, RPE, Trainingsorte, Equipment</li>
+                  <li><strong>Einstellungen:</strong> Aktiver Tab, Rolle (Trainer/Athlet), Theme, Sub-Section, Filter</li>
+                </ul>
+                <p style="margin-top:8px;">Speicherorte (alle im Browser): <code>tpv2_profile_data</code>, <code>tpv2_active_tab</code>, <code>tpv2_role</code>, <code>tpv2_theme</code>, <code>tpv2_info_section</code>, <code>tpv2_bal_view</code>, <code>tpv2_bal_range</code>, <code>tpv2_fp_range</code>, <code>tpv2_fp_exercise</code>.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">3</span>
+                <span class="info-legal-title">Rechtsgrundlage</span>
+              </div>
+              <div class="info-text">
+                <p>Die Verarbeitung erfolgt auf Grundlage deiner <strong>Einwilligung</strong> (Art. 6 Abs. 1 lit. a DSGVO) durch die Nutzung der App und das Anlegen eines Profils. Bei Gesundheitsdaten zusätzlich Art. 9 Abs. 2 lit. a DSGVO. Du kannst deine Einwilligung jederzeit widerrufen, indem du dein Profil löschst oder den Browser-Speicher leerst.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">4</span>
+                <span class="info-legal-title">Externe Dienste &amp; Datenübertragungen</span>
+              </div>
+              <div class="info-text">
+                <p><strong>Keine.</strong> Die App lädt alle Schriften (Inter, JetBrains Mono) und JavaScript-Bibliotheken (Chart.js) direkt aus dem App-Verzeichnis. Es findet <strong>keine</strong> Verbindung zu Google Fonts, jsDelivr oder anderen CDNs statt. Es gibt keine Analytics, kein Tracking, keine Werbung und keine Drittanbieter-Cookies.</p>
+                <p style="margin-top:8px;">Die App wird über <em>GitHub Pages</em> ausgeliefert. Beim Aufruf der Seite verarbeitet GitHub aus technischen Gründen kurzzeitig die IP-Adresse des Browsers. Details siehe <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">GitHub Privacy Statement</a>.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">5</span>
+                <span class="info-legal-title">Speicherdauer</span>
+              </div>
+              <div class="info-text">
+                <p>Deine Daten verbleiben so lange in deinem Browser, bis du sie selbst löschst — entweder über die App (Info → Daten → Demo zurücksetzen / Profil neu anlegen) oder durch Leeren des Browser-Speichers. Es gibt keine automatische Löschfrist, weil keine Daten an einen Server übertragen werden.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">6</span>
+                <span class="info-legal-title">Deine Rechte</span>
+              </div>
+              <div class="info-text">
+                <p>Nach DSGVO stehen dir folgende Rechte zu:</p>
+                <ul style="margin:8px 0 0 20px;line-height:1.7;">
+                  <li><strong>Auskunft</strong> (Art. 15): Über Info → Daten → Export kannst du jederzeit eine vollständige Kopie deiner Daten als JSON herunterladen.</li>
+                  <li><strong>Berichtigung</strong> (Art. 16): Profil-Bearbeiten in jedem Tab.</li>
+                  <li><strong>Löschung</strong> (Art. 17): Profil neu anlegen oder Browser-Speicher leeren.</li>
+                  <li><strong>Datenübertragbarkeit</strong> (Art. 20): JSON-Export (maschinenlesbar).</li>
+                  <li><strong>Widerruf der Einwilligung</strong> (Art. 7 Abs. 3): jederzeit durch Löschen.</li>
+                  <li><strong>Beschwerde</strong> (Art. 77): bei der österreichischen Datenschutzbehörde (dsb.gv.at).</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">7</span>
+                <span class="info-legal-title">Backup &amp; Datenverlust</span>
+              </div>
+              <div class="info-text">
+                <p>Da deine Daten ausschließlich im Browser-Speicher liegen, können sie verloren gehen, wenn du den Browser-Speicher löschst, ein anderes Gerät verwendest oder den Browser-Modus „Privat / Inkognito" nutzt. Erstelle regelmäßig ein Backup über Info → Daten → Export.</p>
+              </div>
+            </div>
+          </div>
+          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 10.04.2026</div>
+        </div>
+
+        <!-- ── Nutzungsbedingungen / Haftungsausschluss ── -->
+        <div class="info-card">
+          <div class="info-card-head">
+            <div class="info-card-label">⚖ &nbsp;Nutzungsbedingungen</div>
+            <div class="info-card-sub">Haftungsausschluss · Eigenverantwortung beim Training</div>
+          </div>
+          <div class="info-notice">
+            <div class="info-notice-icon">⚠</div>
+            <div class="info-notice-text">
+              Diese App ersetzt <strong>keinen ärztlichen oder physiotherapeutischen Rat</strong>. Trainingsempfehlungen, Übungen, Gewichtsvorschläge und Readiness-Bewertungen sind sportwissenschaftlich gestützte Orientierungswerte — keine medizinischen Anweisungen. Du trainierst eigenverantwortlich.
+            </div>
+          </div>
+
+          <div class="info-legal">
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">1</span>
+                <span class="info-legal-title">Geltungsbereich</span>
+              </div>
+              <div class="info-text">
+                <p>Diese Nutzungsbedingungen gelten für die Verwendung der Anwendung „Trainingsplaner" (nachfolgend „App"). Mit der Nutzung der App akzeptierst du diese Bedingungen.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">2</span>
+                <span class="info-legal-title">Kein medizinischer Rat</span>
+              </div>
+              <div class="info-text">
+                <p>Die App dient ausschließlich der Unterstützung der Trainingsplanung und stellt <strong>keine medizinische, physiotherapeutische oder ärztliche Beratung</strong> dar. Trainingspläne, Übungsempfehlungen, Gewichtsvorschläge, Readiness-Score, 1RM-Schätzungen und Kraft-Standards-Einstufungen ersetzen <strong>nicht</strong> die fachkundige Beurteilung durch qualifiziertes medizinisches Personal.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">3</span>
+                <span class="info-legal-title">Eigenverantwortung</span>
+              </div>
+              <div class="info-text">
+                <p>Du trainierst <strong>eigenverantwortlich</strong>. Vor Aufnahme eines Trainingsprogramms wird dringend empfohlen, eine ärztliche Untersuchung durchführen zu lassen — insbesondere bei Vorerkrankungen, Beschwerden, Schwangerschaft oder nach längerer Trainingspause. Du bist verpflichtet, den Anamnesebogen wahrheitsgemäß auszufüllen und bei Veränderungen deines Gesundheitszustands zu aktualisieren.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">4</span>
+                <span class="info-legal-title">Haftungsausschluss</span>
+              </div>
+              <div class="info-text">
+                <p>Der Betreiber haftet <strong>nicht</strong> für:</p>
+                <ul style="margin:8px 0 0 20px;line-height:1.7;">
+                  <li>Verletzungen, Schäden oder gesundheitliche Beeinträchtigungen, die durch die Ausübung von Trainingsübungen entstehen</li>
+                  <li>Fehlerhafte Trainingsempfehlungen, Gewichts- oder Wiederholungsvorschläge</li>
+                  <li>Datenverlust durch Löschung des Browser-Speichers, Gerätewechsel oder Browser-Updates</li>
+                  <li>Schäden, die aus der Nichtbeachtung von Kontraindikationen oder ärztlichen Empfehlungen resultieren</li>
+                  <li>Folgen einer fehlerhaft oder unvollständig ausgefüllten Anamnese</li>
+                </ul>
+                <p style="margin-top:8px;">Die Haftung für Vorsatz und grobe Fahrlässigkeit bleibt unberührt.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">5</span>
+                <span class="info-legal-title">Datenspeicherung</span>
+              </div>
+              <div class="info-text">
+                <p>Alle personenbezogenen Daten (Profil, Gesundheitsdaten, Trainingshistorie) werden <strong>ausschließlich lokal</strong> im Browser gespeichert. Es erfolgt keine Übertragung an externe Server. Du bist selbst für die Sicherung deiner Daten verantwortlich (Export-Funktion unter Info → Daten). Details siehe Datenschutzerklärung.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">6</span>
+                <span class="info-legal-title">Anamnesebogen</span>
+              </div>
+              <div class="info-text">
+                <p>Der Anamnesebogen muss bei Profilerstellung wahrheitsgemäß ausgefüllt werden. Bei Änderungen des Gesundheitszustands ist eine Aktualisierung verpflichtend. Vorherige Versionen bleiben zur Dokumentation erhalten.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section">
+              <div class="info-legal-head">
+                <span class="info-legal-num">7</span>
+                <span class="info-legal-title">Änderungen</span>
+              </div>
+              <div class="info-text">
+                <p>Der Betreiber behält sich vor, diese Nutzungsbedingungen jederzeit zu ändern. Die jeweils aktuelle Version ist in der App einsehbar. Wesentliche Änderungen werden im Cockpit angekündigt.</p>
+              </div>
+            </div>
+          </div>
+          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 10.04.2026</div>
+        </div>
+      </div>
+
       <!-- ─── Section: Über ─── -->
       <div class="info-section" data-section="ueber">
         <div class="info-card">
@@ -1819,7 +2054,7 @@
             <div class="info-row"><div class="info-row-key">Version</div><div class="info-row-val">v2.7 · Prototyp komplett</div></div>
             <div class="info-row"><div class="info-row-key">Farbsystem</div><div class="info-row-val">Teal-Deep · Emerald · Honey · Coral</div></div>
             <div class="info-row"><div class="info-row-key">Typografie</div><div class="info-row-val">Inter (sans) · JetBrains Mono</div></div>
-            <div class="info-row"><div class="info-row-key">Charts</div><div class="info-row-val">Chart.js 4.4.7</div></div>
+            <div class="info-row"><div class="info-row-key">Charts</div><div class="info-row-val">Chart.js 4.4.7 (lokal eingebunden)</div></div>
             <div class="info-row"><div class="info-row-key">Tabs</div><div class="info-row-val">Cockpit · Jahresplan · Trainingsplan · Fortschritt · Lexikon · Info</div></div>
           </div>
         </div>
@@ -1839,12 +2074,16 @@
               <div class="info-row-val">Sportwissenschaftliche Grundlagen aus WIFI-Ausbildung &amp; Diplomarbeit Hendrik Tretter</div>
             </div>
             <div class="info-row">
+              <div class="info-row-key">Kraft-Standards</div>
+              <div class="info-row-val">Bewertungs-Ratios basierend auf NSCA/ACSM-Richtwerten (Strength &amp; Conditioning Journal, ACSM Guidelines for Exercise Testing &amp; Prescription)</div>
+            </div>
+            <div class="info-row">
               <div class="info-row-key">Readiness-Formel</div>
               <div class="info-row-val">RPE 35% · Volumen 25% · Frequenz 20% · Stagnation 20% (portiert aus <code>calculateFatigueScore</code>)</div>
             </div>
             <div class="info-row">
               <div class="info-row-key">Open Source</div>
-              <div class="info-row-val">Chart.js (MIT) · Inter (OFL) · JetBrains Mono (OFL)</div>
+              <div class="info-row-val">Chart.js 4.4.7 (MIT, lokal) · Inter (OFL 1.1, lokal) · JetBrains Mono (OFL 1.1, lokal)</div>
             </div>
             <div class="info-row">
               <div class="info-row-key">Design-System</div>
