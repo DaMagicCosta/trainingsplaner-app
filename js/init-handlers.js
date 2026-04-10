@@ -11,6 +11,7 @@ import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.j
 import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
 import { reloadDemoProfile } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
+import { revokeConsent } from './consent.js';
 
 // ── Info-Tab Event-Handler ──
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation
@@ -31,6 +32,24 @@ import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.j
   if (anaHistoryBtn)   anaHistoryBtn.addEventListener('click',   () => toast('Historie-Ansicht folgt'));
   if (verReconfirmBtn) verReconfirmBtn.addEventListener('click', () => toast('Vereinbarung erneut bestätigt'));
   if (verRevokeBtn)    verRevokeBtn.addEventListener('click',    () => toast('Widerruf-Flow folgt in v2.8'));
+
+  // DSGVO-Einwilligung widerrufen (Recht → Datenschutzerklärung Abschnitt 8)
+  const consentRevokeBtn = document.getElementById('consentRevokeBtn');
+  if (consentRevokeBtn) consentRevokeBtn.addEventListener('click', () => {
+    const ok = confirm(
+      'Einwilligung wirklich zurückziehen?\n\n' +
+      'Beim nächsten Aufruf wird das Welcome-Modal erneut angezeigt.\n\n' +
+      'Mit "OK" wirst du gleich gefragt, ob auch deine lokal gespeicherten ' +
+      'Trainingsdaten gelöscht werden sollen.'
+    );
+    if (!ok) return;
+    const alsoData = confirm(
+      'Auch alle lokal gespeicherten Trainingsdaten löschen?\n\n' +
+      '• OK = Ja, alles löschen (Profil, Sessions, Pläne, Einstellungen)\n' +
+      '• Abbrechen = Nein, nur Einwilligung widerrufen, Daten behalten'
+    );
+    revokeConsent(alsoData);
+  });
 
   // Sub-Navigation Handler
   const sections = document.querySelectorAll('.info-section');

@@ -275,7 +275,8 @@ _pickerAvailableEq()  → Equipment-Set für den aktuellen Plan-Block
 - **Rechtsstand v2.7** (Audit + Umsetzung am 10.04.): DSGVO/Lizenzen/Impressum/AGB komplett aufgesetzt. Siehe eigenen Abschnitt „Rechtsstand" weiter unten.
 - **Google Fonts lokal**: Inter + JetBrains Mono als Variable-Font-WOFF2 unter `css/fonts/`, eigene `css/fonts.css` mit `@font-face` (latin Subset, ~80 KB total). Keine Requests mehr an `fonts.googleapis.com` / `fonts.gstatic.com` — DSGVO-Konformität (LG München I, Az. 3 O 17493/20).
 - **Chart.js lokal**: `js/lib/chart.umd.min.js` (4.4.7, ~206 KB). Keine jsDelivr-Requests mehr.
-- **Info → Recht** (neue Sub-Sektion): Impressum nach § 25 MedienG / § 5 ECG / § 5 DDG, Datenschutzerklärung in 7 Abschnitten (Art. 6/9 DSGVO, alle `tpv2_*` localStorage-Schlüssel transparent aufgelistet, Betroffenenrechte mit Verweis auf Export/Reset), Nutzungsbedingungen + Haftungsausschluss in 7 Abschnitten (v1-AGB portiert, ABGB-konformer Vorbehalt für Vorsatz/grobe Fahrlässigkeit, Readiness/1RM/Kraft-Standards explizit benannt). Sub-Nav-Button „Recht" zwischen „Daten" und „Über".
+- **Info → Recht** (neue Sub-Sektion): Impressum nach § 25 MedienG / § 5 ECG / § 5 DDG, Datenschutzerklärung in 8 Abschnitten (Art. 6/9 DSGVO, alle `tpv2_*` localStorage-Schlüssel transparent aufgelistet, Betroffenenrechte mit Verweis auf Export/Reset, Abschnitt 8 zeigt Datum der erteilten Einwilligung + Widerrufs-Button), Nutzungsbedingungen + Haftungsausschluss in 7 Abschnitten (v1-AGB portiert, ABGB-konformer Vorbehalt für Vorsatz/grobe Fahrlässigkeit, Readiness/1RM/Kraft-Standards explizit benannt). Sub-Nav-Button „Recht" zwischen „Daten" und „Über".
+- **Aktive DSGVO-Einwilligung** (Welcome-Modal): Beim ersten Aufruf (kein gültiger `tpv2_consent_v1`) erscheint ein blockierendes Modal mit drei Kernpunkten, klappbarem Datenschutz-Detail-Bereich, Pflicht-Checkbox und Akzeptieren-Button (initial disabled). Esc und Click-Outside sind explizit blockiert. Versionierung der Rechtstexte über `DSE_VERSION` / `AGB_VERSION` in `js/consent.js` — bei Änderungen erhöhen, dann erzwingt das Modal eine erneute Akzeptanz. Splash wird beim Erstaufruf übersprungen, damit die zwei Overlays nicht rivalisieren. Modul: `js/consent.js`. Init-Gate: `await initConsent()` in `js/app.js`.
 - **LICENSE**: MIT-Lizenz im Repo-Root. GitHub-Pages-Free-Tier zwingt zu public, MIT ist die kleinste Hülle, die zu allen Dependencies (Chart.js MIT, Inter/JetBrains Mono OFL 1.1) passt.
 - **Credits aktualisiert**: Im „Über"-Tab sind Chart.js/Inter/JetBrains Mono jetzt als „lokal" markiert, Kraft-Standards-Quelle „NSCA/ACSM" als eigene Zeile ergänzt.
 
@@ -289,10 +290,11 @@ Die App ist seit 10.04.2026 rechtlich grundabgesichert. Die Belegspur dazu ist i
 **Dauerhafte Regel für künftige Sessions:**
 
 - **Keine externen CDN-Requests aus `Trainingsplaner.html`** (oder sonstigen App-Dateien). Alle Schriften, Libraries, Icons müssen lokal liegen oder als Inline-SVG/Data-URI eingebettet werden. Sonst ist die DSGVO-Aufsetzung sofort wieder kaputt.
-- **Bei Änderungen an `Info → Recht`**: Stand-Datum am Ende jeder Card aktualisieren, sonst geht die Belegbarkeit verloren.
-- **Bei neuen Trainings-Features mit gesundheitlicher Wirkung** (z. B. neue Score-Formeln, neue Empfehlungs-Logik): in den Nutzungsbedingungen Abschnitt 2 explizit benennen, sonst greift der Haftungsausschluss nicht für das neue Feature.
-- **Bei neuen `localStorage`-Schlüsseln**: in der Datenschutzerklärung Abschnitt 2 nachziehen.
+- **Bei Änderungen an `Info → Recht`**: Stand-Datum am Ende jeder Card aktualisieren UND `DSE_VERSION` bzw. `AGB_VERSION` in `js/consent.js` erhöhen, sonst werden bestehende Nutzer nicht erneut um Einwilligung gebeten und die Belegspur driftet auseinander.
+- **Bei neuen Trainings-Features mit gesundheitlicher Wirkung** (z. B. neue Score-Formeln, neue Empfehlungs-Logik): in den Nutzungsbedingungen Abschnitt 2 explizit benennen, sonst greift der Haftungsausschluss nicht für das neue Feature. Danach `AGB_VERSION` bumpen.
+- **Bei neuen `localStorage`-Schlüsseln** (mit `tpv2_`-Prefix): in der Datenschutzerklärung Abschnitt 2 nachziehen, dann `DSE_VERSION` bumpen.
 - **Bei neuen Dependencies**: Lizenz prüfen, in den Credits („Über"-Tab) aufnehmen, in der Mitschrift ergänzen, im Repo lokal hosten.
+- **Bei Init-Sequenz-Änderungen in `js/app.js`**: Der `await initConsent()`-Block muss vor allen Profil-, Tab-, Render- und Demo-Calls bleiben. Sonst läuft App-Code, bevor der Nutzer eingewilligt hat — und die Einwilligung ist nicht mehr „vor der Verarbeitung" erteilt.
 
 ## Ausstehende Bau-Etappen (große Richtung)
 

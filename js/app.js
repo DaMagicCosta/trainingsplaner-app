@@ -6,6 +6,7 @@
 // ── Basis ──
 import { state, _saveProfile } from './state.js';
 import { toast } from './utils.js';
+import { initConsent, renderConsentInfo } from './consent.js';
 
 // ── UI-Infrastruktur ──
 import { applyTheme } from './themes.js';
@@ -42,14 +43,22 @@ import './splash.js';
 // ══════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════
+// Theme sofort anwenden, damit das Welcome-Modal im richtigen Look erscheint.
 applyTheme(state.theme);
-switchTab(state.activeTab);
-setRole(state.role);
-// Initial-Toasts von applyTheme/setRole unterdrücken
-setTimeout(() => document.getElementById('toast').classList.remove('show'), 100);
 
-// Demo-Profil im Hintergrund laden
-loadDemoProfile().then(() => {
+// Consent-Gate: blockiert alles weitere, bis der Nutzer akzeptiert hat.
+// Bei erneutem Aufruf mit gültigem Consent ist initConsent ein No-Op.
+(async () => {
+  await initConsent();
+  renderConsentInfo();
+
+  switchTab(state.activeTab);
+  setRole(state.role);
+  // Initial-Toasts von applyTheme/setRole unterdrücken
+  setTimeout(() => document.getElementById('toast').classList.remove('show'), 100);
+
+  // Demo-Profil im Hintergrund laden
+  loadDemoProfile().then(() => {
   // Demo-Banner zeigen wenn kein eigenes Profil gespeichert ist
   const hasSaved = !!localStorage.getItem('tpv2_profile_data');
   const dismissed = sessionStorage.getItem('tpv2_demo_banner_dismissed');
@@ -113,4 +122,5 @@ loadDemoProfile().then(() => {
     if (banner) banner.style.display = 'none';
     sessionStorage.setItem('tpv2_demo_banner_dismissed', '1');
   });
-});
+  });
+})();

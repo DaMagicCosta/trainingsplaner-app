@@ -1,7 +1,10 @@
 // ── Splash Screen (nur beim allerersten Besuch dieser Session) ──
+// Skip-Bedingung: Wenn noch kein DSGVO-Consent vorliegt, übernimmt das
+// Welcome-Modal die Begrüßung — Splash entfällt, sonst rivalisieren beide.
 const _splash = document.getElementById('splash');
+const _hasConsent = !!localStorage.getItem('tpv2_consent_v1');
 if (_splash) {
-  if (sessionStorage.getItem('tpv2_splash_seen')) {
+  if (sessionStorage.getItem('tpv2_splash_seen') || !_hasConsent) {
     _splash.remove();
   } else {
     sessionStorage.setItem('tpv2_splash_seen', '1');

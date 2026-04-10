@@ -421,6 +421,117 @@ Diese Punkte stehen weiter im Wiki-Todo (`08_Obsidian/Alex Wiki/todos.md`) und i
 
 ## Verantwortlich für die Umsetzung
 
-Alexander da Costa Amaral, mit Unterstützung von Claude Code (Opus 4.6, 1M context) am 10.04.2026 zwischen ca. 17:25 und 18:45 Uhr.
+Alexander da Costa Amaral, mit Unterstützung von Claude Code (Opus 4.6, 1M context) am 10.04.2026 zwischen ca. 17:25 und 18:45 Uhr (Hauptarbeit) sowie 19:00 und 19:45 Uhr (Nachtrag, siehe unten).
 
 Bei Rückfragen oder Audit-Anforderungen: Diese Datei zusammen mit dem Original-Audit (`2026-04-10_rechtsaudit-original.md`) und den entsprechenden Git-Commits aus dem Repo `DaMagicCosta/trainingsplaner-app` vorlegen.
+
+---
+
+## Nachtrag — Aktive DSGVO-Einwilligung (Welcome-Modal)
+
+**Datum:** 10.04.2026, ca. 19:00–19:45 Uhr
+**Auslöser:** Nach der Hauptumsetzung wurde erkannt, dass die in der Datenschutzerklärung beschriebene Einwilligung *nur passiv* war („durch Nutzung der App und Anlegen eines Profils"). Bei besonderen Datenkategorien nach **Art. 9 DSGVO** (Anamnese: Vorerkrankungen, Medikamente) ist nach herrschender Meinung eine **ausdrückliche** Einwilligung erforderlich (Art. 9 Abs. 2 lit. a DSGVO). Eine bloße passive Einwilligung wäre angreifbar.
+
+### Maßnahme
+
+Beim ersten App-Aufruf (kein gültiger `tpv2_consent_v1`-Eintrag) wird ein **blockierendes Welcome-Modal** angezeigt. Der Nutzer muss eine Checkbox ankreuzen *und* einen Button klicken — beides ist nötig, um die App freizuschalten. Damit ist die Einwilligung **bewusst, aktiv und dokumentiert**.
+
+### Was im Modal steht
+
+- **Headline:** „Bevor du loslegst — drei Dinge"
+- **Drei Punkte (Icons + Kurztext):**
+  1. „Alles bleibt auf deinem Gerät" (lokale Speicherung, keine CDNs, keine Cookies)
+  2. „Gesundheitsdaten sind besondere Daten" (Art. 9 DSGVO explizit benannt)
+  3. „Kein Ersatz für ärztlichen Rat" (Eigenverantwortung, Disclaimer)
+- **Klappbarer Detail-Bereich** „Datenschutz im Detail" mit den DSE-Kernpunkten (verarbeitete Daten, Speicherorte, Rechtsgrundlage, externe Dienste = keine, Speicherdauer, Betroffenenrechte, Verweis auf Info → Recht für Volltexte)
+- **Pflicht-Checkbox** „Ich habe Datenschutzerklärung und Nutzungsbedingungen gelesen und willige in die lokale Verarbeitung meiner Daten — einschließlich Gesundheitsdaten nach Art. 9 DSGVO — ein."
+- **Akzeptieren-Button** (disabled, bis die Checkbox gesetzt ist)
+- **Footer:** Stand-Datum der Texte + Hinweis, dass die Einwilligung jederzeit widerrufbar ist
+
+### Datenmodell des Consent-Eintrags
+
+```json
+{
+  "acceptedAt": "2026-04-10T19:30:00.000Z",
+  "dseVersion": "2026-04-10",
+  "agbVersion": "2026-04-10"
+}
+```
+
+Gespeichert unter `localStorage.tpv2_consent_v1`. Die beiden Versionen sind feste Konstanten in `js/consent.js` (`DSE_VERSION`, `AGB_VERSION`). Bei Änderung der Rechtstexte (etwa wenn neue Features in den Disclaimer aufgenommen werden) müssen diese Konstanten erhöht werden — `hasValidConsent()` prüft, ob der gespeicherte Consent zu den aktuellen Versionen passt. Wenn nicht, wird beim nächsten Aufruf das Modal erneut angezeigt — der Nutzer muss die *aktualisierten* Texte nochmals akzeptieren. Das ist die DSGVO-konforme Behandlung von Änderungen an einer einwilligungsbasierten Verarbeitung.
+
+### Widerruf-Mechanismus
+
+In der Datenschutzerklärung wurde Abschnitt **8 „Deine Einwilligung"** ergänzt. Dort steht dynamisch:
+
+- Datum + Uhrzeit der Einwilligung (formatiert „DD.MM.YYYY um HH:MM Uhr")
+- Datenschutz-Stand-Version
+- Nutzungsbedingungen-Stand-Version
+- Button **„Einwilligung zurückziehen"**
+
+Beim Klick auf den Button erscheint eine zweistufige Bestätigung (Browser-`confirm()`):
+1. „Einwilligung wirklich zurückziehen?" → ja/nein
+2. „Auch alle lokal gespeicherten Trainingsdaten löschen?" → ja/nein
+
+Bei „ja" auf Schritt 2 werden alle `tpv2_*`-Schlüssel aus dem localStorage entfernt (Profil, Sessions, Pläne, Einstellungen, UI-State). Anschließend wird die Seite neu geladen — beim nächsten Init greift `initConsent()` und das Welcome-Modal erscheint erneut.
+
+### Begründung der Implementierungs-Details
+
+- **Checkbox + Button (statt nur Button):** Eine reine Button-Klick-Aktion könnte als „beiläufig" interpretiert werden. Die Checkbox-Pflicht zwingt zu einem zweiten, bewussten Handlungsschritt — das ist der Standard für ausdrückliche Einwilligung im EU-Raum (vgl. Cookie-Banner-Designs nach EuGH C-673/17 „Planet49").
+- **Esc und Click-Outside blockiert:** Ein einfaches Wegklicken wäre keine Akzeptanz, sondern ein Umgehen. Der Modal-Handler in `consent.js` blockiert Esc explizit (`addEventListener('keydown', ..., true)` mit `preventDefault()`). Click-Outside ist nicht implementiert (kein Handler auf dem Backdrop). Die einzige Aktion, die das Modal entfernt, ist der Akzeptieren-Button mit gesetzter Checkbox.
+- **Versionierung der Texte:** Damit nach Änderungen ein erneuter Consent erzwungen werden kann (siehe oben).
+- **Splash-Skip bei Erstaufruf:** Der Splash-Screen (Mindmap-Animation, Portrait, Glow) wird übersprungen, wenn kein Consent vorliegt — sonst rivalisieren zwei Begrüßungs-Overlays. `splash.js` checkt `localStorage.tpv2_consent_v1` und entfernt sich selbst, wenn keiner da ist. Bei späteren Aufrufen (mit Consent) läuft der Splash wieder normal.
+- **Theme wird vor Modal angewendet:** `applyTheme()` läuft vor dem `await initConsent()` in der Init-Sequenz, damit das Modal sofort im richtigen Look (Midnight/Ember/Teal/Pastell) erscheint. Sonst würde es im Default-Theme aufblitzen, bevor das gespeicherte Theme greift.
+
+### Betroffene Dateien (Nachtrag)
+
+| Datei | Änderung |
+|---|---|
+| `js/consent.js` | **Neu** — 130 Zeilen: Konstanten, getConsent, hasValidConsent, setConsent, clearConsent, showWelcomeModal, initConsent, formatConsentDate, renderConsentInfo, revokeConsent |
+| `css/welcome.css` | **Neu** — Modal-Styling, blockierender Backdrop, Drei-Punkte-Layout, klappbarer Detail-Bereich, Checkbox-Card, Akzeptieren-Button, Mobile-Anpassungen |
+| `Trainingsplaner.html` | Welcome-Modal-Markup direkt nach `<body>`, neue CSS-Einbindung `css/welcome.css`, Datenschutzerklärung Abschnitt 8 „Deine Einwilligung" mit Datum-Anzeige + Widerrufs-Button |
+| `js/app.js` | Init-Sequenz in async IIFE gewrappt, `await initConsent()` als Gate vor allen weiteren Inits, `renderConsentInfo()` nach Akzeptanz |
+| `js/splash.js` | Skip-Bedingung: wenn kein `tpv2_consent_v1` existiert, Splash überspringen (Welcome übernimmt die Begrüßung) |
+| `js/init-handlers.js` | Handler für `consentRevokeBtn`: zweistufige Confirm-Bestätigung → `revokeConsent(alsoData)` |
+
+### Rechtsgrundlagen-Bezug
+
+- **Art. 4 Nr. 11 DSGVO** — Definition „Einwilligung": *„unmissverständlich abgegebene Willensbekundung in Form einer Erklärung oder einer sonstigen eindeutigen bestätigenden Handlung"*. Eine Checkbox + Button-Klick erfüllt das Kriterium der „eindeutigen bestätigenden Handlung".
+- **Art. 7 Abs. 1 DSGVO** — *„Beruht die Verarbeitung auf einer Einwilligung, muss der Verantwortliche nachweisen können, dass die betroffene Person in die Verarbeitung […] eingewilligt hat."* → Genau dafür ist der Timestamp im Consent-Eintrag.
+- **Art. 7 Abs. 3 DSGVO** — *„Die betroffene Person hat das Recht, ihre Einwilligung jederzeit zu widerrufen. […] Der Widerruf muss so einfach wie die Erteilung sein."* → Der Widerrufs-Button in der DSE-Sektion 8 ist genauso direkt erreichbar wie das Welcome-Modal.
+- **Art. 9 Abs. 2 lit. a DSGVO** — *„Die betroffene Person hat in die Verarbeitung der genannten personenbezogenen Daten für einen oder mehrere festgelegte Zwecke ausdrücklich eingewilligt"*. → Die explizite Erwähnung „einschließlich Gesundheitsdaten nach Art. 9 DSGVO" in der Checkbox-Beschriftung deckt diese ausdrückliche Einwilligung ab.
+- **EuGH C-673/17 „Planet49"** (01.10.2019) — Klarstellung, dass voreingestellte Häkchen keine wirksame Einwilligung sind. Die Checkbox in unserem Modal ist initial **leer** (`checkbox.checked = false` in `showWelcomeModal()`), der Akzeptieren-Button ist **disabled**, bis der Nutzer aktiv das Häkchen setzt.
+
+### Verifikation
+
+- [ ] **First-Run-Test:** Im Inkognito-Browser oder nach `localStorage.clear()` → App aufrufen → Welcome-Modal erscheint, Akzeptieren-Button initial disabled, nach Checkbox-Aktivierung enabled, nach Klick verschwindet das Modal und der `tpv2_consent_v1`-Eintrag ist im DevTools → Application → Local Storage sichtbar
+- [ ] **Reload-Test:** Seite neu laden → kein Modal mehr (gültiger Consent vorhanden), App startet normal
+- [ ] **Esc-Block-Test:** Modal offen → Esc drücken → Modal bleibt
+- [ ] **Click-Outside-Test:** Modal offen → auf den Backdrop klicken → Modal bleibt
+- [ ] **Detail-Klapp-Test:** „Datenschutz im Detail" auf- und zuklappen → funktioniert ohne State-Verlust
+- [ ] **DSE-Anzeige-Test:** Tab Info → Recht → Datenschutzerklärung Abschnitt 8 → Datum + Versionen werden korrekt angezeigt
+- [ ] **Widerrufs-Test:** Button „Einwilligung zurückziehen" → 1. Confirm „wirklich?" → 2. Confirm „auch Daten löschen?" → Reload → Welcome-Modal erscheint erneut, Daten je nach Wahl gelöscht oder erhalten
+- [ ] **Versions-Bump-Test:** In `js/consent.js` `DSE_VERSION` auf `2026-04-11` ändern → Reload → Modal erscheint erneut, weil `hasValidConsent()` die Versionsdiskrepanz erkennt
+
+### Was offen bleibt
+
+- **Kein eigenes Modal für die Bestätigungen:** Aktuell `confirm()` aus dem Browser. Funktional korrekt, aber stilbruch. Für ein späteres Polish sollte ein `tp-modal`-basiertes Bestätigungs-Dialog gebaut werden. Der Inhalt der Confirm-Texte ist aber juristisch ausreichend.
+- **Mehrsprachigkeit:** Die App ist deutschsprachig, das Modal ebenfalls. Falls später eine englische Version kommt, müssen DSE/AGB und Modal-Texte separat versioniert werden.
+- **Consent-Historie:** Aktuell wird nur der letzte Consent gespeichert. Bei einem späteren Audit könnte interessant sein, *alle* früheren Akzeptanzen zu kennen (z. B. wann der Nutzer eine Versions-Aktualisierung akzeptiert hat). Das wäre ein eigener Schlüssel `tpv2_consent_history_v1: [{...}, {...}]` und kann nachgereicht werden, falls verlangt.
+
+### Commit (geplant)
+
+```
+Recht: Aktive DSGVO-Einwilligung via Welcome-Modal
+
+- Neues Modul js/consent.js (Konstanten, Init, Modal-Handler, Widerruf)
+- Welcome-Modal mit Pflicht-Checkbox + Button (Art. 4 Nr. 11 / Art. 9
+  Abs. 2 lit. a DSGVO — ausdrueckliche Einwilligung)
+- Init-Sequenz in app.js: await initConsent() als Gate
+- Splash skipt bei Erstaufruf (Welcome uebernimmt)
+- DSE Abschnitt 8 "Deine Einwilligung" mit Datum + Widerrufs-Button
+- Versionierung der Rechtstexte (DSE_VERSION, AGB_VERSION) — bei
+  inhaltlichen Aenderungen erhoehen, dann erzwingt das Modal eine
+  erneute Akzeptanz
+- Belegspur: Notizen/2026-04-10_rechtsaudit-umsetzung.md (Nachtrag)
+```

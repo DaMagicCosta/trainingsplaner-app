@@ -19,9 +19,75 @@
 <link rel="stylesheet" href="css/pages/fortschritt.css">
 <link rel="stylesheet" href="css/pages/trainingsplan.css">
 <link rel="stylesheet" href="css/splash.css">
+<link rel="stylesheet" href="css/welcome.css">
 <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
+
+<!-- ═══════════════ CONSENT / WELCOME-MODAL (DSGVO) ═══════════════ -->
+<!-- Wird beim ersten Aufruf angezeigt, wenn kein tpv2_consent_v1 existiert. -->
+<!-- Steckt initial mit display:none im DOM und wird von js/consent.js aktiviert. -->
+<div class="welcome-overlay" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" style="display:none;">
+  <div class="welcome-panel">
+    <div class="welcome-head">
+      <div class="welcome-eyebrow">Willkommen</div>
+      <h1 class="welcome-title" id="welcomeTitle">Bevor du loslegst</h1>
+      <p class="welcome-sub">Drei Dinge, die du wissen solltest — kurz und direkt.</p>
+    </div>
+
+    <div class="welcome-points">
+      <div class="welcome-point">
+        <div class="welcome-point-icon">⌂</div>
+        <div class="welcome-point-body">
+          <h3 class="welcome-point-title">Alles bleibt auf deinem Gerät</h3>
+          <p class="welcome-point-text">Diese App speichert alle Daten ausschließlich lokal in deinem Browser. Es gibt keinen Server, kein Tracking, keine Cookies und keine Übertragung an Dritte. Auch Schriften und Bibliotheken werden lokal geladen.</p>
+        </div>
+      </div>
+
+      <div class="welcome-point">
+        <div class="welcome-point-icon">⛨</div>
+        <div class="welcome-point-body">
+          <h3 class="welcome-point-title">Gesundheitsdaten sind besondere Daten</h3>
+          <p class="welcome-point-text">Wenn du in der Anamnese Vorerkrankungen, Medikamente oder Beschwerden einträgst, sind das nach <strong>Art. 9 DSGVO</strong> besonders geschützte Daten. Du kannst sie jederzeit ändern oder löschen.</p>
+        </div>
+      </div>
+
+      <div class="welcome-point">
+        <div class="welcome-point-icon">⚕</div>
+        <div class="welcome-point-body">
+          <h3 class="welcome-point-title">Kein Ersatz für ärztlichen Rat</h3>
+          <p class="welcome-point-text">Trainingsempfehlungen, Gewichtsvorschläge, 1RM-Schätzungen und Readiness-Bewertungen sind sportwissenschaftliche Orientierung — <strong>kein medizinischer Rat</strong>. Du trainierst eigenverantwortlich.</p>
+        </div>
+      </div>
+    </div>
+
+    <details class="welcome-details">
+      <summary>Datenschutz im Detail</summary>
+      <div class="welcome-details-body">
+        <p><strong>Verarbeitete Daten:</strong> Stammdaten (Name, Alter, Größe, Gewicht, HFmax), Gesundheitsdaten (Anamnese, sofern eingegeben), Trainingsdaten (Sessions, Sätze, Wiederholungen, Gewichte, RPE) und UI-Einstellungen (aktiver Tab, Theme, Filter).</p>
+        <p><strong>Speicherorte (Browser-localStorage):</strong> <code>tpv2_profile_data</code>, <code>tpv2_consent_v1</code>, <code>tpv2_active_tab</code>, <code>tpv2_role</code>, <code>tpv2_theme</code> und weitere <code>tpv2_*</code>-Schlüssel.</p>
+        <p><strong>Rechtsgrundlage:</strong> Deine Einwilligung nach Art. 6 Abs. 1 lit. a DSGVO; bei Gesundheitsdaten zusätzlich Art. 9 Abs. 2 lit. a DSGVO.</p>
+        <p><strong>Externe Dienste:</strong> Keine. Alle Schriften (Inter, JetBrains Mono) und Bibliotheken (Chart.js) liegen lokal im App-Verzeichnis. Es findet keine Verbindung zu Google Fonts, jsDelivr oder anderen CDNs statt.</p>
+        <p><strong>Speicherdauer:</strong> Bis du sie selbst löschst (Profil-Reset oder Browser-Cache leeren). Es gibt keine Server-Speicherung.</p>
+        <p><strong>Deine Rechte:</strong> Auskunft (Export als JSON), Berichtigung (Profil-Bearbeiten), Löschung (Profil-Reset), Datenübertragbarkeit (JSON-Export), Widerruf der Einwilligung jederzeit (siehe Info → Recht), Beschwerde bei dsb.gv.at.</p>
+        <p><strong>Vollständige Texte</strong> findest du nach dem Akzeptieren jederzeit unter <em>Info → Recht</em> (Impressum, Datenschutzerklärung, Nutzungsbedingungen).</p>
+      </div>
+    </details>
+
+    <label class="welcome-consent" for="welcomeAccept">
+      <input type="checkbox" id="welcomeAccept">
+      <span><strong>Ich habe Datenschutzerklärung und Nutzungsbedingungen gelesen</strong> und willige in die lokale Verarbeitung meiner Daten — einschließlich Gesundheitsdaten nach Art. 9 DSGVO — ein.</span>
+    </label>
+
+    <div class="welcome-actions">
+      <button class="welcome-btn" id="welcomeAcceptBtn" disabled>Akzeptieren &amp; loslegen</button>
+    </div>
+
+    <div class="welcome-foot">
+      Stand der Texte: <strong>10.04.2026</strong> · Du kannst deine Einwilligung jederzeit unter <em>Info → Recht</em> zurückziehen. Beim Widerruf werden deine lokalen Daten auf Wunsch gelöscht.
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════ SPLASH / WELCOME ═══════════════ -->
 <div class="splash" id="splash">
@@ -1938,6 +2004,37 @@
               </div>
               <div class="info-text">
                 <p>Da deine Daten ausschließlich im Browser-Speicher liegen, können sie verloren gehen, wenn du den Browser-Speicher löschst, ein anderes Gerät verwendest oder den Browser-Modus „Privat / Inkognito" nutzt. Erstelle regelmäßig ein Backup über Info → Daten → Export.</p>
+              </div>
+            </div>
+
+            <div class="info-legal-section" id="consentSection">
+              <div class="info-legal-head">
+                <span class="info-legal-num">8</span>
+                <span class="info-legal-title">Deine Einwilligung</span>
+              </div>
+              <div class="info-text">
+                <p>Du hast deine Einwilligung in die lokale Verarbeitung deiner Daten — einschließlich Gesundheitsdaten nach Art. 9 DSGVO — am folgenden Zeitpunkt aktiv erteilt:</p>
+                <div class="info-rows" style="margin-top:10px;">
+                  <div class="info-row">
+                    <div class="info-row-key">Erteilt am</div>
+                    <div class="info-row-val" id="consentDate">—</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-row-key">Datenschutz-Stand</div>
+                    <div class="info-row-val" id="consentDseVersion">—</div>
+                  </div>
+                  <div class="info-row">
+                    <div class="info-row-key">Nutzungsbedingungen-Stand</div>
+                    <div class="info-row-val" id="consentAgbVersion">—</div>
+                  </div>
+                </div>
+                <p style="margin-top:14px;">Du kannst deine Einwilligung jederzeit zurückziehen. Beim Widerruf wirst du gefragt, ob du auch deine lokal gespeicherten Trainingsdaten löschen möchtest. Ohne Einwilligung kann die App nicht weiter genutzt werden — nach dem Widerruf wird beim nächsten Aufruf erneut das Welcome-Modal angezeigt.</p>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+                  <button class="info-action info-action-danger" id="consentRevokeBtn" type="button">
+                    <span class="info-action-icon">⊘</span>
+                    Einwilligung zurückziehen
+                  </button>
+                </div>
               </div>
             </div>
           </div>
