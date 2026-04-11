@@ -127,8 +127,11 @@ import { renderCockpit } from '../pages/cockpit.js';
   }
 
   function renderBlockRow(block, idx) {
-    // Lazy-Default: location setzen beim ersten Render wenn noch nicht vorhanden
-    if (!block.location) block.location = _defaultLoc();
+    // Block-Location aus aktuellem Profil ableiten, solange der User
+    // sie nicht explizit gesetzt hat. Damit reagiert der Generator auf
+    // Hierarchie-Änderungen im Profil-Edit, ohne explizite User-Wahl
+    // zu überschreiben.
+    if (block._userLocation !== true) block.location = _defaultLoc();
     return `
       <div class="pn-block-row" data-idx="${idx}" style="border-left: 3px solid ${block.color};">
         <select class="pn-block-goal" data-field="goal">
@@ -168,6 +171,7 @@ import { renderCockpit } from '../pages/cockpit.js';
       });
       row.querySelector('[data-field="location"]').addEventListener('change', (e) => {
         blocks[idx].location = e.target.value;
+        blocks[idx]._userLocation = true;  // explizite Wahl markieren
         applyToProfile();
       });
       row.querySelector('[data-field="length"]').addEventListener('change', (e) => {
