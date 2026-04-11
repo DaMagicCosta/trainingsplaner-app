@@ -172,6 +172,11 @@ function saveProfileEdit() {
   p.equipment = eq;
 
   if (target === 'self') {
+    // Trainingsort-Hierarchie könnte sich geändert haben → tpUseHome
+    // zurücksetzen, damit der nächste renderTrainingsplan-Aufruf den
+    // Default aus der neuen trainingLocation[0] neu ableitet.
+    state.tpUseHome = null;
+
     // Re-render: Info-Tab und Sidebar-Label
     renderInfo(p);
     const roleNameEl = document.getElementById('roleName');
