@@ -35,11 +35,17 @@ function renderTrainingsplan(profile) {
   const kw = state.tpViewKw;
 
   // Studio/Home-Toggle initial aus dem Profil ableiten:
-  // trainingLocation[0] === 'home' → Plan startet im Home-Modus
+  // trainingLocation[0] === 'home' → globaler Default ist Home-Modus.
+  // Per-KW-Overrides leben in state.tpUseHomePerKw und überschreiben den
+  // Default für die jeweilige Woche.
   if (state.tpUseHome === null || state.tpUseHome === undefined) {
     const locs = Array.isArray(profile.trainingLocation) ? profile.trainingLocation : [];
     state.tpUseHome = locs[0] === 'home';
   }
+  // Effektiver Modus für die aktuell angezeigte KW
+  const effectiveUseHome = (state.tpUseHomePerKw && state.tpUseHomePerKw[kw] !== undefined)
+    ? state.tpUseHomePerKw[kw]
+    : state.tpUseHome;
 
   // Datumsbereich Mo–So
   const monday = _isoWeekToMonday(year, kw);
@@ -154,11 +160,11 @@ function renderTrainingsplan(profile) {
       let fallbackDays = null;
       let fallbackLabel = '';
 
-      if (state.tpUseHome && plan._homeFallback) {
+      if (effectiveUseHome && plan._homeFallback) {
         useFallback = true;
         fallbackDays = plan._homeFallback;
         fallbackLabel = 'Home-Plan';
-      } else if (!state.tpUseHome && plan._studioFallback) {
+      } else if (!effectiveUseHome && plan._studioFallback) {
         useFallback = true;
         fallbackDays = plan._studioFallback;
         fallbackLabel = 'Studio-Plan';
@@ -174,7 +180,7 @@ function renderTrainingsplan(profile) {
       const locBtn = document.getElementById('tpLocToggle');
       if (locBtn) {
         locBtn.style.display = hasFallback ? '' : 'none';
-        locBtn.classList.toggle('home-active', !!state.tpUseHome);
+        locBtn.classList.toggle('home-active', !!effectiveUseHome);
         const locLabel = document.getElementById('tpLocLabel');
         if (locLabel) {
           if (useFallback) {
@@ -619,16 +625,27 @@ function _renderTpNoPlanState(kw) {
   const tp = document.querySelector('.page[data-page="trainingsplan"]');
   if (!tp) return;
 
-  // ── Studio/Home-Toggle (bidirektional) ──
-  // Initial null — wird beim ersten Render aus profile.trainingLocation[0]
-  // abgeleitet. Wenn Standard 'home' ist, startet der Plan im Home-Modus.
+  // ── Studio/Home-Toggle (bidirektional, KW-spezifisch) ──
+  // Globaler Default state.tpUseHome wird beim ersten Render aus
+  // profile.trainingLocation[0] abgeleitet. Klick auf den Toggle
+  // setzt einen KW-spezifischen Override in state.tpUseHomePerKw,
+  // sodass nur die aktuell angezeigte KW umgeschaltet wird. Andere
+  // Wochen behalten den Profil-Default oder ihren eigenen Override.
   state.tpUseHome = null;
+  state.tpUseHomePerKw = {};
   const locToggleBtn = document.getElementById('tpLocToggle');
   if (locToggleBtn) {
     locToggleBtn.addEventListener('click', () => {
-      state.tpUseHome = !state.tpUseHome;
+      const kw = state.tpViewKw;
+      if (kw == null) return;
+      const current = (state.tpUseHomePerKw[kw] !== undefined)
+        ? state.tpUseHomePerKw[kw]
+        : !!state.tpUseHome;
+      state.tpUseHomePerKw[kw] = !current;
       if (state.profile) renderTrainingsplan(state.profile);
-      toast(state.tpUseHome ? 'Home-Ausweichplan aktiv' : 'Studio-Plan aktiv');
+      toast(state.tpUseHomePerKw[kw]
+        ? `KW ${kw}: Home-Ausweichplan aktiv`
+        : `KW ${kw}: Studio-Plan aktiv`);
     });
   }
 

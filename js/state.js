@@ -123,7 +123,8 @@ export const state = {
   tpViewDay: 0,   // aktiv ausgewählter Tag-Index
   tpEditing: null, // { exerciseName, setIdx } oder null — aktiv bearbeitete Satz-Zeile
   tpEditMode: false, // Trainingsplan Bearbeiten-Modus (Trainer-only)
-  tpUseHome: false,  // Studio/Home-Toggle im Trainingsplan
+  tpUseHome: false,  // Studio/Home-Toggle: globaler Default aus Profil-Hierarchie
+  tpUseHomePerKw: {}, // KW-spezifische Overrides: { 15: true, 16: false, ... }
   fpRange: localStorage.getItem('tpv2_fp_range') || '12W',
   fpExercise: localStorage.getItem('tpv2_fp_exercise') || '',
   fpAgg: localStorage.getItem('tpv2_fp_agg') || 'week',

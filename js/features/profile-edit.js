@@ -174,8 +174,10 @@ function saveProfileEdit() {
   if (target === 'self') {
     // Trainingsort-Hierarchie könnte sich geändert haben → tpUseHome
     // zurücksetzen, damit der nächste renderTrainingsplan-Aufruf den
-    // Default aus der neuen trainingLocation[0] neu ableitet.
+    // Default aus der neuen trainingLocation[0] neu ableitet. Plus
+    // KW-Overrides löschen — sie waren auf dem alten Default basiert.
     state.tpUseHome = null;
+    state.tpUseHomePerKw = {};
 
     // Re-render: Info-Tab und Sidebar-Label
     renderInfo(p);

@@ -29,8 +29,10 @@ function _applyProfile(profile, source) {
   window._profile = profile;
 
   // tpUseHome zurücksetzen, damit der nächste renderTrainingsplan-Aufruf
-  // den Default aus dem neu geladenen Profil ableiten kann.
+  // den Default aus dem neu geladenen Profil ableiten kann. Plus:
+  // KW-spezifische Overrides löschen — sie gehören zum vorherigen Profil.
   state.tpUseHome = null;
+  state.tpUseHomePerKw = {};
 
   const sessions = profile.sessions || [];
   const isEmpty = typeof profile.id === 'string' && profile.id.startsWith('empty-');
