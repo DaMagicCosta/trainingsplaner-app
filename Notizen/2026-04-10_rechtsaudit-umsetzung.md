@@ -866,6 +866,55 @@ In `getEmptyProfile()` werden `anamnesis: null` und `agreement: null` plus leere
 - [ ] **Persistenz nach Demo-Wechsel:** F5 → das geladene Demo bleibt
 - [ ] **„Eigenes Profil erstellen"-Button:** Im leeren Zustand klicken → öffnet Profil-Edit-Modal mit leeren Feldern, bekannter Mechanismus
 
-### Bekannter UX-Punkt
+### Bekannter UX-Punkt (im Nachtrag 7 behoben)
 
 Wenn der User im leeren Zustand auf „Demo Max laden" klickt, fragt der Confirm-Dialog „aktuelles Profil überschreiben?". Das ist semantisch korrekt (das leere Profil ist *technisch* schon im localStorage), aber UX-mäßig irritierend („ich hab doch noch gar nichts"). Eine Verbesserung wäre: Im `loadDemoMax`/`loadDemoJulia`-Code prüfen, ob das gespeicherte Profil leer ist (z. B. `id.startsWith('empty-')` oder `sessions.length === 0`) und nur dann den Confirm überspringen. → Folge-Polish (15 Min), nicht kritisch.
+
+→ **Behoben** im selben Commit über `_isRealProfile()`-Helper, der `id.startsWith('empty-')` prüft. Kein Confirm bei leerem Profil.
+
+---
+
+## Nachtrag 7 — Demo-Naming vereinheitlicht (Max → Alexander)
+
+**Datum:** 11.04.2026
+**Auslöser:** Bei der Sichtprüfung der Etappe-D-Buttons fiel auf, dass die App den Demo-Athleten an verschiedenen Stellen unterschiedlich benennt: Die JSON-Datei hieß `Trainingsplaner_Max_Mustermann_Demo.json`, die Code-Strings nannten ihn „Demo Max", aber der **tatsächliche Inhalt** der JSON ist **Alexander da Costa Amaral** (id `p_demo_alexander`, name „Alexander", nachname „da Costa Amaral"). Die Buttons hießen also „Demo Max laden", luden aber Alexander. Klassischer Datei-Namen-Drift.
+
+### Maßnahme
+
+Komplette Vereinheitlichung auf **Alexander** in allen Live-Code-Stellen:
+
+1. **JSON-Datei umbenannt** via `git mv Trainingsplaner_Max_Mustermann_Demo.json Trainingsplaner_Alexander_Demo.json`. Inhalt unverändert.
+2. **`js/demo-loader.js`**: `DEMO_PATH` aktualisiert, Funktion `loadDemoMax()` → `loadDemoAlexander()`, alle Log/Toast-Strings „Demo Max" → „Demo Alexander", JSDoc-Kommentar angepasst, Confirm-Dialog-Text „Max Mustermann" → „Alexander".
+3. **`js/init-handlers.js`**: Import + Variable `loadMaxBtn` → `loadAlexBtn`, Element-ID `infoLoadDemoMaxBtn` → `infoLoadDemoAlexanderBtn`.
+4. **`js/command-palette.js`**: Import + Item-Label „Demo Max laden" → „Demo Alexander laden".
+5. **`js/app.js`**: Import + Banner-Variable `loadMaxBtn` → `loadAlexBtn`, Element-ID `cpDemoLoadMax` → `cpDemoLoadAlexander`.
+6. **`Trainingsplaner.html`**: 
+   - Banner-Button-ID `cpDemoLoadMax` → `cpDemoLoadAlexander`, Label „Demo Max laden" → „Demo Alexander laden"
+   - Info → Daten Card-Label „Demo Max" → „Demo Alexander", Sub-Text „Studio · 430 Sessions" → „Studio + Home · 430 Sessions · Calisthenics-Erfahrung" (das passt besser zum tatsächlichen Profil-Inhalt mit `trainingLocation: ['studio', 'home']`)
+   - Button-ID `infoLoadDemoMaxBtn` → `infoLoadDemoAlexanderBtn`
+7. **`generate_demo.js`**: Header-Kommentar + `filename`-Konstante auf `Trainingsplaner_Alexander_Demo.json`.
+8. **`generate_demo.py`**: `f1`-Pfad analog.
+
+### Was nicht angefasst wurde (bewusst)
+
+- **`Notizen/2026-04-10_rechtsaudit-umsetzung.md` Nachträge 1–6**: Historische Doku. Die alten Texte beschreiben den Zustand zum Zeitpunkt der Umsetzung („Demo Max") — sie sollen dokumentieren *was war*, nicht *was jetzt ist*. Nachtrag 7 (dieser hier) erklärt die Umbenennung.
+- **`Daten/*` Backups**: Reine Snapshots, irrelevant für die laufende App.
+- **`Redesign/Trainingsplaner_v2.html`**: Single-File-Archiv aus der v2-Anfangszeit, nicht mehr in Nutzung.
+- **`sync/SETUP.md`**: Sync ist im Prototyp deaktiviert, der Filename-Hinweis ist Doku-Altlast.
+
+### Verifikations-Grep
+
+`Grep "Max_Mustermann|loadDemoMax|Demo Max|MaxBtn|cpDemoLoadMax|infoLoadDemoMaxBtn"` im Live-Code (`js/`, `Trainingsplaner.html`, `generate_demo.*`) → **0 Treffer**. Restliche Treffer nur in `Notizen/`, `Daten/`, `Redesign/`, `sync/`.
+
+### Betroffene Dateien (Nachtrag 7)
+
+| Datei | Änderung |
+|---|---|
+| `Trainingsplaner_Max_Mustermann_Demo.json` → `Trainingsplaner_Alexander_Demo.json` | git mv (Inhalt unverändert) |
+| `js/demo-loader.js` | DEMO_PATH, Funktionsname, Strings, JSDoc, Confirm-Text |
+| `js/init-handlers.js` | Import, Variable, Element-ID |
+| `js/command-palette.js` | Import, Item-Label |
+| `js/app.js` | Import, Variable, Element-ID |
+| `Trainingsplaner.html` | Zwei IDs, drei Labels, Sub-Text |
+| `generate_demo.js` | Header-Kommentar, filename-Konstante |
+| `generate_demo.py` | f1-Pfad |

@@ -29,7 +29,7 @@ import { renderInfo } from './pages/info.js';
 import './pages/lexikon.js';
 
 // ── Demo & Lifecycle ──
-import { DEMO_PATH, loadDemoProfile, reloadDemoProfile, loadDemoMax, loadDemoJulia } from './demo-loader.js';
+import { DEMO_PATH, loadDemoProfile, reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from './demo-loader.js';
 import { startNextEinheit } from './features/log-session.js';
 import { exportProfileJson } from './pages/info.js';
 
@@ -76,9 +76,9 @@ applyTheme(state.theme);
     }
   }
   // Demo-Lade-Buttons im Banner
-  const loadMaxBtn = document.getElementById('cpDemoLoadMax');
+  const loadAlexBtn = document.getElementById('cpDemoLoadAlexander');
   const loadJuliaBtn = document.getElementById('cpDemoLoadJulia');
-  if (loadMaxBtn)   loadMaxBtn.addEventListener('click',   loadDemoMax);
+  if (loadAlexBtn)  loadAlexBtn.addEventListener('click',  loadDemoAlexander);
   if (loadJuliaBtn) loadJuliaBtn.addEventListener('click', loadDemoJulia);
   // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
   const createBtn = document.getElementById('cpDemoCreate');

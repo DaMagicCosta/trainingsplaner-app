@@ -9,7 +9,7 @@ import { switchTab } from './tabs.js';
 import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.js';
 import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
-import { reloadDemoProfile, loadDemoMax, loadDemoJulia } from './demo-loader.js';
+import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { revokeConsent } from './consent.js';
 import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } from './features/anamnese-edit.js';
@@ -21,12 +21,12 @@ import { openAgreementConfirmModal, confirmAgreement, revokeAgreement, openAgree
   const exportBtn = document.getElementById('infoExportBtn');
   const importBtn = document.getElementById('infoImportBtn');
   const reloadBtn = document.getElementById('infoReloadBtn');
-  const loadMaxBtn = document.getElementById('infoLoadDemoMaxBtn');
+  const loadAlexBtn = document.getElementById('infoLoadDemoAlexanderBtn');
   const loadJuliaBtn = document.getElementById('infoLoadDemoJuliaBtn');
   if (exportBtn) exportBtn.addEventListener('click', exportProfileJson);
   if (importBtn) importBtn.addEventListener('click', importProfileJson);
   if (reloadBtn) reloadBtn.addEventListener('click', reloadDemoProfile);
-  if (loadMaxBtn)   loadMaxBtn.addEventListener('click',   loadDemoMax);
+  if (loadAlexBtn)  loadAlexBtn.addEventListener('click',  loadDemoAlexander);
   if (loadJuliaBtn) loadJuliaBtn.addEventListener('click', loadDemoJulia);
 
   // Anamnese & Trainer-Vereinbarung Buttons

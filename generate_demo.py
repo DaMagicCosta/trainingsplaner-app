@@ -245,7 +245,7 @@ julia = generate('Julia','da Costa Amaral',38,62,168,182,'kraftausdauer',
 # ── Save ──
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-f1 = os.path.join(script_dir, 'Trainingsplaner_Max_Mustermann_Demo.json')
+f1 = os.path.join(script_dir, 'Trainingsplaner_Alexander_Demo.json')
 with open(f1, 'w', encoding='utf-8') as f:
     json.dump(alexander, f, indent=2, ensure_ascii=False)
 

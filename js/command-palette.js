@@ -4,7 +4,7 @@ import { switchTab } from './tabs.js';
 import { setRole, switchProfile, toggleRoleDropdown } from './roles.js';
 import { startNextEinheit } from "./features/log-session.js";
 import { exportProfileJson, importProfileJson } from "./pages/info.js";
-import { reloadDemoProfile, loadDemoMax, loadDemoJulia } from "./demo-loader.js";
+import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from "./demo-loader.js";
 import { openProfileEditModal } from "./features/profile-edit.js";
 
 // Funktionen aus noch-nicht-extrahierten Modulen (Phase 4+)
@@ -22,7 +22,7 @@ const cmdkItems = [
   { group: 'Quick Actions', label: 'Profil importieren', ico: '↑', action: () => importProfileJson() },
   { group: 'Quick Actions', label: 'Profil exportieren', ico: '↗', action: () => exportProfileJson() },
 
-  { group: 'Demo-Profile', label: 'Demo Max laden (Studio · 430 Sessions)', ico: '◉', action: () => loadDemoMax() },
+  { group: 'Demo-Profile', label: 'Demo Alexander laden (Studio · 430 Sessions)', ico: '◉', action: () => loadDemoAlexander() },
   { group: 'Demo-Profile', label: 'Demo Julia laden (Studio + Cardio · weiblich)', ico: '◉', action: () => loadDemoJulia() },
   { group: 'Demo-Profile', label: 'Aktuelles Demo zurücksetzen', ico: '↻', action: () => reloadDemoProfile() },
 

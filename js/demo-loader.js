@@ -10,12 +10,12 @@ import { renderInfo } from "./pages/info.js";
 import { buildPlanBalance } from "./features/plan-balance.js";
 import { _parseLocationString } from "./features/profile-edit.js";
 
-export { DEMO_PATH, DEMO_PATH_JULIA, _applyProfile, _loadDemoFromFetch, loadDemoProfile, reloadDemoProfile, loadDemoMax, loadDemoJulia, applyEmptyProfile };
+export { DEMO_PATH, DEMO_PATH_JULIA, _applyProfile, _loadDemoFromFetch, loadDemoProfile, reloadDemoProfile, loadDemoAlexander, loadDemoJulia, applyEmptyProfile };
 
 /* ═══════════════════════════════════════════════════════
    DEMO PROFILE LOADER
    ═══════════════════════════════════════════════════════ */
-const DEMO_PATH       = './Trainingsplaner_Max_Mustermann_Demo.json';
+const DEMO_PATH       = './Trainingsplaner_Alexander_Demo.json';
 const DEMO_PATH_JULIA = './Trainingsplaner_Julia_Demo.json';
 
 function _applyProfile(profile, source) {
@@ -70,7 +70,7 @@ function _applyProfile(profile, source) {
  * - Wenn ein lokal gespeichertes Profil existiert: laden
  * - Sonst: leeres Profil verwenden (kein Auto-Demo mehr)
  *
- * Demo-Profile (Max, Julia) können über loadDemoMax() / loadDemoJulia()
+ * Demo-Profile (Alexander, Julia) können über loadDemoAlexander() / loadDemoJulia()
  * explizit nachgeladen werden — Trigger sind Command Palette, Info → Daten
  * und der Demo-Banner im Cockpit.
  */
@@ -89,7 +89,7 @@ function applyEmptyProfile() {
 }
 
 async function _loadDemoFromFetch() {
-  return _loadDemoFromPath(DEMO_PATH, 'Demo Max');
+  return _loadDemoFromPath(DEMO_PATH, 'Demo Alexander');
 }
 
 async function _loadDemoFromPath(path, label) {
@@ -118,21 +118,21 @@ function _isRealProfile(p) {
 }
 
 /**
- * Lädt das Max-Demo (Alexander Cali · 430 Sessions). Mit optionalem
- * Confirm wenn bereits ein echtes Profil im localStorage existiert.
+ * Lädt das Alexander-Demo (430 Sessions, Calisthenics-Erfahrung). Mit
+ * optionalem Confirm wenn bereits ein echtes Profil im localStorage existiert.
  */
-async function loadDemoMax() {
+async function loadDemoAlexander() {
   const saved = _loadSavedProfile();
   if (_isRealProfile(saved)) {
     const ok = confirm(
-      'Aktuelles Profil mit dem Demo "Max Mustermann" überschreiben?\n\n' +
+      'Aktuelles Profil mit dem Demo "Alexander" überschreiben?\n\n' +
       'Dein bisheriges Profil geht dabei verloren. Erstelle vorher ein ' +
       'Backup über Info → Daten → Export, falls du es behalten willst.'
     );
     if (!ok) return;
   }
   _clearSavedProfile();
-  const result = await _loadDemoFromPath(DEMO_PATH, 'Demo Max');
+  const result = await _loadDemoFromPath(DEMO_PATH, 'Demo Alexander');
   if (result) {
     setTimeout(() => location.reload(), 600);
   }
@@ -163,7 +163,7 @@ async function loadDemoJulia() {
 async function reloadDemoProfile() {
   _clearSavedProfile();
   toast('Demo zurückgesetzt …');
-  await _loadDemoFromPath(DEMO_PATH, 'Demo Max');
+  await _loadDemoFromPath(DEMO_PATH, 'Demo Alexander');
   setTimeout(() => location.reload(), 600);
 }
 
