@@ -29,27 +29,31 @@ function _applyProfile(profile, source) {
   window._profile = profile;
 
   const sessions = profile.sessions || [];
+  const isEmpty = typeof profile.id === 'string' && profile.id.startsWith('empty-');
   console.log(`[${source}] Profil geladen:`, profile.name, '·', sessions.length, 'Sessions');
 
-  toast(`${profile.name || 'Profil'} geladen · ${sessions.length} Einheiten`);
-
-  // Sidebar-Name und Dropdown an geladenes Profil anpassen
-  const roleNameEl = document.getElementById('roleName');
-  if (roleNameEl) roleNameEl.textContent = (profile.name || '').trim() || 'Profil';
-  const selfSwitch = document.querySelector('[data-athlete-switch="self"] span:last-child');
-  if (selfSwitch) {
-    const displayName = ((profile.name || '') + ' ' + (profile.nachname || '')).trim() || 'Mein Profil';
-    selfSwitch.textContent = displayName + ' (eigenes Profil)';
+  if (!isEmpty) {
+    toast(`${profile.name || 'Profil'} geladen · ${sessions.length} Einheiten`);
   }
 
-  // Bei eigenem Profil (aus localStorage): Demo-Athleten komplett entfernen
-  if (source === 'Persist') {
+  // Sidebar-Name und Dropdown an geladenes Profil anpassen
+  const fullName = ((profile.name || '') + ' ' + (profile.nachname || '')).trim();
+  const sidebarLabel = fullName || (isEmpty ? 'Leeres Profil' : 'Profil');
+  const roleNameEl = document.getElementById('roleName');
+  if (roleNameEl) roleNameEl.textContent = sidebarLabel;
+  const selfSwitch = document.querySelector('[data-athlete-switch="self"] span:last-child');
+  if (selfSwitch) {
+    selfSwitch.textContent = fullName ? fullName + ' (eigenes Profil)' : 'Mein Profil';
+  }
+
+  // Hardcoded Julia-Reste aus dem alten Demo-Modell entfernen — gilt
+  // für alle Quellen außer der echten Demo-Julia-Vorschau (wo sie eh
+  // gerade aktiv geladen wird, also nicht doppelt erscheinen darf).
+  if (source !== 'Demo Julia') {
     const juliaSwitch = document.querySelector('[data-athlete-switch="lisa"]');
     if (juliaSwitch) juliaSwitch.remove();
-    // Athleten-Verwaltung im Info-Tab leeren (hardcoded Julia-Zeile)
     const athletesList = document.getElementById('infoAthletesList');
     if (athletesList) athletesList.innerHTML = '';
-    // Demo-Athleten-State aufräumen
     state._juliaProfile = null;
     state.demoAthletes = {};
   }

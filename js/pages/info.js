@@ -17,7 +17,9 @@ function renderInfo(profile) {
   if (!profile) return;
 
   // Profil-Hero
-  const name = ((profile.name || '') + ' ' + (profile.nachname || '')).trim() || 'Unbekannt';
+  const isEmpty = typeof profile.id === 'string' && profile.id.startsWith('empty-');
+  const fullName = ((profile.name || '') + ' ' + (profile.nachname || '')).trim();
+  const name = fullName || (isEmpty ? 'Leeres Profil' : 'Unbekannt');
   document.getElementById('infoProfileName').textContent = name;
 
   // Sidebar-Name synchronisieren (wird sonst nie gesetzt)
