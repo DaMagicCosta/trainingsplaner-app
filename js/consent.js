@@ -15,9 +15,10 @@ const STORAGE_KEY = 'tpv2_consent_v1';
 
 // Versions-Hashes der Rechtstexte. Bei inhaltlicher Änderung erhöhen,
 // dann wird beim nächsten Reload der Consent erneut abgefragt.
-// 2026-04-11: DSE Abschnitt 2 um Hinweis zu v1-Legacy-Cleanup ergänzt.
+// 2026-04-11: AGB Abschnitt 2 um Voraussetzungs-Logik (Generator-Ausschluss,
+//             Picker-Warnung, Level-Hinweis) ergänzt.
 export const DSE_VERSION = '2026-04-11';
-export const AGB_VERSION = '2026-04-10';
+export const AGB_VERSION = '2026-04-11';
 
 /**
  * Liest den gespeicherten Consent-Eintrag.

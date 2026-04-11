@@ -11,6 +11,13 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-11
 
+### Voraussetzungs-Check in der Plangestaltung
+- **Generator-Pool filtert Prereq-Übungen**: `pickExercises()` in `js/features/generator.js` schließt Übungen mit `voraussetzungen.length > 0` aus dem automatischen Wochenplan aus — Skill-Moves wie Planche oder One-Arm Push-up landen nie unaufgefordert im Plan
+- **Picker-Warnbadge**: `tp-picker-card--prereq` + gelbes `⚠ Prereq`-Badge für Übungen mit Voraussetzungen, `tp-picker-card--locked` + rotes `⛔ Level`-Badge für Anfänger/Beginner laut Anamnese
+- **Neues `prereqConfirmModal`**: öffnet sich beim Klick auf eine Prereq-Übung, listet alle Voraussetzungen mit Kalym-Regel, bei Anfänger-Level zusätzlich roter „Nicht empfohlen"-Hinweis, Durchbruch via „Trotzdem hinzufügen"
+- **Fehlende Imports ergänzt**: `openModal`, `closeModal`, `LX_CATEGORIES` in `js/pages/trainingsplan.js` (liefen bislang über globalen Scope)
+- **AGB Abschnitt 2** um konkrete Beschreibung der Voraussetzungs-Logik ergänzt, `AGB_VERSION` → `2026-04-11`, Stand-Datum auf Nutzungsbedingungen-Karte aktualisiert
+
 ### Calisthenics-Fokus + Lexikon-Erweiterung
 - **Kalym-Ingest**: 26 neue Übungen nach Ashley Kalym, *Calisthenics — Das ultimative Handbuch* (Riva Verlag)
   - 15 Lever/Planche-Progressionen (Planche × 5, Front Lever × 4, Back Lever × 3, Human Flag × 3)

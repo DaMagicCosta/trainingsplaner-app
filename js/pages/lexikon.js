@@ -43,16 +43,28 @@ function renderLexikon() {
   const locIcons = { studio: '◇', home: '⌂', outdoor: '✦' };
   const locLabels = { studio: 'Studio', home: 'Zuhause', outdoor: 'Outdoor' };
 
+  // Anfänger/Beginner-Level aus der Anamnese — fehlende Anamnese wird konservativ
+  // als Beginner behandelt. Siehe _isBeginnerLevel() in trainingsplan.js.
+  const exp = state.profile?.anamnesis?.experience;
+  const beginnerLocked = !exp || exp === 'anfaenger' || exp === 'beginner';
+
   grid.innerHTML = filtered.map((ex, i) => {
     const catLabel = LX_CATEGORIES[ex.catKey] || '—';
     const catCls   = _lxCatClass(ex.catKey);
     const locIcon  = locIcons[ex.location] || '◇';
     const locLabel = locLabels[ex.location] || 'Studio';
+    const hasPrereq = Array.isArray(ex.voraussetzungen) && ex.voraussetzungen.length > 0;
+    const locked = hasPrereq && beginnerLocked;
+    const prereqBadge = hasPrereq
+      ? `<div class="lx-card-prereq${locked ? ' lx-card-prereq--locked' : ''}" title="${locked ? 'Für dein Level nicht empfohlen' : 'Voraussetzungen prüfen'}">${locked ? '⛔ Level' : '⚠ Prereq'}</div>`
+      : '';
+    const cardCls = 'lx-card ' + catCls + (hasPrereq ? ' lx-card--prereq' : '') + (locked ? ' lx-card--locked' : '');
     return `
-      <button class="lx-card ${catCls}" data-cat="${ex.catKey}" data-idx="${i}">
+      <button class="${cardCls}" data-cat="${ex.catKey}" data-idx="${i}">
         <div class="lx-card-chips">
           <div class="lx-card-cat">${catLabel}</div>
           <div class="lx-card-loc loc-${ex.location}">${locIcon} ${locLabel}</div>
+          ${prereqBadge}
         </div>
         <div class="lx-card-name">${escapeHtml(ex.name)}</div>
         <div class="lx-card-muscle">${escapeHtml(ex.muscle)}</div>

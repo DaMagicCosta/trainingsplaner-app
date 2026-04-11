@@ -163,6 +163,29 @@
 .lx-card-loc.loc-studio  { color: var(--accent);  background: var(--accent-dim);  border-color: var(--accent-line); }
 .lx-card-loc.loc-home    { color: var(--success); background: var(--success-dim); border-color: var(--success-line); }
 .lx-card-loc.loc-outdoor { color: var(--warning); background: var(--warning-dim); border-color: var(--warning-line); }
+.lx-card-prereq {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 8px;
+  border-radius: 100px;
+  color: var(--warning);
+  background: color-mix(in srgb, var(--warning) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  width: fit-content;
+}
+.lx-card-prereq--locked {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 18%, transparent);
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
+}
+.lx-card--prereq { border-top-color: var(--warning); }
+.lx-card--locked { border-top-color: var(--danger); }
 .lx-card-name {
   font-size: 16px;
   font-weight: 600;

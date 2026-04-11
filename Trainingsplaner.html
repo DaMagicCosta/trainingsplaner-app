@@ -2105,6 +2105,7 @@
               <div class="info-text">
                 <p>Die App dient ausschließlich der Unterstützung der Trainingsplanung und stellt <strong>keine medizinische, physiotherapeutische oder ärztliche Beratung</strong> dar. Trainingspläne, Übungsempfehlungen, Gewichtsvorschläge, Readiness-Score, 1RM-Schätzungen und Kraft-Standards-Einstufungen ersetzen <strong>nicht</strong> die fachkundige Beurteilung durch qualifiziertes medizinisches Personal.</p>
                 <p style="margin-top:10px;">Die Übungsbibliothek basiert auf publizierter Fachliteratur und etablierten Standards (NSCA/ACSM für Kraft-Standards, Ashley Kalym für die Calisthenics-Systematik — siehe <em>Info → Über → Credits</em>). Alle Beschreibungen wurden eigen formuliert; wörtliche Zitate sind im Text als solche gekennzeichnet. Die Progressionsstufen und Voraussetzungen sind Faustregeln aus der Community — keine garantierten Erfolgswerte.</p>
+                <p style="margin-top:10px;">Übungen mit hinterlegten Voraussetzungen (insbesondere Calisthenics-Skill-Moves wie Planche, Front Lever, Human Flag, One-Arm Push-up) werden vom automatischen Wochenplan-Generator <strong>nicht</strong> in den Plan geschrieben. Im Übungspicker sind sie mit einem Warn-Badge markiert und öffnen beim Hinzufügen einen Bestätigungsdialog mit der Voraussetzungsliste. Bei Anfänger- oder Beginner-Level laut Anamnese zeigt der Dialog zusätzlich einen roten Hinweis, dass die Übung für dein Level nicht empfohlen ist. Das Hinzufügen bleibt jederzeit möglich — die Verantwortung für die korrekte Selbsteinschätzung liegt ausschließlich bei dir (siehe Abschnitt 3).</p>
               </div>
             </div>
 
@@ -2166,7 +2167,7 @@
               </div>
             </div>
           </div>
-          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 10.04.2026</div>
+          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 11.04.2026</div>
         </div>
       </div>
 
@@ -2631,6 +2632,32 @@
           <input type="search" class="tp-picker-search" id="tpPickerSearch" placeholder="Übung suchen …" autocomplete="off">
           <div class="tp-picker-cats" id="tpPickerCats"></div>
           <div class="tp-picker-grid" id="tpPickerGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ VORAUSSETZUNGS-CONFIRM MODAL ═══════════════ -->
+    <div class="tp-modal" id="prereqConfirmModal" role="dialog" aria-modal="true" aria-labelledby="prereqConfirmTitle">
+      <div class="tp-modal-backdrop" data-modal-close="prereqConfirmModal"></div>
+      <div class="tp-modal-panel tp-modal-panel--narrow">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">⚠ &nbsp;Voraussetzungen prüfen</div>
+            <h2 class="tp-modal-title" id="prereqConfirmTitle">Skill-Übung</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="prereqConfirmModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <p class="prereq-intro" id="prereqIntro">Diese Übung setzt folgende Fähigkeiten voraus. Goldene Regel nach Kalym: Erst zur nächsten Stufe weiter, wenn diese Voraussetzungen sauber erfüllt sind.</p>
+          <ul class="prereq-list" id="prereqList"></ul>
+          <div class="prereq-level-warning" id="prereqLevelWarning" hidden>
+            <strong>Nicht empfohlen für dein Level.</strong>
+            <span>Laut deiner Anamnese bist du noch im Anfänger-/Beginner-Bereich. Diese Skill-Übung erfordert stabile Grundlagen über mehrere Jahre. Du kannst sie trotzdem hinzufügen — die Verantwortung liegt bei dir (siehe Nutzungsbedingungen).</span>
+          </div>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action" data-modal-close="prereqConfirmModal" type="button">Abbrechen</button>
+          <button class="info-action info-action-primary" id="prereqConfirmBtn" type="button">Trotzdem hinzufügen</button>
         </div>
       </div>
     </div>

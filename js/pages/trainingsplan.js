@@ -1,8 +1,9 @@
 import { state, STORAGE_KEYS, _saveProfile } from '../state.js';
 import { toast, escapeHtml, _parseDE, _isoWeek, _fmtKg, _DOW_DE_SHORT, _DOW_DE_LONG, _MONTH_DE } from '../utils.js';
-import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
+import { LEXIKON_DATA, LX_CATEGORIES, _lxAllExercises } from '../data/lexikon-data.js';
 import { _isoWeekToMonday, _calcPeriodization, _blockClass } from './jahresplan.js';
 import { _getBwFactor, _effectiveWeight } from '../features/muscle-balance.js';
+import { openModal, closeModal } from '../features/profile-edit.js';
 
 export { renderTrainingsplan, _logSet, _getSessionsByDay };
 
@@ -684,12 +685,24 @@ function _renderTpNoPlanState(kw) {
     return avail;
   }
 
+  // Anfänger/Beginner brauchen bei Skill-Übungen einen expliziten Durchbruch,
+  // höhere Level sehen nur die Warnung. Siehe LEVEL_MAP in strength-standards.js.
+  function _isBeginnerLevel() {
+    const exp = state.profile?.anamnesis?.experience;
+    return !exp || exp === 'anfaenger' || exp === 'beginner';
+  }
+
+  function _hasPrereqs(ex) {
+    return Array.isArray(ex?.voraussetzungen) && ex.voraussetzungen.length > 0;
+  }
+
   function renderPickerGrid() {
     const grid = document.getElementById('tpPickerGrid');
     if (!grid) return;
     const all = _lxAllExercises();
     const q = pickerSearch.toLowerCase();
     const availEq = _pickerAvailableEq();
+    const beginnerLocked = _isBeginnerLevel();
 
     const filtered = all.filter(ex => {
       if (pickerCat !== 'all' && ex.catKey !== pickerCat) return false;
@@ -706,11 +719,20 @@ function _renderTpNoPlanState(kw) {
       }
       return true;
     });
-    grid.innerHTML = filtered.map(ex => `
-      <div class="tp-picker-card" data-ex-name="${escapeHtml(ex.name)}" data-ex-muscle="${escapeHtml(ex.muscle)}">
+    grid.innerHTML = filtered.map(ex => {
+      const prereq = _hasPrereqs(ex);
+      const locked = prereq && beginnerLocked;
+      const cls = 'tp-picker-card' + (prereq ? ' tp-picker-card--prereq' : '') + (locked ? ' tp-picker-card--locked' : '');
+      const badge = prereq
+        ? `<span class="tp-picker-badge" title="${locked ? 'Für dein Level nicht empfohlen' : 'Voraussetzungen prüfen'}">${locked ? '⛔ Level' : '⚠ Prereq'}</span>`
+        : '';
+      return `
+      <div class="${cls}" data-ex-name="${escapeHtml(ex.name)}" data-ex-muscle="${escapeHtml(ex.muscle)}">
         <div class="tp-picker-name">${escapeHtml(ex.name)}</div>
         <div class="tp-picker-muscle">${escapeHtml(ex.muscle)}</div>
-      </div>`).join('') || '<div style="color:var(--text-3);padding:var(--s-4);">Keine Übungen gefunden.</div>';
+        ${badge}
+      </div>`;
+    }).join('') || '<div style="color:var(--text-3);padding:var(--s-4);">Keine Übungen gefunden.</div>';
   }
 
   function renderPickerCats() {
@@ -766,6 +788,46 @@ function _renderTpNoPlanState(kw) {
   }
 
   // ── Picker Grid Click → Übung zum Plan hinzufügen ──
+  // Übungen mit Voraussetzungen öffnen zuerst das prereqConfirmModal und
+  // werden erst bei expliziter Bestätigung in den Plan geschrieben.
+  function _commitExerciseAdd(name, muscle) {
+    const kw = state.tpViewKw;
+    const plan = (state.profile?.plans || {})['w' + kw];
+    if (!plan || !plan.days) return;
+    const dayIdx = state.tpViewDay;
+    if (!plan.days[dayIdx]) return;
+    const exists = plan.days[dayIdx].exercises.some(ex => ex.name === name);
+    if (exists) {
+      toast('Übung ist schon im Plan');
+      return;
+    }
+    plan.days[dayIdx].exercises.push({
+      name, muscle, saetze: 3, wdh: 10, gewicht: null
+    });
+    closeModal('exercisePickerModal');
+    _saveProfile();
+    renderTrainingsplan(state.profile);
+    toast(name + ' hinzugefügt');
+  }
+
+  function _openPrereqConfirm(ex) {
+    const title = document.getElementById('prereqConfirmTitle');
+    const list = document.getElementById('prereqList');
+    const levelWarn = document.getElementById('prereqLevelWarning');
+    const btn = document.getElementById('prereqConfirmBtn');
+    if (!title || !list || !btn) return;
+    title.textContent = ex.name;
+    list.innerHTML = ex.voraussetzungen
+      .map(v => `<li>${escapeHtml(v)}</li>`).join('');
+    const locked = _isBeginnerLevel();
+    if (levelWarn) levelWarn.hidden = !locked;
+    btn.onclick = () => {
+      closeModal('prereqConfirmModal');
+      _commitExerciseAdd(ex.name, ex.muscle);
+    };
+    openModal('prereqConfirmModal');
+  }
+
   const pickerGrid = document.getElementById('tpPickerGrid');
   if (pickerGrid) {
     pickerGrid.addEventListener('click', (e) => {
@@ -773,24 +835,12 @@ function _renderTpNoPlanState(kw) {
       if (!card) return;
       const name = card.dataset.exName;
       const muscle = card.dataset.exMuscle;
-      const kw = state.tpViewKw;
-      const plan = (state.profile?.plans || {})['w' + kw];
-      if (!plan || !plan.days) return;
-      const dayIdx = state.tpViewDay;
-      if (!plan.days[dayIdx]) return;
-      // Prüfen ob Übung schon vorhanden
-      const exists = plan.days[dayIdx].exercises.some(ex => ex.name === name);
-      if (exists) {
-        toast('Übung ist schon im Plan');
+      const exFull = _lxAllExercises().find(e => e.name === name);
+      if (exFull && _hasPrereqs(exFull)) {
+        _openPrereqConfirm(exFull);
         return;
       }
-      plan.days[dayIdx].exercises.push({
-        name, muscle, saetze: 3, wdh: 10, gewicht: null
-      });
-      closeModal('exercisePickerModal');
-      _saveProfile();
-      renderTrainingsplan(state.profile);
-      toast(name + ' hinzugefügt');
+      _commitExerciseAdd(name, muscle);
     });
   }
 

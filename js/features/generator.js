@@ -286,6 +286,9 @@ import { renderCockpit } from '../pages/cockpit.js';
 
     return (LEXIKON_DATA[catKey] || [])
       .filter(ex => {
+        // Skill-Übungen mit Voraussetzungen nie automatisch einplanen —
+        // der Athlet muss sie bewusst im Picker hinzufügen.
+        if (Array.isArray(ex.voraussetzungen) && ex.voraussetzungen.length > 0) return false;
         // Wenn Athlet Equipment für diesen Ort hat → danach filtern.
         // ALLE Equipment-Items der Übung müssen verfügbar sein (every),
         // sonst greifen Kombi-Übungen wie ['Kurzhanteln', 'Hantelbank']

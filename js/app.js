@@ -23,7 +23,7 @@ import './features/generator.js?v=20260409g';
 // ── Pages ──
 import { renderCockpit } from './pages/cockpit.js';
 import { renderJahresplan } from './pages/jahresplan.js';
-import { renderTrainingsplan } from './pages/trainingsplan.js';
+import { renderTrainingsplan } from './pages/trainingsplan.js?v=20260411a';
 import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo } from './pages/info.js';
 import './pages/lexikon.js';
