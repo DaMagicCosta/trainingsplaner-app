@@ -801,3 +801,71 @@ Damit ist Abschnitt 6 der Nutzungsbedingungen **vollständig substantiell erfül
 - [ ] **Persistenz:** F5 → Status, Bestätigungs-Box und History bleiben erhalten
 - [ ] **Athlet-Modus:** In den Athlet-Modus wechseln → Vereinbarungs-Tab ist gar nicht sichtbar (rollenbasierte CSS-Sichtbarkeit)
 - [ ] **Esc-Close + Backdrop-Close:** Confirm-Modal und History-Modal lassen sich beide mit Esc und Click-Outside schließen
+
+---
+
+## Nachtrag 6 — Etappe D: Demo als Import statt Pflicht
+
+**Datum:** 11.04.2026
+**Auslöser:** Risiko 3 aus der Audit-Folge-Analyse. Bisher lud die App beim Erstaufruf automatisch das Max-Mustermann-Demo (430 Sessions, 3 Jahre Trainingsdaten). Das hatte zwei Probleme:
+
+1. **UX:** Tester sahen sofort fremde Trainingsdaten und mussten sich aktiv durch die Demo-Banner-Logik klicken, um ein eigenes Profil anzulegen. Verwirrung war vorprogrammiert.
+2. **DSGVO-Belegspur:** Auch wenn die Demo-Daten technisch unter dem Profil-Schlüssel des Nutzers landeten, war die DSE in Abschnitt 2 schwer zu erfüllen — sie listet die verarbeiteten Daten transparent, aber bei Demo-Daten ist „verarbeitete Daten" eine fragwürdige Kategorie. Sauberer ist: App startet leer, Demo-Profile sind explizite Import-Optionen.
+
+### Maßnahme
+
+1. **`getEmptyProfile()` Helper** in `js/state.js`: Liefert ein vollständiges Profil-Objekt mit allen Pflichtfeldern (id `empty-{timestamp}`, leere Strings für Stammdaten, leere Arrays für `tage`/`sessions`, leeres `equipment.studio`-Objekt, `null` für `anamnesis`/`agreement`, leere History-Arrays). Damit crashen die Render-Funktionen nicht — sie können mit dem leeren Profil normal durchlaufen und zeigen leere Cockpits, leere Charts, leere Listen.
+
+2. **`loadDemoProfile()` umgebaut** in `js/demo-loader.js`: Das war bisher die Auto-Lade-Funktion für die Init-Sequenz. Neue Logik:
+   - **Wenn `tpv2_profile_data` im localStorage existiert** → laden (wie bisher)
+   - **Sonst** → `applyEmptyProfile()` aufrufen, das ein leeres Profil über `getEmptyProfile()` erzeugt und durch `_applyProfile()` rendert
+   
+   Kein Auto-Fetch des Demo-JSONs mehr.
+
+3. **Zwei neue Funktionen `loadDemoMax()` und `loadDemoJulia()`** in `demo-loader.js`:
+   - Wenn bereits ein Profil im localStorage existiert: Browser-`confirm()` mit Warnung, dass das aktuelle Profil überschrieben wird, plus Hinweis auf den Export
+   - Bei Bestätigung (oder leerem localStorage): `_clearSavedProfile()`, dann fetch über `_loadDemoFromPath()`, dann `_applyProfile()`, dann `_saveProfile()` und `location.reload()` für sauberen Zustand
+4. **Demo-Banner im Cockpit** umgebaut: zeigt sich jetzt nur noch bei *leerem* Profil (id beginnt mit `'empty-'`). Text: „Leeres Profil — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren." Vier Buttons: „Eigenes Profil erstellen" (bestehender Mechanismus), „Demo Max laden", „Demo Julia laden", „Später" (Banner ausblenden für die Session).
+5. **Command Palette** um eine neue Gruppe „Demo-Profile" mit drei Items erweitert: Demo Max, Demo Julia, Aktuelles Demo zurücksetzen. Die alte Quick-Action „Demo-Profil neu laden" ist in die neue Gruppe gewandert (sie war als Quick Action auf der Startseite verwirrend, weil sie nur dann sinnvoll ist, wenn man weiß, dass man ein Demo-Profil hat).
+6. **Info → Daten** Sektion erweitert: Statt einer einzigen „Zurücksetzen"-Karte gibt es jetzt drei Karten:
+   - **Demo Max** mit Beschreibung „Studio · 430 Sessions · Calisthenics-Erfahrung" und „Demo Max laden"-Button
+   - **Demo Julia** mit Beschreibung „Studio + Cardio · weibliches Profil" und „Demo Julia laden"-Button
+   - **Demo zurücksetzen** mit Hinweis, dass dies das aktuell aktive Demo neu lädt (alte Mutationen verwirft)
+   
+   Die alte „Sync nicht aktiv im Prototyp"-Karte ist weggefallen — sie war redundant mit dem CLAUDE.md-Hinweis.
+
+### Edge Cases und ihre Behandlung
+
+- **Erstaufruf nach Welcome-Modal-Akzeptanz:** Welcome-Modal akzeptiert → `loadDemoProfile()` → kein gespeichertes Profil → leeres Profil → Cockpit rendert mit `sessions: []`, Demo-Banner erscheint im Cockpit. Kein Auto-Demo mehr.
+- **Bestehende Nutzer mit gespeichertem Profil:** Beim Reload greift `_loadSavedProfile()` und lädt wie bisher das eigene Profil. Banner erscheint nicht. Kein Bruch für Wiederkehrer.
+- **Demo-Profile haben kein `agreement`/`anamnesis`:** Nach dem Laden zeigt der Trainer-Modus „Vereinbarung noch nicht bestätigt" — was korrekt ist, weil ein importiertes Demo-Profil aus DSGVO-Sicht eine eigene Bestätigung braucht (alte Bestätigungen aus dem ursprünglichen Demo-Snapshot wären für den jetzigen Nutzer nicht rechtsgültig).
+- **`_applyProfile()` mit Source `'Empty'`:** Der Toast „Profil geladen · 0 Einheiten" wäre verwirrend bei einem leeren Profil. Er bleibt aber drin, weil `_applyProfile()` von vielen Stellen aufgerufen wird und Sonderfälle die Funktion komplizierter machen würden. Pragmatisch: Tester sieht „leeres Profil geladen", versteht den Zustand und nutzt den Banner.
+- **Banner-Button „Eigenes Profil erstellen"-Mechanismus:** Der bestehende Code in `app.js` setzt alle Profil-Felder auf leer und öffnet das Profil-Edit-Modal. Mit dem neuen leeren Profil ist das semantisch identisch — nur, dass das Profil schon leer ist, also der „Reset"-Schritt eigentlich überflüssig wäre. Bleibt drin, weil er auch funktioniert wenn man von einem geladenen Demo aus startet.
+
+### Bonus: Defensive Init für anamnesis/agreement
+
+In `getEmptyProfile()` werden `anamnesis: null` und `agreement: null` plus leere History-Arrays gesetzt. Damit funktioniert der Render-Code aus Etappe A und B sofort (er prüft beide Felder defensive). Auch beim Demo-Import sind diese Felder dann sauber initialisiert, falls die Demo-JSONs sie nicht enthalten — was sie nicht tun.
+
+### Betroffene Dateien (Nachtrag 6)
+
+| Datei | Änderung |
+|---|---|
+| `js/state.js` | Neue Funktion `getEmptyProfile()` mit allen Pflichtfeldern, Export ergänzt |
+| `js/demo-loader.js` | Import `getEmptyProfile`, neue Konstante `DEMO_PATH_JULIA`, neue Funktionen `applyEmptyProfile`, `loadDemoMax`, `loadDemoJulia`, generische `_loadDemoFromPath`. `loadDemoProfile()` lädt bei fehlendem Saved-Profile ein leeres statt Auto-Demo. `reloadDemoProfile()` jetzt mit `location.reload()` für sauberen Zustand |
+| `Trainingsplaner.html` | Demo-Banner: Text + zwei neue Buttons (Demo Max / Demo Julia laden). Info → Daten: drei neue Karten (Demo Max / Demo Julia / Demo zurücksetzen), alte Sync-Karte entfernt |
+| `js/app.js` | Banner-Anzeige-Logik: zeigt nur bei `id.startsWith('empty-')`, nicht mehr bei „kein Saved-Profile". Imports `loadDemoMax`, `loadDemoJulia`. Banner-Button-Handler für die zwei neuen Buttons |
+| `js/init-handlers.js` | Imports `loadDemoMax`, `loadDemoJulia`. Handler für `infoLoadDemoMaxBtn`, `infoLoadDemoJuliaBtn` |
+| `js/command-palette.js` | Neue Gruppe „Demo-Profile" mit drei Items. Alte Quick-Action „Demo-Profil neu laden" verschoben |
+
+### Verifikation (durch User)
+
+- [ ] **Erstaufruf simulieren:** localStorage komplett leeren (DevTools → Application → Clear site data) → F5 → Welcome-Modal → akzeptieren → Cockpit zeigt jetzt **leeren Zustand** (Readiness 100/100 oder ähnlich, weil keine Sessions, keine Charts), Demo-Banner ist sichtbar mit den drei Lade-Buttons
+- [ ] **Demo Max via Banner:** Klick „Demo Max laden" → Confirm-Dialog (weil das leere Profil bereits gespeichert ist?) **Hmm**, das könnte unerwartet sein — siehe Fix-Hinweis unten. Wenn ja: Bestätigen → Profil lädt → Reload → Cockpit zeigt Alex' Daten, Banner ist weg
+- [ ] **Demo Julia via Command Palette:** Cmd+K → „Demo Julia laden" → Confirm → Profil wechselt zu Julia
+- [ ] **Demo via Info → Daten:** Tab Info → Daten → Karte „Demo Julia" → Klick → Confirm → Profil wechselt
+- [ ] **Persistenz nach Demo-Wechsel:** F5 → das geladene Demo bleibt
+- [ ] **„Eigenes Profil erstellen"-Button:** Im leeren Zustand klicken → öffnet Profil-Edit-Modal mit leeren Feldern, bekannter Mechanismus
+
+### Bekannter UX-Punkt
+
+Wenn der User im leeren Zustand auf „Demo Max laden" klickt, fragt der Confirm-Dialog „aktuelles Profil überschreiben?". Das ist semantisch korrekt (das leere Profil ist *technisch* schon im localStorage), aber UX-mäßig irritierend („ich hab doch noch gar nichts"). Eine Verbesserung wäre: Im `loadDemoMax`/`loadDemoJulia`-Code prüfen, ob das gespeicherte Profil leer ist (z. B. `id.startsWith('empty-')` oder `sessions.length === 0`) und nur dann den Confirm überspringen. → Folge-Polish (15 Min), nicht kritisch.

@@ -4,7 +4,7 @@ import { switchTab } from './tabs.js';
 import { setRole, switchProfile, toggleRoleDropdown } from './roles.js';
 import { startNextEinheit } from "./features/log-session.js";
 import { exportProfileJson, importProfileJson } from "./pages/info.js";
-import { reloadDemoProfile } from "./demo-loader.js";
+import { reloadDemoProfile, loadDemoMax, loadDemoJulia } from "./demo-loader.js";
 import { openProfileEditModal } from "./features/profile-edit.js";
 
 // Funktionen aus noch-nicht-extrahierten Modulen (Phase 4+)
@@ -19,9 +19,12 @@ const cmdkList = document.getElementById('cmdkList');
 
 const cmdkItems = [
   { group: 'Quick Actions', label: 'Neue Einheit loggen', ico: '+', kbd: ['⌘','N'], action: () => startNextEinheit() },
-  { group: 'Quick Actions', label: 'Demo-Profil neu laden', ico: '↓', action: () => reloadDemoProfile() },
   { group: 'Quick Actions', label: 'Profil importieren', ico: '↑', action: () => importProfileJson() },
   { group: 'Quick Actions', label: 'Profil exportieren', ico: '↗', action: () => exportProfileJson() },
+
+  { group: 'Demo-Profile', label: 'Demo Max laden (Studio · 430 Sessions)', ico: '◉', action: () => loadDemoMax() },
+  { group: 'Demo-Profile', label: 'Demo Julia laden (Studio + Cardio · weiblich)', ico: '◉', action: () => loadDemoJulia() },
+  { group: 'Demo-Profile', label: 'Aktuelles Demo zurücksetzen', ico: '↻', action: () => reloadDemoProfile() },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
   { group: 'Navigation', label: 'Zum Jahresplan', ico: '▤', kbd: ['G','J'], action: () => switchTab('jahresplan') },

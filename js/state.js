@@ -43,6 +43,36 @@ export function _clearSavedProfile() {
   console.log('[Persist] localStorage gelöscht');
 }
 
+// ─── Leeres Profil ───
+// Wird beim ersten Aufruf verwendet, wenn kein localStorage-Profil und
+// keine explizite Demo-Wahl vorliegt. Alle Pflichtfelder sind angelegt,
+// sodass die Render-Funktionen nicht crashen.
+export function getEmptyProfile() {
+  return {
+    id:           'empty-' + Date.now(),
+    name:         '',
+    nachname:     '',
+    alter:        '',
+    gewicht:      '',
+    groesse:      '',
+    hfmax:        '',
+    geschlecht:   '',
+    goal:         'hypertrophie',
+    tage:         [],
+    trainingLocation: 'studio',
+    equipment:    { studio: { available: [], excluded: [] } },
+    sessions:     [],
+    plans:        {},
+    periodization: null,
+    regenConfig:  null,
+    athleteRegenWeeks: [],
+    anamnesis:    null,
+    anamnesisHistory: [],
+    agreement:    null,
+    agreementHistory: []
+  };
+}
+
 // ─── v1-Legacy-Cleanup ───
 // Räumt alte localStorage-Schlüssel der v1-App auf, die in v2 nicht mehr
 // genutzt werden. Wird einmalig beim Init aufgerufen. Wichtig für die

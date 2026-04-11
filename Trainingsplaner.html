@@ -227,13 +227,15 @@
         <p class="page-sub">Dein Tag auf einen Blick — Readiness, Wochenvolumen und was als Nächstes ansteht.</p>
       </div>
 
-      <!-- Demo-Banner: fordert zum Erstellen eines eigenen Profils auf -->
+      <!-- Empty/Demo-Banner: leeres Profil oder aktives Demo -->
       <div class="cp-demo-banner" id="cpDemoBanner" style="display:none">
-        <div class="cp-demo-banner-text">
-          <strong>Demo-Profil aktiv</strong> — erstelle dein eigenes Profil um deine Trainingsdaten dauerhaft zu speichern.
+        <div class="cp-demo-banner-text" id="cpDemoBannerText">
+          <strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren.
         </div>
         <div class="cp-demo-banner-actions">
           <button class="cp-demo-banner-btn cp-demo-banner-primary" id="cpDemoCreate">Eigenes Profil erstellen</button>
+          <button class="cp-demo-banner-btn" id="cpDemoLoadMax">Demo Max laden</button>
+          <button class="cp-demo-banner-btn" id="cpDemoLoadJulia">Demo Julia laden</button>
           <button class="cp-demo-banner-btn" id="cpDemoDismiss">Später</button>
         </div>
       </div>
@@ -1818,32 +1820,48 @@
 
           <div class="info-card">
             <div class="info-card-head">
-              <div class="info-card-label">↻ &nbsp;Zurücksetzen</div>
-              <div class="info-card-sub">Demo neu laden</div>
+              <div class="info-card-label">◉ &nbsp;Demo Max</div>
+              <div class="info-card-sub">Studio · 430 Sessions · Calisthenics-Erfahrung</div>
             </div>
             <div class="info-text">
-              <p>Löscht gespeicherte Daten und lädt das Original-Demo-Profil frisch vom Server. Alle eigenen Änderungen gehen verloren!</p>
+              <p>Beispiel-Profil mit ausgebauter Trainings-Historie zum Ausprobieren aller Charts und Tabs. <strong>Überschreibt</strong> dein aktuelles Profil — vorher exportieren!</p>
             </div>
             <div class="info-actions">
-              <button class="info-action" id="infoReloadBtn">
-                <span class="info-action-icon">↻</span>
-                Demo-Profil neu laden
+              <button class="info-action" id="infoLoadDemoMaxBtn">
+                <span class="info-action-icon">↓</span>
+                Demo Max laden
               </button>
             </div>
           </div>
 
           <div class="info-card">
             <div class="info-card-head">
-              <div class="info-card-label">⇄ &nbsp;Sync</div>
-              <div class="info-card-sub">nicht aktiv im Prototyp</div>
+              <div class="info-card-label">◉ &nbsp;Demo Julia</div>
+              <div class="info-card-sub">Studio + Cardio · weibliches Profil</div>
             </div>
             <div class="info-text">
-              <p>In der Original-App gibt es Google-Apps-Script-Sync für Trainer-Athleten-Transfer. Im v2-Prototyp bewusst deaktiviert, weil Multi-User-Isolation (Variante B) gewünscht ist.</p>
+              <p>Zweites Beispiel-Profil mit anderem Schwerpunkt — eignet sich um den Profil-Wechsel und die Geschlechts-spezifischen Auswertungen zu testen. <strong>Überschreibt</strong> dein aktuelles Profil!</p>
             </div>
             <div class="info-actions">
-              <button class="info-action" disabled>
-                <span class="info-action-icon">⇄</span>
-                Sync-Einstellungen
+              <button class="info-action" id="infoLoadDemoJuliaBtn">
+                <span class="info-action-icon">↓</span>
+                Demo Julia laden
+              </button>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card-head">
+              <div class="info-card-label">↻ &nbsp;Demo zurücksetzen</div>
+              <div class="info-card-sub">Aktives Demo-Profil neu vom Server holen</div>
+            </div>
+            <div class="info-text">
+              <p>Wenn du ein Demo-Profil geladen und an ihm Änderungen vorgenommen hast, kannst du hiermit den Original-Stand wiederherstellen. Alle eigenen Mutationen am Demo gehen verloren.</p>
+            </div>
+            <div class="info-actions">
+              <button class="info-action" id="infoReloadBtn">
+                <span class="info-action-icon">↻</span>
+                Demo zurücksetzen
               </button>
             </div>
           </div>

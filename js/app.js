@@ -29,7 +29,7 @@ import { renderInfo } from './pages/info.js';
 import './pages/lexikon.js';
 
 // ── Demo & Lifecycle ──
-import { DEMO_PATH, loadDemoProfile, reloadDemoProfile } from './demo-loader.js';
+import { DEMO_PATH, loadDemoProfile, reloadDemoProfile, loadDemoMax, loadDemoJulia } from './demo-loader.js';
 import { startNextEinheit } from './features/log-session.js';
 import { exportProfileJson } from './pages/info.js';
 
@@ -62,15 +62,24 @@ applyTheme(state.theme);
   // Initial-Toasts von applyTheme/setRole unterdrücken
   setTimeout(() => document.getElementById('toast').classList.remove('show'), 100);
 
-  // Demo-Profil im Hintergrund laden
+  // Profil laden (oder leeres Profil verwenden, wenn keins gespeichert ist)
   loadDemoProfile().then(() => {
-  // Demo-Banner zeigen wenn kein eigenes Profil gespeichert ist
-  const hasSaved = !!localStorage.getItem('tpv2_profile_data');
+  // Banner-Logik: nur zeigen, wenn aktuelles Profil leer ist (id beginnt mit "empty-")
+  const isEmpty = !!(state.profile && typeof state.profile.id === 'string' && state.profile.id.startsWith('empty-'));
   const dismissed = sessionStorage.getItem('tpv2_demo_banner_dismissed');
   const banner = document.getElementById('cpDemoBanner');
-  if (banner && !hasSaved && !dismissed) {
+  const bannerText = document.getElementById('cpDemoBannerText');
+  if (banner && isEmpty && !dismissed) {
     banner.style.display = '';
+    if (bannerText) {
+      bannerText.innerHTML = '<strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren.';
+    }
   }
+  // Demo-Lade-Buttons im Banner
+  const loadMaxBtn = document.getElementById('cpDemoLoadMax');
+  const loadJuliaBtn = document.getElementById('cpDemoLoadJulia');
+  if (loadMaxBtn)   loadMaxBtn.addEventListener('click',   loadDemoMax);
+  if (loadJuliaBtn) loadJuliaBtn.addEventListener('click', loadDemoJulia);
   // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
   const createBtn = document.getElementById('cpDemoCreate');
   if (createBtn) createBtn.addEventListener('click', () => {
