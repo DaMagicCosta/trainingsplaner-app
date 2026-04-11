@@ -572,6 +572,147 @@ body.role-athlete .jp-balance-preview,
 }
 .cp-demo-banner-primary:hover { background: var(--accent-hover); }
 
+/* ─── Onboarding-Kombi-Banner (Profil + Anamnese + Vereinbarung) ─── */
+.cp-ob-banner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+  padding: var(--s-6);
+  margin-bottom: var(--s-4);
+  border: 2px solid var(--danger);
+  background: var(--danger-dim); /* Safari < 16.2 Fallback */
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+  border-radius: var(--r-md);
+}
+.cp-ob-head {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.cp-ob-icon {
+  font-size: 24px;
+  line-height: 1;
+  color: var(--danger);
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+.cp-ob-titles { flex: 1; min-width: 0; }
+.cp-ob-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--danger);
+  margin-bottom: 4px;
+}
+.cp-ob-sub {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+.cp-ob-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+}
+.cp-ob-step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--s-5);
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+}
+.cp-ob-step--required {
+  border-color: var(--danger-line);
+}
+.cp-ob-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface-3);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.cp-ob-step--required .cp-ob-num {
+  background: var(--danger);
+  color: #fff;
+}
+.cp-ob-content {
+  flex: 1;
+  min-width: 0;
+}
+.cp-ob-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+.cp-ob-req, .cp-ob-opt {
+  display: inline-block;
+  padding: 1px 7px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: var(--r-sm);
+}
+.cp-ob-req {
+  background: var(--danger);
+  color: #fff;
+}
+.cp-ob-opt {
+  background: var(--surface-3);
+  color: var(--text-3);
+  border: 1px solid var(--border-subtle);
+}
+.cp-ob-desc {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.cp-ob-btn {
+  flex-shrink: 0;
+  padding: 9px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  cursor: pointer;
+  transition: all var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.cp-ob-btn:hover { background: var(--accent-hover); }
+.cp-ob-step--required .cp-ob-btn {
+  background: var(--danger);
+  border-color: var(--danger);
+}
+.cp-ob-step--required .cp-ob-btn:hover { filter: brightness(1.1); }
+
+/* Solange der Onboarding-Banner sichtbar ist, keinen Demo-Banner zeigen
+   — sonst stapeln sich zwei Karten mit ueberlappendem Inhalt. */
+body.onboarding-pending .cp-demo-banner { display: none !important; }
+
+@media (max-width: 720px) {
+  .cp-ob-step { flex-wrap: wrap; }
+  .cp-ob-btn { width: 100%; margin-top: var(--s-2); margin-left: 44px; }
+}
+
 /* ─── Gate-Banner (Anamnese / Vereinbarung) ─── */
 .cp-gate-banner {
   display: flex;

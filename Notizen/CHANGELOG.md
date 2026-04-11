@@ -11,6 +11,14 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Onboarding-Kombi-Banner (Profil + Anamnese + Vereinbarung)
+- **Neues Cockpit-Banner `cpOnboardingBanner`** ersetzt die beiden alten Gate-Banner `cpAnamnesisBanner` und `cpAgreementBanner` — nummerierte Checkliste mit den offenen Pflicht-/Empfohlen-Schritten. Erledigte Schritte fallen raus, bei 0 offenen Schritten verschwindet die Card komplett
+- **Schrittreihenfolge**: `1. Profil-Stammdaten anlegen` (Empfohlen, keine Tab-Sperre), `2. Gesundheits-Anamnese bestätigen` (Pflicht, sperrt Jahresplan/Trainingsplan/Fortschritt), `3. Trainervereinbarung bestätigen` (nur im Trainer-Modus, Empfohlen)
+- **`_getPendingSteps()`** und **`_renderOnboardingBanner()`** in `js/gates.js` berechnen die Liste und rendern sie. Event-Delegation auf `[data-ob-action]` fängt die Schritt-Button-Klicks ab und öffnet die jeweiligen Modale via dynamischem Import
+- **`body.onboarding-pending`** unterdrückt den bestehenden `cpDemoBanner` per CSS, solange mindestens ein Schritt offen ist — damit stapeln sich nicht zwei Karten mit ähnlichem Inhalt übereinander
+- **Alte `cpAnamnesisOpen`/`cpAgreementOpen`-Handler aus `js/app.js`** entfernt (obsolet durch Event-Delegation in gates.js)
+- **Mobile-Anpassung**: Unter 720px wrappt jeder Schritt, der Button rutscht auf eine neue Zeile mit Einrückung auf Höhe der Schritt-Nummer
+
 ### Fix: Anamnese-Gate greift auch nach Cache-Löschung
 - **`_isEmptyProfile`-Ausnahme in `js/gates.js` entfernt**: Bislang waren leere Profile (`id` startet mit `empty-` + leerer Name) vom Anamnese- und Vereinbarungs-Gate ausgenommen, um Banner-Konflikt mit dem bestehenden „Eigenes Profil erstellen"-Demo-Banner zu vermeiden. Problem: Nach Löschen der Browser-Webseitendaten am Mobilgerät fällt `loadDemoProfile()` auf ein frisches leeres Profil zurück (`anamnesis: null`, `agreement: null`). Die Ausnahme verhinderte, dass das Gate dort greift — DSGVO-Einwilligung wurde neu abgefragt, Anamnese und Trainervereinbarung nicht, obwohl faktisch alle drei gleichzeitig verloren gingen
 - **Neues Verhalten**: Das Anamnese-Gate greift jetzt auch auf frischen leeren Profilen. Beim allerersten App-Start (oder nach Cache-Löschung) sind Jahresplan, Trainingsplan und Fortschritt bis zur Anamnese-Bestätigung gesperrt. Demo-Banner und Anamnese-Banner koexistieren im Cockpit — inhaltlich nicht im Konflikt, weil Anamnese unabhängig von Profil-Stammdaten bestätigt werden kann

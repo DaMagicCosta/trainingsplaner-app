@@ -249,28 +249,18 @@
         </div>
       </div>
 
-      <!-- Gate: Anamnese pflicht (blockiert Trainingsplan/Jahresplan/Fortschritt) -->
-      <div class="cp-gate-banner cp-gate-banner--danger" id="cpAnamnesisBanner" style="display:none">
-        <div class="cp-gate-banner-icon">⚕</div>
-        <div class="cp-gate-banner-text">
-          <strong>Gesundheits-Anamnese ausstehend</strong>
-          <span>Bevor du mit dem Training starten kannst, fülle bitte die Anamnese aus. Jahresplan, Trainingsplan und Fortschritt sind bis zur Bestätigung gesperrt. Die Angaben bleiben lokal auf deinem Gerät (siehe Datenschutzerklärung).</span>
+      <!-- Onboarding-Kombi-Banner: Profil + Anamnese + (Trainer:) Vereinbarung -->
+      <div class="cp-ob-banner" id="cpOnboardingBanner" style="display:none">
+        <div class="cp-ob-head">
+          <div class="cp-ob-icon">◇</div>
+          <div class="cp-ob-titles">
+            <div class="cp-ob-title">Erste Schritte</div>
+            <div class="cp-ob-sub">Bevor du mit dem Training startest, erledige bitte die folgenden Punkte. Jahresplan, Trainingsplan und Fortschritt sind gesperrt, bis die Anamnese bestätigt ist.</div>
+          </div>
         </div>
-        <div class="cp-gate-banner-actions">
-          <button class="cp-gate-banner-btn cp-gate-banner-primary" id="cpAnamnesisOpen" type="button">Anamnese jetzt ausfüllen</button>
-        </div>
-      </div>
-
-      <!-- Gate: Trainervereinbarung (nur Trainer-Modus, Banner-only) -->
-      <div class="cp-gate-banner cp-gate-banner--warn" id="cpAgreementBanner" style="display:none">
-        <div class="cp-gate-banner-icon">⚖</div>
-        <div class="cp-gate-banner-text">
-          <strong>Trainervereinbarung offen</strong>
-          <span>Im Trainer-Modus solltest du die Vereinbarung mit deinen Athleten formal bestätigen — das regelt Haftung, Datennutzung und Weisungsrecht. Du kannst die App trotzdem nutzen, der Hinweis bleibt bis zur Bestätigung sichtbar.</span>
-        </div>
-        <div class="cp-gate-banner-actions">
-          <button class="cp-gate-banner-btn cp-gate-banner-primary" id="cpAgreementOpen" type="button">Vereinbarung bestätigen</button>
-        </div>
+        <ol class="cp-ob-steps" id="cpOnboardingSteps">
+          <!-- dynamisch gefüllt von gates.js → applyGates() -->
+        </ol>
       </div>
 
       <!-- Hero-Zeile: Readiness + Stat-Stack -->

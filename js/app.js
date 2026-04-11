@@ -133,22 +133,9 @@ applyTheme(state.theme);
     sessionStorage.setItem('tpv2_demo_banner_dismissed', '1');
   });
 
-  // Pflicht-Gates (Anamnese / Vereinbarung) einmalig prüfen und Banner setzen.
-  // Bei gesperrtem Tab wird in applyGates() automatisch auf Cockpit umgelenkt.
+  // Onboarding-Kombi-Banner (Profil + Anamnese + Vereinbarung) rendern.
+  // Die Schritt-Buttons hoeren ueber Event-Delegation in gates.js, daher
+  // keine separaten Handler hier noetig.
   applyGates();
-
-  // Gate-Banner-Buttons an die bestehenden Modal-Öffner hängen
-  import('./features/anamnese-edit.js').then(({ openAnamneseEditModal }) => {
-    const openAnamBtn = document.getElementById('cpAnamnesisOpen');
-    if (openAnamBtn && openAnamneseEditModal) {
-      openAnamBtn.addEventListener('click', () => openAnamneseEditModal());
-    }
-  });
-  import('./features/agreement-edit.js').then(({ openAgreementConfirmModal }) => {
-    const openAgrBtn = document.getElementById('cpAgreementOpen');
-    if (openAgrBtn && openAgreementConfirmModal) {
-      openAgrBtn.addEventListener('click', () => openAgreementConfirmModal());
-    }
-  });
   });
 })();
