@@ -680,11 +680,17 @@ body.role-athlete .jp-balance-preview,
     flex: 1 1 calc(100% - 36px);
     min-width: 0;
   }
-  .cp-ob-label { font-size: 13px; gap: 6px; }
-  .cp-ob-req, .cp-ob-opt { font-size: 9px; padding: 1px 5px; }
+  .cp-ob-label {
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  /* Tags ausblenden — die Pflicht/Empfohlen-Info kommt mobil durch
+     rote Nummer + roter Rand + roter Button. Tags wuerden sonst in
+     eine eigene Zeile unter das Label rutschen und unruhig wirken. */
+  .cp-ob-req, .cp-ob-opt { display: none; }
   .cp-ob-desc { font-size: 11px; line-height: 1.45; }
   .cp-ob-btn {
-    width: 100%;
+    flex: 0 0 calc(100% - 36px);
     margin-top: 0;
     margin-left: 36px;
     padding: 9px 12px;
