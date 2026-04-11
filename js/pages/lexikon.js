@@ -1,6 +1,6 @@
 import { state } from '../state.js';
 import { toast, escapeHtml } from '../utils.js';
-import { LEXIKON_DATA, LX_CATEGORIES, LX_LOCATIONS, _lxCatClass, _lxAllExercises } from '../data/lexikon-data.js';
+import { LEXIKON_DATA, LX_CATEGORIES, LX_LOCATIONS, _lxCatClass, _lxAllExercises, _lxSource } from '../data/lexikon-data.js';
 
 export { renderLexikon, openLexikonSheet, closeLexikonSheet };
 
@@ -111,6 +111,12 @@ function openLexikonSheet(exercise) {
       <div class="lx-sheet-label"><span class="lx-sheet-label-dot desc"></span>Ausführung &amp; Technik</div>
       <div class="lx-sheet-text desc-text">${escapeHtml(exercise.desc)}</div>
     </div>
+
+    ${_lxSource(exercise) ? `
+    <div class="lx-sheet-source">
+      <span class="lx-sheet-source-label">Quelle:</span>
+      <span class="lx-sheet-source-text">${escapeHtml(_lxSource(exercise))}</span>
+    </div>` : ''}
   `;
 
   sheet.classList.add('open');

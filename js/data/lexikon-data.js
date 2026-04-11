@@ -63,8 +63,9 @@ export const LEXIKON_DATA = {
       muscle: 'Großer Brustmuskel, Trizeps, Deltamuskel (vorderer Anteil)',
       secondary: 'Vorderer Sägemuskel, Core, Unterarme',
       antagonist: 'Breiter Rückenmuskel, Bizeps',
-      desc: 'Liegestütz explosiv nach oben drücken, sodass die Hände den Boden kurz verlassen — optional mit Klatschen vor der Brust. Kontrolliert landen, nicht einfach fallen lassen. Trainiert explosive Push-Kraft (Kalym Kap. 5).',
+      desc: 'Liegestütz explosiv nach oben drücken, sodass die Hände den Boden kurz verlassen — optional mit Klatschen vor der Brust. Kontrolliert landen, nicht einfach fallen lassen. Trainiert explosive Push-Kraft.',
       voraussetzungen: ['20 saubere Liegestütze', 'stabile Handgelenke'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 5: Liegestütze',
       location: 'home',
       eq: ['Bodyweight'], bwFactor: 0.70 },
     { name: 'Einarmiger Liegestütz',
@@ -73,6 +74,7 @@ export const LEXIKON_DATA = {
       antagonist: 'Breiter Rückenmuskel, Bizeps',
       desc: 'Skill-Gipfel der Push-Familie. Ein Arm hinter dem Rücken, Beine breit für Stabilität, Körper als gerade Linie. Der andere Arm drückt das gesamte Körpergewicht seitlich versetzt — hohe Anforderungen an Core und Schulterstabilität. Kalym bezeichnet ihn als „schwerer als jeder Bankdrück-PR".',
       voraussetzungen: ['30 saubere Liegestütze', '10 Archer Liegestütze pro Seite'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 5: Liegestütze',
       location: 'home',
       eq: ['Bodyweight'], bwFactor: 0.85 }
   ],
@@ -265,6 +267,7 @@ export const LEXIKON_DATA = {
       antagonist: 'Großer Brustmuskel, Trizeps',
       desc: 'Oben am Kinnniveau seitlich von einer Hand zur anderen „fahren" (wie eine Schreibmaschine). Eine Seite voll anziehen, dann langsam zur anderen verlagern. Vorstufe zum einarmigen Klimmzug. Kontrolliert, kein Schwung.',
       voraussetzungen: ['15 strict Pull-ups', 'stabile Scapula-Kontrolle'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 6: Klimmzüge',
       location: 'home', isometric: false,
       eq: ['Klimmzugstange'], bwFactor: 1.0 },
     { name: 'Einarmiger Klimmzug',
@@ -273,6 +276,7 @@ export const LEXIKON_DATA = {
       antagonist: 'Großer Brustmuskel, Trizeps',
       desc: 'Skill-Gipfel der Pull-Familie. Eine Hand an der Stange, die andere am Handgelenk gestützt (Assisted) oder komplett frei (Full). Der Core stabilisiert gegen die Rotation. Kalym: „wahrscheinlich die seltenste saubere Bewegung im Park".',
       voraussetzungen: ['20 strict Pull-ups', '5 Typewriter Pull-ups pro Seite', 'kräftiger Handgelenks-Grip'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 6: Klimmzüge',
       location: 'home', isometric: false,
       eq: ['Klimmzugstange'], bwFactor: 1.10 }
   ],
@@ -443,6 +447,7 @@ export const LEXIKON_DATA = {
       antagonist: 'Hüftbeuger, Beinbeugemuskulatur',
       desc: 'Kalyms Lieblings-Bein-Übung jenseits der Pistol. Auf einem Bein stehen, das andere hinter dem Körper angewinkelt am Knöchel halten. Kontrolliert absenken bis das hintere Knie den Boden berührt, dann wieder hoch. Mehr Knie- und Hüftflexibilität als die Pistol. Kalym: „Die beste Übung, die kaum jemand kennt".',
       voraussetzungen: ['10 Pistol Squats pro Bein', 'Hüft- und Knöchelmobilität'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 11: Bein-Übungen',
       location: 'home',
       eq: ['Bodyweight'], bwFactor: 1.0 }
   ],
@@ -498,6 +503,7 @@ export const LEXIKON_DATA = {
       antagonist: 'Rückenstrecker, Großer Gesäßmuskel, Beinbeugemuskulatur',
       desc: 'Progression des L-Sit. Statt Beine horizontal, Beine in einem V-Winkel schräg nach oben halten (etwa 45–60°). Oberkörper bleibt senkrecht. Deutlich mehr Hüftkompression als L-Sit. Angabe in Sekunden.',
       voraussetzungen: ['30 s L-Sit', 'offene hintere Oberschenkel (Beinstrecker-Flexibilität)'],
+      quelle: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 12: Core',
       location: 'home', isometric: true,
       eq: ['Bodyweight'] },
     { name: 'Dragon Flag',
@@ -810,6 +816,28 @@ export const LX_CATEGORIES = {
   p_warmup:       'Warm-up',
   p_cooldown:     'Cooldown'
 };
+
+// Kategorie-Default-Quellen. Gilt für alle Übungen der jeweiligen
+// Kategorie, solange sie kein eigenes quelle-Feld am Eintrag haben.
+// Einzelne Übungen (z. B. Maximal-Varianten in p_brust/p_ruecken) können
+// das über den ex.quelle-Parameter individuell überschreiben.
+export const LX_SOURCES = {
+  p_skill:  'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 10: Lever-Familie',
+  p_cardio: 'Ashley Kalym, Calisthenics — Das ultimative Handbuch (2013), Kap. 13: Konditionsübungen'
+};
+
+/**
+ * Löst die Quelle für eine Übung auf. Priorität:
+ * 1. Explizites ex.quelle-Feld am Eintrag (für Maximal-Varianten in
+ *    den Standard-Kategorien)
+ * 2. Kategorie-Default aus LX_SOURCES (für Skill + Cardio)
+ * 3. null (kein Quellhinweis nötig — generische Übung)
+ */
+export function _lxSource(ex) {
+  if (ex && ex.quelle) return ex.quelle;
+  if (ex && ex.catKey && LX_SOURCES[ex.catKey]) return LX_SOURCES[ex.catKey];
+  return null;
+}
 
 // p_brust → lx-cat-brust (Klassen-Namen für Farbe)
 export function _lxCatClass(catKey) {

@@ -379,6 +379,27 @@
   line-height: 1.5;
 }
 
+/* Quellen-Footer (Attribution für Kalym/NSCA/etc.) */
+.lx-sheet-source {
+  margin-top: var(--s-5);
+  padding-top: var(--s-3);
+  border-top: 1px dashed var(--border-subtle);
+  font-size: 10px;
+  color: var(--text-3);
+  line-height: 1.55;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+.lx-sheet-source-label {
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+.lx-sheet-source-text {
+  font-style: italic;
+}
+
 @media (max-width: 720px) {
   .lx-filters { flex-direction: column; align-items: stretch; }
   .lx-search-wrap { min-width: 0; }
