@@ -1,6 +1,7 @@
 import { state, _saveProfile } from '../state.js';
 import { toast } from '../utils.js';
 import { LEXIKON_DATA, _lxAllExercises } from '../data/lexikon-data.js';
+import { estimateStartWeight } from '../data/strength-standards.js';
 import { _allGroups } from './muscle-balance.js';
 import { buildPlanBalance } from './plan-balance.js';
 import { _parseLocationString } from './profile-edit.js';
@@ -310,7 +311,13 @@ import { renderCockpit } from '../pages/cockpit.js';
       const exercises = [];
       splitDay.cats.forEach(catKey => {
         pickExercises(catKey, exPerCat, location).forEach(ex => {
-          exercises.push({ name: ex.name, muscle: ex.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+          exercises.push({
+            name: ex.name,
+            muscle: ex.muscle,
+            saetze: blockDef.saetze,
+            wdh: blockDef.wdh,
+            gewicht: estimateStartWeight(ex.name, blockDef.wdh, state.profile)
+          });
         });
       });
       // Extras nur für Studio (Kabelzug etc.)
@@ -318,7 +325,13 @@ import { renderCockpit } from '../pages/cockpit.js';
         splitDay.extras.forEach(exName => {
           const found = _lxAllExercises().find(e => e.name === exName);
           if (found && (location === 'all' || (found.location || 'studio') === location)) {
-            exercises.push({ name: found.name, muscle: found.muscle, saetze: blockDef.saetze, wdh: blockDef.wdh, gewicht: null });
+            exercises.push({
+              name: found.name,
+              muscle: found.muscle,
+              saetze: blockDef.saetze,
+              wdh: blockDef.wdh,
+              gewicht: estimateStartWeight(found.name, blockDef.wdh, state.profile)
+            });
           }
         });
       }
