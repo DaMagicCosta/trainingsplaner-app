@@ -72,6 +72,20 @@ function openLexikonSheet(exercise) {
 
   const catLabel = LX_CATEGORIES[exercise.catKey] || '—';
   const catCls   = _lxCatClass(exercise.catKey);
+
+  // Voraussetzungen-Block nur rendern wenn das Feld existiert und
+  // nicht leer ist (primär bei Skill- und Maximal-Varianten-Einträgen).
+  const hasPrereq = Array.isArray(exercise.voraussetzungen) && exercise.voraussetzungen.length > 0;
+  const prereqHtml = hasPrereq
+    ? `<div class="lx-sheet-section">
+         <div class="lx-sheet-label"><span class="lx-sheet-label-dot primary"></span>Voraussetzungen</div>
+         <ul class="lx-sheet-prereq">
+           ${exercise.voraussetzungen.map(v => `<li>${escapeHtml(v)}</li>`).join('')}
+         </ul>
+         <div class="lx-sheet-prereq-hint">Goldene Regel (Kalym): Erst zur nächsten Stufe weiter, wenn diese Voraussetzungen sauber erfüllt sind.</div>
+       </div>`
+    : '';
+
   content.innerHTML = `
     <div class="lx-sheet-cat ${catCls}">${catLabel}</div>
     <h2 class="lx-sheet-name">${escapeHtml(exercise.name)}</h2>
@@ -90,6 +104,8 @@ function openLexikonSheet(exercise) {
       <div class="lx-sheet-label"><span class="lx-sheet-label-dot antagonist"></span>Antagonisten</div>
       <div class="lx-sheet-text muted">${escapeHtml(exercise.antagonist || '—')}</div>
     </div>
+
+    ${prereqHtml}
 
     <div class="lx-sheet-section">
       <div class="lx-sheet-label"><span class="lx-sheet-label-dot desc"></span>Ausführung &amp; Technik</div>

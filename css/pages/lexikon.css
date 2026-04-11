@@ -2,9 +2,10 @@
    LEXIKON (v2.6)
    ═══════════════════════════════════════════════════════ */
 
-/* Kategorie-Farben: 6 Farben für 6 Muskelgruppen
-   Teal-Deep + Emerald aus dem Cockpit (Rücken/Arme) + 4 neue Hues
-   (Brust Coral, Schulter Honey, Unterkörper Steel-Blue, Bauch Lavendel)
+/* Kategorie-Farben: 8 Farben für 6 Muskelgruppen + Skill + Cardio
+   Teal-Deep + Emerald aus dem Cockpit (Rücken/Arme) + 4 Hues für
+   Muskelgruppen, Electric-Cyan für Calisthenics-Skill (Kalym-Lever),
+   Coral-Rot für Cardio/Kondition (Herz-Kreislauf), plus Warm-up/Cooldown.
    Specificity: .lx-card.lx-cat-* und .lx-sheet-cat.lx-cat-* — damit die
    Variablen den Default in .lx-card überschreiben. */
 .lx-card.lx-cat-brust,        .lx-sheet-cat.lx-cat-brust        { --lx-c: #E08A7A; --lx-cd: rgba(224,138,122,0.14); --lx-cl: rgba(224,138,122,0.40); }
@@ -13,6 +14,8 @@
 .lx-card.lx-cat-arme,         .lx-sheet-cat.lx-cat-arme         { --lx-c: #10B981; --lx-cd: rgba(16,185,129,0.14);  --lx-cl: rgba(16,185,129,0.40);  }
 .lx-card.lx-cat-unterkoerper, .lx-sheet-cat.lx-cat-unterkoerper { --lx-c: #6B9BD4; --lx-cd: rgba(107,155,212,0.14); --lx-cl: rgba(107,155,212,0.40); }
 .lx-card.lx-cat-bauch,        .lx-sheet-cat.lx-cat-bauch        { --lx-c: #A481D4; --lx-cd: rgba(164,129,212,0.14); --lx-cl: rgba(164,129,212,0.40); }
+.lx-card.lx-cat-skill,        .lx-sheet-cat.lx-cat-skill        { --lx-c: #2FD4C4; --lx-cd: rgba(47,212,196,0.16);  --lx-cl: rgba(47,212,196,0.45);  }
+.lx-card.lx-cat-cardio,       .lx-sheet-cat.lx-cat-cardio       { --lx-c: #E85D5D; --lx-cd: rgba(232,93,93,0.14);   --lx-cl: rgba(232,93,93,0.40);   }
 .lx-card.lx-cat-warmup,      .lx-sheet-cat.lx-cat-warmup      { --lx-c: #E09B4A; --lx-cd: rgba(224,155,74,0.14);  --lx-cl: rgba(224,155,74,0.40);  }
 .lx-card.lx-cat-cooldown,    .lx-sheet-cat.lx-cat-cooldown    { --lx-c: #4AB8D4; --lx-cd: rgba(74,184,212,0.14);  --lx-cl: rgba(74,184,212,0.40);  }
 
@@ -342,6 +345,38 @@
   border-radius: 0 var(--r-sm) var(--r-sm) 0;
   color: var(--text);
   line-height: 1.7;
+}
+
+/* Voraussetzungen-Block (Skill-Progressionen nach Kalym) */
+.lx-sheet-prereq {
+  margin: var(--s-2) 0 var(--s-2) 0;
+  padding: var(--s-3) var(--s-4) var(--s-3) var(--s-8);
+  background: var(--surface-2);
+  border-left: 2px solid var(--lx-cl, var(--accent-line));
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  list-style: none;
+  color: var(--text-2);
+  line-height: 1.7;
+}
+.lx-sheet-prereq li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 4px;
+}
+.lx-sheet-prereq li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--lx-c, var(--accent));
+  font-weight: 700;
+}
+.lx-sheet-prereq li:last-child { margin-bottom: 0; }
+.lx-sheet-prereq-hint {
+  margin-top: var(--s-2);
+  font-size: 11px;
+  color: var(--text-3);
+  font-style: italic;
+  line-height: 1.5;
 }
 
 @media (max-width: 720px) {
