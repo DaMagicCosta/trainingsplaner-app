@@ -2180,6 +2180,29 @@
 
     </section>
 
+    <!-- ═══════════════ ANAMNESE-HISTORIE MODAL (v2.8) ═══════════════ -->
+    <div class="tp-modal" id="anamneseHistoryModal" role="dialog" aria-modal="true" aria-labelledby="anamneseHistoryTitle">
+      <div class="tp-modal-backdrop" data-modal-close="anamneseHistoryModal"></div>
+      <div class="tp-modal-panel">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">◷ &nbsp;Vorherige Versionen</div>
+            <h2 class="tp-modal-title" id="anamneseHistoryTitle">Anamnese-Historie</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="anamneseHistoryModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <div class="info-text" style="margin-bottom:14px;color:var(--text-2);font-size:.88rem;">
+            Jede Aktualisierung deines Anamnesebogens wird mit Datum dokumentiert. Frühere Versionen bleiben hier zur Nachvollziehbarkeit erhalten — gemäß Nutzungsbedingungen Abschnitt 6. Klick auf einen Eintrag, um die Details zu sehen.
+          </div>
+          <div id="anamneseHistoryList"></div>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action info-action-primary" data-modal-close="anamneseHistoryModal" type="button">Schließen</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ═══════════════ ANAMNESE-EDIT MODAL (v2.8) ═══════════════ -->
     <div class="tp-modal" id="anamneseEditModal" role="dialog" aria-modal="true" aria-labelledby="anamneseEditTitle">
       <div class="tp-modal-backdrop" data-modal-close="anamneseEditModal"></div>

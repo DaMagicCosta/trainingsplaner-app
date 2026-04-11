@@ -12,7 +12,7 @@ import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexi
 import { reloadDemoProfile } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { revokeConsent } from './consent.js';
-import { openAnamneseEditModal, saveAnamneseEdit } from './features/anamnese-edit.js';
+import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } from './features/anamnese-edit.js';
 
 // ── Info-Tab Event-Handler ──
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation
@@ -30,7 +30,7 @@ import { openAnamneseEditModal, saveAnamneseEdit } from './features/anamnese-edi
   const verReconfirmBtn = document.getElementById('vereinbarungReconfirmBtn');
   const verRevokeBtn    = document.getElementById('vereinbarungRevokeBtn');
   if (anaUpdateBtn)    anaUpdateBtn.addEventListener('click',    openAnamneseEditModal);
-  if (anaHistoryBtn)   anaHistoryBtn.addEventListener('click',   () => toast('Historie-Ansicht folgt'));
+  if (anaHistoryBtn)   anaHistoryBtn.addEventListener('click',   openAnamneseHistoryModal);
 
   // Anamnese-Edit-Modal: Conditions-Chips toggeln
   document.querySelectorAll('#aemConditionsChips .tp-chip').forEach(chip => {

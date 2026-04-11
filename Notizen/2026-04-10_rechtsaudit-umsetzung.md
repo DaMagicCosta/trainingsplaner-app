@@ -664,7 +664,69 @@ Die Datenschutzerklärung (Abschnitt 2) ist nicht betroffen, da die Anamnese-Dat
 
 ### Was offen bleibt (für Etappe B/C/D)
 
-- **Vorherige Versionen** der Anamnese aufbewahren (Historie) — Folge-ToDo, AGB-konforme Vollendung von Abschnitt 6
+- ~~**Vorherige Versionen** der Anamnese aufbewahren (Historie)~~ — **erledigt im Nachtrag 4** (siehe unten)
 - **Vereinbarung editierbar** + Bestätigungs-Mechanismus (Etappe B)
 - **Onboarding-Wizard** beim Erst-Profilanlegen (Etappe C) — Welcome-Modal → Stammdaten → Anamnese (jetzt verfügbar) → Vereinbarung
 - **Demo als Import statt Pflicht** (Etappe D)
+
+---
+
+## Nachtrag 4 — Anamnese-Historie
+
+**Datum:** 11.04.2026
+**Auslöser:** Nach Etappe A war die AGB-Klausel Abschnitt 6 zu zwei Dritteln erfüllt: „wahrheitsgemäß ausfüllen" und „Aktualisierungspflicht" funktionierten, aber der dritte Teil — *„Vorherige Versionen bleiben zur Dokumentation erhalten"* — war noch nicht implementiert. Bei jedem Save wurde der alte Stand überschrieben. Das ist ein konkretes offenes Belegproblem: Wenn jemand fragt „Wo ist der ursprüngliche Anamnesestand vom 11.04. dokumentiert, nachdem er heute aktualisiert wurde?", müsstest du antworten: „Nirgends, der wurde überschrieben." — und das widerspricht dem AGB-Text.
+
+### Maßnahme
+
+1. **Datenmodell erweitert:** `state.profile.anamnesisHistory = []` als Array von Snapshot-Objekten. Jedes Snapshot ist eine Vollkopie eines früheren `anamnesis`-Eintrags (samt `confirmedAt`-Timestamp und `version`).
+2. **Save-Logik erweitert:** In `saveAnamneseEdit()` wird vor dem Überschreiben geprüft, ob bereits ein bestätigter Stand existiert (`anamnesis.confirmedAt`). Wenn ja, wird er per `{...spread}`-Kopie an `anamnesisHistory` gepusht. Defensive Initialisierung: Wenn das Array fehlt (alte Profile, frische Demo-Profile), wird es neu angelegt.
+3. **Render-Funktion `renderAnamneseHistory()`:** Sortiert die Historie absteigend nach `confirmedAt` (neueste zuerst), nummeriert die Einträge aufsteigend von der ältesten (v1, v2, v3 …), rendert jeden als HTML-`<details>`-Disclosure mit:
+   - **Kompakter Summary:** Versions-Pill (`v1`, `v2`, …), Datum, Kurz-Meta („3 Vorerkrankungen · Beschwerden · Medikamente" oder „keine Vorerkrankungen · —")
+   - **Aufklappbarer Body:** Vollständige Antworten aller 12 Felder im selben `info-form-rows`-Layout wie die Live-Anzeige
+4. **History-Modal `#anamneseHistoryModal`:** Neues `tp-modal` mit Erklärtext (Verweis auf AGB Abschnitt 6), Liste-Container `#anamneseHistoryList`, Schließen-Button im Footer.
+5. **CSS für `.anam-history-entry`** in `info.css`: Disclosure-Styling im Stil des Welcome-Modal-Detail-Bereichs (Hover, Open-State, rotierender Pfeil, Versions-Pill in Accent-Farbe). Mobile-Anpassung: Summary klappt bei < 640px in zwei Zeilen.
+6. **Init-Handler:** Toast-Stub für `anamneseHistoryBtn` durch `openAnamneseHistoryModal` ersetzt. Damit ist der zweite ehemals-Stub-Button im Anamnese-Tab funktional.
+7. **Bessere Save-Toast-Rückmeldung:** `saveAnamneseEdit()` zeigt nach dem Speichern jetzt zusätzlich „· N frühere Versionen archiviert" (oder „1 frühere Version archiviert" im Singular), sofern History-Einträge vorhanden sind. Damit sieht der Nutzer sofort, dass die Versionierung greift.
+
+### Sortier- und Nummerierungs-Logik
+
+- **Sortierung:** Absteigend nach `confirmedAt` — neueste Version oben in der Liste, älteste unten.
+- **Nummerierung:** Aufsteigend von alt nach neu, also v1 = älteste Version. Das ist die UX-Konvention für Versionierung (v1 < v2 < v3). Da die Liste absteigend sortiert ist, steht die höchste Versionsnummer oben.
+- Beispiel: Wenn drei alte Versionen archiviert sind, zeigt die Liste oben „v3" (zweitneueste), darunter „v2", darunter „v1" (älteste). Die *aktuellste* Version steht *nicht* in der History (sie ist live in `state.profile.anamnesis` und in der Anamnese-Sektion sichtbar).
+
+### AGB-Status nach diesem Nachtrag
+
+| AGB §6 Klausel | Status |
+|---|---|
+| „Anamnesebogen muss wahrheitsgemäß ausgefüllt werden" | ✅ Pflicht-Checkbox im Edit-Modal |
+| „Bei Änderungen … ist eine Aktualisierung verpflichtend" | ✅ Aktualisieren-Button + neuer `confirmedAt`-Timestamp |
+| „Vorherige Versionen bleiben zur Dokumentation erhalten" | ✅ `anamnesisHistory[]` + History-Modal |
+
+Damit ist Abschnitt 6 der Nutzungsbedingungen **vollständig substantiell erfüllt** — alle drei Teilklauseln haben einen funktionalen Mechanismus.
+
+### Edge Cases und ihre Behandlung
+
+- **Erstes Speichern:** `state.profile.anamnesis` ist `null` → der History-Push wird übersprungen (Bedingung `anamnesis && anamnesis.confirmedAt`). Nach dem ersten Save: leere History, ein bestätigter Live-Stand. Klick auf „Vorherige Versionen" zeigt: „Noch keine vorherigen Versionen — die erste Bestätigung steht oben in der Anamnese-Sektion."
+- **Profil ohne `anamnesisHistory`-Feld** (z. B. importierte alte Profile, Demo-Profile): Defensive Init `if (!Array.isArray(state.profile.anamnesisHistory)) state.profile.anamnesisHistory = []`. Kein Crash.
+- **Snapshot-Identität:** Verwendung von `{...spread}` für die Kopie statt einer Referenz. Damit ist der archivierte Snapshot unveränderlich, auch wenn das Live-Objekt später mutiert wird.
+- **Speicherplatz-Überlegung:** Jeder Snapshot ist ~500 Bytes. Bei jährlichen Aktualisierungen über 20 Jahre wären das ~10 KB pro Profil — vernachlässigbar im Verhältnis zum gesamten `tpv2_profile_data`-Schlüssel (typisch 100 KB+ für ein gewachsenes Profil mit Sessions und Plänen).
+
+### Betroffene Dateien (Nachtrag 4)
+
+| Datei | Änderung |
+|---|---|
+| `js/features/anamnese-edit.js` | `saveAnamneseEdit()` um History-Push erweitert, neue Funktionen `renderAnamneseHistory()` und `openAnamneseHistoryModal()`, erweiterter Save-Toast mit History-Counter |
+| `Trainingsplaner.html` | Neues `anamneseHistoryModal` als tp-modal mit Erklärtext, Liste-Container, Schließen-Button |
+| `js/init-handlers.js` | Import `openAnamneseHistoryModal`, Toast-Stub durch Modal-Open ersetzt |
+| `css/pages/info.css` | Neue Klassen `.anam-history-entry`, `.anam-history-summary`, `.anam-history-num`, `.anam-history-summary-meta`, `.anam-history-body` mit Mobile-Anpassung |
+
+### Verifikation (durch User)
+
+- [ ] **Erstes Speichern:** Anamnese ausfüllen + speichern → Toast „✓ Anamnese gespeichert" (ohne History-Counter, weil leer)
+- [ ] **History-Modal leer:** Klick auf „Vorherige Versionen" → Modal öffnet sich → Hinweis „Noch keine vorherigen Versionen"
+- [ ] **Zweites Speichern:** Anamnese erneut ausfüllen (z. B. eine Vorerkrankung anhaken) + speichern → Toast „✓ Anamnese gespeichert · 1 frühere Version archiviert"
+- [ ] **History-Modal mit einer alten Version:** Modal öffnen → ein Eintrag „v1 · [altes Datum] · keine Vorerkrankungen · —"
+- [ ] **Disclosure aufklappen:** Klick auf den Eintrag → expandiert, zeigt alle 12 Felder mit alten Werten
+- [ ] **Drittes Speichern:** Erneute Aktualisierung → History hat zwei Einträge: oben „v2 · [vorletztes Datum]", darunter „v1 · [erstes Datum]"
+- [ ] **Persistenz:** F5 → History bleibt erhalten (im `tpv2_profile_data` unter `anamnesisHistory`)
+- [ ] **Mobile:** Auf schmalem Viewport (<640px) klappt die Summary in zwei Zeilen, Meta-Text wird linksbündig

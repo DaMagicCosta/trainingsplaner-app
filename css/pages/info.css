@@ -555,6 +555,101 @@ body.role-athlete .profile-link-vereinbarung {
   background: var(--surface-3);
   border-color: var(--border-subtle);
 }
+
+/* Anamnese-Historie: Disclosure-Einträge */
+.anam-history-entry {
+  background: var(--surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md, 10px);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.anam-history-entry[open] {
+  border-color: var(--accent-line);
+}
+
+.anam-history-summary {
+  cursor: pointer;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  list-style: none;
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.anam-history-summary::-webkit-details-marker { display: none; }
+
+.anam-history-summary:hover {
+  background: var(--surface-3);
+}
+
+.anam-history-summary-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text);
+  flex: 0 0 auto;
+}
+
+.anam-history-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 100px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.anam-history-summary-meta {
+  font-size: 0.82rem;
+  color: var(--text-3);
+  text-align: right;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.anam-history-summary::after {
+  content: '▾';
+  color: var(--text-3);
+  font-size: 11px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.anam-history-entry[open] .anam-history-summary::after {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.anam-history-body {
+  padding: 4px 16px 16px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-1);
+}
+
+@media (max-width: 640px) {
+  .anam-history-summary {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .anam-history-summary-meta {
+    width: 100%;
+    text-align: left;
+  }
+}
 .info-text code {
   font-family: var(--font-mono);
   font-size: 11px;

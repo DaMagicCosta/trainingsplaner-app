@@ -278,6 +278,10 @@ export function closeAnamneseEditModal() {
 /**
  * Sammelt die Form-Werte und schreibt sie zurück in state.profile.anamnesis,
  * setzt confirmedAt auf jetzt, persistiert und re-rendert.
+ *
+ * Vor dem Überschreiben wird der bisherige Stand (sofern bestätigt) in
+ * profile.anamnesisHistory gepusht — AGB Abschnitt 6 verlangt, dass
+ * vorherige Versionen zur Dokumentation erhalten bleiben.
  */
 export function saveAnamneseEdit() {
   if (!state.profile) {
@@ -296,6 +300,15 @@ export function saveAnamneseEdit() {
   document.querySelectorAll('#aemConditionsChips .tp-chip.active').forEach(chip => {
     if (chip.dataset.condition) conditions.push(chip.dataset.condition);
   });
+
+  // History-Push: Wenn bereits ein bestätigter Stand existiert, ihn vor
+  // dem Überschreiben in die Historie aufnehmen. Defensive Init.
+  if (!Array.isArray(state.profile.anamnesisHistory)) {
+    state.profile.anamnesisHistory = [];
+  }
+  if (state.profile.anamnesis && state.profile.anamnesis.confirmedAt) {
+    state.profile.anamnesisHistory.push({ ...state.profile.anamnesis });
+  }
 
   state.profile.anamnesis = {
     version: ANAMNESIS_VERSION,
@@ -317,5 +330,86 @@ export function saveAnamneseEdit() {
   _saveProfile();
   renderAnamnese(state.profile);
   closeAnamneseEditModal();
-  toast('✓ Anamnese gespeichert');
+  const histLen = state.profile.anamnesisHistory.length;
+  toast('✓ Anamnese gespeichert' + (histLen ? ` · ${histLen} ${histLen === 1 ? 'frühere Version' : 'frühere Versionen'} archiviert` : ''));
+}
+
+/**
+ * Rendert die Anamnese-Historie als HTML in das History-Modal.
+ * Sortiert die Snapshots absteigend nach confirmedAt (neueste zuerst).
+ */
+export function renderAnamneseHistory() {
+  const container = document.getElementById('anamneseHistoryList');
+  if (!container) return;
+  const history = state.profile?.anamnesisHistory || [];
+
+  if (!history.length) {
+    container.innerHTML = '<div class="info-form-a info-form-a-empty" style="padding:16px;">Noch keine vorherigen Versionen — die erste Bestätigung steht oben in der Anamnese-Sektion.</div>';
+    return;
+  }
+
+  // Absteigend sortieren (neueste zuerst)
+  const sorted = [...history].sort((a, b) => {
+    return new Date(b.confirmedAt || 0) - new Date(a.confirmedAt || 0);
+  });
+
+  const html = sorted.map((snap, idx) => {
+    const num = sorted.length - idx;  // Versions-Nummer (älteste = 1)
+    const date = formatDate(snap.confirmedAt);
+    const conditions = Array.isArray(snap.conditions) ? snap.conditions : [];
+    const condCount = conditions.length;
+    const condSummary = condCount
+      ? `${condCount} ${condCount === 1 ? 'Vorerkrankung' : 'Vorerkrankungen'}`
+      : 'keine Vorerkrankungen';
+    const painYes = snap.currentPain === 'ja';
+    const surgYes = snap.surgery === 'ja';
+    const medYes = snap.medication === 'ja';
+    const flags = [];
+    if (painYes) flags.push('Beschwerden');
+    if (surgYes) flags.push('OP/Verletzung');
+    if (medYes)  flags.push('Medikamente');
+    const flagSummary = flags.length ? flags.join(' · ') : '—';
+
+    const conditionChips = conditions.length
+      ? conditions.map(c => `<span class="info-chip-muted">${escapeHtml(LABELS_CONDITION[c] || c)}</span>`).join(' ')
+      : '<span style="color:var(--text-3);font-style:italic;">keine</span>';
+
+    return `
+      <details class="anam-history-entry">
+        <summary class="anam-history-summary">
+          <div class="anam-history-summary-main">
+            <span class="anam-history-num">v${num}</span>
+            <strong>${escapeHtml(date)}</strong>
+          </div>
+          <div class="anam-history-summary-meta">${escapeHtml(condSummary)} · ${escapeHtml(flagSummary)}</div>
+        </summary>
+        <div class="anam-history-body">
+          <div class="info-form-rows">
+            <div class="info-form-row"><div class="info-form-q">Allgemeiner Gesundheitszustand</div><div class="info-form-a">${escapeHtml(LABELS_GENERAL[snap.general] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Ärztliche Freigabe</div><div class="info-form-a">${escapeHtml(LABELS_CLEARANCE[snap.clearance] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Vorerkrankungen</div><div class="info-form-a">${conditionChips}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Sonstige Erkrankungen</div><div class="info-form-a${snap.otherConditions ? '' : ' info-form-a-empty'}">${escapeHtml(snap.otherConditions || 'Keine Angabe')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Aktuelle Beschwerden</div><div class="info-form-a">${escapeHtml(LABELS_YESNO[snap.currentPain] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Beschwerden-Details</div><div class="info-form-a${snap.painDetails ? '' : ' info-form-a-empty'}">${escapeHtml(snap.painDetails || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">OP/Verletzung (12 Monate)</div><div class="info-form-a">${escapeHtml(LABELS_YESNO[snap.surgery] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">OP-Details</div><div class="info-form-a${snap.surgeryDetails ? '' : ' info-form-a-empty'}">${escapeHtml(snap.surgeryDetails || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Medikamente</div><div class="info-form-a">${escapeHtml(LABELS_YESNO[snap.medication] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Medikamenten-Details</div><div class="info-form-a${snap.medicationDetails ? '' : ' info-form-a-empty'}">${escapeHtml(snap.medicationDetails || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Trainingserfahrung</div><div class="info-form-a">${escapeHtml(LABELS_EXPERIENCE[snap.experience] || '—')}</div></div>
+            <div class="info-form-row"><div class="info-form-q">Übungs-Einschränkungen</div><div class="info-form-a${snap.restricted ? '' : ' info-form-a-empty'}">${escapeHtml(snap.restricted || 'Keine')}</div></div>
+          </div>
+        </div>
+      </details>
+    `;
+  }).join('');
+
+  container.innerHTML = html;
+}
+
+/**
+ * Öffnet das History-Modal.
+ */
+export function openAnamneseHistoryModal() {
+  renderAnamneseHistory();
+  openModal('anamneseHistoryModal');
 }
