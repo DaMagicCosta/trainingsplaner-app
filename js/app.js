@@ -63,76 +63,11 @@ applyTheme(state.theme);
   // Initial-Toasts von applyTheme/setRole unterdrücken
   setTimeout(() => document.getElementById('toast').classList.remove('show'), 100);
 
-  // Profil laden (oder leeres Profil verwenden, wenn keins gespeichert ist)
+  // Profil laden (oder leeres Profil verwenden, wenn keins gespeichert ist).
+  // Der frueher hier angesiedelte cpDemoBanner ("Leeres Profil — leg los")
+  // ist entfallen — seine Funktion ist seit dem Onboarding-Kombi-Banner
+  // (Schritt 1: Profil anlegen) redundant.
   loadDemoProfile().then(() => {
-  // Banner-Logik: nur zeigen, wenn aktuelles Profil leer ist (id beginnt mit "empty-")
-  const isEmpty = !!(state.profile && typeof state.profile.id === 'string' && state.profile.id.startsWith('empty-'));
-  const dismissed = sessionStorage.getItem('tpv2_demo_banner_dismissed');
-  const banner = document.getElementById('cpDemoBanner');
-  const bannerText = document.getElementById('cpDemoBannerText');
-  if (banner && isEmpty && !dismissed) {
-    banner.style.display = '';
-    if (bannerText) {
-      bannerText.innerHTML = '<strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren.';
-    }
-  }
-  // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
-  const createBtn = document.getElementById('cpDemoCreate');
-  if (createBtn) createBtn.addEventListener('click', () => {
-    if (state.profile) {
-      state.profile.name = '';
-      state.profile.nachname = '';
-      state.profile.alter = '';
-      state.profile.gewicht = '';
-      state.profile.groesse = '';
-      state.profile.hfmax = '';
-      state.profile.goal = 'hypertrophie';
-      state.profile.tage = [];
-      state.profile.trainingLocation = '';
-      state.profile.equipment = {};
-      state.profile.sessions = [];
-      state.profile.plans = {};
-      state.profile.periodization = null;
-      state.profile.athleteRegenWeeks = [];
-    }
-
-    state._juliaProfile = null;
-    state._selfProfile = null;
-    state._savedThemeBeforeAthlete = null;
-    state.activeProfile = 'self';
-    state.demoAthletes = {};
-
-    const juliaSwitch = document.querySelector('[data-athlete-switch="lisa"]');
-    if (juliaSwitch) juliaSwitch.remove();
-
-    const athletesList = document.getElementById('infoAthletesList');
-    if (athletesList) athletesList.innerHTML = '';
-
-    document.querySelectorAll('.role-dropdown [data-athlete-switch]').forEach(btn => {
-      const isActive = btn.dataset.athleteSwitch === 'self';
-      btn.querySelector('.radio')?.classList.toggle('active', isActive);
-    });
-
-    if (state.profile) {
-      _saveProfile();
-      renderCockpit(state.profile);
-      renderJahresplan(state.profile);
-      renderTrainingsplan(state.profile);
-      renderFortschritt(state.profile);
-      renderInfo(state.profile);
-      buildPlanBalance(state.profile);
-    }
-
-    if (banner) banner.style.display = 'none';
-    openProfileEditModal('self');
-  });
-
-  const dismissBtn = document.getElementById('cpDemoDismiss');
-  if (dismissBtn) dismissBtn.addEventListener('click', () => {
-    if (banner) banner.style.display = 'none';
-    sessionStorage.setItem('tpv2_demo_banner_dismissed', '1');
-  });
-
   // Onboarding-Kombi-Banner (Profil + Anamnese + Vereinbarung) rendern.
   // Die Schritt-Buttons hoeren ueber Event-Delegation in gates.js, daher
   // keine separaten Handler hier noetig.

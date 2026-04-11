@@ -184,10 +184,9 @@ export function revokeConsent(alsoDeleteData = false) {
     keysToDelete.forEach(k => localStorage.removeItem(k));
     console.log('[Consent] Widerruf inkl. Datenlöschung —', keysToDelete.length, 'Schlüssel entfernt');
   }
-  // sessionStorage ebenfalls leeren, damit Splash und Demo-Banner neu erscheinen
+  // sessionStorage ebenfalls leeren, damit der Splash neu erscheint
   try {
     sessionStorage.removeItem('tpv2_splash_seen');
-    sessionStorage.removeItem('tpv2_demo_banner_dismissed');
   } catch (e) { /* ignore */ }
   // Reload, damit initConsent erneut greift
   window.location.reload();

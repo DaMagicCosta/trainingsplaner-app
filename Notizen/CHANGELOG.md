@@ -11,6 +11,11 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Onboarding-Polish: Mobile-Layout + alter Demo-Banner entfernt
+- **Mobile-Layout des Onboarding-Banners überarbeitet**: Unter 720px sind jetzt Padding, Schriftgrößen und die Schritt-Nummer-Größe (24px statt 28px) kompakter. Der Button geht weiterhin in die zweite Zeile, ist aber schmaler und korrekt auf die Nummer-Breite plus Gap eingerückt (`margin-left: 36px`)
+- **Alter `cpDemoBanner` komplett entfernt**: Das war der grüne „Leeres Profil — leg los"-Banner mit „Eigenes Profil erstellen" und „Später". Seit dem Onboarding-Kombi-Banner war seine Funktion redundant (Schritt 1 „Profil anlegen" macht genau dasselbe), plus er hatte einen sichtbaren Bug: Beim App-Start wurde er für jede `empty-`-Profil-ID eingeblendet, aber die ID ändert sich nach Profil-Save nicht — nach Abschluss der Onboarding-Schritte erschien er wieder, obwohl inhaltlich überholt
+- Aufgeräumt: HTML-Div in `Trainingsplaner.html`, Init-Block in `js/app.js` (inkl. des Reset-Flows für Demo→Eigen-Profil-Übergang, der mit dem heutigen RAM-only-Demo-Modus ohnehin obsolet war), CSS-Block in `css/pages/cockpit.css`, `sessionStorage.removeItem('tpv2_demo_banner_dismissed')` in `js/consent.js`
+
 ### Onboarding-Kombi-Banner (Profil + Anamnese + Vereinbarung)
 - **Neues Cockpit-Banner `cpOnboardingBanner`** ersetzt die beiden alten Gate-Banner `cpAnamnesisBanner` und `cpAgreementBanner` — nummerierte Checkliste mit den offenen Pflicht-/Empfohlen-Schritten. Erledigte Schritte fallen raus, bei 0 offenen Schritten verschwindet die Card komplett
 - **Schrittreihenfolge**: `1. Profil-Stammdaten anlegen` (Empfohlen, keine Tab-Sperre), `2. Gesundheits-Anamnese bestätigen` (Pflicht, sperrt Jahresplan/Trainingsplan/Fortschritt), `3. Trainervereinbarung bestätigen` (nur im Trainer-Modus, Empfohlen)
