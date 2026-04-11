@@ -34,6 +34,13 @@ function renderTrainingsplan(profile) {
   }
   const kw = state.tpViewKw;
 
+  // Studio/Home-Toggle initial aus dem Profil ableiten:
+  // trainingLocation[0] === 'home' → Plan startet im Home-Modus
+  if (state.tpUseHome === null || state.tpUseHome === undefined) {
+    const locs = Array.isArray(profile.trainingLocation) ? profile.trainingLocation : [];
+    state.tpUseHome = locs[0] === 'home';
+  }
+
   // Datumsbereich Mo–So
   const monday = _isoWeekToMonday(year, kw);
   const sunday = _sundayOfIsoWeek(year, kw);
@@ -613,7 +620,9 @@ function _renderTpNoPlanState(kw) {
   if (!tp) return;
 
   // ── Studio/Home-Toggle (bidirektional) ──
-  state.tpUseHome = false;
+  // Initial null — wird beim ersten Render aus profile.trainingLocation[0]
+  // abgeleitet. Wenn Standard 'home' ist, startet der Plan im Home-Modus.
+  state.tpUseHome = null;
   const locToggleBtn = document.getElementById('tpLocToggle');
   if (locToggleBtn) {
     locToggleBtn.addEventListener('click', () => {

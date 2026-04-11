@@ -126,12 +126,35 @@ import { openAgreementConfirmModal, confirmAgreement, revokeAgreement, openAgree
     chip.addEventListener('click', () => chip.classList.toggle('active'));
   });
 
-  // Chip-Toggle: Trainingsort (2-Zustand) + Equipment-Gruppen ein-/ausblenden
+  // Chip-Toggle: Trainingsort mit Reihenfolge-Hierarchie.
+  // Klick auf inaktiven Chip → wird aktiv mit nächster freier Order-Nummer
+  // (1, 2, 3 …). Klick auf aktiven Chip → deaktivieren, andere Nummern
+  // schließen die Lücke. Reihenfolge ist semantisch: 1 = Standard.
+  function _renumberLocationChips() {
+    const active = Array.from(document.querySelectorAll('#pemLocationChips .tp-chip.active'))
+      .sort((a, b) => (parseInt(a.dataset.order || '99', 10)) - (parseInt(b.dataset.order || '99', 10)));
+    active.forEach((chip, idx) => { chip.dataset.order = String(idx + 1); });
+    document.querySelectorAll('#pemLocationChips .tp-chip:not(.active)').forEach(chip => {
+      delete chip.dataset.order;
+    });
+  }
+
   document.querySelectorAll('#pemLocationChips .tp-chip').forEach(chip => {
     chip.addEventListener('click', () => {
-      chip.classList.toggle('active');
-      // Equipment-Gruppen synchronisieren
       const loc = chip.dataset.loc;
+      if (chip.classList.contains('active')) {
+        // Deaktivieren
+        chip.classList.remove('active');
+        delete chip.dataset.order;
+      } else {
+        // Aktivieren mit nächster Order-Nummer
+        const maxOrder = Math.max(0, ...Array.from(document.querySelectorAll('#pemLocationChips .tp-chip.active'))
+          .map(c => parseInt(c.dataset.order || '0', 10)));
+        chip.classList.add('active');
+        chip.dataset.order = String(maxOrder + 1);
+      }
+      _renumberLocationChips();
+      // Equipment-Gruppen synchronisieren
       const group = document.querySelector(`#pemEquipmentWrap .pem-eq-group[data-eqloc="${loc}"]`);
       if (group) group.classList.toggle('visible', chip.classList.contains('active'));
     });

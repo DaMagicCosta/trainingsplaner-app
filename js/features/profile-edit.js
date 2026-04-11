@@ -97,11 +97,21 @@ function openProfileEditModal(target) {
     chip.classList.toggle('active', activeTage.has(chip.dataset.day));
   });
 
-  // Trainingsort-Chips: aktive markieren (Rückwärtskompatibel mit String)
+  // Trainingsort-Chips: aktive markieren UND Reihenfolge als data-order setzen.
+  // Die Reihenfolge im trainingLocation-Array ist semantisch:
+  // [0] = Standard, [1] = erste Alternative, [2] = zweite Alternative.
   const rawLoc = p.trainingLocation || [];
-  const activeLocs = new Set(Array.isArray(rawLoc) ? rawLoc : _parseLocationString(rawLoc));
+  const orderedLocs = Array.isArray(rawLoc) ? rawLoc : _parseLocationString(rawLoc);
+  const orderMap = new Map(orderedLocs.map((loc, idx) => [loc, idx + 1]));
   document.querySelectorAll('#pemLocationChips .tp-chip').forEach(chip => {
-    chip.classList.toggle('active', activeLocs.has(chip.dataset.loc));
+    const order = orderMap.get(chip.dataset.loc);
+    if (order) {
+      chip.classList.add('active');
+      chip.dataset.order = String(order);
+    } else {
+      chip.classList.remove('active');
+      delete chip.dataset.order;
+    }
   });
 
   // Equipment pro Ort laden + Gruppen-Sichtbarkeit setzen
@@ -136,7 +146,10 @@ function saveProfileEdit() {
   p.hfmax            = parseInt(document.getElementById('pemHfmax').value, 10) || p.hfmax;
   p.goal             = document.getElementById('pemGoal').value;
 
+  // Trainingsorte: nach data-order sortieren, dann data-loc einsammeln.
+  // Die Reihenfolge ist semantisch — [0] ist der Standard-Trainingsort.
   p.trainingLocation = Array.from(document.querySelectorAll('#pemLocationChips .tp-chip.active'))
+    .sort((a, b) => (parseInt(a.dataset.order || '99', 10)) - (parseInt(b.dataset.order || '99', 10)))
     .map(c => c.dataset.loc);
   p.tage = Array.from(document.querySelectorAll('#pemTageChips .tp-chip.active'))
     .map(c => c.dataset.day);

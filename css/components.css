@@ -199,6 +199,28 @@
   color: var(--danger);
   text-decoration: line-through;
 }
+
+/* Trainingsort-Chips: Reihenfolge-Badge ("1" = Standard, "2" = Alternative) */
+#pemLocationChips .tp-chip { position: relative; padding-left: 26px; }
+#pemLocationChips .tp-chip[data-order]::before {
+  content: attr(data-order);
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+#pemLocationChips .tp-chip:not(.active) { padding-left: 12px; }
 /* Equipment-Gruppen pro Trainingsort */
 .pem-eq-group { display: none; margin-top: var(--s-2); }
 .pem-eq-group.visible { display: block; }

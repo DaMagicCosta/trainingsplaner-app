@@ -28,6 +28,10 @@ function _applyProfile(profile, source) {
   state.profile = profile;
   window._profile = profile;
 
+  // tpUseHome zurücksetzen, damit der nächste renderTrainingsplan-Aufruf
+  // den Default aus dem neu geladenen Profil ableiten kann.
+  state.tpUseHome = null;
+
   const sessions = profile.sessions || [];
   const isEmpty = typeof profile.id === 'string' && profile.id.startsWith('empty-');
   console.log(`[${source}] Profil geladen:`, profile.name, '·', sessions.length, 'Sessions');
