@@ -585,7 +585,7 @@ body.role-athlete .tp-mode { display: none; }
 .tp-ex-edit-btn.tp-ex-delete:hover { color: var(--danger); border-color: var(--danger); }
 @media (max-width: 720px) {
   .tp-ex-edit-bar { top: var(--s-3); right: var(--s-3); }
-  .tp-ex-edit-btn { width: 44px; height: 44px; font-size: 16px; }
+  .tp-ex-edit-btn { width: 36px; height: 36px; font-size: 13px; }
 }
 .tp-ex-params-edit {
   display: none;
