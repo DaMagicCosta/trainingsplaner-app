@@ -12,17 +12,10 @@
     "Mi",
     "Fr"
   ],
-  "trainingLocation": "studio",
-  "equipment": [
-    "langhantel",
-    "kurzhantel",
-    "kabelzug",
-    "beinpresse",
-    "latzug",
-    "brustpresse",
-    "beinstrecker",
-    "beinbeuger"
-  ],
+  "trainingLocation": ["studio"],
+  "equipment": {
+    "studio": { "available": ["Langhantel", "Kurzhanteln", "Hantelbank", "Squat Rack", "Kabelzug", "Maschinen", "Klimmzugstange"], "excluded": [] }
+  },
   "role": "athlete",
   "pin": "",
   "plans": {

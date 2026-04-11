@@ -671,9 +671,12 @@ function _renderTpNoPlanState(kw) {
         const hay = (ex.name + ' ' + ex.muscle).toLowerCase();
         if (!hay.includes(q)) return false;
       }
-      // Equipment-Filter: Übung braucht mindestens ein verfügbares Equipment
+      // Equipment-Filter: ALLE Equipment-Items der Übung müssen verfügbar sein.
+      // Wichtig für Kombi-Übungen wie ['Kurzhanteln', 'Hantelbank'] — hier
+      // reichen Kurzhanteln allein nicht, ohne Bank ist die Übung nicht
+      // sinnvoll ausführbar.
       if (availEq && ex.eq && ex.eq.length > 0) {
-        if (!ex.eq.some(e => availEq.has(e))) return false;
+        if (!ex.eq.every(e => availEq.has(e))) return false;
       }
       return true;
     });

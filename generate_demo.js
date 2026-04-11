@@ -1,6 +1,12 @@
 // Demo-Profil Generator: Alexander (Cali) + Julia (Studio)
 // Ausführen: node generate_demo.js
 // Erzeugt: Trainingsplaner_Alexander_Demo.json (Hauptprofil)
+//
+// HINWEIS (11.04.2026): Die Demo-JSONs werden mittlerweile manuell
+// gepflegt — der Generator entspricht nicht mehr dem Live-Stand
+// (Equipment-Format, Squat Rack, anamnesis/agreement-Felder etc.).
+// Bei einer Neugeneration musst du die Equipment-Listen und Profil-
+// Felder anschließend von Hand auf den aktuellen Stand bringen.
 //          + Julia-Daten werden in die v2-HTML eingebettet
 
 const fs = require('fs');

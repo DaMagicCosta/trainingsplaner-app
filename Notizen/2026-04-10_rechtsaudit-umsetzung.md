@@ -1077,3 +1077,88 @@ Damit gehen alle Mutationen am Demo-Profil (Anamnese ausfüllen, Vereinbarung be
 - [ ] **Command Palette:** Cmd+K → „Vorschau: Demo …" sichtbar; bei aktiver Vorschau zusätzlich „Demo-Vorschau verlassen" und „Aktuelle Demo neu laden"
 - [ ] **Info → Daten:** Nur noch eine schlanke Hinweis-Karte „Demo-Profile" statt der drei großen Karten
 - [ ] **Mobile:** Banner wrapping in zwei Zeilen, Demo-Tiles in 1-Spalten-Grid, Button auf voller Breite
+
+---
+
+## Nachtrag 9 — Equipment-Trennung: Bank, Squat Rack, Filter `every`
+
+**Datum:** 11.04.2026
+**Auslöser:** User-Beobachtung beim Test des Übungspickers — bei Heim-Übungen mit `eq: ['Kurzhanteln']` wurden Übungen vorgeschlagen, die laut Beschreibung explizit eine Bank brauchen („Rudern eng mit Kurzhantel" → *„Freie Hand auf der Bank abstellen"*). Plus: Kurzhantel-Bankdrücken hatte zwar schon `['Kurzhanteln', 'Hantelbank']`, aber der Filter nutzte `.some()` — die Übung wurde also auch dann angezeigt, wenn nur Kurzhanteln verfügbar waren. Klassisches Off-by-Logic-Problem.
+
+### Maßnahme
+
+**Phase 1 — Filter umgestellt von `.some()` auf `.every()`** in beiden Stellen:
+
+- `js/features/generator.js:286` — Wochenplan-Generator
+- `js/pages/trainingsplan.js:676` — Übungspicker im Trainingsplan-Edit
+
+Bedeutung: Eine Übung mit `['Kurzhanteln', 'Hantelbank']` erscheint jetzt nur, wenn das Athleten-Equipment für den Trainingsort *beide* Items als verfügbar markiert hat.
+
+**Phase 2 — Hantelbank-Chip im Home-Equipment ergänzt** und Equipment-Liste aufgeräumt:
+
+- Studio-Chips: `Langhantel · Kurzhanteln · Hantelbank · Squat Rack · Kabelzug · Maschinen · Klimmzugstange · Dip-Station` (SZ-Stange entfernt)
+- Home-Chips: `Kurzhanteln · Langhantel · Hantelbank · Squat Rack · Klimmzugstange · Dip-Station · Widerstandsbänder · Gymnastikmatte · Ab Wheel` (Kettlebells entfernt)
+- Outdoor-Chips: unverändert (`Klimmzugstange · Dip-Barren · Parallettes · Ringe · Widerstandsbänder`)
+
+**Phase 3a — Lexikon: bestehende Bug-Übung gefixt**
+
+| Übung | Vorher | Nachher | Begründung |
+|---|---|---|---|
+| Rudern eng mit Kurzhantel | `['Kurzhanteln']` | `['Kurzhanteln', 'Hantelbank']` | Beschreibung sagt explizit „Freie Hand auf der Bank abstellen" |
+
+**Phase 3b — Squat Rack als neues Equipment-Item eingeführt**
+
+Begründung: Eine schwere Langhantel-Kniebeuge braucht ein Power Rack zum Auflegen — ohne Rack ist sie gefährlich (kein Spotter, kein Sicherheitssystem). Wer zu Hause ohne Rack trainiert, soll die Übung nicht mehr im Picker sehen.
+
+| Übung | Vorher | Nachher |
+|---|---|---|
+| Kniebeugen mit LH | `['Langhantel']` | `['Langhantel', 'Squat Rack']` |
+
+Beschreibung der Übung wurde um den Hinweis ergänzt: *„Schwere Sätze nur mit Squat Rack und Sicherheitsablagen."*
+
+**Hinweis:** Kreuzheben bleibt `['Langhantel']` — Kreuzheben startet vom Boden, kein Rack nötig.
+
+**Phase 3c — SZ-Stange + Kettlebells entfernt (vorerst)**
+
+Beide Equipment-Items waren als Chips im Profil-Edit verfügbar, aber keine einzige Übung im Lexikon nutzte sie. Tester konnten den Chip aktivieren und es passierte nichts. Pragmatisch entfernt.
+
+**Folge-ToDo** im Wiki unter „Trainingsplaner: Lexikon um Kettlebell- und SZ-Stange-Übungen erweitern" — wenn passende Übungen ergänzt werden (Goblet Squat, Kettlebell Swing, Turkish Get-up, SZ-Curls, French Press), kommen die Chips wieder rein.
+
+### Demo-Profile migriert
+
+Beide Demo-JSONs mussten an das neue Equipment-Schema angepasst werden, sonst würden Tester nach dem Demo-Wechsel keine Langhantel-Kniebeugen mehr im Picker sehen (Squat Rack fehlte).
+
+| Datei | Vorher | Nachher |
+|---|---|---|
+| `Trainingsplaner_Alexander_Demo.json` (Studio) | `["Langhantel", "Kurzhanteln", "Kabelzug", "Maschinen", "Klimmzugstange", "Hantelbank", "Dip-Barren"]` | `["Langhantel", "Kurzhanteln", "Hantelbank", "Squat Rack", "Kabelzug", "Maschinen", "Klimmzugstange", "Dip-Barren"]` |
+| `Trainingsplaner_Julia_Demo.json` | Altes Array-Format mit Kleinbuchstaben (`langhantel, beinpresse, latzug ...`) | Neues Objekt-Format `{ studio: { available: [...] } }` mit kanonischen Werten |
+
+Julia hatte zusätzlich noch das Legacy-Array-Format aus v1, das durch die Auto-Migration in `_applyProfile` umgewandelt wurde — aber mit *kleingeschriebenen* Werten, die im Lexikon-Filter nicht griffen. Migration jetzt direkt im JSON. Nebeneffekt: Das alte Array enthielt unbekannte Items wie `beinpresse`, `latzug`, `brustpresse` — die sind im neuen Lexikon-Schema nicht gültig (sie sind alle `Maschinen`). Im neuen Format steht jetzt nur `Maschinen` als Sammel-Item.
+
+### `generate_demo.js` Hinweis
+
+Der Generator entspricht ohnehin nicht mehr dem Live-Stand der Demo-JSONs — er produziert Alexander mit `outdoor` + Calisthenics-Equipment, während die echte JSON `studio + home` mit ganz anderem Setup hat. Header-Kommentar ergänzt, dass die JSONs jetzt Source of Truth sind und Re-Generationen manuell nachgepflegt werden müssen.
+
+### Betroffene Dateien (Nachtrag 9)
+
+| Datei | Änderung |
+|---|---|
+| `js/features/generator.js` | `.some()` → `.every()` |
+| `js/pages/trainingsplan.js` | `.some()` → `.every()` |
+| `js/data/lexikon-data.js` | „Rudern eng mit Kurzhantel" + „Kniebeugen mit LH" eq-Arrays |
+| `Trainingsplaner.html` | Studio-Chips: SZ-Stange raus, Squat Rack rein, Reorder. Home-Chips: Kettlebells raus, Hantelbank + Langhantel + Squat Rack rein |
+| `Trainingsplaner_Alexander_Demo.json` | Studio-Equipment um Squat Rack ergänzt + Reorder |
+| `Trainingsplaner_Julia_Demo.json` | Komplette Migration auf Objekt-Format mit kanonischen Equipment-Werten |
+| `generate_demo.js` | Header-Hinweis, dass JSONs Source of Truth sind |
+| `08_Obsidian/Alex Wiki/todos.md` | Bank-Item als erledigt markiert, neues ToDo „Kettlebell + SZ-Stange Lexikon-Übungen ergänzen" |
+
+### Verifikation (durch User)
+
+- [ ] **Empty-State, Equipment-Edit Home:** Hantelbank, Squat Rack, Langhantel sind als Chips verfügbar, Kettlebells sind weg
+- [ ] **Empty-State, Equipment-Edit Studio:** Squat Rack ist neu sichtbar, SZ-Stange ist weg
+- [ ] **Demo Alexander Vorschau:** Profil-Edit → Equipment Studio → Squat Rack ist als „verfügbar" (teal) markiert
+- [ ] **Demo Julia Vorschau:** Equipment-Liste ist sauber im neuen Format
+- [ ] **Übungspicker-Test (Studio):** Kniebeuge mit LH erscheint nur, wenn Squat Rack im Profil ist
+- [ ] **Übungspicker-Test (Home ohne Bank):** Kurzhantel-Bankdrücken erscheint nicht mehr, Rudern eng mit Kurzhantel auch nicht
+- [ ] **Übungspicker-Test (Home mit Bank):** Beide o. g. Übungen erscheinen wieder
+- [ ] **Generator-Test:** Wochenplan mit Heim-Block ohne Bank → keine Bank-pflichtigen Übungen im Plan

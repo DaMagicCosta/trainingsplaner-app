@@ -281,9 +281,12 @@ import { renderCockpit } from '../pages/cockpit.js';
 
     return (LEXIKON_DATA[catKey] || [])
       .filter(ex => {
-        // Wenn Athlet Equipment für diesen Ort hat → danach filtern
+        // Wenn Athlet Equipment für diesen Ort hat → danach filtern.
+        // ALLE Equipment-Items der Übung müssen verfügbar sein (every),
+        // sonst greifen Kombi-Übungen wie ['Kurzhanteln', 'Hantelbank']
+        // auch ohne Bank — was praktisch nicht ausführbar wäre.
         if (availEq && ex.eq) {
-          return ex.eq.some(e => availEq.has(e));
+          return ex.eq.every(e => availEq.has(e));
         }
         // Fallback: Home/Outdoor ohne Equipment → nur Bodyweight
         if (location === 'home' || location === 'outdoor') {

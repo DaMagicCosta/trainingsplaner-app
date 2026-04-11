@@ -14,7 +14,7 @@
   ],
   "trainingLocation": ["studio", "home"],
   "equipment": {
-    "studio": { "available": ["Langhantel", "Kurzhanteln", "Kabelzug", "Maschinen", "Klimmzugstange", "Hantelbank", "Dip-Barren"], "excluded": [] },
+    "studio": { "available": ["Langhantel", "Kurzhanteln", "Hantelbank", "Squat Rack", "Kabelzug", "Maschinen", "Klimmzugstange", "Dip-Barren"], "excluded": [] },
     "home": { "available": ["Klimmzugstange", "Dip-Barren", "Parallettes", "Ringe", "Widerstandsbänder", "Gymnastikmatte", "Kurzhanteln"], "excluded": [] }
   },
   "role": "athlete",
