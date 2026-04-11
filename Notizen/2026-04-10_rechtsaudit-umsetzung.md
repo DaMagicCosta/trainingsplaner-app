@@ -599,3 +599,72 @@ Die ToDo-Liste im Wiki (`08_Obsidian/Alex Wiki/todos.md`) führt weiterhin folge
 - **🔴 Onboarding + Anamnese/Vereinbarung** — Anamnese als read-only Demo-Daten ist substantiell unvollständig; die AGB-Klausel „Anamnesebogen muss wahrheitsgemäß ausgefüllt werden" ist solange nicht erfüllbar
 - **🔴 Demo als Import statt Pflicht** — App startet aktuell mit Alexander-Demo-Profil, sollte leer starten
 - **🟡 Vereinbarung-Widerruf-Flow** — aktuell Toast-Stub
+
+---
+
+## Nachtrag 3 — Etappe A: Anamnese editierbar
+
+**Datum:** 11.04.2026
+**Auslöser:** Risiko 2 aus der Audit-Folge-Analyse: Die Anamnese-Sektion zeigte statische Demo-Daten („Gut", „Nicht benötigt", „Keine") und die Buttons „Anamnese aktualisieren" / „Vorherige Versionen" waren Toast-Stubs. Die Klausel in den Nutzungsbedingungen Abschnitt 6 verlangt aber: *„Der Anamnesebogen muss bei Profilerstellung wahrheitsgemäß ausgefüllt werden."* — solange kein Eingabe-Mechanismus existiert, ist diese Klausel substantiell leer und ein Tester kann sich bei Rückfragen darauf berufen.
+
+### Maßnahme
+
+Vollständiges Anamnese-Bearbeitungs-System aufgesetzt:
+
+1. **Datenmodell** in `js/features/anamnese-edit.js` definiert: `state.profile.anamnesis = { version, confirmedAt, general, clearance, conditions[], otherConditions, currentPain, painDetails, surgery, surgeryDetails, medication, medicationDetails, experience, restricted }`. Mit `ANAMNESIS_VERSION = 1` für künftige Schema-Migrationen.
+2. **Default-Werte** über `getDefaultAnamnesis()` — gibt ein leeres, nicht-bestätigtes Objekt zurück (`confirmedAt: null` markiert „noch nicht ausgefüllt"). Migration: Wenn ein Profil ohne `anamnesis`-Feld geladen wird, wird beim ersten Edit-Open `getDefaultAnamnesis()` zugewiesen.
+3. **Anamnese-Edit-Modal** als `tp-modal` analog zum Profil-Edit-Modal. Form-Felder nach `tp-form-group` / `tp-form-grid` / `tp-field`-Pattern: 5 Sektionen entsprechend der read-only-Anzeige. Selects für Enums (Gesundheitszustand, Freigabe, Erfahrungslevel, Ja/Nein), Toggleable Chips für Mehrfach-Vorerkrankungen, Textareas für Freitext-Felder. Unten eine Pflicht-Bestätigungs-Checkbox („Ich bestätige, dass ich diese Angaben wahrheitsgemäß gemacht habe …"), die den Speichern-Button erst aktiviert. Esc und Click-Outside schließen das Modal über das bestehende globale tp-modal-System.
+4. **Render-Funktion `renderAnamnese(profile)`** in `js/features/anamnese-edit.js`: Liest `profile.anamnesis` und füllt alle 12 read-only-Anzeige-IDs (`anamGeneral`, `anamClearance`, `anamConditions` …). Bei `confirmedAt: null` wird Status-Badge auf grau („○ Noch nicht ausgefüllt") gesetzt, alle Antwort-Felder zeigen „— noch nicht ausgefüllt", Bestätigungs-Box ist ausgeblendet. Bei vorhandenem Consent: grünes Badge mit formatiertem Datum, Antworten via Label-Maps in lesbare deutsche Form übersetzt, Conditions als `info-chip-muted`-Chips gerendert.
+5. **Save-Logik `saveAnamneseEdit()`**: Sammelt alle Form-Werte, schreibt sie zurück nach `state.profile.anamnesis` mit aktuellem `confirmedAt`-Timestamp, ruft `_saveProfile()` zur localStorage-Persistierung auf, ruft anschließend `renderAnamnese()` für sofortiges UI-Refresh, schließt das Modal, zeigt Success-Toast. Wenn die Bestätigungs-Checkbox nicht aktiviert ist: Toast „Bitte die Bestätigungs-Checkbox aktivieren" und kein Save.
+6. **Init-Handler in `init-handlers.js`**: Toast-Stub für `anamneseUpdateBtn` durch `openAnamneseEditModal` ersetzt. Conditions-Chips bekommen Click-Toggle für `.active`-Klasse. `aemConfirm`-Checkbox steuert `aemSaveBtn.disabled`. `aemSaveBtn`-Click ruft `saveAnamneseEdit`.
+7. **HTML-Restruktur** der Anamnese-Sektion in `Trainingsplaner.html`: Alle 12 Antwort-Felder bekamen IDs, statische Demo-Inhalte wurden durch Platzhalter („—") ersetzt, Status-Zeile bekam dynamische IDs (`anamStatusBadge`, `anamValidUntil`), Bestätigungs-Box ist initial mit `display:none` versteckt und wird nur gezeigt, wenn `confirmedAt` gesetzt ist. Neue CSS-Klasse `.info-pill-muted` (grauer Pill für „noch nicht ausgefüllt") in `info.css` ergänzt.
+
+### Begründung der Einzel-Entscheidungen
+
+- **Pflicht-Bestätigungs-Checkbox im Modal:** Wie beim Welcome-Modal verlangt die Bestätigung einen aktiven, bewussten Klick — kein „aus Versehen Speichern". Das ist insbesondere für die DSGVO-Belegspur wichtig: Bei Gesundheitsdaten nach Art. 9 DSGVO muss die Wahrheitsgemäßheit aktiv erklärt werden. Ein bloßer Speichern-Klick wäre dafür schwächer.
+- **Konstanten-basierte Werte (Enums):** Die Felder `general`, `clearance`, `experience`, `currentPain`, `surgery`, `medication` sind Enums mit deutschen Anzeigetexten in Label-Maps. Dadurch ist eine spätere Internationalisierung trivial — nur die Maps austauschen, nicht die Datenwerte.
+- **`confirmedAt: null` als „nicht ausgefüllt"-Marker:** Statt eines separaten `isConfirmed`-Booleans nutzt die Logik die Existenz des Timestamps. Das spart ein Feld und verhindert inkonsistente Zustände („confirmed: true, aber confirmedAt: null"). `hasConfirmedAnamnesis(profile)` als Helper.
+- **`validUntil` berechnet, nicht gespeichert:** 1 Jahr nach `confirmedAt`, dynamisch berechnet via `calcValidUntil()`. Bei zukünftiger Änderung der Gültigkeitsdauer (z. B. auf 6 Monate) reicht eine Code-Änderung, keine Daten-Migration.
+- **Demo-Profile bleiben ohne `anamnesis`:** Die JSON-Demo-Profile (`Trainingsplaner_Max_Mustermann_Demo.json`, `Trainingsplaner_Julia_Demo.json`) haben kein `anamnesis`-Feld. Das ist gewollt: Beim Laden zeigt die App „Noch nicht ausgefüllt", was der korrekte UX-Zustand für ein Tester-Demoprofil ist. Wenn der Tester die Anamnese ausfüllt, wird sie ans Demo-Profil drangehängt — bei einem Demo-Reset ist sie weg, was die saubere Erwartung ist.
+- **Versionierung über `ANAMNESIS_VERSION = 1`:** Bei späteren Schema-Änderungen (z. B. wenn ein neues Feld dazukommt oder ein bestehendes Feld umstrukturiert wird) kann die Version erhöht werden, und beim Laden eines alten Profils kann eine Migration laufen. Aktuell noch nicht nötig, aber als Fundament eingebaut.
+
+### Verbindung zur Compliance-Schicht
+
+Mit Etappe A ist die AGB-Klausel **Abschnitt 6 „Anamnesebogen"** erstmals erfüllbar:
+
+> *„Der Anamnesebogen muss bei Profilerstellung wahrheitsgemäß ausgefüllt werden. Bei Änderungen des Gesundheitszustands ist eine Aktualisierung verpflichtend. Vorherige Versionen bleiben zur Dokumentation erhalten."*
+
+- ✅ **Wahrheitsgemäß ausfüllen** — Pflicht-Checkbox mit Wahrheits-Erklärung im Modal
+- ✅ **Aktualisierung verpflichtend** — „Aktualisieren"-Button funktional, jeder Save schreibt einen neuen `confirmedAt`-Timestamp
+- ⏳ **Vorherige Versionen bleiben erhalten** — *noch nicht implementiert*. Aktuell wird der alte Stand beim Save überschrieben. Eine Historie würde einen separaten Schlüssel `tpv2_anamnesis_history_v1` brauchen, ähnlich wie für den Consent geplant. → Folge-ToDo.
+
+Die Datenschutzerklärung (Abschnitt 2) ist nicht betroffen, da die Anamnese-Daten unter `tpv2_profile_data` verschachtelt persistiert werden — sie sind also bereits Teil des dort erwähnten Profil-Objekts.
+
+### Betroffene Dateien (Nachtrag 3)
+
+| Datei | Änderung |
+|---|---|
+| `js/features/anamnese-edit.js` | **Neu** — 240 Zeilen: Datenmodell, Label-Maps, getDefaultAnamnesis, hasConfirmedAnamnesis, formatDate, calcValidUntil, renderAnamnese, openAnamneseEditModal, closeAnamneseEditModal, saveAnamneseEdit |
+| `Trainingsplaner.html` | Anamnese-Sektion restrukturiert (12 ID-Felder, Platzhalter statt Demo-Inhalte, Status-Badge dynamisch, Bestätigungs-Box `display:none` initial), neues `anamneseEditModal` als tp-modal mit 5 Form-Sektionen + Pflicht-Bestätigungs-Checkbox |
+| `js/pages/info.js` | Import `renderAnamnese`, Aufruf in `renderInfo(profile)` |
+| `js/init-handlers.js` | Import `openAnamneseEditModal` + `saveAnamneseEdit`, Toast-Stub durch echtes Modal ersetzt, Chip-Toggle-Handler, Confirm-Checkbox-Handler, Save-Button-Handler |
+| `css/pages/info.css` | Neue `.info-pill-muted`-Klasse (grauer Pill für „noch nicht ausgefüllt") |
+
+### Verifikation (durch User)
+
+- [ ] **First-Run-Test:** Tab Info → Anamnese → Status zeigt „○ Noch nicht ausgefüllt", alle Antwortfelder zeigen Platzhalter, Bestätigungs-Box ist nicht sichtbar
+- [ ] **Edit-Open:** Klick auf „Anamnese aktualisieren" → Modal öffnet sich, Felder enthalten Default-Werte (Gut / Nicht benötigt / Beginner / Nein-Selects), Conditions-Chips alle inaktiv
+- [ ] **Conditions-Chips:** Mehrere Chips anklicken → werden teal markiert (`.active`-Klasse)
+- [ ] **Save ohne Checkbox:** Speichern-Button bleibt grau (disabled)
+- [ ] **Save mit Checkbox:** Checkbox setzen → Speichern-Button wird aktiv → klicken → Modal schließt, Toast „✓ Anamnese gespeichert", Anamnese-Sektion zeigt grünen Status mit Datum, Antwortfelder mit eingegebenen Werten, Conditions als Chips
+- [ ] **Persistenz:** F5 → Anamnese bleibt erhalten
+- [ ] **Edit-Reopen:** Modal erneut öffnen → vorherige Werte werden geladen, ausgewählte Conditions sind markiert
+- [ ] **Esc-Close:** Modal offen → Esc → Modal schließt ohne Save
+- [ ] **Backdrop-Close:** Modal offen → außerhalb klicken → Modal schließt ohne Save
+
+### Was offen bleibt (für Etappe B/C/D)
+
+- **Vorherige Versionen** der Anamnese aufbewahren (Historie) — Folge-ToDo, AGB-konforme Vollendung von Abschnitt 6
+- **Vereinbarung editierbar** + Bestätigungs-Mechanismus (Etappe B)
+- **Onboarding-Wizard** beim Erst-Profilanlegen (Etappe C) — Welcome-Modal → Stammdaten → Anamnese (jetzt verfügbar) → Vereinbarung
+- **Demo als Import statt Pflicht** (Etappe D)

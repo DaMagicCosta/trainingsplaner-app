@@ -4,6 +4,7 @@ import { _formatEquipment, _formatLocations } from '../features/profile-edit.js'
 import { switchTab } from '../tabs.js';
 import { themeLabels } from '../themes.js';
 import { _applyProfile, _loadDemoFromFetch } from '../demo-loader.js';
+import { renderAnamnese } from '../features/anamnese-edit.js';
 
 export { renderInfo, exportProfileJson, importProfileJson };
 
@@ -89,6 +90,9 @@ function renderInfo(profile) {
   if (themeNameEl && typeof themeLabels !== 'undefined') {
     themeNameEl.textContent = themeLabels[state.theme] || state.theme || '—';
   }
+
+  // Anamnese-Sektion mit Profil-Daten füllen
+  renderAnamnese(profile);
 
   console.log('[Info] gerendert', { name, sessions, plans });
 }

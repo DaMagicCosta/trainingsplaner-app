@@ -12,6 +12,7 @@ import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexi
 import { reloadDemoProfile } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { revokeConsent } from './consent.js';
+import { openAnamneseEditModal, saveAnamneseEdit } from './features/anamnese-edit.js';
 
 // ── Info-Tab Event-Handler ──
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation
@@ -28,8 +29,23 @@ import { revokeConsent } from './consent.js';
   const anaHistoryBtn   = document.getElementById('anamneseHistoryBtn');
   const verReconfirmBtn = document.getElementById('vereinbarungReconfirmBtn');
   const verRevokeBtn    = document.getElementById('vereinbarungRevokeBtn');
-  if (anaUpdateBtn)    anaUpdateBtn.addEventListener('click',    () => toast('Anamnese-Bearbeitung folgt in v2.8'));
+  if (anaUpdateBtn)    anaUpdateBtn.addEventListener('click',    openAnamneseEditModal);
   if (anaHistoryBtn)   anaHistoryBtn.addEventListener('click',   () => toast('Historie-Ansicht folgt'));
+
+  // Anamnese-Edit-Modal: Conditions-Chips toggeln
+  document.querySelectorAll('#aemConditionsChips .tp-chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('active'));
+  });
+
+  // Anamnese-Edit-Modal: Confirm-Checkbox steuert Save-Button
+  const aemConfirm = document.getElementById('aemConfirm');
+  const aemSaveBtn = document.getElementById('aemSaveBtn');
+  if (aemConfirm && aemSaveBtn) {
+    aemConfirm.addEventListener('change', () => {
+      aemSaveBtn.disabled = !aemConfirm.checked;
+    });
+    aemSaveBtn.addEventListener('click', saveAnamneseEdit);
+  }
   if (verReconfirmBtn) verReconfirmBtn.addEventListener('click', () => toast('Vereinbarung erneut bestätigt'));
   if (verRevokeBtn)    verRevokeBtn.addEventListener('click',    () => toast('Widerruf-Flow folgt in v2.8'));
 

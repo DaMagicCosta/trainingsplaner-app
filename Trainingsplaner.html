@@ -997,14 +997,13 @@
           <div class="info-form-status">
             <div>
               <div class="info-form-status-label">Status</div>
-              <div class="info-form-status-value">
-                <span class="info-pill info-pill-success">● Bestätigt</span>
-                am 05.04.2026
+              <div class="info-form-status-value" id="anamStatusValue">
+                <span class="info-pill info-pill-muted" id="anamStatusBadge">○ Noch nicht ausgefüllt</span>
               </div>
             </div>
             <div>
               <div class="info-form-status-label">Gültig bis</div>
-              <div class="info-form-status-value">05.04.2027 · bei Änderung des Gesundheitszustands früher aktualisieren</div>
+              <div class="info-form-status-value" id="anamValidUntil">— · bei Änderung des Gesundheitszustands früher aktualisieren</div>
             </div>
           </div>
 
@@ -1018,11 +1017,11 @@
               <div class="info-form-rows">
                 <div class="info-form-row">
                   <div class="info-form-q">Wie würdest du deinen allgemeinen Gesundheitszustand beschreiben?</div>
-                  <div class="info-form-a">Gut</div>
+                  <div class="info-form-a info-form-a-empty" id="anamGeneral">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Hast du eine ärztliche Freigabe für sportliche Betätigung?</div>
-                  <div class="info-form-a">Nicht benötigt</div>
+                  <div class="info-form-a info-form-a-empty" id="anamClearance">—</div>
                 </div>
               </div>
             </div>
@@ -1036,23 +1035,11 @@
               <div class="info-form-rows">
                 <div class="info-form-row">
                   <div class="info-form-q">Bestehende Erkrankungen <span style="color:var(--text-3)">(Mehrfachauswahl)</span></div>
-                  <div class="info-form-a">
-                    <span class="info-chip-muted">Herz-Kreislauf</span>
-                    <span class="info-chip-muted">Bluthochdruck</span>
-                    <span class="info-chip-muted">Diabetes</span>
-                    <span class="info-chip-muted">Asthma / Atemwege</span>
-                    <span class="info-chip-muted">Gelenkprobleme</span>
-                    <span class="info-chip-muted">Rückenprobleme</span>
-                    <span class="info-chip-muted">Bandscheibenvorfall</span>
-                    <span class="info-chip-muted">Schilddrüse</span>
-                    <span class="info-chip-muted">Epilepsie</span>
-                    <span class="info-chip-muted">Osteoporose</span>
-                    <div style="margin-top:6px;color:var(--success);font-size:12px;">→ Keine der oben genannten (Demo)</div>
-                  </div>
+                  <div class="info-form-a info-form-a-empty" id="anamConditions">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Sonstige Erkrankungen / Diagnosen</div>
-                  <div class="info-form-a info-form-a-empty">Keine Angabe</div>
+                  <div class="info-form-a info-form-a-empty" id="anamOtherConditions">—</div>
                 </div>
               </div>
             </div>
@@ -1066,19 +1053,19 @@
               <div class="info-form-rows">
                 <div class="info-form-row">
                   <div class="info-form-q">Aktuell Schmerzen oder Einschränkungen?</div>
-                  <div class="info-form-a">Nein</div>
+                  <div class="info-form-a info-form-a-empty" id="anamCurrentPain">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Wenn ja, wo und welcher Art?</div>
-                  <div class="info-form-a info-form-a-empty">—</div>
+                  <div class="info-form-a info-form-a-empty" id="anamPainDetails">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Operationen oder schwere Verletzungen in den letzten 12 Monaten?</div>
-                  <div class="info-form-a">Nein</div>
+                  <div class="info-form-a info-form-a-empty" id="anamSurgery">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Wenn ja, welche?</div>
-                  <div class="info-form-a info-form-a-empty">—</div>
+                  <div class="info-form-a info-form-a-empty" id="anamSurgeryDetails">—</div>
                 </div>
               </div>
             </div>
@@ -1092,11 +1079,11 @@
               <div class="info-form-rows">
                 <div class="info-form-row">
                   <div class="info-form-q">Regelmäßige Medikamenten-Einnahme?</div>
-                  <div class="info-form-a">Nein</div>
+                  <div class="info-form-a info-form-a-empty" id="anamMedication">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Details</div>
-                  <div class="info-form-a info-form-a-empty">—</div>
+                  <div class="info-form-a info-form-a-empty" id="anamMedicationDetails">—</div>
                 </div>
               </div>
             </div>
@@ -1110,23 +1097,23 @@
               <div class="info-form-rows">
                 <div class="info-form-row">
                   <div class="info-form-q">Trainings-Erfahrungslevel</div>
-                  <div class="info-form-a">Erfahren (2–5 Jahre)</div>
+                  <div class="info-form-a info-form-a-empty" id="anamExperience">—</div>
                 </div>
                 <div class="info-form-row">
                   <div class="info-form-q">Übungen, die nicht ausgeführt werden können/dürfen</div>
-                  <div class="info-form-a info-form-a-empty">Keine bekannten Einschränkungen</div>
+                  <div class="info-form-a info-form-a-empty" id="anamRestricted">—</div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Bestätigung -->
-          <div class="info-confirm-box">
+          <div class="info-confirm-box" id="anamConfirmBox" style="display:none;">
             <div class="info-confirm-check">
               <span class="info-confirm-icon">✓</span>
               <div>
-                <strong>Bestätigt am 05.04.2026</strong><br>
-                <span>Ich bestätige, dass ich die obigen Angaben wahrheitsgemäß gemacht habe. Mir ist bewusst, dass die App keinen ärztlichen Rat ersetzt und ich eigenverantwortlich trainiere.</span>
+                <strong>Bestätigt am <span id="anamConfirmDate">—</span></strong><br>
+                <span>Ich habe die obigen Angaben wahrheitsgemäß gemacht. Mir ist bewusst, dass die App keinen ärztlichen Rat ersetzt und ich eigenverantwortlich trainiere.</span>
               </div>
             </div>
           </div>
@@ -2192,6 +2179,157 @@
       </div>
 
     </section>
+
+    <!-- ═══════════════ ANAMNESE-EDIT MODAL (v2.8) ═══════════════ -->
+    <div class="tp-modal" id="anamneseEditModal" role="dialog" aria-modal="true" aria-labelledby="anamneseEditTitle">
+      <div class="tp-modal-backdrop" data-modal-close="anamneseEditModal"></div>
+      <div class="tp-modal-panel">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">⚕ &nbsp;Anamnese bearbeiten</div>
+            <h2 class="tp-modal-title" id="anamneseEditTitle">Gesundheitsfragebogen</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="anamneseEditModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <div class="info-notice" style="margin-bottom:18px;">
+            <div class="info-notice-icon">◐</div>
+            <div class="info-notice-text">
+              <strong>Wahrheitsgemäß ausfüllen:</strong> Diese Angaben helfen dir und ggf. deinem Trainer, das Training an deine Situation anzupassen. Sie sind <strong>besondere Daten nach Art. 9 DSGVO</strong> und bleiben ausschließlich auf deinem Gerät. Die App ist <strong>kein Ersatz</strong> für ärztlichen Rat.
+            </div>
+          </div>
+
+          <!-- Sektion 1: Allgemein -->
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">1. Allgemeiner Gesundheitszustand</div>
+            <div class="tp-form-grid">
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemGeneral">Wie würdest du deinen allgemeinen Gesundheitszustand beschreiben?</label>
+                <select class="tp-field-select" id="aemGeneral">
+                  <option value="sehr_gut">Sehr gut</option>
+                  <option value="gut">Gut</option>
+                  <option value="befriedigend">Befriedigend</option>
+                  <option value="eingeschraenkt">Eingeschränkt</option>
+                </select>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemClearance">Hast du eine ärztliche Freigabe für sportliche Betätigung?</label>
+                <select class="tp-field-select" id="aemClearance">
+                  <option value="nicht_benoetigt">Nicht benötigt</option>
+                  <option value="vorhanden">Vorhanden</option>
+                  <option value="erforderlich_offen">Erforderlich, aber noch nicht eingeholt</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sektion 2: Vorerkrankungen -->
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">2. Vorerkrankungen &amp; Diagnosen</div>
+            <div class="tp-field" style="margin-bottom:14px;">
+              <label class="tp-field-label">Bestehende Erkrankungen <span style="color:var(--text-3);font-weight:400;">(Mehrfachauswahl, leer lassen wenn keine)</span></label>
+              <div id="aemConditionsChips" style="display:flex;flex-wrap:wrap;gap:8px;">
+                <button type="button" class="tp-chip" data-condition="herz_kreislauf">Herz-Kreislauf</button>
+                <button type="button" class="tp-chip" data-condition="bluthochdruck">Bluthochdruck</button>
+                <button type="button" class="tp-chip" data-condition="diabetes">Diabetes</button>
+                <button type="button" class="tp-chip" data-condition="asthma">Asthma / Atemwege</button>
+                <button type="button" class="tp-chip" data-condition="gelenke">Gelenkprobleme</button>
+                <button type="button" class="tp-chip" data-condition="ruecken">Rückenprobleme</button>
+                <button type="button" class="tp-chip" data-condition="bandscheibe">Bandscheibenvorfall</button>
+                <button type="button" class="tp-chip" data-condition="schilddruese">Schilddrüse</button>
+                <button type="button" class="tp-chip" data-condition="epilepsie">Epilepsie</button>
+                <button type="button" class="tp-chip" data-condition="osteoporose">Osteoporose</button>
+              </div>
+            </div>
+            <div class="tp-field">
+              <label class="tp-field-label" for="aemOtherConditions">Sonstige Erkrankungen / Diagnosen (Freitext)</label>
+              <textarea class="tp-field-input" id="aemOtherConditions" rows="2" placeholder="z. B. Migräne, Allergien, leer lassen wenn keine"></textarea>
+            </div>
+          </div>
+
+          <!-- Sektion 3: Beschwerden -->
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">3. Aktuelle Beschwerden &amp; Einschränkungen</div>
+            <div class="tp-form-grid">
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemCurrentPain">Aktuell Schmerzen oder Einschränkungen?</label>
+                <select class="tp-field-select" id="aemCurrentPain">
+                  <option value="nein">Nein</option>
+                  <option value="ja">Ja</option>
+                </select>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemPainDetails">Wenn ja, wo und welcher Art? (Freitext)</label>
+                <textarea class="tp-field-input" id="aemPainDetails" rows="2" placeholder="z. B. linke Schulter beim Drücken, Knie beim tiefen Beugen"></textarea>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemSurgery">Operationen oder schwere Verletzungen in den letzten 12 Monaten?</label>
+                <select class="tp-field-select" id="aemSurgery">
+                  <option value="nein">Nein</option>
+                  <option value="ja">Ja</option>
+                </select>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemSurgeryDetails">Wenn ja, welche? (Freitext)</label>
+                <textarea class="tp-field-input" id="aemSurgeryDetails" rows="2" placeholder="z. B. Kreuzband-OP rechtes Knie 06/2025"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sektion 4: Medikamente -->
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">4. Medikamente</div>
+            <div class="tp-form-grid">
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemMedication">Regelmäßige Medikamenten-Einnahme?</label>
+                <select class="tp-field-select" id="aemMedication">
+                  <option value="nein">Nein</option>
+                  <option value="ja">Ja</option>
+                </select>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemMedicationDetails">Details (Freitext, optional)</label>
+                <textarea class="tp-field-input" id="aemMedicationDetails" rows="2" placeholder="z. B. Blutdrucksenker, Schilddrüsenhormon"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sektion 5: Erfahrung -->
+          <div class="tp-form-group">
+            <div class="tp-form-group-title">5. Trainingserfahrung</div>
+            <div class="tp-form-grid">
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemExperience">Trainings-Erfahrungslevel</label>
+                <select class="tp-field-select" id="aemExperience">
+                  <option value="anfaenger">Anfänger (&lt; 6 Monate)</option>
+                  <option value="beginner">Beginner (6 Monate – 2 Jahre)</option>
+                  <option value="erfahren">Erfahren (2 – 5 Jahre)</option>
+                  <option value="fortgeschritten">Fortgeschritten (&gt; 5 Jahre)</option>
+                  <option value="elite">Elite / Wettkampf</option>
+                </select>
+              </div>
+              <div class="tp-field" style="grid-column: 1 / -1;">
+                <label class="tp-field-label" for="aemRestricted">Übungen, die nicht ausgeführt werden können/dürfen (Freitext)</label>
+                <textarea class="tp-field-input" id="aemRestricted" rows="2" placeholder="z. B. Überkopfdrücken, Kniebeugen tief, Kreuzheben"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bestätigungs-Checkbox -->
+          <div class="welcome-consent" style="margin-top:18px;">
+            <input type="checkbox" id="aemConfirm">
+            <label for="aemConfirm"><strong>Ich bestätige, dass ich diese Angaben wahrheitsgemäß gemacht habe.</strong> Mir ist bewusst, dass die App keinen ärztlichen Rat ersetzt und ich eigenverantwortlich trainiere. Bei Änderungen meines Gesundheitszustands aktualisiere ich diesen Fragebogen.</label>
+          </div>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action" data-modal-close="anamneseEditModal" type="button">Abbrechen</button>
+          <button class="info-action info-action-primary" id="aemSaveBtn" type="button" disabled>
+            <span class="info-action-icon">✓</span>
+            Speichern &amp; bestätigen
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══════════════ PROFIL-EDIT MODAL (v2.8) ═══════════════ -->
     <div class="tp-modal" id="profileEditModal" role="dialog" aria-modal="true" aria-labelledby="profileEditTitle">
