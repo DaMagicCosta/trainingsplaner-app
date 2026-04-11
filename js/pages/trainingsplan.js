@@ -639,12 +639,40 @@ function _renderTpNoPlanState(kw) {
     locToggleBtn.addEventListener('click', () => {
       const kw = state.tpViewKw;
       if (kw == null) return;
+      const plan = state.profile?.plans?.['w' + kw];
+      if (!plan) {
+        toast(`KW ${kw}: Kein Plan vorhanden`);
+        return;
+      }
+      const planLoc = plan._location || 'studio';
+      const homeFb = plan._homeFallback;
+      const studioFb = plan._studioFallback;
       const current = (state.tpUseHomePerKw[kw] !== undefined)
         ? state.tpUseHomePerKw[kw]
         : !!state.tpUseHome;
-      state.tpUseHomePerKw[kw] = !current;
+      const next = !current;
+
+      console.log('[tpLocToggle] kw=' + kw, 'planLoc=' + planLoc,
+        'current=' + current, 'next=' + next,
+        'hasHomeFb=' + (Array.isArray(homeFb) && homeFb.length > 0),
+        'hasStudioFb=' + (Array.isArray(studioFb) && studioFb.length > 0));
+
+      // Wenn Ziel-Modus Home ist, brauchen wir entweder einen Home-Plan
+      // (planLoc='home') oder einen _homeFallback. Sonst wechseln wir nur
+      // das Label, und die Uebungen bleiben stehen — genau der gemeldete
+      // Bug. Klartext-Toast und Abbruch statt stillem Fehlschlag.
+      if (next === true && planLoc !== 'home' && !(Array.isArray(homeFb) && homeFb.length > 0)) {
+        toast(`KW ${kw}: Kein Home-Ausweichplan. Im Generator "Home-Fallback mitgenerieren" aktivieren.`);
+        return;
+      }
+      if (next === false && planLoc !== 'studio' && !(Array.isArray(studioFb) && studioFb.length > 0)) {
+        toast(`KW ${kw}: Kein Studio-Ausweichplan. Im Generator "Home-Fallback mitgenerieren" aktivieren.`);
+        return;
+      }
+
+      state.tpUseHomePerKw[kw] = next;
       if (state.profile) renderTrainingsplan(state.profile);
-      toast(state.tpUseHomePerKw[kw]
+      toast(next
         ? `KW ${kw}: Home-Ausweichplan aktiv`
         : `KW ${kw}: Studio-Plan aktiv`);
     });
