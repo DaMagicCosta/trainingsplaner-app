@@ -43,6 +43,33 @@ export function _clearSavedProfile() {
   console.log('[Persist] localStorage gelöscht');
 }
 
+// ─── v1-Legacy-Cleanup ───
+// Räumt alte localStorage-Schlüssel der v1-App auf, die in v2 nicht mehr
+// genutzt werden. Wird einmalig beim Init aufgerufen. Wichtig für die
+// DSGVO-Belegspur: Die Datenschutzerklärung listet nur tpv2_*-Schlüssel,
+// also dürfen keine alten Schlüssel ohne Erklärung im Browser verbleiben.
+const LEGACY_KEYS = [
+  'trainingsplaner_profiles',     // v1 PROFILES_KEY
+  'trainingsplaner_active',       // v1 ACTIVE_PROFILE_KEY
+  'trainingsplaner_sync_url',     // v1 SYNC_URL_KEY (Drive-Sync)
+  'trainingsplaner_vault',        // v1 TP_VAULT_KEY (AES-Vault)
+  'trainingsplaner_verify',       // v1 TP_VERIFY_KEY (PIN-Hash)
+  'trainings_planer_active_tab'   // ältere Variante mit Underscore
+];
+
+export function _cleanupLegacyKeys() {
+  const removed = [];
+  LEGACY_KEYS.forEach(k => {
+    if (localStorage.getItem(k) !== null) {
+      localStorage.removeItem(k);
+      removed.push(k);
+    }
+  });
+  if (removed.length) {
+    console.log('[Cleanup] v1-Legacy-Schlüssel entfernt:', removed.join(', '));
+  }
+}
+
 export const state = {
   activeTab: localStorage.getItem(STORAGE_KEYS.tab) || 'cockpit',
   role: localStorage.getItem(STORAGE_KEYS.role) || 'trainer',

@@ -4,7 +4,7 @@
  */
 
 // ── Basis ──
-import { state, _saveProfile } from './state.js';
+import { state, _saveProfile, _cleanupLegacyKeys } from './state.js';
 import { toast } from './utils.js';
 import { initConsent, renderConsentInfo } from './consent.js';
 
@@ -43,6 +43,11 @@ import './splash.js';
 // ══════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════
+// v1-Legacy-Schlüssel aufräumen, bevor der Nutzer die Datenschutzerklärung
+// liest — dort sind nur tpv2_*-Keys aufgelistet, alte Reste würden die
+// Belegspur verzerren.
+_cleanupLegacyKeys();
+
 // Theme sofort anwenden, damit das Welcome-Modal im richtigen Look erscheint.
 applyTheme(state.theme);
 

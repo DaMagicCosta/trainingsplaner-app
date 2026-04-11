@@ -535,3 +535,67 @@ Recht: Aktive DSGVO-Einwilligung via Welcome-Modal
   erneute Akzeptanz
 - Belegspur: Notizen/2026-04-10_rechtsaudit-umsetzung.md (Nachtrag)
 ```
+
+---
+
+## Nachtrag 2 — v1-Legacy-Cleanup im localStorage
+
+**Datum:** 11.04.2026
+**Auslöser:** Beim Verifikations-Test des Welcome-Modals (Punkt 8 der Checkliste, Screenshot 20:09) wurde im DevTools-Local-Storage ein alter Schlüssel `trainings_planer_active_tab` ohne `tpv2_`-Prefix entdeckt. Recherche im v1-Archiv (`Trainingsplaner_v1_archiv.html`) ergab fünf weitere Schlüssel der Vorgängerversion, die im Browser eines früheren v1-Nutzers liegen geblieben sein können.
+
+### Problem
+
+Die Datenschutzerklärung listet in Abschnitt 2 nur Schlüssel mit `tpv2_*`-Prefix als verarbeitete Daten. Wenn im Browser eines Nutzers zusätzlich noch v1-Schlüssel herumliegen, ist die DSE-Liste unvollständig — formal eine Lücke in der Belegspur. Die saubere Lösung ist, diese Schlüssel beim App-Start automatisch zu entfernen.
+
+### Maßnahme
+
+1. Neue Funktion `_cleanupLegacyKeys()` in `js/state.js` mit expliziter Liste von 6 Legacy-Schlüsseln:
+   - `trainingsplaner_profiles` (v1 PROFILES_KEY)
+   - `trainingsplaner_active` (v1 ACTIVE_PROFILE_KEY)
+   - `trainingsplaner_sync_url` (v1 SYNC_URL_KEY, Drive-Sync)
+   - `trainingsplaner_vault` (v1 TP_VAULT_KEY, AES-Vault)
+   - `trainingsplaner_verify` (v1 TP_VERIFY_KEY, PIN-Hash)
+   - `trainings_planer_active_tab` (ältere Variante mit Underscore)
+2. Aufruf in `js/app.js` ganz am Anfang der Init-Sequenz, **vor** `applyTheme()` und vor `initConsent()` — damit der Browser-Speicher schon sauber ist, bevor der Nutzer die DSE liest.
+3. Logging über `console.log('[Cleanup] v1-Legacy-Schlüssel entfernt: …')` — nur wenn tatsächlich etwas gelöscht wurde, sonst still.
+4. **Explizite Liste statt Prefix-Filter:** Ein generischer Filter wie „alle Schlüssel ohne `tpv2_`-Prefix löschen" wäre gefährlich, weil er auch Schlüssel anderer Web-Apps auf derselben Origin treffen würde. Die explizite Liste ist sicher und nachvollziehbar.
+
+### Belegspur in der DSE
+
+Abschnitt 2 der Datenschutzerklärung wurde um folgenden Hinweis ergänzt:
+
+> *„Hinweis: Schlüssel früherer Versionen der App (Präfix `trainingsplaner_*`) werden beim Start automatisch entfernt, damit keine veralteten Daten ohne Erklärung im Browser verbleiben."*
+
+Außerdem wurde `tpv2_consent_v1` in die Liste der Speicherorte aufgenommen — der war bei der ursprünglichen DSE noch nicht erwähnt, weil das Welcome-Modal erst im Nachtrag 1 gebaut wurde.
+
+### Versions-Bump
+
+Da sich die DSE inhaltlich geändert hat (auch wenn nur klarstellend), wurde nach der Dauerhaft-Regel aus `CLAUDE.md` der `DSE_VERSION` in `js/consent.js` von `2026-04-10` auf `2026-04-11` erhöht. Das hat den gewünschten Nebeneffekt, dass beim nächsten Aufruf das Welcome-Modal erneut erscheint und der Nutzer die aktualisierte DSE-Version aktiv akzeptiert. Der Mechanismus ist damit auch praktisch verifiziert.
+
+`AGB_VERSION` bleibt auf `2026-04-10` — die Nutzungsbedingungen sind unverändert.
+
+### Betroffene Dateien (Nachtrag 2)
+
+| Datei | Änderung |
+|---|---|
+| `js/state.js` | Neue Funktion `_cleanupLegacyKeys()` mit Schlüsselliste, Export ergänzt |
+| `js/app.js` | Import `_cleanupLegacyKeys`, Aufruf ganz am Anfang vor `applyTheme()` |
+| `Trainingsplaner.html` | DSE Abschnitt 2: `tpv2_consent_v1` in Schlüsselliste, Hinweis-Satz zum v1-Cleanup, Stand-Datum auf 11.04.2026 |
+| `js/consent.js` | `DSE_VERSION = '2026-04-11'` |
+
+### Verifikation (durch User, 10.04.2026 abends)
+
+- **Punkt 4 (Esc-Block):** ✅ Modal bleibt
+- **Punkt 5 (Click-Outside-Block):** ✅ Modal bleibt
+- **Punkt 8 (Local Storage Persistenz):** ✅ `tpv2_consent_v1` mit korrektem JSON sichtbar (Screenshot 20:09)
+- **Punkt 9 (DSE Sektion 8 Anzeige):** ✅ Datum + Versionen werden korrekt formatiert (Screenshot 20:09)
+- **Punkt 10 (Reload-Test):** ✅ Kein Modal beim normalen Reload
+- **Punkt 11 (Widerrufs-Test):** ✅ Beide Confirms erscheinen, Reload, Modal wieder
+
+### Was offen bleibt
+
+Die ToDo-Liste im Wiki (`08_Obsidian/Alex Wiki/todos.md`) führt weiterhin folgende Folge-Items aus dem Audit:
+
+- **🔴 Onboarding + Anamnese/Vereinbarung** — Anamnese als read-only Demo-Daten ist substantiell unvollständig; die AGB-Klausel „Anamnesebogen muss wahrheitsgemäß ausgefüllt werden" ist solange nicht erfüllbar
+- **🔴 Demo als Import statt Pflicht** — App startet aktuell mit Alexander-Demo-Profil, sollte leer starten
+- **🟡 Vereinbarung-Widerruf-Flow** — aktuell Toast-Stub
