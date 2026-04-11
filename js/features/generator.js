@@ -305,6 +305,23 @@ import { renderCockpit } from '../pages/cockpit.js';
       .slice(0, count);
   }
 
+  // Prueft, ob zwei days-Arrays inhaltlich identisch sind — vergleicht
+  // nur Uebungs-Namen pro Tag in Reihenfolge. Wird genutzt, um zu
+  // erkennen, ob ein home/studio-Fallback sich vom Main-Plan ueberhaupt
+  // unterscheidet. Wenn nicht, ist er nutzlos und wird nicht gespeichert,
+  // damit der Studio/Home-Toggle nicht sinnlos sichtbar wird.
+  function _areDaysIdentical(a, b) {
+    if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+    return a.every((dayA, i) => {
+      const dayB = b[i];
+      if (!dayB) return false;
+      const exA = Array.isArray(dayA.exercises) ? dayA.exercises : [];
+      const exB = Array.isArray(dayB.exercises) ? dayB.exercises : [];
+      if (exA.length !== exB.length) return false;
+      return exA.every((e, j) => e && exB[j] && e.name === exB[j].name);
+    });
+  }
+
   // ── Einen Wochenplan für einen Block generieren ──
   function buildWeekPlan(blockDef, splitDef, selectedDays, location, blockIdx) {
     const exPerCat = blockDef.goal === 'maximalkraft' ? 2 : 3;
@@ -375,6 +392,8 @@ import { renderCockpit } from '../pages/cockpit.js';
     let kw = startKw;
     let weeksSinceRegen = 0;
     let safetyLimit = 520; // Endlos-Loop-Schutz (10× max KWs)
+    let fallbackCount = 0;     // Echte Fallbacks mit Unterschied
+    let fallbackSkipped = 0;   // Fallbacks, die inhaltlich gleich zum Main waren
 
     // Einmal durchlaufen oder bei "Ganzjährig" wiederholen bis KW 52
     function generateOnePass() {
@@ -386,13 +405,27 @@ import { renderCockpit } from '../pages/cockpit.js';
           profile.plans['w' + kw] = plan;
 
           if (homeFallback) {
+            // Nur speichern, wenn der Fallback sich tatsaechlich vom Main
+            // unterscheidet. Sonst waere der Studio/Home-Toggle im
+            // Trainingsplan sichtbar, wuerde aber nichts sichtbares
+            // bewirken (beide Plaene mit identischen Uebungen).
             if (blockLoc !== 'home') {
               const homePlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'home', blockIdx);
-              profile.plans['w' + kw]._homeFallback = homePlan.days;
+              if (!_areDaysIdentical(plan.days, homePlan.days)) {
+                profile.plans['w' + kw]._homeFallback = homePlan.days;
+                fallbackCount++;
+              } else {
+                fallbackSkipped++;
+              }
             }
             if (blockLoc !== 'studio') {
               const studioPlan = buildWeekPlan(blockDef, splitDef, selectedDays, 'studio', blockIdx);
-              profile.plans['w' + kw]._studioFallback = studioPlan.days;
+              if (!_areDaysIdentical(plan.days, studioPlan.days)) {
+                profile.plans['w' + kw]._studioFallback = studioPlan.days;
+                fallbackCount++;
+              } else {
+                fallbackSkipped++;
+              }
             }
           }
 
@@ -440,7 +473,18 @@ import { renderCockpit } from '../pages/cockpit.js';
     dbg('ALLES OK — gespeichert');
 
     const totalPlans = Object.keys(profile.plans || {}).filter(k => k.startsWith('w')).length;
-    toast(`${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`);
+    let msg = `${totalPlans} Wochenpläne generiert${repeatYear ? ' (ganzjährig)' : ''}`;
+    if (homeFallback) {
+      if (fallbackCount > 0) {
+        msg += ` · ${fallbackCount} Ausweichplan${fallbackCount === 1 ? '' : '-Varianten'}`;
+      }
+      if (fallbackSkipped > 0 && fallbackCount === 0) {
+        msg += ` · Kein Unterschied zum Main-Plan (gleiches Equipment an beiden Orten?)`;
+      } else if (fallbackSkipped > 0) {
+        msg += ` · ${fallbackSkipped} identisch übersprungen`;
+      }
+    }
+    toast(msg);
     } catch (e) {
       dbg('FEHLER: ' + e.message + ' @ ' + (e.stack?.split('\n').slice(0,3).join(' | ')));
     }

@@ -652,11 +652,6 @@ function _renderTpNoPlanState(kw) {
         : !!state.tpUseHome;
       const next = !current;
 
-      console.log('[tpLocToggle] kw=' + kw, 'planLoc=' + planLoc,
-        'current=' + current, 'next=' + next,
-        'hasHomeFb=' + (Array.isArray(homeFb) && homeFb.length > 0),
-        'hasStudioFb=' + (Array.isArray(studioFb) && studioFb.length > 0));
-
       // Wenn Ziel-Modus Home ist, brauchen wir entweder einen Home-Plan
       // (planLoc='home') oder einen _homeFallback. Sonst wechseln wir nur
       // das Label, und die Uebungen bleiben stehen — genau der gemeldete
