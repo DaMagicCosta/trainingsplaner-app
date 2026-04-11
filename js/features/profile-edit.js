@@ -107,6 +107,7 @@ function openProfileEditModal(target) {
   const rawLoc = p.trainingLocation || [];
   const orderedLocs = Array.isArray(rawLoc) ? rawLoc : _parseLocationString(rawLoc);
   const orderMap = new Map(orderedLocs.map((loc, idx) => [loc, idx + 1]));
+  const activeLocs = new Set(orderedLocs);  // wird unten beim Equipment-Block gebraucht
   document.querySelectorAll('#pemLocationChips .tp-chip').forEach(chip => {
     const order = orderMap.get(chip.dataset.loc);
     if (order) {
