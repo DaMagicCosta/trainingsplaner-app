@@ -203,6 +203,8 @@ export function confirmAgreement() {
   _saveProfile();
   renderAgreement(state.profile);
   closeModal('agreementConfirmModal');
+  // Pflicht-Gate neu auswerten: Vereinbarungs-Banner ausblenden
+  import('../gates.js').then(({ applyGates }) => applyGates());
   toast('✓ Trainer-Vereinbarung bestätigt');
 }
 
@@ -248,6 +250,8 @@ export function revokeAgreement() {
 
   _saveProfile();
   renderAgreement(state.profile);
+  // Pflicht-Gate neu auswerten: Widerruf bringt Banner zurück
+  import('../gates.js').then(({ applyGates }) => applyGates());
   toast('✓ Vereinbarung widerrufen');
 }
 

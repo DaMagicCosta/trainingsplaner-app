@@ -196,6 +196,9 @@ function saveProfileEdit() {
 
   closeModal('profileEditModal');
   _saveProfile();
+  // Profil-Stammdaten gespeichert → "Leer"-Status faellt weg, Anamnese-Gate
+  // kann jetzt greifen, sofern noch keine Anamnese bestaetigt wurde.
+  import('../gates.js').then(({ applyGates }) => applyGates());
   toast((target === 'self' ? 'Profil' : 'Athlet') + ' gespeichert');
 }
 

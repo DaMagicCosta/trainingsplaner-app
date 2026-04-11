@@ -17,8 +17,10 @@ const STORAGE_KEY = 'tpv2_consent_v1';
 // dann wird beim nächsten Reload der Consent erneut abgefragt.
 // 2026-04-11: AGB Abschnitt 2 um Voraussetzungs-Logik (Generator-Ausschluss,
 //             Picker-Warnung, Level-Hinweis) ergänzt.
+// 2026-04-12: AGB Abschnitt 3 um technische Durchsetzung der Anamnese-Pflicht
+//             und Trainervereinbarungs-Hinweis ergänzt.
 export const DSE_VERSION = '2026-04-11';
-export const AGB_VERSION = '2026-04-11';
+export const AGB_VERSION = '2026-04-12';
 
 /**
  * Liest den gespeicherten Consent-Eintrag.

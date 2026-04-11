@@ -1,10 +1,16 @@
 import { state, STORAGE_KEYS } from './state.js';
+import { enforceTabGate } from './gates.js';
 
 /* ═══════════════════════════════════════════════════════
    TAB SWITCHING
    ═══════════════════════════════════════════════════════ */
 export function switchTab(tabName) {
   if (!tabName) return;
+  // Pflicht-Gate (Anamnese): gesperrte Tabs abfangen und auf Cockpit umlenken.
+  // enforceTabGate zeigt den Toast und gibt false zurück, wenn blockiert.
+  if (!enforceTabGate(tabName)) {
+    tabName = 'cockpit';
+  }
   state.activeTab = tabName;
   localStorage.setItem(STORAGE_KEYS.tab, tabName);
 

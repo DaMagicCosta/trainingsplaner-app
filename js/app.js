@@ -7,6 +7,7 @@
 import { state, _saveProfile, _cleanupLegacyKeys } from './state.js';
 import { toast } from './utils.js';
 import { initConsent, renderConsentInfo } from './consent.js';
+import { applyGates } from './gates.js';
 
 // ── UI-Infrastruktur ──
 import { applyTheme } from './themes.js';
@@ -130,6 +131,24 @@ applyTheme(state.theme);
   if (dismissBtn) dismissBtn.addEventListener('click', () => {
     if (banner) banner.style.display = 'none';
     sessionStorage.setItem('tpv2_demo_banner_dismissed', '1');
+  });
+
+  // Pflicht-Gates (Anamnese / Vereinbarung) einmalig prüfen und Banner setzen.
+  // Bei gesperrtem Tab wird in applyGates() automatisch auf Cockpit umgelenkt.
+  applyGates();
+
+  // Gate-Banner-Buttons an die bestehenden Modal-Öffner hängen
+  import('./features/anamnese-edit.js').then(({ openAnamneseEditModal }) => {
+    const openAnamBtn = document.getElementById('cpAnamnesisOpen');
+    if (openAnamBtn && openAnamneseEditModal) {
+      openAnamBtn.addEventListener('click', () => openAnamneseEditModal());
+    }
+  });
+  import('./features/agreement-edit.js').then(({ openAgreementConfirmModal }) => {
+    const openAgrBtn = document.getElementById('cpAgreementOpen');
+    if (openAgrBtn && openAgreementConfirmModal) {
+      openAgrBtn.addEventListener('click', () => openAgreementConfirmModal());
+    }
   });
   });
 })();

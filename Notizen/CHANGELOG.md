@@ -9,6 +9,17 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ---
 
+## 2026-04-12
+
+### Pflicht-Gates: Anamnese + Trainervereinbarung
+- **Neues Modul `js/gates.js`**: `isAnamnesisGated()`, `isAgreementGated()`, `applyGates()`, `enforceTabGate()` — zentrale Pflicht-Gate-Logik nach dem DSGVO-Consent
+- **Anamnese-Gate** (Hard): Solange `anamnesis.confirmedAt` nicht gesetzt ist, sperrt `body.anamnesis-required` via CSS die Sidebar-/Bottom-Nav-Items Jahresplan, Trainingsplan und Fortschritt (inkl. Schloss-Icon). `switchTab()` leitet gesperrte Ziele zusätzlich auf Cockpit um und zeigt einen Toast. Cockpit, Lexikon und Info bleiben frei
+- **Vereinbarungs-Gate** (Soft): Nur Banner im Cockpit für Trainer-Modus, keine Tab-Sperre — Multi-Athleten-Verwaltung ist noch Bau-Etappe
+- **Zwei neue Cockpit-Banner** (`cpAnamnesisBanner`, `cpAgreementBanner`) direkt unter dem Demo-Banner mit Direkt-Button in das bestehende `openAnamneseEditModal()` / `openAgreementConfirmModal()`
+- **Gate-Hooks** in `saveAnamneseEdit`, `confirmAgreement`, `revokeAgreement`, `setRole`, `switchProfile`, `saveProfileEdit`, `_loadDemoAsPreview`, `exitDemoMode` — jede relevante State-Änderung triggert `applyGates()` neu
+- **Demo-Modus + leeres Profil ausgenommen**: `state.demoMode !== null` und `empty-`-ID mit leerem Namen unterdrücken das Gate, damit der Demo-Vorschau-Flow und der „Eigenes Profil erstellen"-Flow sauber funktionieren
+- **AGB Abschnitt 3** um einen Absatz zur technischen Durchsetzung ergänzt, `AGB_VERSION` auf `2026-04-12` gebumpt, Stand-Datum aktualisiert — bestehende Nutzer werden beim nächsten Reload zur erneuten Einwilligung gebeten
+
 ## 2026-04-11
 
 ### Voraussetzungs-Check in der Plangestaltung

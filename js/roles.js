@@ -77,6 +77,9 @@ export function setRole(role) {
     }
   }
 
+  // Rollenwechsel kann das Vereinbarungs-Gate ein-/ausblenden
+  import('./gates.js').then(({ applyGates }) => applyGates());
+
   toast(role === 'trainer' ? 'Trainer-Modus aktiv' : 'Athlet-Modus aktiv');
 }
 
@@ -172,6 +175,9 @@ export async function switchProfile(key) {
   renderTrainingsplan(state.profile);
   renderFortschritt(state.profile);
   renderInfo(state.profile);
+
+  // Profilwechsel → Gate neu auswerten (Banner + Tab-Sperre je nach Anamnese des neuen Profils)
+  import('./gates.js').then(({ applyGates }) => applyGates());
 
   toast(key === 'self' ? 'Eigenes Profil aktiv' : `${name} — Athleten-Profil aktiv`);
 }

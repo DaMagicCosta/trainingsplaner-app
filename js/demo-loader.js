@@ -145,6 +145,8 @@ async function _loadDemoAsPreview(path, label, modeKey) {
     state.demoMode = modeKey;
     _applyProfile(profile, label);
     _renderDemoBanner();
+    // Gate greift im Demo-Modus nicht mehr
+    import('./gates.js').then(({ applyGates }) => applyGates());
     toast('Demo-Vorschau: ' + (profile.name || modeKey) + ' · Änderungen werden nicht gespeichert');
     return profile;
   } catch (err) {
@@ -188,6 +190,8 @@ function exitDemoMode() {
     applyEmptyProfile();
   }
   _renderDemoBanner();
+  // Beim Verlassen der Demo das echte Profil wieder gaten (oder freischalten)
+  import('./gates.js').then(({ applyGates }) => applyGates());
   toast('Zurück zu deinem Profil');
 }
 

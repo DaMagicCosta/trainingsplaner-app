@@ -572,6 +572,77 @@ body.role-athlete .jp-balance-preview,
 }
 .cp-demo-banner-primary:hover { background: var(--accent-hover); }
 
+/* ─── Gate-Banner (Anamnese / Vereinbarung) ─── */
+.cp-gate-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-5) var(--s-5);
+  margin-bottom: var(--s-4);
+  border: 2px solid;
+  border-radius: var(--r-md);
+  flex-wrap: wrap;
+}
+.cp-gate-banner--danger {
+  background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+  border-color: var(--danger);
+}
+.cp-gate-banner--warn {
+  background: color-mix(in srgb, var(--warning) 10%, var(--surface-2));
+  border-color: var(--warning);
+}
+.cp-gate-banner-icon {
+  font-size: 24px;
+  line-height: 1;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+.cp-gate-banner--danger .cp-gate-banner-icon { color: var(--danger); }
+.cp-gate-banner--warn .cp-gate-banner-icon { color: var(--warning); }
+.cp-gate-banner-text {
+  flex: 1;
+  min-width: 220px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+}
+.cp-gate-banner-text strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.cp-gate-banner--danger .cp-gate-banner-text strong { color: var(--danger); }
+.cp-gate-banner--warn .cp-gate-banner-text strong { color: var(--warning); }
+.cp-gate-banner-actions {
+  display: flex;
+  gap: var(--s-2);
+  flex-shrink: 0;
+  align-self: center;
+}
+.cp-gate-banner-btn {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-2);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.cp-gate-banner--danger .cp-gate-banner-primary {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+.cp-gate-banner--warn .cp-gate-banner-primary {
+  background: var(--warning);
+  color: #000;
+  border-color: var(--warning);
+}
+.cp-gate-banner-primary:hover { filter: brightness(1.1); }
+
 /* ─── Next Session Card ─── */
 .next-card {
   display: flex;

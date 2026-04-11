@@ -249,6 +249,30 @@
         </div>
       </div>
 
+      <!-- Gate: Anamnese pflicht (blockiert Trainingsplan/Jahresplan/Fortschritt) -->
+      <div class="cp-gate-banner cp-gate-banner--danger" id="cpAnamnesisBanner" style="display:none">
+        <div class="cp-gate-banner-icon">⚕</div>
+        <div class="cp-gate-banner-text">
+          <strong>Gesundheits-Anamnese ausstehend</strong>
+          <span>Bevor du mit dem Training starten kannst, fülle bitte die Anamnese aus. Jahresplan, Trainingsplan und Fortschritt sind bis zur Bestätigung gesperrt. Die Angaben bleiben lokal auf deinem Gerät (siehe Datenschutzerklärung).</span>
+        </div>
+        <div class="cp-gate-banner-actions">
+          <button class="cp-gate-banner-btn cp-gate-banner-primary" id="cpAnamnesisOpen" type="button">Anamnese jetzt ausfüllen</button>
+        </div>
+      </div>
+
+      <!-- Gate: Trainervereinbarung (nur Trainer-Modus, Banner-only) -->
+      <div class="cp-gate-banner cp-gate-banner--warn" id="cpAgreementBanner" style="display:none">
+        <div class="cp-gate-banner-icon">⚖</div>
+        <div class="cp-gate-banner-text">
+          <strong>Trainervereinbarung offen</strong>
+          <span>Im Trainer-Modus solltest du die Vereinbarung mit deinen Athleten formal bestätigen — das regelt Haftung, Datennutzung und Weisungsrecht. Du kannst die App trotzdem nutzen, der Hinweis bleibt bis zur Bestätigung sichtbar.</span>
+        </div>
+        <div class="cp-gate-banner-actions">
+          <button class="cp-gate-banner-btn cp-gate-banner-primary" id="cpAgreementOpen" type="button">Vereinbarung bestätigen</button>
+        </div>
+      </div>
+
       <!-- Hero-Zeile: Readiness + Stat-Stack -->
       <div class="cockpit-grid">
 
@@ -2116,6 +2140,7 @@
               </div>
               <div class="info-text">
                 <p>Du trainierst <strong>eigenverantwortlich</strong>. Vor Aufnahme eines Trainingsprogramms wird dringend empfohlen, eine ärztliche Untersuchung durchführen zu lassen — insbesondere bei Vorerkrankungen, Beschwerden, Schwangerschaft oder nach längerer Trainingspause. Du bist verpflichtet, den Anamnesebogen wahrheitsgemäß auszufüllen und bei Veränderungen deines Gesundheitszustands zu aktualisieren.</p>
+                <p style="margin-top:10px;">Die App setzt die Anamnese-Pflicht <strong>technisch durch</strong>: Solange du den Anamnesebogen nicht ausgefüllt und bestätigt hast, sind der Jahresplan, der Trainingsplan und der Fortschritt-Bereich gesperrt. Cockpit, Lexikon und Info bleiben zugänglich, damit du die Rechtstexte, Übungen und Einstellungen jederzeit einsehen kannst. Ein Hinweis-Banner im Cockpit zeigt dir den direkten Weg zum Anamnese-Formular. Für Trainer gilt zusätzlich: Ohne bestätigte Trainervereinbarung erscheint ein dauerhafter Hinweis-Banner im Cockpit, die App bleibt aber nutzbar.</p>
               </div>
             </div>
 
@@ -2167,7 +2192,7 @@
               </div>
             </div>
           </div>
-          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 11.04.2026</div>
+          <div class="info-text" style="margin-top:12px;color:var(--text-3);font-size:.85rem;">Stand: 12.04.2026</div>
         </div>
       </div>
 

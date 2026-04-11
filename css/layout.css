@@ -258,6 +258,31 @@ ul, ol { list-style: none; }
 }
 .nav-item:hover .nav-kbd { opacity: 1; }
 
+/* ─── Gate: Tabs gesperrt solange Anamnese nicht bestätigt ─── */
+body.anamnesis-required .nav-item[data-tab="jahresplan"],
+body.anamnesis-required .nav-item[data-tab="trainingsplan"],
+body.anamnesis-required .nav-item[data-tab="fortschritt"],
+body.anamnesis-required .bnav-item[data-tab="jahresplan"],
+body.anamnesis-required .bnav-item[data-tab="fortschritt"] {
+  opacity: 0.35;
+  cursor: not-allowed;
+  position: relative;
+}
+body.anamnesis-required .nav-item[data-tab="jahresplan"]::after,
+body.anamnesis-required .nav-item[data-tab="trainingsplan"]::after,
+body.anamnesis-required .nav-item[data-tab="fortschritt"]::after {
+  content: '🔒';
+  margin-left: auto;
+  font-size: 11px;
+  opacity: 0.7;
+}
+body.anamnesis-required .nav-item[data-tab="jahresplan"]:hover,
+body.anamnesis-required .nav-item[data-tab="trainingsplan"]:hover,
+body.anamnesis-required .nav-item[data-tab="fortschritt"]:hover {
+  background: transparent;
+  color: var(--text-2);
+}
+
 /* ─── Sidebar Foot ─── */
 .sidebar-foot {
   padding-top: var(--s-3);

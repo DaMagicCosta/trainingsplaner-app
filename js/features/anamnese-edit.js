@@ -330,6 +330,8 @@ export function saveAnamneseEdit() {
   _saveProfile();
   renderAnamnese(state.profile);
   closeAnamneseEditModal();
+  // Pflicht-Gate neu auswerten: Banner entfernen, Tabs entsperren
+  import('../gates.js').then(({ applyGates }) => applyGates());
   const histLen = state.profile.anamnesisHistory.length;
   toast('✓ Anamnese gespeichert' + (histLen ? ` · ${histLen} ${histLen === 1 ? 'frühere Version' : 'frühere Versionen'} archiviert` : ''));
 }
