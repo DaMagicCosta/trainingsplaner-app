@@ -182,8 +182,11 @@ import { openAgreementConfirmModal, confirmAgreement, revokeAgreement, openAgree
   if (saveBtn) saveBtn.addEventListener('click', saveProfileEdit);
 
   // Einstiegspunkt 1: Button im Info-Tab Profil-Section
+  // Wichtig: explizit 'self' übergeben, sonst bekommt openProfileEditModal
+  // das MouseEvent als target — was _resolveProfile in den falschen Pfad
+  // schickt und im Demo-Modus zu "Kein Profil geladen" führt.
   const openBtn = document.getElementById('profileEditOpenBtn');
-  if (openBtn) openBtn.addEventListener('click', openProfileEditModal);
+  if (openBtn) openBtn.addEventListener('click', () => openProfileEditModal('self'));
 
   // Schnellzugriff: Anamnesebogen / Vereinbarung direkt aus der Profil-Section
   const anamneseBtn = document.getElementById('profileAnamneseBtn');

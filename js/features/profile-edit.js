@@ -48,6 +48,10 @@ function _resolveProfile(key) {
 }
 
 function openProfileEditModal(target) {
+  // Defensive: Falls die Funktion direkt als Click-Handler registriert
+  // wurde, kommt ein Event statt eines String-Targets rein. Auf 'self'
+  // umbiegen, sonst landet _resolveProfile im falschen Pfad.
+  if (target && typeof target !== 'string') target = 'self';
   target = target || 'self';
   const p = _resolveProfile(target);
   if (!p) { toast('Kein Profil geladen'); return; }
