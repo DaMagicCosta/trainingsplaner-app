@@ -289,18 +289,32 @@ import { renderCockpit } from '../pages/cockpit.js';
         // Skill-Übungen mit Voraussetzungen nie automatisch einplanen —
         // der Athlet muss sie bewusst im Picker hinzufügen.
         if (Array.isArray(ex.voraussetzungen) && ex.voraussetzungen.length > 0) return false;
-        // Wenn Athlet Equipment für diesen Ort hat → danach filtern.
-        // ALLE Equipment-Items der Übung müssen verfügbar sein (every),
-        // sonst greifen Kombi-Übungen wie ['Kurzhanteln', 'Hantelbank']
-        // auch ohne Bank — was praktisch nicht ausführbar wäre.
-        if (availEq && ex.eq) {
-          return ex.eq.every(e => availEq.has(e));
+
+        // Location zuerst pruefen. Die Lexikon-location sagt, wo die
+        // Uebung typischerweise stattfindet. Bei spezifischer Ort-Wahl
+        // muessen wir das respektieren, sonst tauchen "Home-Uebungen"
+        // wie Liegestuetze im Studio-Plan auf, nur weil ihr Equipment
+        // (Bodyweight) auch im Studio verfuegbar waere.
+        const exLoc = ex.location || 'studio';
+        if (location !== 'all' && location !== exLoc) {
+          // Ausnahme: Im Home-/Outdoor-Pool sind reine Bodyweight-Uebungen
+          // (ohne Geraete-Abhaengigkeit) orts-neutral erlaubt, weil sie
+          // ueberall machbar sind. Im Studio-Pool nicht — dort soll
+          // Geraete-Training stehen.
+          const isPureBw = Array.isArray(ex.eq) && ex.eq.length === 1 && ex.eq[0] === 'Bodyweight';
+          if (!(isPureBw && (location === 'home' || location === 'outdoor'))) {
+            return false;
+          }
         }
-        // Fallback: Home/Outdoor ohne Equipment → nur Bodyweight
-        if (location === 'home' || location === 'outdoor') {
-          return ex.eq?.includes('Bodyweight') || (ex.location || 'studio') === location;
+
+        // Equipment-Filter: ALLE Equipment-Items der Übung müssen verfügbar
+        // sein (every), sonst greifen Kombi-Übungen wie ['Kurzhanteln',
+        // 'Hantelbank'] auch ohne Bank — was praktisch nicht ausführbar wäre.
+        if (availEq && ex.eq && ex.eq.length > 0) {
+          if (!ex.eq.every(e => availEq.has(e))) return false;
         }
-        return location === 'all' || (ex.location || 'studio') === location;
+
+        return true;
       })
       .slice(0, count);
   }
