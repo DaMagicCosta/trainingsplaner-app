@@ -53,6 +53,59 @@ export const EXERCISE_MAP = {
   'Rudern':          ['Rudern', 'Langhantelrudern', 'Latzug', 'Cable Row', 'Low Row', 'Upper Back']
 };
 
+// ─── Isolations-Map: Substring → Compound-Übung + Faktor ──────────
+// Für Iso- und Maschinen-Übungen, die keinen eigenen NSCA-Standard
+// haben, wird das Gewicht als Bruchteil einer Compound-Übung
+// abgeleitet (Faustregeln aus der Praxis, keine offiziellen Werte).
+//
+// Substrings sind kleingeschrieben — werden mit toLowerCase()
+// gegen den Übungsnamen geprüft. Reihenfolge ist wichtig: das
+// erste Match gewinnt, deshalb spezifischere Patterns vor allgemeinen.
+export const ISOLATION_PATTERNS = [
+  // ─── Brust-Iso ───
+  ['butterfly',           'Bankdrücken', 0.50],
+  ['pectoral machine',    'Bankdrücken', 0.50],
+  ['fliegende',           'Bankdrücken', 0.30],
+  ['flys',                'Bankdrücken', 0.30],
+
+  // ─── Schulter-Iso ───
+  ['seitheben',           'Schulterdrücken', 0.20],
+  ['frontheben',          'Schulterdrücken', 0.20],
+  ['reverse fly',         'Schulterdrücken', 0.15],
+  ['innenrotation',       'Schulterdrücken', 0.10],
+  ['außenrotation',       'Schulterdrücken', 0.10],
+
+  // ─── Bein-Iso (sitzend/liegend an der Maschine) ───
+  ['beinstreckmaschine',  'Kniebeuge', 0.50],
+  ['beinstrecker',        'Kniebeuge', 0.50],
+  ['beinbeugemaschine',   'Kniebeuge', 0.40],
+  ['beinbeuger',          'Kniebeuge', 0.40],
+  ['adduktor',            'Kniebeuge', 0.30],
+  ['abduktor',            'Kniebeuge', 0.30],
+  ['wadenmaschine',       'Kniebeuge', 0.80],
+  ['hüftstreck',          'Kniebeuge', 0.40],
+  ['ausfallschritt',      'Kniebeuge', 0.30],
+  ['lunges',              'Kniebeuge', 0.30],
+
+  // ─── Rücken-Iso ───
+  ['rückenstreckmaschine','Kreuzheben', 0.40],
+  ['rückenstrecken',      'Kreuzheben', 0.40],
+
+  // ─── Bizeps-Iso ───
+  ['langhantelcurl',      'Bankdrücken', 0.30],
+  ['konzentrationscurl',  'Bankdrücken', 0.20],
+  ['kurzhantelcurl',      'Bankdrücken', 0.20],
+  ['bizepscurl',          'Bankdrücken', 0.30],
+
+  // ─── Trizeps-Iso ───
+  ['trizepsstrecken',     'Bankdrücken', 0.30],
+  ['trizeps kicks',       'Bankdrücken', 0.15],
+
+  // ─── Bauch-Iso ───
+  ['bauchmaschine',       'Bankdrücken', 0.40],
+  ['beinhebemaschine',    'Bankdrücken', 0.30]
+];
+
 // ─── Anamnese-Level → Standards-Index ─────────────────────────────
 // Anamnese-Werte: anfaenger, beginner, erfahren, fortgeschritten, elite
 // Index in den Ratio-Arrays oben: 0..4
@@ -91,24 +144,11 @@ export function getExperienceIndex(profile) {
 }
 
 /**
- * Schätzt ein Start-Gewicht für eine Übung basierend auf:
- * - Anamnese-Level (oder Default 'beginner')
- * - Geschlecht (oder Default männlich)
- * - Körpergewicht
- * - Geplante Wiederholungszahl (Epley-Umrechnung 1RM → Arbeitsgewicht)
- *
- * @param {string} exerciseName — z. B. "Flachbankdrücken mit der Langhantel"
- * @param {number} reps — geplante Wdh-Zahl pro Satz
- * @param {object} profile — state.profile
- * @returns {number | null} — gerundetes Arbeitsgewicht in kg, oder null
- *   wenn keine Standards-Übereinstimmung gefunden wurde
+ * Interner Helper: rechnet ein Compound-Gewicht für ein gegebenes
+ * Standards-Key (Bankdrücken / Kniebeuge / etc.) und Profile.
+ * Gibt das Arbeitsgewicht als Float zurück (ungerundet).
  */
-export function estimateStartWeight(exerciseName, reps, profile) {
-  if (!profile) return null;
-
-  const stdKey = resolveStandardExercise(exerciseName);
-  if (!stdKey) return null;
-
+function _computeCompoundWorkingWeight(stdKey, reps, profile) {
   const isFemale = (profile.geschlecht || '').toLowerCase().includes('w');
   const standards = isFemale ? STANDARDS_F : STANDARDS_M;
   const ratios = standards[stdKey];
@@ -122,9 +162,59 @@ export function estimateStartWeight(exerciseName, reps, profile) {
   const oneRm = ratio * bw;
 
   // Epley invers: weight = 1RM / (1 + reps/30)
-  // Clamp reps auf [1, 30], damit keine negativen Faktoren entstehen
   const safeReps = Math.max(1, Math.min(reps || 10, 30));
-  const workingWeight = oneRm / (1 + safeReps / 30);
+  return oneRm / (1 + safeReps / 30);
+}
+
+/**
+ * Sucht in der ISOLATION_PATTERNS-Liste das erste Pattern, das im
+ * Übungsnamen vorkommt. Gibt das Tupel [substring, base, factor]
+ * oder null zurück.
+ */
+function _resolveIsolationPattern(exerciseName) {
+  if (!exerciseName) return null;
+  const lower = exerciseName.toLowerCase();
+  for (const entry of ISOLATION_PATTERNS) {
+    if (lower.includes(entry[0])) return entry;
+  }
+  return null;
+}
+
+/**
+ * Schätzt ein Start-Gewicht für eine Übung basierend auf:
+ * - Anamnese-Level (oder Default 'beginner')
+ * - Geschlecht (oder Default männlich)
+ * - Körpergewicht
+ * - Geplante Wiederholungszahl (Epley-Umrechnung 1RM → Arbeitsgewicht)
+ *
+ * Drei-Stufen-Auflösung:
+ * 1. Direkter Compound-Match über EXERCISE_MAP → eigene Ratio
+ * 2. Isolations-Pattern über ISOLATION_PATTERNS → Compound × Faktor
+ * 3. Sonst null (keine Schätzung möglich)
+ *
+ * @param {string} exerciseName — z. B. "Flachbankdrücken mit der Langhantel"
+ * @param {number} reps — geplante Wdh-Zahl pro Satz
+ * @param {object} profile — state.profile
+ * @returns {number | null} — gerundetes Arbeitsgewicht in kg, oder null
+ */
+export function estimateStartWeight(exerciseName, reps, profile) {
+  if (!profile) return null;
+
+  // Stufe 1: Compound-Match über EXERCISE_MAP
+  const stdKey = resolveStandardExercise(exerciseName);
+  let workingWeight = null;
+  if (stdKey) {
+    workingWeight = _computeCompoundWorkingWeight(stdKey, reps, profile);
+  } else {
+    // Stufe 2: Isolations-Pattern → Compound × Faktor
+    const iso = _resolveIsolationPattern(exerciseName);
+    if (iso) {
+      const baseWeight = _computeCompoundWorkingWeight(iso[1], reps, profile);
+      if (baseWeight != null) workingWeight = baseWeight * iso[2];
+    }
+  }
+
+  if (workingWeight == null) return null;
 
   // Auf 2.5 kg runden (Studio-Standard)
   const rounded = Math.round(workingWeight / 2.5) * 2.5;
