@@ -179,7 +179,7 @@ function saveProfileEdit() {
     state.tpUseHome = null;
     state.tpUseHomePerKw = {};
 
-    // Re-render: Info-Tab und Sidebar-Label
+    // Re-render: Info-Tab direkt (statischer Import), Sidebar-Label manuell
     renderInfo(p);
     const roleNameEl = document.getElementById('roleName');
     if (roleNameEl) roleNameEl.textContent = (p.name || '').trim() || 'Profil';
@@ -189,6 +189,17 @@ function saveProfileEdit() {
       const displayName = ((p.name || '') + ' ' + (p.nachname || '')).trim() || 'Mein Profil';
       selfSwitch.textContent = displayName + ' (eigenes Profil)';
     }
+    // Die uebrigen Pages (Cockpit, Jahresplan, Trainingsplan, Fortschritt +
+    // PlanBalance) via dynamischem Import neu rendern, damit der neue
+    // Profil-Name, Goal, HFmax etc. ueberall uebernommen werden ohne dass
+    // der Nutzer manuell F5 druecken muss. Dynamische Imports vermeiden
+    // zirkulaere Auswertungs-Reihenfolge (pages/trainingsplan.js importiert
+    // umgekehrt bereits profile-edit.js fuer openModal/closeModal).
+    import('../pages/cockpit.js').then(({ renderCockpit }) => renderCockpit(p));
+    import('../pages/jahresplan.js').then(({ renderJahresplan }) => renderJahresplan(p));
+    import('../pages/trainingsplan.js').then(({ renderTrainingsplan }) => renderTrainingsplan(p));
+    import('../pages/fortschritt.js').then(({ renderFortschritt }) => renderFortschritt(p));
+    import('./plan-balance.js').then(({ buildPlanBalance }) => buildPlanBalance(p));
   } else {
     // Athleten-Card in der Profil-Section aktualisieren
     renderAthleteRow(target, p);
