@@ -730,3 +730,74 @@ Damit ist Abschnitt 6 der Nutzungsbedingungen **vollständig substantiell erfül
 - [ ] **Drittes Speichern:** Erneute Aktualisierung → History hat zwei Einträge: oben „v2 · [vorletztes Datum]", darunter „v1 · [erstes Datum]"
 - [ ] **Persistenz:** F5 → History bleibt erhalten (im `tpv2_profile_data` unter `anamnesisHistory`)
 - [ ] **Mobile:** Auf schmalem Viewport (<640px) klappt die Summary in zwei Zeilen, Meta-Text wird linksbündig
+
+---
+
+## Nachtrag 5 — Etappe B: Trainer-Vereinbarung bestätigen, widerrufen, dokumentieren
+
+**Datum:** 11.04.2026
+**Auslöser:** Risiko-Folge-Analyse, Etappe B. Im Trainer-Modus zeigte die Vereinbarungs-Sektion read-only Demo-Daten („Bestätigt am 05.04.2026"), und die zwei Aktions-Buttons („Erneut bestätigen", „Widerrufen") waren Toast-Stubs (`init-handlers.js` Zeilen 50–51 vor dem Patch). Damit waren zwei Probleme offen:
+
+1. **DSGVO-Belegspur:** Es gab keinen Nachweis, dass der Trainer die Vereinbarung jemals aktiv akzeptiert hat. Die statische Demo-Anzeige war für einen Audit wertlos.
+2. **Kein Widerrufs-Mechanismus:** Auch wenn die DSE/AGB das Widerrufsrecht garantieren, war es technisch nicht möglich. Das widerspricht Art. 7 Abs. 3 DSGVO („Der Widerruf muss so einfach wie die Erteilung sein").
+
+### Maßnahme
+
+1. **Datenmodell** in `js/features/agreement-edit.js`: `state.profile.agreement = { version, confirmedAt, revokedAt, agreementVersion }` plus `state.profile.agreementHistory = [{ type, timestamp, agreementVersion }]`.
+2. **Status-Berechnung** über `getAgreementStatus(profile)`: leitet `'pending' | 'confirmed' | 'revoked'` aus den Timestamps ab. Kein redundantes `status`-Feld, das auseinanderlaufen könnte.
+3. **Confirm-Modal** als `tp-modal` mit drei Kernpunkten (Fehlermeldepflicht, Meldungsweg, Mitverantwortung — übernommen aus den Sektionen 2, 3, 4 des Vereinbarungs-Texts), Pflicht-Checkbox und Bestätigungs-Button (initial disabled). Optisch im selben Stil wie das Welcome-Modal (`welcome-points` und `welcome-consent` Klassen wiederverwendet — sie passen perfekt für „mehrere Punkte mit Icon plus Pflicht-Checkbox").
+4. **Render-Funktion `renderAgreement(profile)`**: Drei Status-Modi mit unterschiedlichem UI:
+   - **Pending:** Graues Badge „○ Noch nicht bestätigt", Bestätigungs-Box ausgeblendet, Widerruf-Button ausgeblendet, Hauptbutton-Label „Vereinbarung bestätigen"
+   - **Confirmed:** Grünes Badge „● Bestätigt am [Datum]", Bestätigungs-Box mit vollem Timestamp sichtbar, Widerruf-Button sichtbar, Hauptbutton-Label „Erneut bestätigen"
+   - **Revoked:** Rotes Badge „⊘ Widerrufen am [Datum]", Warnungs-Box mit Erklärtext sichtbar, Widerruf-Button ausgeblendet (kann nicht erneut widerrufen werden), Hauptbutton-Label „Erneut bestätigen"
+5. **Confirm-Funktion `confirmAgreement()`**: Pflicht-Checkbox-Check, History-Push (`type: 'confirm'`), neuer Live-Stand mit aktuellem Timestamp, `revokedAt: null` (überschreibt einen evtl. früheren Widerruf), Save, Render, Modal schließen, Toast.
+6. **Widerruf-Funktion `revokeAgreement()`**: Browser-`confirm()`-Dialog mit dreizeiligem Erklärtext (was passiert, dass der Trainer-Modus weiter nutzbar bleibt, dass die Aktion dokumentiert wird). Bei Bestätigung: History-Push (`type: 'revoke'`), `revokedAt`-Timestamp gesetzt (`confirmedAt` bleibt erhalten — wichtig für die Dokumentation der ursprünglichen Bestätigung), Save, Render, Toast.
+7. **History-Modal** zeigt eine zeitlich absteigende Liste aller Bestätigungs- und Widerrufs-Aktionen mit:
+   - Status-Pill (grün „✓ Bestätigt" oder rot „⊘ Widerrufen")
+   - Vollformatiertes Datum/Uhrzeit
+   - Versions-Hash der Vereinbarungs-Texte (rechts in monospace, klein)
+8. **Soft-Lock statt Hard-Lock:** Beim Widerruf wird der Trainer-Modus *nicht* deaktiviert. Stattdessen erscheint im Vereinbarungs-Tab ein gelber Warnungs-Banner („Du nutzt den Trainer-Modus aktuell ohne aktive Vereinbarung"), und der Status-Badge wechselt auf rot. Begründung: Hard-Lock würde den Nutzer überraschen und ihn aus der App werfen — Soft-Lock macht das Problem sichtbar, ohne Schaden anzurichten. Der Trainer kann die Vereinbarung jederzeit erneut bestätigen, und der Widerruf bleibt in der History dokumentiert.
+
+### Versionierung
+
+- **`AGREEMENT_DATA_VERSION = 1`** — Schema-Version des `agreement`-Objekts (für künftige Migrationen).
+- **`AGREEMENT_TEXT_VERSION = '2026-04-10'`** — Inhalts-Version der Vereinbarungs-Texte. Bei inhaltlicher Änderung erhöhen, dann sollte zusätzlich eine UI-Logik dafür sorgen, dass bestehende Bestätigungen *abgewertet* werden (z. B. ein Hinweis „Die Vereinbarung wurde aktualisiert — bitte erneut bestätigen"). Aktuell noch nicht implementiert, aber das Datenmodell ist vorbereitet.
+
+### AGB-Klausel-Bezug
+
+| Klausel | Vorher | Jetzt |
+|---|---|---|
+| Vereinbarung muss aktiv bestätigt werden | nicht möglich (Toast-Stub) | ✅ Confirm-Modal mit Pflicht-Checkbox |
+| Widerruf jederzeit möglich (Art. 7 Abs. 3 DSGVO) | nicht möglich (Toast-Stub) | ✅ Widerrufs-Button mit Browser-Confirm |
+| Dokumentation aller Aktionen (Art. 7 Abs. 1 DSGVO Nachweispflicht) | gar nicht | ✅ `agreementHistory[]` mit Timestamps |
+| Versionierung der Texte | gar nicht | ✅ `AGREEMENT_TEXT_VERSION`-Konstante |
+
+### Edge Cases und ihre Behandlung
+
+- **Widerruf ohne vorherige Bestätigung:** `revokeAgreement()` prüft den Status; wenn nicht `confirmed`, kommt ein Toast „Vereinbarung ist aktuell nicht bestätigt" und keine Aktion. Verhindert, dass der Widerruf-Button im Pending-Status irgendwas anrichtet.
+- **Erneute Bestätigung nach Widerruf:** Beim Confirm wird `revokedAt: null` explizit gesetzt — der Widerruf wird also „aufgehoben". Trotzdem bleibt der alte Widerruf in der History dokumentiert. Der Status springt auf `confirmed`, der rote Banner verschwindet.
+- **Mehrfache Widerrufe:** Theoretisch nicht möglich, weil der Widerruf-Button im Revoked-Status ausgeblendet ist. Falls doch (z. B. durch direkten DOM-Zugriff): Der zweite Widerruf überschreibt den `revokedAt`-Timestamp einfach, History wächst weiter.
+- **Kein agreement-Feld im Profil:** Defensive Init in beiden Funktionen — `if (!profile.agreement) profile.agreement = getDefaultAgreement()`. Kein Crash beim ersten Aufruf.
+- **Demo-Profile (Alexander, Julia):** Haben kein `agreement`-Feld. Beim Render zeigt das den Pending-Zustand. Trainer kann die Vereinbarung dann bestätigen, und sie wird ans Demo-Profil drangehängt.
+
+### Betroffene Dateien (Nachtrag 5)
+
+| Datei | Änderung |
+|---|---|
+| `js/features/agreement-edit.js` | **Neu** — 250 Zeilen: Datenmodell, Status-Berechnung, Render, Confirm-Modal, Revoke mit Confirm-Dialog, History-Modal |
+| `Trainingsplaner.html` | Vereinbarungs-Sektion restrukturiert (IDs für Status, Validity, ConfirmBox, RevokedBox, ButtonLabel), neue Buttons: „Verlauf"-Button zwischen Bestätigen und Widerruf, Widerruf-Hinweis-Box `info-notice` initial versteckt. Neue Modals `agreementConfirmModal` (mit drei `welcome-point`-Karten + Pflicht-Checkbox) und `agreementHistoryModal` (mit Liste-Container) |
+| `js/pages/info.js` | Import `renderAgreement`, Aufruf in `renderInfo(profile)` |
+| `js/init-handlers.js` | Imports der vier Agreement-Funktionen, Toast-Stubs für `vereinbarungReconfirmBtn` und `vereinbarungRevokeBtn` durch echte Handler ersetzt, neuer Handler für `verHistoryBtn`, Confirm-Checkbox-Handler für `agrConfirmCheck` |
+
+### Verifikation (durch User)
+
+- [ ] **Pending-Initial:** Tab Info → Vereinbarung → Status zeigt graues „○ Noch nicht bestätigt", Bestätigungs-Box unsichtbar, Widerruf-Button unsichtbar, Hauptbutton heißt „Vereinbarung bestätigen"
+- [ ] **Confirm-Modal-Open:** Klick auf „Vereinbarung bestätigen" → Modal öffnet sich, drei Punkte sichtbar, Bestätigen-Button grau (disabled)
+- [ ] **Checkbox + Button:** Checkbox setzen → Button wird teal/aktiv → klicken → Modal schließt, Toast „✓ Trainer-Vereinbarung bestätigt", Status-Badge wird grün mit Datum, Bestätigungs-Box sichtbar mit vollem Timestamp, Widerruf-Button erscheint, Hauptbutton-Label wechselt auf „Erneut bestätigen"
+- [ ] **History nach 1. Confirm:** Klick auf „Verlauf" → History-Modal zeigt einen Eintrag mit grünem „✓ Bestätigt"-Pill und vollformatierten Timestamp
+- [ ] **Widerruf:** Klick auf „Widerrufen" → Browser-Confirm „wirklich?" → OK → Status-Badge wird rot „⊘ Widerrufen am [Datum]", Warnungs-Banner erscheint, Widerruf-Button verschwindet, Hauptbutton bleibt „Erneut bestätigen"
+- [ ] **History nach Widerruf:** „Verlauf" → zwei Einträge, oben rotes „⊘ Widerrufen", darunter grünes „✓ Bestätigt"
+- [ ] **Erneute Bestätigung nach Widerruf:** Klick „Erneut bestätigen" → Modal → Checkbox + Button → Status zurück auf grün, Warnungs-Banner verschwindet, History hat jetzt drei Einträge
+- [ ] **Persistenz:** F5 → Status, Bestätigungs-Box und History bleiben erhalten
+- [ ] **Athlet-Modus:** In den Athlet-Modus wechseln → Vereinbarungs-Tab ist gar nicht sichtbar (rollenbasierte CSS-Sichtbarkeit)
+- [ ] **Esc-Close + Backdrop-Close:** Confirm-Modal und History-Modal lassen sich beide mit Esc und Click-Outside schließen

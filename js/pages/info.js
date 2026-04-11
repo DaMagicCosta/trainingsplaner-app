@@ -5,6 +5,7 @@ import { switchTab } from '../tabs.js';
 import { themeLabels } from '../themes.js';
 import { _applyProfile, _loadDemoFromFetch } from '../demo-loader.js';
 import { renderAnamnese } from '../features/anamnese-edit.js';
+import { renderAgreement } from '../features/agreement-edit.js';
 
 export { renderInfo, exportProfileJson, importProfileJson };
 
@@ -93,6 +94,9 @@ function renderInfo(profile) {
 
   // Anamnese-Sektion mit Profil-Daten füllen
   renderAnamnese(profile);
+
+  // Trainer-Vereinbarung-Sektion mit Profil-Daten füllen
+  renderAgreement(profile);
 
   console.log('[Info] gerendert', { name, sessions, plans });
 }

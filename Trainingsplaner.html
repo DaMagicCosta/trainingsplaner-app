@@ -1149,14 +1149,13 @@
           <div class="info-form-status">
             <div>
               <div class="info-form-status-label">Status</div>
-              <div class="info-form-status-value">
-                <span class="info-pill info-pill-success">● Bestätigt</span>
-                am 05.04.2026
+              <div class="info-form-status-value" id="agrStatusValue">
+                <span class="info-pill info-pill-muted" id="agrStatusBadge">○ Noch nicht bestätigt</span>
               </div>
             </div>
             <div>
               <div class="info-form-status-label">Gültigkeit</div>
-              <div class="info-form-status-value">Unbefristet · jederzeit widerrufbar (führt zum Entzug des Trainer-Zugangs)</div>
+              <div class="info-form-status-value" id="agrValidity">— · bitte zunächst bestätigen</div>
             </div>
           </div>
 
@@ -1221,20 +1220,32 @@
           </div>
 
           <!-- Bestätigungs-Block -->
-          <div class="info-confirm-box">
+          <div class="info-confirm-box" id="agrConfirmBox" style="display:none;">
             <div class="info-confirm-check">
               <span class="info-confirm-icon">✓</span>
               <div>
-                <strong>Bestätigt am 05.04.2026</strong><br>
+                <strong>Bestätigt am <span id="agrConfirmDate">—</span></strong><br>
                 <span>„Ich habe die Trainer-Vereinbarung gelesen und verpflichte mich, Fehler und Auffälligkeiten in der App zeitnah zu melden."</span>
               </div>
+            </div>
+          </div>
+
+          <!-- Widerruf-Hinweis -->
+          <div class="info-notice" id="agrRevokedBox" style="display:none;">
+            <div class="info-notice-icon">⊘</div>
+            <div class="info-notice-text">
+              <strong>Vereinbarung widerrufen</strong> am <span id="agrRevokeDate">—</span>. Du nutzt den Trainer-Modus aktuell ohne aktive Vereinbarung. Bitte erneut bestätigen oder in den Athlet-Modus wechseln.
             </div>
           </div>
 
           <div class="info-actions">
             <button class="info-action info-action-primary" id="vereinbarungReconfirmBtn">
               <span class="info-action-icon">✓</span>
-              Erneut bestätigen
+              <span id="vereinbarungReconfirmBtnLabel">Vereinbarung bestätigen</span>
+            </button>
+            <button class="info-action" id="vereinbarungHistoryBtn">
+              <span class="info-action-icon">◷</span>
+              Verlauf
             </button>
             <button class="info-action info-action-danger" id="vereinbarungRevokeBtn">
               <span class="info-action-icon">✕</span>
@@ -2179,6 +2190,87 @@
       </div>
 
     </section>
+
+    <!-- ═══════════════ TRAINER-VEREINBARUNG CONFIRM MODAL (v2.8) ═══════════════ -->
+    <div class="tp-modal" id="agreementConfirmModal" role="dialog" aria-modal="true" aria-labelledby="agreementConfirmTitle">
+      <div class="tp-modal-backdrop" data-modal-close="agreementConfirmModal"></div>
+      <div class="tp-modal-panel">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">⚖ &nbsp;Trainer-Vereinbarung</div>
+            <h2 class="tp-modal-title" id="agreementConfirmTitle">Bestätigung der Trainer-Pflichten</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="agreementConfirmModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <div class="info-notice" style="margin-bottom:18px;">
+            <div class="info-notice-icon">◐</div>
+            <div class="info-notice-text">
+              Die Trainer-Vereinbarung verpflichtet dich, Auffälligkeiten in der App zeitnah zu melden und Mitverantwortung für die Trainingsplanung deiner Athleten zu übernehmen. Sie ist <strong>jederzeit widerrufbar</strong>.
+            </div>
+          </div>
+
+          <div class="welcome-points">
+            <div class="welcome-point">
+              <div class="welcome-point-icon">①</div>
+              <div class="welcome-point-body">
+                <h3 class="welcome-point-title">Fehlermeldepflicht</h3>
+                <p class="welcome-point-text">Ich melde fehlerhafte Berechnungen, falsche oder fehlende Daten, Darstellungsfehler, unerwartetes Verhalten und Abweichungen zwischen geplantem und angezeigtem Training zeitnah an den App-Betreiber.</p>
+              </div>
+            </div>
+            <div class="welcome-point">
+              <div class="welcome-point-icon">②</div>
+              <div class="welcome-point-body">
+                <h3 class="welcome-point-title">Meldungsweg</h3>
+                <p class="welcome-point-text">Per Nachricht, E-Mail oder über den im Info-Tab hinterlegten Kontaktweg. Eine kurze Beschreibung („Was ist passiert? Was wurde erwartet?") ist ausreichend.</p>
+              </div>
+            </div>
+            <div class="welcome-point">
+              <div class="welcome-point-icon">③</div>
+              <div class="welcome-point-body">
+                <h3 class="welcome-point-title">Mitverantwortung</h3>
+                <p class="welcome-point-text">Ich trage Mitverantwortung für die Trainingsplanung meiner Athleten. Die App unterstützt diesen Prozess, ersetzt aber <strong>nicht meine fachliche Beurteilung</strong>. Erkannte Fehler nicht zu melden, kann zu fehlerhaften Empfehlungen führen.</p>
+              </div>
+            </div>
+          </div>
+
+          <label class="welcome-consent" for="agrConfirmCheck" style="margin-top:8px;">
+            <input type="checkbox" id="agrConfirmCheck">
+            <span><strong>Ich habe die Trainer-Vereinbarung gelesen</strong> und verpflichte mich, die obigen Pflichten zu erfüllen. Mir ist bewusst, dass ein Widerruf jederzeit möglich ist und zur Aussetzung der Vereinbarung führt.</span>
+          </label>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action" data-modal-close="agreementConfirmModal" type="button">Abbrechen</button>
+          <button class="info-action info-action-primary" id="agrConfirmBtn" type="button" disabled>
+            <span class="info-action-icon">✓</span>
+            Verpflichten &amp; bestätigen
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ TRAINER-VEREINBARUNG HISTORY MODAL (v2.8) ═══════════════ -->
+    <div class="tp-modal" id="agreementHistoryModal" role="dialog" aria-modal="true" aria-labelledby="agreementHistoryTitle">
+      <div class="tp-modal-backdrop" data-modal-close="agreementHistoryModal"></div>
+      <div class="tp-modal-panel">
+        <div class="tp-modal-head">
+          <div class="tp-modal-title-group">
+            <div class="tp-modal-label">◷ &nbsp;Verlauf</div>
+            <h2 class="tp-modal-title" id="agreementHistoryTitle">Vereinbarung-Verlauf</h2>
+          </div>
+          <button class="tp-modal-close" data-modal-close="agreementHistoryModal" title="Schließen (Esc)">✕</button>
+        </div>
+        <div class="tp-modal-body">
+          <div class="info-text" style="margin-bottom:14px;color:var(--text-2);font-size:.88rem;">
+            Jede Bestätigung und jeder Widerruf der Trainer-Vereinbarung wird mit Datum und Uhrzeit dokumentiert. Diese Liste dient der Nachvollziehbarkeit gemäß DSGVO Art. 7 Abs. 1 (Nachweispflicht der Einwilligung).
+          </div>
+          <div id="agreementHistoryList"></div>
+        </div>
+        <div class="tp-modal-foot">
+          <button class="info-action info-action-primary" data-modal-close="agreementHistoryModal" type="button">Schließen</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ═══════════════ ANAMNESE-HISTORIE MODAL (v2.8) ═══════════════ -->
     <div class="tp-modal" id="anamneseHistoryModal" role="dialog" aria-modal="true" aria-labelledby="anamneseHistoryTitle">

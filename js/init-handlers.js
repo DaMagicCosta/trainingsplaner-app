@@ -13,6 +13,7 @@ import { reloadDemoProfile } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { revokeConsent } from './consent.js';
 import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } from './features/anamnese-edit.js';
+import { openAgreementConfirmModal, confirmAgreement, revokeAgreement, openAgreementHistoryModal } from './features/agreement-edit.js';
 
 // ── Info-Tab Event-Handler ──
 // Info & Einstellungen (v2.7): Export/Reload-Buttons + Sub-Navigation
@@ -24,13 +25,15 @@ import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } fro
   if (importBtn) importBtn.addEventListener('click', importProfileJson);
   if (reloadBtn) reloadBtn.addEventListener('click', reloadDemoProfile);
 
-  // Anamnese & Trainer-Vereinbarung Buttons (Platzhalter)
+  // Anamnese & Trainer-Vereinbarung Buttons
   const anaUpdateBtn    = document.getElementById('anamneseUpdateBtn');
   const anaHistoryBtn   = document.getElementById('anamneseHistoryBtn');
   const verReconfirmBtn = document.getElementById('vereinbarungReconfirmBtn');
+  const verHistoryBtn   = document.getElementById('vereinbarungHistoryBtn');
   const verRevokeBtn    = document.getElementById('vereinbarungRevokeBtn');
   if (anaUpdateBtn)    anaUpdateBtn.addEventListener('click',    openAnamneseEditModal);
   if (anaHistoryBtn)   anaHistoryBtn.addEventListener('click',   openAnamneseHistoryModal);
+  if (verHistoryBtn)   verHistoryBtn.addEventListener('click',   openAgreementHistoryModal);
 
   // Anamnese-Edit-Modal: Conditions-Chips toggeln
   document.querySelectorAll('#aemConditionsChips .tp-chip').forEach(chip => {
@@ -46,8 +49,18 @@ import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } fro
     });
     aemSaveBtn.addEventListener('click', saveAnamneseEdit);
   }
-  if (verReconfirmBtn) verReconfirmBtn.addEventListener('click', () => toast('Vereinbarung erneut bestätigt'));
-  if (verRevokeBtn)    verRevokeBtn.addEventListener('click',    () => toast('Widerruf-Flow folgt in v2.8'));
+  if (verReconfirmBtn) verReconfirmBtn.addEventListener('click', openAgreementConfirmModal);
+  if (verRevokeBtn)    verRevokeBtn.addEventListener('click',    revokeAgreement);
+
+  // Trainer-Vereinbarung Confirm-Modal: Checkbox steuert Bestätigen-Button
+  const agrCheck = document.getElementById('agrConfirmCheck');
+  const agrBtn = document.getElementById('agrConfirmBtn');
+  if (agrCheck && agrBtn) {
+    agrCheck.addEventListener('change', () => {
+      agrBtn.disabled = !agrCheck.checked;
+    });
+    agrBtn.addEventListener('click', confirmAgreement);
+  }
 
   // DSGVO-Einwilligung widerrufen (Recht → Datenschutzerklärung Abschnitt 8)
   const consentRevokeBtn = document.getElementById('consentRevokeBtn');
