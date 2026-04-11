@@ -11,6 +11,10 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Fix: Anamnese-Gate greift auch nach Cache-Löschung
+- **`_isEmptyProfile`-Ausnahme in `js/gates.js` entfernt**: Bislang waren leere Profile (`id` startet mit `empty-` + leerer Name) vom Anamnese- und Vereinbarungs-Gate ausgenommen, um Banner-Konflikt mit dem bestehenden „Eigenes Profil erstellen"-Demo-Banner zu vermeiden. Problem: Nach Löschen der Browser-Webseitendaten am Mobilgerät fällt `loadDemoProfile()` auf ein frisches leeres Profil zurück (`anamnesis: null`, `agreement: null`). Die Ausnahme verhinderte, dass das Gate dort greift — DSGVO-Einwilligung wurde neu abgefragt, Anamnese und Trainervereinbarung nicht, obwohl faktisch alle drei gleichzeitig verloren gingen
+- **Neues Verhalten**: Das Anamnese-Gate greift jetzt auch auf frischen leeren Profilen. Beim allerersten App-Start (oder nach Cache-Löschung) sind Jahresplan, Trainingsplan und Fortschritt bis zur Anamnese-Bestätigung gesperrt. Demo-Banner und Anamnese-Banner koexistieren im Cockpit — inhaltlich nicht im Konflikt, weil Anamnese unabhängig von Profil-Stammdaten bestätigt werden kann
+
 ### Safari-/iOS-Kompatibilität: color-mix Fallbacks
 - **Alle 19 `color-mix()`-Regeln** in `css/components.css`, `css/pages/cockpit.css`, `css/pages/lexikon.css`, `css/pages/trainingsplan.css` bekommen eine Token-basierte Fallback-Deklaration davor (`var(--warning-dim)`, `var(--warning-line)`, `var(--danger-dim)`, `var(--danger-line)`). Safari auf iOS < 16.2 parste die color-mix-Zeilen nicht und renderte die Prereq-Badges, Gate-Banner, Lexikon-Prereq-Chips und das Voraussetzungs-Confirm-Modal ohne Hintergrund und ohne Rahmen — progressive Enhancement behebt das, moderne Browser ändern sich nicht
 - **Fehlender `-webkit-backdrop-filter`-Prefix** in `.lx-sheet-backdrop` ergänzt (war der einzige `backdrop-filter` in der Codebase ohne Prefix)

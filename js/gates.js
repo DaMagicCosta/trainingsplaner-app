@@ -10,10 +10,16 @@
  * Die Trainervereinbarung (Trainer-Rolle) wird nur per Banner angemahnt,
  * nicht mit Tab-Sperre — Multi-Athleten-Verwaltung ist noch Bau-Etappe.
  *
- * Ausnahmen (Gate greift nicht):
- * - state.demoMode !== null   → Demo-Vorschau darf immer durch
- * - profile.id startet mit 'empty-' → leeres Profil muss zuerst erstellt werden,
- *   der cpDemoBanner führt den Nutzer dorthin, dann greift das Gate
+ * Einzige Ausnahme: state.demoMode !== null → die RAM-only Demo-Vorschau
+ * darf immer durch, weil sie nicht persistent ist.
+ *
+ * Achtung: Leere Profile (id startet mit 'empty-') sind NICHT vom Gate
+ * ausgenommen. Das war frueher so gedacht, war aber ein Loch: Nach
+ * Cache-/localStorage-Loeschung faellt loadDemoProfile() auf ein leeres
+ * Profil zurueck, und ohne Gate waere die Trainingsfunktion sofort
+ * wieder nutzbar, obwohl Anamnese und Vereinbarung gerade verloren
+ * gegangen sind. Der cpDemoBanner ("Eigenes Profil erstellen") und der
+ * Anamnese-Banner koexistieren im Cockpit — inhaltlich nicht im Konflikt.
  */
 
 import { state } from './state.js';
@@ -41,23 +47,13 @@ function _agreementConfirmed(profile) {
   return true;
 }
 
-// "Leer" heisst: ID startet mit 'empty-' UND es wurde noch nie ein
-// Stammdaten-Save gemacht (kein Name gesetzt). Sobald der Nutzer sein
-// Profil ueber den Profil-Edit-Dialog befuellt, greift das Gate.
-function _isEmptyProfile(profile) {
-  if (!profile) return false;
-  const hasEmptyId = typeof profile.id === 'string' && profile.id.startsWith('empty-');
-  const hasName = typeof profile.name === 'string' && profile.name.trim().length > 0;
-  return hasEmptyId && !hasName;
-}
-
 /**
- * Greift das Anamnese-Gate gerade? Demo und leeres Profil sind ausgenommen.
+ * Greift das Anamnese-Gate gerade? Demo ausgenommen; leere Profile
+ * werden absichtlich NICHT ausgenommen — siehe Header-Kommentar.
  */
 function isAnamnesisGated(profile) {
   if (state.demoMode !== null) return false;
   if (!profile) return false;
-  if (_isEmptyProfile(profile)) return false;
   return !_hasConfirmedAnamnesis(profile);
 }
 
@@ -69,7 +65,6 @@ function isAgreementGated(profile) {
   if (state.demoMode !== null) return false;
   if (state.role !== 'trainer') return false;
   if (!profile) return false;
-  if (_isEmptyProfile(profile)) return false;
   return !_agreementConfirmed(profile);
 }
 
