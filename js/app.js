@@ -19,12 +19,12 @@ import './keyboard.js';
 // ── Features ──
 import { buildPlanBalance } from './features/plan-balance.js';
 import { openProfileEditModal } from './features/profile-edit.js';
-import './features/generator.js?v=20260411b';
+import './features/generator.js';
 
 // ── Pages ──
 import { renderCockpit } from './pages/cockpit.js';
 import { renderJahresplan } from './pages/jahresplan.js';
-import { renderTrainingsplan } from './pages/trainingsplan.js?v=20260411a';
+import { renderTrainingsplan } from './pages/trainingsplan.js';
 import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo } from './pages/info.js';
 import './pages/lexikon.js';

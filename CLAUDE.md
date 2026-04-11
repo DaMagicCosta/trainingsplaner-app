@@ -182,6 +182,8 @@ Die App hat eine vollständige rechtliche Basis: DSGVO, Impressum, Nutzungsbedin
 
 9. **iOS-/Safari-Kompatibilität**: Chrome-DevTools iPhone-Emulation ist **kein echter Safari-Test** — sie simuliert nur Viewport und User-Agent, die Rendering-Engine bleibt Chromium. Echtes iOS läuft immer auf WebKit (auch Chrome/Firefox auf iOS). Realitätsnahe Tests nur gegen macOS-Safari oder physisches iPhone. Besonders kritisch: `color-mix()` existiert in Safari erst ab iOS 16.2 — jede `color-mix()`-Regel braucht eine **Fallback-Deklaration davor** mit `var(--warning-dim)`/`var(--warning-line)`/`var(--danger-dim)`/`var(--danger-line)` etc., sonst rendern ältere iPhones die Fläche ohne Hintergrund/Border. `backdrop-filter` immer mit `-webkit-backdrop-filter`-Prefix schreiben.
 
+10. **KEINE Cache-Buster-Query-Strings auf ES-Module-Imports**. Falls ein Modul wie `trainingsplan.js` aus mehreren Stellen importiert wird (Quell-Grep: `grep -r "from.*trainingsplan" js/`), erzeugt ein Cache-Buster an **einer** der Import-Stellen zwei unterschiedliche URLs (`foo.js` und `foo.js?v=xyz`) und damit **zwei separate Modul-Instanzen** — jedes mit eigenem Top-Level-IIFE und eigenen Event-Listenern auf denselben DOM-Knoten. Folge: doppelte Handler, Race Conditions, stumme Render-Inkonsistenzen. Pattern vermeiden. Nach Deploy stattdessen manuellen Hard Reload (Strg+Shift+R) machen oder den `<script src="js/app.js">`-Eintrag in `Trainingsplaner.html` mit `?v=...` versehen, damit der Browser den Einstiegspunkt frisch holt — von dort laufen alle child-Imports ohne Query und bleiben konsistent.
+
 ## Architektur-Entscheidungen, die nicht offensichtlich sind
 
 ### Demo-Vorschau-Modus (RAM-only)
