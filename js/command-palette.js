@@ -4,7 +4,7 @@ import { switchTab } from './tabs.js';
 import { setRole, switchProfile, toggleRoleDropdown } from './roles.js';
 import { startNextEinheit } from "./features/log-session.js";
 import { exportProfileJson, importProfileJson } from "./pages/info.js";
-import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from "./demo-loader.js";
+import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia, exitDemoMode } from "./demo-loader.js";
 import { openProfileEditModal } from "./features/profile-edit.js";
 
 // Funktionen aus noch-nicht-extrahierten Modulen (Phase 4+)
@@ -22,9 +22,10 @@ const cmdkItems = [
   { group: 'Quick Actions', label: 'Profil importieren', ico: '↑', action: () => importProfileJson() },
   { group: 'Quick Actions', label: 'Profil exportieren', ico: '↗', action: () => exportProfileJson() },
 
-  { group: 'Demo-Profile', label: 'Demo Alexander laden (Studio · 430 Sessions)', ico: '◉', action: () => loadDemoAlexander() },
-  { group: 'Demo-Profile', label: 'Demo Julia laden (Studio + Cardio · weiblich)', ico: '◉', action: () => loadDemoJulia() },
-  { group: 'Demo-Profile', label: 'Aktuelles Demo zurücksetzen', ico: '↻', action: () => reloadDemoProfile() },
+  { group: 'Demo-Profile', label: 'Vorschau: Demo Alexander (Studio · 430 Sessions)', ico: '🔍', action: () => loadDemoAlexander() },
+  { group: 'Demo-Profile', label: 'Vorschau: Demo Julia (Studio + Cardio · weiblich)', ico: '🔍', action: () => loadDemoJulia() },
+  { group: 'Demo-Profile', label: 'Demo-Vorschau verlassen', ico: '←', visible: () => !!state.demoMode, action: () => exitDemoMode() },
+  { group: 'Demo-Profile', label: 'Aktuelle Demo neu laden (Mutationen verwerfen)', ico: '↻', visible: () => !!state.demoMode, action: () => reloadDemoProfile() },
 
   { group: 'Navigation', label: 'Zum Cockpit', ico: '◈', kbd: ['G','C'], action: () => switchTab('cockpit') },
   { group: 'Navigation', label: 'Zum Jahresplan', ico: '▤', kbd: ['G','J'], action: () => switchTab('jahresplan') },

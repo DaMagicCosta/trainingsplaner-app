@@ -124,6 +124,7 @@
         <div class="role-info">
           <div class="role-name" id="roleName">—</div>
           <div class="role-mode" id="roleMode">Trainer-Modus</div>
+          <span class="sidebar-demo-pill" id="sidebarDemoPill" style="display:none;">🔍 Demo-Vorschau</span>
         </div>
         <span class="role-chevron">▾</span>
       </button>
@@ -219,6 +220,16 @@
   <!-- ═══════════════ MAIN AREA ═══════════════ -->
   <main class="main" id="mainArea">
 
+    <!-- Demo-Vorschau-Banner (sichtbar wenn state.demoMode aktiv) -->
+    <div class="demo-mode-banner" id="demoModeBanner" style="display:none;">
+      <div class="demo-mode-banner-icon">🔍</div>
+      <div class="demo-mode-banner-text">
+        <strong>Demo-Vorschau aktiv</strong>
+        <span id="demoModeBannerLabel">Du erkundest gerade ein Demo-Profil — Änderungen werden nicht gespeichert.</span>
+      </div>
+      <button class="demo-mode-banner-btn" id="demoModeExitBtn" type="button">Zurück zu meinem Profil</button>
+    </div>
+
     <!-- Cockpit -->
     <section class="page active" data-page="cockpit">
       <div class="page-head">
@@ -227,15 +238,13 @@
         <p class="page-sub">Dein Tag auf einen Blick — Readiness, Wochenvolumen und was als Nächstes ansteht.</p>
       </div>
 
-      <!-- Empty/Demo-Banner: leeres Profil oder aktives Demo -->
+      <!-- Empty-Banner: leeres Profil → eigenes anlegen -->
       <div class="cp-demo-banner" id="cpDemoBanner" style="display:none">
         <div class="cp-demo-banner-text" id="cpDemoBannerText">
-          <strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren.
+          <strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst. Demo-Profile zum Ausprobieren findest du im <em>Profil</em>-Tab.
         </div>
         <div class="cp-demo-banner-actions">
           <button class="cp-demo-banner-btn cp-demo-banner-primary" id="cpDemoCreate">Eigenes Profil erstellen</button>
-          <button class="cp-demo-banner-btn" id="cpDemoLoadAlexander">Demo Alexander laden</button>
-          <button class="cp-demo-banner-btn" id="cpDemoLoadJulia">Demo Julia laden</button>
           <button class="cp-demo-banner-btn" id="cpDemoDismiss">Später</button>
         </div>
       </div>
@@ -953,6 +962,38 @@
           </div>
         </div>
 
+        <!-- Demo-Profile zum Ausprobieren (ein-/ausblendbar in Einstellungen) -->
+        <div class="info-card demo-showcase-card" id="demoShowcaseCard">
+          <div class="info-card-head">
+            <div class="info-card-label">🔍 &nbsp;Demo-Profile zum Ausprobieren</div>
+            <div class="info-card-sub">Vorschau-Modus · Änderungen werden nicht gespeichert</div>
+          </div>
+          <div class="info-text" style="margin-bottom:14px;">
+            <p>Mit den Beispiel-Profilen kannst du alle Charts, Pläne und Auswertungen erkunden, ohne dein eigenes Profil anzufassen. Dein Profil bleibt sicher im Hintergrund — über den Banner oben kommst du jederzeit zurück.</p>
+          </div>
+          <div class="demo-showcase-grid">
+            <button class="demo-showcase-tile" id="demoShowcaseAlexBtn" type="button">
+              <div class="demo-showcase-icon">◉</div>
+              <div class="demo-showcase-body">
+                <div class="demo-showcase-name">Alexander</div>
+                <div class="demo-showcase-meta">Studio + Home · 430 Sessions · Calisthenics-Erfahrung</div>
+              </div>
+              <div class="demo-showcase-arrow">→</div>
+            </button>
+            <button class="demo-showcase-tile" id="demoShowcaseJuliaBtn" type="button">
+              <div class="demo-showcase-icon">◉</div>
+              <div class="demo-showcase-body">
+                <div class="demo-showcase-name">Julia</div>
+                <div class="demo-showcase-meta">Studio + Cardio · weibliches Profil · Kraftausdauer</div>
+              </div>
+              <div class="demo-showcase-arrow">→</div>
+            </button>
+          </div>
+          <div class="info-text" style="margin-top:14px;color:var(--text-3);font-size:.82rem;">
+            ⓘ Diese Sektion kannst du unter <em>Info → Einstellungen → Demo-Profile anzeigen</em> ein- oder ausblenden.
+          </div>
+        </div>
+
         <!-- Athleten-Verwalten (nur Trainer) -->
         <div class="info-card info-athletes-card">
           <div class="info-card-head">
@@ -1287,6 +1328,15 @@
             <div class="info-row">
               <div class="info-row-key">Datum-Format</div>
               <div class="info-row-val">DD.MM.YYYY · ISO-KW 1–52</div>
+            </div>
+            <div class="info-row">
+              <div class="info-row-key">Demo-Profile anzeigen</div>
+              <div class="info-row-val">
+                <label class="settings-toggle">
+                  <input type="checkbox" id="settingsShowDemos" checked>
+                  <span>Demo-Sektion im Profil-Tab sichtbar</span>
+                </label>
+              </div>
             </div>
           </div>
         </div>
@@ -1820,49 +1870,12 @@
 
           <div class="info-card">
             <div class="info-card-head">
-              <div class="info-card-label">◉ &nbsp;Demo Alexander</div>
-              <div class="info-card-sub">Studio + Home · 430 Sessions · Calisthenics-Erfahrung</div>
+              <div class="info-card-label">🔍 &nbsp;Demo-Profile</div>
+              <div class="info-card-sub">Erkunden statt überschreiben</div>
             </div>
             <div class="info-text">
-              <p>Beispiel-Profil mit ausgebauter Trainings-Historie zum Ausprobieren aller Charts und Tabs. <strong>Überschreibt</strong> dein aktuelles Profil — vorher exportieren!</p>
-            </div>
-            <div class="info-actions">
-              <button class="info-action" id="infoLoadDemoAlexanderBtn">
-                <span class="info-action-icon">↓</span>
-                Demo Alexander laden
-              </button>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-head">
-              <div class="info-card-label">◉ &nbsp;Demo Julia</div>
-              <div class="info-card-sub">Studio + Cardio · weibliches Profil</div>
-            </div>
-            <div class="info-text">
-              <p>Zweites Beispiel-Profil mit anderem Schwerpunkt — eignet sich um den Profil-Wechsel und die Geschlechts-spezifischen Auswertungen zu testen. <strong>Überschreibt</strong> dein aktuelles Profil!</p>
-            </div>
-            <div class="info-actions">
-              <button class="info-action" id="infoLoadDemoJuliaBtn">
-                <span class="info-action-icon">↓</span>
-                Demo Julia laden
-              </button>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <div class="info-card-head">
-              <div class="info-card-label">↻ &nbsp;Demo zurücksetzen</div>
-              <div class="info-card-sub">Aktives Demo-Profil neu vom Server holen</div>
-            </div>
-            <div class="info-text">
-              <p>Wenn du ein Demo-Profil geladen und an ihm Änderungen vorgenommen hast, kannst du hiermit den Original-Stand wiederherstellen. Alle eigenen Mutationen am Demo gehen verloren.</p>
-            </div>
-            <div class="info-actions">
-              <button class="info-action" id="infoReloadBtn">
-                <span class="info-action-icon">↻</span>
-                Demo zurücksetzen
-              </button>
+              <p>Demo-Profile (Alexander &amp; Julia) findest du im <strong>Profil-Tab</strong> als Vorschau-Karten. Ein Klick öffnet eine Vorschau, dein eigenes Profil bleibt unangetastet. Über den Banner oben kommst du jederzeit zurück.</p>
+              <p style="margin-top:8px;color:var(--text-3);font-size:.85rem;">Sektion ein- oder ausblenden über <em>Info → Einstellungen → Demo-Profile anzeigen</em>.</p>
             </div>
           </div>
         </div>

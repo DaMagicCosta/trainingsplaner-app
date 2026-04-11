@@ -9,7 +9,7 @@ import { switchTab } from './tabs.js';
 import { renderFortschritt } from './pages/fortschritt.js';
 import { renderInfo, exportProfileJson, importProfileJson } from './pages/info.js';
 import { renderLexikon, openLexikonSheet, closeLexikonSheet } from './pages/lexikon.js';
-import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from './demo-loader.js';
+import { reloadDemoProfile, loadDemoAlexander, loadDemoJulia, exitDemoMode } from './demo-loader.js';
 import { openProfileEditModal, saveProfileEdit } from './features/profile-edit.js';
 import { revokeConsent } from './consent.js';
 import { openAnamneseEditModal, saveAnamneseEdit, openAnamneseHistoryModal } from './features/anamnese-edit.js';
@@ -20,14 +20,30 @@ import { openAgreementConfirmModal, confirmAgreement, revokeAgreement, openAgree
 (function initInfo() {
   const exportBtn = document.getElementById('infoExportBtn');
   const importBtn = document.getElementById('infoImportBtn');
-  const reloadBtn = document.getElementById('infoReloadBtn');
-  const loadAlexBtn = document.getElementById('infoLoadDemoAlexanderBtn');
-  const loadJuliaBtn = document.getElementById('infoLoadDemoJuliaBtn');
   if (exportBtn) exportBtn.addEventListener('click', exportProfileJson);
   if (importBtn) importBtn.addEventListener('click', importProfileJson);
-  if (reloadBtn) reloadBtn.addEventListener('click', reloadDemoProfile);
-  if (loadAlexBtn)  loadAlexBtn.addEventListener('click',  loadDemoAlexander);
-  if (loadJuliaBtn) loadJuliaBtn.addEventListener('click', loadDemoJulia);
+
+  // Demo-Vorschau-Karten im Profil-Tab
+  const demoAlexBtn  = document.getElementById('demoShowcaseAlexBtn');
+  const demoJuliaBtn = document.getElementById('demoShowcaseJuliaBtn');
+  if (demoAlexBtn)  demoAlexBtn.addEventListener('click',  loadDemoAlexander);
+  if (demoJuliaBtn) demoJuliaBtn.addEventListener('click', loadDemoJulia);
+
+  // Demo-Vorschau-Banner: Zurück-Button
+  const exitDemoBtn = document.getElementById('demoModeExitBtn');
+  if (exitDemoBtn) exitDemoBtn.addEventListener('click', exitDemoMode);
+
+  // Settings-Toggle: Demo-Sektion anzeigen/ausblenden
+  const showDemosToggle = document.getElementById('settingsShowDemos');
+  if (showDemosToggle) {
+    showDemosToggle.checked = state.showDemos !== false;
+    showDemosToggle.addEventListener('change', () => {
+      state.showDemos = showDemosToggle.checked;
+      localStorage.setItem('tpv2_show_demos', String(state.showDemos));
+      const card = document.getElementById('demoShowcaseCard');
+      if (card) card.style.display = state.showDemos ? '' : 'none';
+    });
+  }
 
   // Anamnese & Trainer-Vereinbarung Buttons
   const anaUpdateBtn    = document.getElementById('anamneseUpdateBtn');

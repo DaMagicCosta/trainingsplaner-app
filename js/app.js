@@ -29,7 +29,7 @@ import { renderInfo } from './pages/info.js';
 import './pages/lexikon.js';
 
 // ── Demo & Lifecycle ──
-import { DEMO_PATH, loadDemoProfile, reloadDemoProfile, loadDemoAlexander, loadDemoJulia } from './demo-loader.js';
+import { DEMO_PATH, loadDemoProfile, reloadDemoProfile } from './demo-loader.js';
 import { startNextEinheit } from './features/log-session.js';
 import { exportProfileJson } from './pages/info.js';
 
@@ -75,11 +75,6 @@ applyTheme(state.theme);
       bannerText.innerHTML = '<strong>Leeres Profil</strong> — leg los, indem du dein eigenes Profil erstellst, oder importiere ein Demo-Profil zum Ausprobieren.';
     }
   }
-  // Demo-Lade-Buttons im Banner
-  const loadAlexBtn = document.getElementById('cpDemoLoadAlexander');
-  const loadJuliaBtn = document.getElementById('cpDemoLoadJulia');
-  if (loadAlexBtn)  loadAlexBtn.addEventListener('click',  loadDemoAlexander);
-  if (loadJuliaBtn) loadJuliaBtn.addEventListener('click', loadDemoJulia);
   // "Eigenes Profil erstellen" → leeres Profil-Edit-Modal
   const createBtn = document.getElementById('cpDemoCreate');
   if (createBtn) createBtn.addEventListener('click', () => {

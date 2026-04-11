@@ -918,3 +918,162 @@ Komplette Vereinheitlichung auf **Alexander** in allen Live-Code-Stellen:
 | `Trainingsplaner.html` | Zwei IDs, drei Labels, Sub-Text |
 | `generate_demo.js` | Header-Kommentar, filename-Konstante |
 | `generate_demo.py` | f1-Pfad |
+
+---
+
+## Nachtrag 8 — Demo als Vorschau-Modus statt Übernahme (Etappe E)
+
+**Datum:** 11.04.2026
+**Auslöser:** UX-Frage des Users zum Demo-Wechsel-Pfad. Aktuell überschrieb „Demo Alexander laden" das eigene Profil im localStorage komplett — der Rückweg zum eigenen Profil war nur über mehrere Klicks (Recht-Tab → Einwilligung widerrufen → Daten löschen → Reload) erreichbar. Vorgeschlagen wurde ein **Vorschau-Modus**, in dem das Demo nur in RAM lädt und das eigene Profil unangetastet bleibt. User-Bestätigung mit Variante B (Mutationen erlaubt aber RAM-only), Banner + Sidebar-Pill als Modus-Anzeige, Toggle default an, alte Karten in Info → Daten entfernen.
+
+### Konzept
+
+Statt „Demo überschreibt eigenes Profil" jetzt: **Demo ist eine RAM-only Vorschau**. Das eigene Profil bleibt unter `tpv2_profile_data` im localStorage liegen, beim Wechsel in den Demo-Modus wird es nur in einer State-Variable geparkt. Ein „Zurück zu meinem Profil"-Button im Demo-Banner spielt es zurück, ohne dass die Persistierungsschicht angefasst wurde.
+
+### Datenmodell-Erweiterung
+
+Neue Felder in `state` (in `js/state.js`):
+
+```js
+demoMode: null,            // 'alexander' | 'julia' | null
+_savedProfileBackup: null, // das eigene Profil während Demo-Vorschau
+showDemos: localStorage.getItem('tpv2_show_demos') !== 'false'  // default true
+```
+
+Plus neuer Storage-Key `STORAGE_KEYS.showDemos = 'tpv2_show_demos'`.
+
+### Schreib-Schutz im Demo-Modus
+
+`_saveProfile()` in `js/state.js` bekommt eine Frühe-Rückgabe:
+
+```js
+if (state.demoMode) {
+  console.log('[Persist] Demo-Modus aktiv (' + state.demoMode + ') — kein Save');
+  return;
+}
+```
+
+Damit gehen alle Mutationen am Demo-Profil (Anamnese ausfüllen, Vereinbarung bestätigen, Sessions loggen, Plan ändern) **nur in RAM**. Beim Verlassen der Vorschau wird der Backup zurückgespielt — alle Demo-Mutationen sind weg. Das ist Variante B des UX-Vorschlags: Mutationen erlaubt, RAM-only, Banner-Hinweis sagt es dem User vorher.
+
+### Vorschau-Loader (RAM-only)
+
+`loadDemoAlexander()` und `loadDemoJulia()` in `js/demo-loader.js` rufen jetzt die neue interne Funktion `_loadDemoAsPreview(path, label, modeKey)` auf, die:
+
+1. **Doppel-Vorschau-Schutz:** Wenn bereits eine Demo aktiv ist, wird der Backup wiederhergestellt, bevor die neue geladen wird (sonst würde der Backup mit dem ersten Demo überschrieben).
+2. **Backup parken:** `state._savedProfileBackup = state.profile`
+3. **Demo fetchen** über `fetch(path)`
+4. **`state.demoMode = modeKey`** *vor* `_applyProfile()` setzen, damit bei einem zufälligen `_saveProfile()`-Aufruf der Schutz schon greift
+5. **`_applyProfile(profile, label)`** rendert das Demo
+6. **Banner + Sidebar-Pill aktivieren** über `_renderDemoBanner()`
+7. **Toast** „Demo-Vorschau: Alexander · Änderungen werden nicht gespeichert"
+8. **Bei Fehler:** Backup wiederherstellen, demoMode zurücksetzen, kein Schaden
+
+`exitDemoMode()`:
+- Liest den Backup
+- Setzt `demoMode = null`, `_savedProfileBackup = null`
+- Spielt das eigene Profil zurück über `_applyProfile(backup, 'Persist')` (oder fällt auf `applyEmptyProfile()` zurück, wenn vorher gar nichts da war)
+- Banner + Pill ausblenden
+- Toast „Zurück zu deinem Profil"
+
+`_renderDemoBanner()` aktualisiert die DOM-Elemente:
+- `#demoModeBanner` (display flex/none)
+- `#demoModeBannerLabel` Text mit „Alexander" oder „Julia"
+- `#sidebarDemoPill` (display flex/none)
+
+### UI-Änderungen
+
+**Profil-Tab — neue Card „Demo-Profile zum Ausprobieren"** zwischen „Profil" und „Athleten verwalten":
+
+- Sub-Text: *„Vorschau-Modus · Änderungen werden nicht gespeichert"*
+- Erklärtext: *„Mit den Beispiel-Profilen kannst du alle Charts, Pläne und Auswertungen erkunden, ohne dein eigenes Profil anzufassen. Dein Profil bleibt sicher im Hintergrund — über den Banner oben kommst du jederzeit zurück."*
+- 2-Spalten-Grid mit zwei Tile-Buttons:
+  - **◉ Alexander** — *„Studio + Home · 430 Sessions · Calisthenics-Erfahrung"*
+  - **◉ Julia** — *„Studio + Cardio · weibliches Profil · Kraftausdauer"*
+- Hover-Effekt: Border accent, Background `--accent-dim`, Pfeil rückt nach rechts
+- Footer-Hint: „Sektion ein-/ausblenden über Info → Einstellungen"
+- CSS-Klasse `.demo-showcase-card` mit gestricheltem Border (deutet „nicht permanent" an)
+
+**Globaler Vorschau-Banner** in `<main id="mainArea">`, oberhalb aller Tab-Sections:
+
+- Sticky oben (z-index 100), Linear-Gradient `warning-dim → accent-dim`, Backdrop-Blur
+- Icon 🔍 + zweizeiliger Text (fett: „Demo-Vorschau aktiv", normal: dynamischer Label-Text)
+- Rechts: Button „Zurück zu meinem Profil"
+- Mobile: wrapping in zwei Zeilen, Button auf voller Breite
+
+**Sidebar-Pill** unter `#roleName` und `#roleMode`:
+
+- Initial `display:none`
+- Wenn aktiv: kleines orange Pill „🔍 Demo-Vorschau" (warning-Farbe, monospace, uppercase)
+
+**Info → Einstellungen — neuer Toggle**:
+
+- Zeile „Demo-Profile anzeigen" mit Checkbox + Label „Demo-Sektion im Profil-Tab sichtbar"
+- Default: an (`tpv2_show_demos !== 'false'`)
+- Setzt `state.showDemos`, persistiert in localStorage, blendet `#demoShowcaseCard` ein/aus
+
+**Info → Daten** — alte Karten entfernt:
+
+- ❌ „Demo Alexander" (große Karte) — gelöscht
+- ❌ „Demo Julia" (große Karte) — gelöscht
+- ❌ „Demo zurücksetzen" — gelöscht
+- ✅ Neu: eine schlanke Hinweis-Karte „🔍 Demo-Profile" mit Verweis auf den Profil-Tab
+
+**Empty-Banner** in `<div id="cpDemoBanner">` — schlanker:
+
+- Vorher: 4 Buttons (Profil erstellen / Demo Alexander / Demo Julia / Später)
+- Nachher: 2 Buttons (Profil erstellen / Später) — Demo-Buttons sind weg, weil sie jetzt im Profil-Tab leben
+- Text-Hinweis am Ende: *„Demo-Profile zum Ausprobieren findest du im Profil-Tab"*
+
+**Command Palette — Demo-Profile-Gruppe aktualisiert**:
+
+- ✅ „Vorschau: Demo Alexander (…)" mit 🔍-Icon
+- ✅ „Vorschau: Demo Julia (…)" mit 🔍-Icon
+- ✅ „Demo-Vorschau verlassen" — nur sichtbar wenn `state.demoMode !== null`
+- ✅ „Aktuelle Demo neu laden (Mutationen verwerfen)" — nur sichtbar wenn `state.demoMode !== null`
+
+### Verhalten in Edge Cases
+
+| Szenario | Verhalten |
+|---|---|
+| Demo Alexander → Profil bearbeiten + speichern | Edits in RAM, `_saveProfile()` no-op (Console-Log), bei Exit verloren |
+| Demo Alexander → Demo Julia | Erst Backup wiederherstellen (lokal), dann Julia laden, Backup neu setzen |
+| Demo aktiv → Tab-Wechsel | Pages rendern Demo-Daten normal, Banner bleibt sichtbar |
+| Demo aktiv → Theme wechseln | Theme-Wechsel wirkt sofort, kein localStorage-Save (`tpv2_theme` ist eigener Key, kein Profil) |
+| Demo aktiv → Reload (F5) | Demo-Modus geht verloren, eigenes Profil wird normal geladen |
+| Demo aktiv → Welcome-Modal-Widerruf | Funktioniert wie immer (Consent ist eigener Key) |
+| Erstes-Mal-Nutzer → leeres Profil → Demo Alexander | Backup ist leeres Profil, Exit kehrt dorthin zurück |
+
+### Was sich semantisch ändert
+
+- **„Demo laden" heißt jetzt „Demo erkunden"** — keine Übernahme, keine Vermischung mit eigenen Daten
+- **Mutationen am Demo sind ein „weiches Sandboxing"** — der Tester darf Buttons drücken, sieht das Verhalten, aber nichts persistiert
+- **Eigenes Profil ist immer sicher** — kein „Profil überschreiben?"-Confirm mehr, weil es keinen Überschreib-Pfad mehr gibt
+- **Demo-Sektion ist optional** — nach dem ersten Erkunden kann der reguläre Nutzer sie ausblenden, der Diplomarbeits-Vorführer behält sie
+
+### Betroffene Dateien (Nachtrag 8)
+
+| Datei | Änderung |
+|---|---|
+| `js/state.js` | Neue Felder `demoMode`, `_savedProfileBackup`, `showDemos`, neuer Storage-Key. `_saveProfile()` mit Demo-Schutz |
+| `js/demo-loader.js` | Neue interne `_loadDemoAsPreview()`, neue exportierte `exitDemoMode()`, Helper `_renderDemoBanner()`. `loadDemoAlexander()` und `loadDemoJulia()` rufen jetzt nur noch `_loadDemoAsPreview()` auf. Alte Confirm-Dialoge entfernt. `reloadDemoProfile()` lädt aktive Vorschau neu. Neue Export-Liste mit `exitDemoMode` |
+| `js/pages/info.js` | Toter Code (zweite `reloadDemoProfile`-Funktion + Import) entfernt. `renderInfo()` setzt Demo-Sektion-Sichtbarkeit |
+| `js/init-handlers.js` | Import `exitDemoMode`, Handler für `demoShowcaseAlexBtn`, `demoShowcaseJuliaBtn`, `demoModeExitBtn`, `settingsShowDemos`-Toggle |
+| `js/app.js` | Imports `loadDemoAlexander/loadDemoJulia` entfernt (gehören jetzt zu Profil-Tab und Command Palette), alte Banner-Button-Handler entfernt |
+| `js/command-palette.js` | Import `exitDemoMode`, Demo-Items umgelabelt zu „Vorschau", zwei neue Items mit `visible: () => !!state.demoMode` |
+| `Trainingsplaner.html` | Sidebar: neuer `#sidebarDemoPill`. Main: neuer `#demoModeBanner`. Empty-Banner: zwei Demo-Buttons entfernt, Text aktualisiert. Profil-Tab: neue Card `#demoShowcaseCard` mit zwei Tiles. Info → Einstellungen: neuer Toggle `#settingsShowDemos`. Info → Daten: alte Demo-Karten durch eine schlanke Hinweis-Karte ersetzt |
+| `css/pages/info.css` | Neue Klassen `.demo-mode-banner`, `.sidebar-demo-pill`, `.demo-showcase-card`, `.demo-showcase-grid`, `.demo-showcase-tile`, `.demo-showcase-icon`, `.demo-showcase-body`, `.demo-showcase-name`, `.demo-showcase-meta`, `.demo-showcase-arrow`, `.settings-toggle`. Mobile-Anpassungen |
+
+### Verifikation (durch User)
+
+- [ ] **Empty-State:** localStorage leeren → F5 → Welcome → akzeptieren → Cockpit zeigt Empty-Banner mit nur „Eigenes Profil erstellen" und „Später", **keine** Demo-Buttons mehr im Banner
+- [ ] **Demo-Sektion sichtbar:** Profil-Tab → eine neue Card „Demo-Profile zum Ausprobieren" mit zwei Tile-Buttons (Alexander, Julia)
+- [ ] **Vorschau starten:** Klick „Alexander" → Demo lädt sofort (kein Confirm-Dialog mehr), Toast „Demo-Vorschau: Alexander · Änderungen werden nicht gespeichert", oben erscheint orange/teal Banner „🔍 Demo-Vorschau aktiv … Du erkundest …", in der Sidebar erscheint kleines „🔍 DEMO-VORSCHAU"-Pill unter dem Namen
+- [ ] **Cockpit-Daten:** Charts, Readiness, alle Tabs zeigen Alexander-Daten
+- [ ] **Mutation-Test:** In der Vorschau Anamnese ausfüllen + speichern → Toast „✓ Anamnese gespeichert", DevTools Console zeigt `[Persist] Demo-Modus aktiv (alexander) — kein Save`. Nach „Zurück" → eigenes Profil hat keine Anamnese
+- [ ] **Demo-Wechsel:** Klick Profil-Tab → Julia → wechselt zu Julia, Banner bleibt sichtbar, Backup bleibt erhalten
+- [ ] **Exit:** Klick „Zurück zu meinem Profil" im Banner → eigenes (leeres oder volles) Profil ist wieder da, Banner und Pill sind weg
+- [ ] **Toggle:** Info → Einstellungen → „Demo-Profile anzeigen" abhaken → Profil-Tab Demo-Card verschwindet, Refresh des Profil-Tabs → bleibt versteckt
+- [ ] **Persistenz Toggle:** F5 → Toggle bleibt deaktiviert
+- [ ] **Command Palette:** Cmd+K → „Vorschau: Demo …" sichtbar; bei aktiver Vorschau zusätzlich „Demo-Vorschau verlassen" und „Aktuelle Demo neu laden"
+- [ ] **Info → Daten:** Nur noch eine schlanke Hinweis-Karte „Demo-Profile" statt der drei großen Karten
+- [ ] **Mobile:** Banner wrapping in zwei Zeilen, Demo-Tiles in 1-Spalten-Grid, Button auf voller Breite

@@ -3,7 +3,7 @@ import { toast, escapeHtml, _fmtKg, _fmtNum } from '../utils.js';
 import { _formatEquipment, _formatLocations } from '../features/profile-edit.js';
 import { switchTab } from '../tabs.js';
 import { themeLabels } from '../themes.js';
-import { _applyProfile, _loadDemoFromFetch } from '../demo-loader.js';
+import { _applyProfile } from '../demo-loader.js';
 import { renderAnamnese } from '../features/anamnese-edit.js';
 import { renderAgreement } from '../features/agreement-edit.js';
 
@@ -98,6 +98,10 @@ function renderInfo(profile) {
   // Trainer-Vereinbarung-Sektion mit Profil-Daten füllen
   renderAgreement(profile);
 
+  // Demo-Showcase-Sektion ein-/ausblenden je nach Einstellung
+  const demoCard = document.getElementById('demoShowcaseCard');
+  if (demoCard) demoCard.style.display = state.showDemos !== false ? '' : 'none';
+
   console.log('[Info] gerendert', { name, sessions, plans });
 }
 
@@ -155,11 +159,4 @@ function importProfileJson() {
   });
   input.click();
 }
-
-async function reloadDemoProfile() {
-  _clearSavedProfile();
-  toast('Demo zurückgesetzt …');
-  await _loadDemoFromFetch();
-}
-
 

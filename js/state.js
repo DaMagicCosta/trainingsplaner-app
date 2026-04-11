@@ -10,12 +10,20 @@ export const STORAGE_KEYS = {
   balRange: 'tpv2_bal_range',
   fpRange: 'tpv2_fp_range',
   fpExercise: 'tpv2_fp_exercise',
-  fpAgg: 'tpv2_fp_agg'
+  fpAgg: 'tpv2_fp_agg',
+  showDemos: 'tpv2_show_demos'
 };
 
 // ─── Profil-Persistenz (localStorage) ───
 export function _saveProfile() {
   if (!state.profile) return;
+  // Demo-Vorschau-Modus: Schutz vor versehentlichem Überschreiben des
+  // eigenen Profils. Mutationen am Demo bleiben in RAM, gehen beim
+  // Verlassen der Vorschau verloren. Banner warnt den User.
+  if (state.demoMode) {
+    console.log('[Persist] Demo-Modus aktiv (' + state.demoMode + ') — kein Save');
+    return;
+  }
   try {
     localStorage.setItem('tpv2_profile_data', JSON.stringify(state.profile));
     console.log('[Persist] Profil gespeichert ·', (state.profile.sessions?.length || 0), 'Sessions');
@@ -149,5 +157,16 @@ export const state = {
     }
   },
   activeProfile: 'self', // 'self' = Alexander, 'lisa' = Julia
-  _editTarget: 'self'
+  _editTarget: 'self',
+
+  // ─── Demo-Vorschau-Modus (seit 11.04.2026) ───
+  // Wenn aktiv, ist das geladene Profil eine RAM-only Vorschau eines
+  // Demo-Athleten. Das eigene Profil ist in _savedProfileBackup geparkt
+  // und wird beim Exit zurückgespielt. _saveProfile() ist im Demo-Modus
+  // gesperrt — Mutationen gehen beim Verlassen verloren.
+  demoMode: null,            // 'alexander' | 'julia' | null
+  _savedProfileBackup: null, // das eigene Profil während Demo-Vorschau
+
+  // ─── UI-Einstellung: Demo-Sektion im Profil-Tab anzeigen? ───
+  showDemos: localStorage.getItem('tpv2_show_demos') !== 'false'  // default: true
 };

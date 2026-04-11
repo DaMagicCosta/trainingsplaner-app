@@ -556,6 +556,197 @@ body.role-athlete .profile-link-vereinbarung {
   border-color: var(--border-subtle);
 }
 
+/* ─── Demo-Vorschau-Banner (global, oben in der Main-Area) ─── */
+.demo-mode-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 22px;
+  background: linear-gradient(90deg, var(--warning-dim), var(--accent-dim));
+  border-bottom: 1px solid var(--warning-line);
+  font-size: 0.9rem;
+  color: var(--text);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.demo-mode-banner-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.demo-mode-banner-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.demo-mode-banner-text strong {
+  color: var(--warning);
+  font-weight: 600;
+}
+
+.demo-mode-banner-text span {
+  color: var(--text-2);
+  font-size: 0.84rem;
+}
+
+.demo-mode-banner-btn {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: var(--r-md, 10px);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: filter 0.15s ease;
+}
+
+.demo-mode-banner-btn:hover {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 720px) {
+  .demo-mode-banner {
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    gap: 10px;
+  }
+  .demo-mode-banner-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ─── Sidebar-Pill für Demo-Modus ─── */
+.sidebar-demo-pill {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: var(--warning-dim);
+  border: 1px solid var(--warning-line);
+  color: var(--warning);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Demo-Showcase Card im Profil-Tab ─── */
+.demo-showcase-card {
+  border: 1px dashed var(--border-strong);
+  background: var(--surface-2);
+}
+
+.demo-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 720px) {
+  .demo-showcase-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-showcase-tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-md, 10px);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: all 0.18s ease;
+}
+
+.demo-showcase-tile:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+  transform: translateY(-1px);
+}
+
+.demo-showcase-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-line);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.demo-showcase-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.demo-showcase-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.demo-showcase-meta {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  line-height: 1.4;
+}
+
+.demo-showcase-arrow {
+  flex-shrink: 0;
+  color: var(--text-3);
+  font-size: 18px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.demo-showcase-tile:hover .demo-showcase-arrow {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* ─── Settings-Toggle (Checkbox-Label-Pattern) ─── */
+.settings-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.settings-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent);
+  margin: 0;
+}
+
+.settings-toggle span {
+  font-size: 0.9rem;
+  color: var(--text-2);
+}
+
 /* Anamnese-Historie: Disclosure-Einträge */
 .anam-history-entry {
   background: var(--surface-2);
