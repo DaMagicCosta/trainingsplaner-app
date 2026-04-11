@@ -584,10 +584,12 @@ body.role-athlete .jp-balance-preview,
   flex-wrap: wrap;
 }
 .cp-gate-banner--danger {
+  background: var(--danger-dim); /* Safari < 16.2 Fallback */
   background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
   border-color: var(--danger);
 }
 .cp-gate-banner--warn {
+  background: var(--warning-dim); /* Safari < 16.2 Fallback */
   background: color-mix(in srgb, var(--warning) 10%, var(--surface-2));
   border-color: var(--warning);
 }

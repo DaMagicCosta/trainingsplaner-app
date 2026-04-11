@@ -60,19 +60,27 @@
 }
 .prereq-list li {
   padding: var(--s-3) var(--s-4);
-  border: 1px solid color-mix(in srgb, var(--warning) 35%, var(--border-subtle));
+  /* Safari < 16.2 Fallbacks */
+  border: 1px solid var(--warning-line);
+  background: var(--warning-dim);
+  /* Moderne Browser (color-mix support) */
+  border-color: color-mix(in srgb, var(--warning) 35%, var(--border-subtle));
+  background: color-mix(in srgb, var(--warning) 7%, var(--surface-2));
   border-left: 3px solid var(--warning);
   border-radius: var(--r-md);
-  background: color-mix(in srgb, var(--warning) 7%, var(--surface-2));
   color: var(--text);
   font-size: 13px;
 }
 .prereq-level-warning {
   display: block;
   padding: var(--s-4);
-  border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent);
-  border-radius: var(--r-md);
+  /* Safari < 16.2 Fallbacks */
+  border: 1px solid var(--danger-line);
+  background: var(--danger-dim);
+  /* Moderne Browser */
+  border-color: color-mix(in srgb, var(--danger) 40%, transparent);
   background: color-mix(in srgb, var(--danger) 10%, var(--surface-2));
+  border-radius: var(--r-md);
   color: var(--text);
   font-size: 13px;
   line-height: 1.5;

@@ -180,6 +180,8 @@ Die App hat eine vollständige rechtliche Basis: DSGVO, Impressum, Nutzungsbedin
 
 8. **Nach jedem Profil-Edit-Save**: `state.tpUseHome = null` und `state.tpUseHomePerKw = {}` zurücksetzen, damit die nächste `renderTrainingsplan`-Aufruf die neue `trainingLocation`-Hierarchie ableitet.
 
+9. **iOS-/Safari-Kompatibilität**: Chrome-DevTools iPhone-Emulation ist **kein echter Safari-Test** — sie simuliert nur Viewport und User-Agent, die Rendering-Engine bleibt Chromium. Echtes iOS läuft immer auf WebKit (auch Chrome/Firefox auf iOS). Realitätsnahe Tests nur gegen macOS-Safari oder physisches iPhone. Besonders kritisch: `color-mix()` existiert in Safari erst ab iOS 16.2 — jede `color-mix()`-Regel braucht eine **Fallback-Deklaration davor** mit `var(--warning-dim)`/`var(--warning-line)`/`var(--danger-dim)`/`var(--danger-line)` etc., sonst rendern ältere iPhones die Fläche ohne Hintergrund/Border. `backdrop-filter` immer mit `-webkit-backdrop-filter`-Prefix schreiben.
+
 ## Architektur-Entscheidungen, die nicht offensichtlich sind
 
 ### Demo-Vorschau-Modus (RAM-only)

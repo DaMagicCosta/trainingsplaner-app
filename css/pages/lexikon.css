@@ -175,12 +175,20 @@
   padding: 4px 8px;
   border-radius: 100px;
   color: var(--warning);
+  /* Safari < 16.2 Fallbacks */
+  background: var(--warning-dim);
+  border: 1px solid var(--warning-line);
+  /* Moderne Browser */
   background: color-mix(in srgb, var(--warning) 18%, transparent);
-  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  border-color: color-mix(in srgb, var(--warning) 40%, transparent);
   width: fit-content;
 }
 .lx-card-prereq--locked {
   color: var(--danger);
+  /* Safari < 16.2 Fallbacks */
+  background: var(--danger-dim);
+  border-color: var(--danger-line);
+  /* Moderne Browser */
   background: color-mix(in srgb, var(--danger) 18%, transparent);
   border-color: color-mix(in srgb, var(--danger) 40%, transparent);
 }
@@ -258,6 +266,7 @@
   position: absolute;
   inset: 0;
   background: rgba(8, 9, 11, 0.65);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 220ms ease;

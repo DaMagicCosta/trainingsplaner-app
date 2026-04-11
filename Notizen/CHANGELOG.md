@@ -11,6 +11,11 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Safari-/iOS-Kompatibilität: color-mix Fallbacks
+- **Alle 19 `color-mix()`-Regeln** in `css/components.css`, `css/pages/cockpit.css`, `css/pages/lexikon.css`, `css/pages/trainingsplan.css` bekommen eine Token-basierte Fallback-Deklaration davor (`var(--warning-dim)`, `var(--warning-line)`, `var(--danger-dim)`, `var(--danger-line)`). Safari auf iOS < 16.2 parste die color-mix-Zeilen nicht und renderte die Prereq-Badges, Gate-Banner, Lexikon-Prereq-Chips und das Voraussetzungs-Confirm-Modal ohne Hintergrund und ohne Rahmen — progressive Enhancement behebt das, moderne Browser ändern sich nicht
+- **Fehlender `-webkit-backdrop-filter`-Prefix** in `.lx-sheet-backdrop` ergänzt (war der einzige `backdrop-filter` in der Codebase ohne Prefix)
+- **CLAUDE.md Dauerhafte Regel 9**: Hinweis dass Chrome-DevTools iPhone-Emulation nicht WebKit ist, plus Pflicht-Fallbacks für jede neue `color-mix()`-Zeile dokumentiert
+
 ### Pflicht-Gates: Anamnese + Trainervereinbarung
 - **Neues Modul `js/gates.js`**: `isAnamnesisGated()`, `isAgreementGated()`, `applyGates()`, `enforceTabGate()` — zentrale Pflicht-Gate-Logik nach dem DSGVO-Consent
 - **Anamnese-Gate** (Hard): Solange `anamnesis.confirmedAt` nicht gesetzt ist, sperrt `body.anamnesis-required` via CSS die Sidebar-/Bottom-Nav-Items Jahresplan, Trainingsplan und Fortschritt (inkl. Schloss-Icon). `switchTab()` leitet gesperrte Ziele zusätzlich auf Cockpit um und zeigt einen Toast. Cockpit, Lexikon und Info bleiben frei
