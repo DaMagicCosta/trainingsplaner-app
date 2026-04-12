@@ -492,6 +492,10 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   const bwBase = bwF ? Math.round(bw * bwF) : 0;
   const isBand = (exerciseName || '').toLowerCase().includes('widerstandsband') ||
                  (exerciseName || '').toLowerCase().includes('band');
+  // Langhantel/SZ-Stange-Erkennung für Stangengewicht-Hint
+  const exData = !bwF && !isBand ? _lxAllExercises().find(e => e.name === exerciseName) : null;
+  const barWeight = exData?.eq?.includes('Langhantel') ? 20
+    : exData?.eq?.includes('SZ-Stange') ? 10 : 0;
 
   // Edit-Modus: Eingabefelder statt Werte
   if (isEditing) {
@@ -586,6 +590,12 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bwBase} kg Eigengewicht · beim Loggen nur Zusatz eingeben</div>`
     : isBand ? `<div class="tp-set-bw-hint">Bandstärke eintragen (leicht=5, mittel=10, schwer=20 kg)</div>`
     : '';
+  // Stangengewicht-Hint: nur beim ersten offenen Satz, damit er nicht
+  // bei jedem Satz wiederholt wird. Hilft Anfaengern, die nicht wissen,
+  // dass die Stange selbst 20 kg (Langhantel) oder 10 kg (SZ) wiegt.
+  const barHint = (idx === 1 && barWeight)
+    ? `<div class="tp-set-bw-hint">Gewicht inkl. ${barWeight} kg Stange eingeben</div>`
+    : '';
   return `
     <div class="tp-set tp-set-open" ${exAttr}>
       <div class="tp-set-num">${num}</div>
@@ -593,7 +603,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
       <div class="tp-set-field"><span class="tp-set-planned">${pkg}${kgHint}</span><span class="tp-set-unit">${kgUnit}</span></div>
       <div class="tp-set-field"><span class="tp-set-planned">—</span><span class="tp-set-unit">RPE</span></div>
       <button class="tp-set-log-btn" type="button">+ Loggen</button>
-      ${bwOpenHint}
+      ${bwOpenHint}${barHint}
     </div>`;
 }
 
