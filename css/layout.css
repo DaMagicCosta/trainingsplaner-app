@@ -14,6 +14,10 @@ html, body {
   font-feature-settings: 'cv11', 'ss01';
   height: 100%;
   overflow: hidden;
+  /* iOS Safari: overflow:hidden allein verhindert nicht immer den
+     horizontalen Overflow wenn Children den Container aufdruecken.
+     max-width als physisches Limit erzwingt die Begrenzung. */
+  max-width: 100vw;
 }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; -webkit-tap-highlight-color: transparent; }
@@ -457,6 +461,7 @@ body.anamnesis-required .nav-item[data-tab="fortschritt"]:hover {
   position: fixed;
   bottom: 0;
   left: 0; right: 0;
+  width: 100%;
   background: var(--surface-1);
   border-top: 1px solid var(--border-subtle);
   padding: var(--s-2) 0 calc(var(--s-2) + env(safe-area-inset-bottom));

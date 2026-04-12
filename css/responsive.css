@@ -4,10 +4,15 @@
 @media (max-width: 860px) {
   .app {
     grid-template-columns: 1fr;
+    /* iPhone-Fix: App-Container darf nicht breiter als der Viewport
+       werden, sonst schneidet iOS Safari rechts ab. */
+    max-width: 100vw;
+    overflow-x: hidden;
   }
   .sidebar { display: none; }
   .main {
     padding: var(--s-6) var(--s-4) calc(var(--bottomnav-h) + var(--s-8));
+    max-width: 100vw;
   }
   .bottom-nav { display: grid; }
   .page-title { font-size: 26px; }
