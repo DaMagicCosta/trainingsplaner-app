@@ -11,6 +11,20 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Lexikon-Erweiterung: Esquerdo Batch 1 (15 neue Übungen)
+- **Neue Quelle**: Óscar Morán Esquerdo, *Enzyklopädie Muskeltraining* (HEEL Verlag, 2009, 440+ Übungen). Wiki-Analyse liegt unter `08_Obsidian/Alex Wiki/wiki/quellen/Esquerdo-Enzyklopaedie-Muskeltraining.md`
+- **Brust** (2): Schrägbankdrücken mit Langhantel, Schrägbankdrücken mit Kurzhanteln — füllt die eklatanteste Lücke im Brust-Bereich (oberer Brustmuskel-Fokus)
+- **Schulter** (3): Military Press (LH stehend), Arnold Press, Shrugs — Compound-Grundübungen die fehlten
+- **Rücken** (1): Einarmiges Kurzhantelrudern — Klassiker mit geringer Wirbelsäulenbelastung
+- **Bizeps** (4): Hammer-Curls, Konzentrations-Curls, Scott-Bank-Curls, Kabel-Curls — Kategorie hatte nur 2 Übungen, jetzt 6
+- **Trizeps** (2): French Press (Stirndrücken), Überkopf-Trizepsdrücken — fehlende Compound-Isolationen für den langen Trizepskopf
+- **Unterkörper** (1): Rumänisches Kreuzheben — Schlüsselübung für die hintere Kette (Beinbeuger)
+- **Bauch** (2): Russian Twist (Rotation), Beinheben hängend (untere Bauchmuskeln)
+- **Credits** im Info-Tab um Esquerdo-Zeile mit voller bibliografischer Angabe erweitert
+- **AGB Abschnitt 2** um Esquerdo-Nennung ergänzt
+- **Lexikon-Umfang**: 111 → 126 Übungen in 8 Kategorien
+- Alle Beschreibungen **eigen formuliert**, keine Kopien. Quellenfeld `quelle:` mit Esquerdo-Kapitelreferenz pro Übung
+
 ### Übungs-Tausch im Training (Bau-Etappe 6)
 - **Neuer ⟳-Button in der `tp-ex-edit-bar`** neben dem bestehenden ✕-Delete-Button — pro Übung im Bearbeiten-Modus sichtbar, Accent-Hover statt Danger
 - **Swap-Modus im Picker**: Klick auf ⟳ öffnet das Picker-Modal mit Titel „[Übungsname] ersetzen durch …", vorgefiltered auf die Lexikon-Kategorie der aktuellen Übung. Die zu tauschende Übung selbst wird aus dem Grid ausgeschlossen
