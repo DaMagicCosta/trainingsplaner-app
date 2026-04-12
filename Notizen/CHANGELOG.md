@@ -11,6 +11,13 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Urlaub/Krank Planadaption — Phase 1 (Bau-Etappe 3)
+- **Datenmodell**: `profile.markedWeeks` als sparse Map mit Key `Jahr_KW` (z.B. `"2026_15": "vacation"` oder `"sick"`)
+- **Jahresplan-Rendering**: Markierte KWs bekommen eigene CSS-Klassen (`jp-week-vacation` warm-gelb, `jp-week-sick` rot) mit diagonalen Streifen, Emoji-Icon (🏖/🌡) und angepasstem Block-Label. Session-Dots werden bei markierten Wochen ausgeblendet
+- **Trainingsplan-Markierungs-Bar**: Drei Buttons (🏖 Urlaub, 🌡 Krank, ↩ Zurücksetzen) unter dem Fortschritts-Balken. Aktiver Status wird visuell hervorgehoben, Reset-Button nur bei bestehender Markierung sichtbar. Klick speichert in `profile.markedWeeks` und aktualisiert Trainingsplan + Jahresplan gleichzeitig
+- **Trainingsplan-Banner**: Bei markierter Woche erscheint über den Übungen ein farbiger Banner mit Icon und Hinweis-Text ("Urlaubs-Woche — Du kannst trotzdem trainieren, wenn du möchtest" / "Krank — Hör auf deinen Körper")
+- **Toast-Feedback**: „KW 15: Urlaub markiert" / „KW 15: Markierung entfernt"
+
 ### Lexikon-Erweiterung: Esquerdo Batch 2+3 (18 weitere Übungen)
 - **Batch 2 — Neue Kategorie `p_unterarme`** (5 Übungen): Handgelenk-Curls, Reverse Handgelenk-Curls, Reverse Curls stehend, Pronation/Supination, Farmer's Walk. Eigene CSS-Farbe `#8B9E6F` (Olive-Grün), LX_CATEGORIES-Eintrag, Filter-Chip
 - **Batch 3 — Varianten-Expansion** (13 Übungen): Negativbankdrücken, Kabelzüge über Kreuz, Überzüge/Pullover (Brust); Aufrechtes Rudern, Reverse Flys (Schulter); Latziehen Untergriff (Rücken); Sumo-Kniebeuge, Goblet Squat, Hip Thrust LH, Step-ups (Unterkörper); Seitliche Crunches, Knieheben hängend (Bauch); Seilspringen, Box Jumps (Cardio)

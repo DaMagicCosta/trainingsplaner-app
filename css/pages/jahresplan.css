@@ -346,6 +346,40 @@
   transform: translateY(-2px);
 }
 
+/* Urlaub/Krank-Markierung (Etappe 3) */
+.jp-week-vacation {
+  --block-color: #D4A040;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(212,160,64,0.06) 0, rgba(212,160,64,0.06) 5px,
+      rgba(212,160,64,0.18) 5px, rgba(212,160,64,0.18) 10px
+    ) !important;
+  border-top: 4px solid #D4A040 !important;
+  opacity: 0.9;
+}
+.jp-week-vacation .jp-week-block {
+  color: #D4A040;
+  background: rgba(212,160,64,0.18);
+  border-color: rgba(212,160,64,0.45);
+}
+.jp-week-sick {
+  --block-color: #C76A5E;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(199,106,94,0.06) 0, rgba(199,106,94,0.06) 5px,
+      rgba(199,106,94,0.18) 5px, rgba(199,106,94,0.18) 10px
+    ) !important;
+  border-top: 4px solid #C76A5E !important;
+  opacity: 0.9;
+}
+.jp-week-sick .jp-week-block {
+  color: #C76A5E;
+  background: rgba(199,106,94,0.18);
+  border-color: rgba(199,106,94,0.45);
+}
+
 /* Aktuelle KW: dezenter Teal-Ring, kein Text-Badge (bewusst zurückhaltend) */
 .jp-week-current {
   border-color: var(--danger);

@@ -218,31 +218,40 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
   const kwStr = `KW ${String(kw).padStart(2, '0')}`;
   const isCurrent = kw === currentKw;
 
+  // Urlaub/Krank-Markierung (Etappe 3, Phase 1)
+  const marked = state.profile?.markedWeeks?.[year + '_' + kw];
+  const markCls = marked === 'vacation' ? ' jp-week-vacation'
+    : marked === 'sick' ? ' jp-week-sick' : '';
+  const markIcon = marked === 'vacation' ? ' 🏖'
+    : marked === 'sick' ? ' 🌡' : '';
+
   // Regen-Woche
   if (p && p.isRegen) {
     return `
-      <div class="jp-week jp-week-regen${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
-        <div class="jp-week-kw">${kwStr}</div>
+      <div class="jp-week jp-week-regen${markCls}${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
+        <div class="jp-week-kw">${kwStr}${markIcon}</div>
         <div class="jp-week-date">${dateStr}</div>
-        <div class="jp-week-block">Erholung</div>
+        <div class="jp-week-block">${marked === 'vacation' ? 'Urlaub' : marked === 'sick' ? 'Krank' : 'Erholung'}</div>
       </div>`;
   }
 
   // Trainingswoche (isPreStart = außerhalb des geplanten Zeitraums)
   const hasBlock = p && !p.isPreStart && p.blockLabel;
   const blockCls = hasBlock ? _blockClass(p.blockIdx) : '';
-  const blockLabel = hasBlock ? `${p.blockLabel} · W${p.relativeWeek}` : '—';
+  const blockLabel = marked
+    ? (marked === 'vacation' ? 'Urlaub' : 'Krank')
+    : (hasBlock ? `${p.blockLabel} · W${p.relativeWeek}` : '—');
 
   // Location-Icon aus dem Plan-Objekt
   const planObj = plans['w' + kw];
   const locIcons = { studio: '◇', home: '⌂', outdoor: '✦' };
   const planLoc = planObj?._location;
-  const locIcon = planLoc ? locIcons[planLoc] || '' : '';
+  const locIcon = (!marked && planLoc) ? locIcons[planLoc] || '' : '';
 
   // Session-Dots: Anzahl der geplanten Tage, gefüllt wenn geloggt
   const kwSessions = sessionsByKw[kw] || new Set();
   let dotsHtml = '';
-  if (kw <= currentKw) {
+  if (kw <= currentKw && !marked) {
     const dayCount = planObj?.days?.length || plannedDays;
     let dotSpans = '';
     for (let i = 0; i < dayCount; i++) {
@@ -253,8 +262,8 @@ function _renderWeekCard(kw, year, period, sessionsByKw, plans, plannedDays, cur
   }
 
   return `
-    <div class="jp-week ${blockCls}${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
-      <div class="jp-week-kw">${kwStr}${locIcon ? ' <span class="jp-week-loc">' + locIcon + '</span>' : ''}</div>
+    <div class="jp-week ${blockCls}${markCls}${isCurrent ? ' jp-week-current' : ''}" data-kw="${kw}">
+      <div class="jp-week-kw">${kwStr}${markIcon}${locIcon ? ' <span class="jp-week-loc">' + locIcon + '</span>' : ''}</div>
       <div class="jp-week-date">${dateStr}</div>
       <div class="jp-week-block">${blockLabel}</div>
       ${dotsHtml}

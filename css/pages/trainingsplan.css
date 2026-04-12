@@ -777,6 +777,60 @@ body.role-athlete .tp-mode { display: none; }
   cursor: pointer;
   transition: all var(--ease);
 }
+/* ─── Urlaub/Krank-Markierung ─── */
+.tp-mark-bar {
+  display: flex;
+  gap: var(--s-2);
+  flex-wrap: wrap;
+}
+.tp-mark-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.tp-mark-btn:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-strong); }
+.tp-mark-btn[data-mark="vacation"]:hover { border-color: #D4A040; color: #D4A040; }
+.tp-mark-btn[data-mark="sick"]:hover { border-color: var(--danger); color: var(--danger); }
+.tp-mark-btn.tp-mark-active {
+  color: #fff;
+}
+.tp-mark-btn.tp-mark-active[data-mark="vacation"] { background: #D4A040; border-color: #D4A040; }
+.tp-mark-btn.tp-mark-active[data-mark="sick"] { background: var(--danger); border-color: var(--danger); }
+.tp-mark-reset { display: none; }
+
+/* Banner im Trainingsplan bei markierter Woche */
+.tp-marked-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  margin-bottom: var(--s-4);
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 500;
+}
+.tp-marked-banner--vacation {
+  background: rgba(212,160,64,0.12);
+  border: 1px solid rgba(212,160,64,0.4);
+  color: #D4A040;
+}
+.tp-marked-banner--sick {
+  background: var(--danger-dim);
+  border: 1px solid var(--danger-line);
+  color: var(--danger);
+}
+.tp-marked-banner-icon { font-size: 24px; }
+.tp-marked-banner-text { flex: 1; }
+.tp-marked-banner-text span { display: block; font-size: 12px; font-weight: 400; color: var(--text-3); margin-top: 2px; }
+
 .tp-loc-toggle:hover { border-color: var(--border-strong); color: var(--text); }
 .tp-loc-toggle:active { transform: scale(0.97); }
 .tp-loc-toggle.home-active {

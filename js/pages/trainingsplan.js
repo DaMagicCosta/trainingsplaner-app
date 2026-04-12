@@ -48,6 +48,20 @@ function renderTrainingsplan(profile) {
     ? state.tpUseHomePerKw[kw]
     : state.tpUseHome;
 
+  // Urlaub/Krank-Markierung (Etappe 3)
+  const markKey = year + '_' + kw;
+  const marked = profile.markedWeeks?.[markKey] || '';
+  const markBar = document.getElementById('tpMarkBar');
+  if (markBar) {
+    markBar.querySelectorAll('.tp-mark-btn').forEach(btn => {
+      const val = btn.dataset.mark;
+      btn.classList.toggle('tp-mark-active', val === marked && val !== '');
+    });
+    // Reset-Button nur zeigen wenn markiert
+    const resetBtn = markBar.querySelector('.tp-mark-reset');
+    if (resetBtn) resetBtn.style.display = marked ? '' : 'none';
+  }
+
   // Datumsbereich Mo–So
   const monday = _isoWeekToMonday(year, kw);
   const sunday = _sundayOfIsoWeek(year, kw);
@@ -146,8 +160,21 @@ function renderTrainingsplan(profile) {
   }
 
   if (exEl) {
+    // Urlaub/Krank-Banner VOR dem regulären Content rendern
+    const markedBannerHtml = marked
+      ? `<div class="tp-marked-banner tp-marked-banner--${marked === 'vacation' ? 'vacation' : 'sick'}">
+           <div class="tp-marked-banner-icon">${marked === 'vacation' ? '🏖' : '🌡'}</div>
+           <div class="tp-marked-banner-text">
+             ${marked === 'vacation' ? 'Urlaubs-Woche' : 'Krank — Training pausiert'}
+             <span>${marked === 'vacation'
+               ? 'Diese Woche ist als Urlaub markiert. Du kannst trotzdem trainieren, wenn du möchtest.'
+               : 'Diese Woche ist als krank markiert. Hör auf deinen Körper und überfordere dich nicht.'}</span>
+           </div>
+         </div>`
+      : '';
+
     if (isRegen) {
-      exEl.innerHTML = _renderTpRegenState(kw);
+      exEl.innerHTML = markedBannerHtml + _renderTpRegenState(kw);
     } else if (!hasPlan) {
       exEl.innerHTML = _renderTpNoPlanState(kw);
       // "Erste Übung hinzufügen" delegiert an den regulären Add-Button
@@ -175,7 +202,7 @@ function renderTrainingsplan(profile) {
         ? (fallbackDays[state.tpViewDay] || fallbackDays[0])
         : (plan.days[state.tpViewDay] || plan.days[0]);
       const session = sessionsByDay[state.tpViewDay] || null;
-      exEl.innerHTML = _renderTpExercises(dayData, session);
+      exEl.innerHTML = markedBannerHtml + _renderTpExercises(dayData, session);
 
       // Studio/Home-Toggle sichtbar wenn Fallback vorhanden
       const locBtn = document.getElementById('tpLocToggle');
@@ -648,6 +675,34 @@ function _renderTpNoPlanState(kw) {
 /* ═══════════════════════════════════════════════════════
    TRAININGSPLAN BEARBEITEN-MODUS (Trainer)
    ═══════════════════════════════════════════════════════ */
+// ── Urlaub/Krank-Markierung (Etappe 3) ──
+(function initMarkWeek() {
+  const markBar = document.getElementById('tpMarkBar');
+  if (!markBar) return;
+  markBar.addEventListener('click', (e) => {
+    const btn = e.target.closest('.tp-mark-btn');
+    if (!btn) return;
+    const profile = state.profile;
+    if (!profile) return;
+    const kw = state.tpViewKw;
+    const year = _isoWeek(new Date()).year;
+    const key = year + '_' + kw;
+    const val = btn.dataset.mark;
+    if (!profile.markedWeeks) profile.markedWeeks = {};
+    if (val) {
+      profile.markedWeeks[key] = val;
+      toast(`KW ${kw}: ${val === 'vacation' ? 'Urlaub' : 'Krank'} markiert`);
+    } else {
+      delete profile.markedWeeks[key];
+      toast(`KW ${kw}: Markierung entfernt`);
+    }
+    _saveProfile();
+    renderTrainingsplan(profile);
+    // Jahresplan-KW-Karten auch aktualisieren
+    import('./jahresplan.js').then(({ renderJahresplan }) => renderJahresplan(profile));
+  });
+})();
+
 (function initTrainingsplanEditMode() {
   const tp = document.querySelector('.page[data-page="trainingsplan"]');
   if (!tp) return;
