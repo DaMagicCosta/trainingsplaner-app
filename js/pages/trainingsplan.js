@@ -57,9 +57,11 @@ function renderTrainingsplan(profile) {
       const val = btn.dataset.mark;
       btn.classList.toggle('tp-mark-active', val === marked && val !== '');
     });
-    // Reset-Button nur zeigen wenn markiert
+    // Reset-Button nur zeigen wenn markiert — explizit 'inline-block'
+    // setzen, weil die CSS-Klasse .tp-mark-reset mit display:none das
+    // leere Inline-Style überschreiben würde.
     const resetBtn = markBar.querySelector('.tp-mark-reset');
-    if (resetBtn) resetBtn.style.display = marked ? '' : 'none';
+    if (resetBtn) resetBtn.style.display = marked ? 'inline-block' : 'none';
   }
 
   // Datumsbereich Mo–So
