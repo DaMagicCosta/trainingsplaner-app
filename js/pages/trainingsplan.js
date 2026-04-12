@@ -560,12 +560,15 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
   let kgHint = '';
   let kgUnit = 'kg';
   if (bwF) {
-    // BW-Übung: letztes Zusatzgewicht oder 0
+    // BW-Übung: Gesamtgewicht anzeigen (BW × Factor + Zusatz), damit
+    // die Satz-Zeile optisch gleich aussieht wie bei Studio-Übungen.
+    // Beim Loggen (Edit-Formular) wird weiterhin nur Zusatz eingegeben.
     const last = _lastLoggedWeight(exerciseName);
     const zusatz = last?._bwZusatz ?? 0;
-    pkg = zusatz ? _fmtKg(zusatz) : '0';
-    kgUnit = 'Zusatz';
-    if (zusatz) kgHint = ' <span style="color:var(--text-3);font-size:10px">letztes</span>';
+    const total = bwBase + zusatz;
+    pkg = _fmtKg(total);
+    kgUnit = 'kg';
+    if (zusatz) kgHint = ` <span style="color:var(--text-3);font-size:10px">(+${zusatz} Zusatz)</span>`;
   } else if (isBand) {
     const last = _lastLoggedWeight(exerciseName);
     pkg = last?.kg != null ? _fmtKg(last.kg) : '—';
@@ -580,7 +583,7 @@ function _renderTpSetRow(idx, plannedWdh, plannedGewicht, loggedSet, isEditing, 
       kgHint = ' <span style="color:var(--text-3);font-size:10px">letztes</span>';
     }
   }
-  const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bw} kg × ${bwF} = ${bwBase} kg · nur Zusatzgewicht eingeben</div>`
+  const bwOpenHint = bwF ? `<div class="tp-set-bw-hint">${bwBase} kg Eigengewicht · beim Loggen nur Zusatz eingeben</div>`
     : isBand ? `<div class="tp-set-bw-hint">Bandstärke eintragen (leicht=5, mittel=10, schwer=20 kg)</div>`
     : '';
   return `
