@@ -559,14 +559,19 @@
 /* ─── Bearbeiten-Modus (Trainer) ─── */
 .tp-mode { margin-left: auto; }
 body.role-athlete .tp-mode { display: none; }
+/* Rechte Seite: Planpill + Swap/Delete als Flex-Gruppe,
+   damit nichts ueberlappt. */
+.tp-ex-right {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  flex-shrink: 0;
+}
+.tp-ex-info { flex: 1; min-width: 0; }
 .tp-ex-edit-bar {
-  display: flex; /* Immer sichtbar — der Swap-Button ist eine Trainings-Aktion,
-                    nicht nur eine Planungs-Aktion. Der Athlet soll waehrend des
-                    Trainings eine Alternative waehlen koennen. */
-  position: absolute;
-  top: var(--s-4);
-  right: var(--s-4);
+  display: flex;
   gap: var(--s-2);
+  flex-shrink: 0;
 }
 /* Delete-Button nur im Bearbeiten-Modus, Swap-Button immer sichtbar */
 .tp-ex-edit-bar .tp-ex-delete { display: none; }
@@ -589,7 +594,6 @@ body.role-athlete .tp-mode { display: none; }
 .tp-ex-edit-btn.tp-ex-swap:hover { color: var(--accent); border-color: var(--accent); }
 .tp-ex-edit-btn.tp-ex-delete:hover { color: var(--danger); border-color: var(--danger); }
 @media (max-width: 720px) {
-  .tp-ex-edit-bar { top: var(--s-3); right: var(--s-3); }
   .tp-ex-edit-btn { width: 36px; height: 36px; font-size: 13px; }
 }
 .tp-ex-params-edit {
@@ -796,7 +800,7 @@ body.role-athlete .tp-mode { display: none; }
   .tp-loc-toggle { margin-left: 0; }
   .tp-exercise { padding: var(--s-6); }
   .tp-ex-head { flex-direction: column; }
-  .tp-ex-plan { align-self: flex-start; }
+  .tp-ex-right { align-self: stretch; justify-content: space-between; }
   .tp-set {
     flex-wrap: wrap;
     gap: var(--s-4);

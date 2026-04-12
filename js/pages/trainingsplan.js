@@ -397,8 +397,18 @@ function _renderTpExercises(day, session) {
     const wdh     = planEx.wdh != null && planEx.wdh !== '' ? Number(planEx.wdh) : null;
     const gewicht = planEx.gewicht != null && planEx.gewicht !== '' ? Number(planEx.gewicht) : null;
 
-    const planPill = gewicht != null
-      ? `${saetze} × ${wdh ?? '—'} @ ${gewicht} kg`
+    // Plan-Pill: Bei BW-Übungen das errechnete Gesamtgewicht anzeigen,
+    // damit die Pill optisch dieselbe Linie bildet wie bei Studio-Übungen.
+    let planPillKg = gewicht;
+    if (planPillKg == null) {
+      const bwF = _getBwFactor(planEx.name);
+      if (bwF) {
+        const bw = Number(state.profile?.gewicht) || 80;
+        planPillKg = Math.round(bw * bwF);
+      }
+    }
+    const planPill = planPillKg != null
+      ? `${saetze} × ${wdh ?? '—'} @ ${_fmtKg(planPillKg)} kg`
       : `${saetze} × ${wdh ?? '—'}`;
 
     // Anzahl gerenderter Zeilen = max(geplant, tatsächlich geloggt)
@@ -443,12 +453,14 @@ function _renderTpExercises(day, session) {
     return `
       <div class="tp-exercise ${cardState}">
         <div class="tp-ex-head">
-          <div>
+          <div class="tp-ex-info">
             <div class="tp-ex-name">${escapeHtml(planEx.name || '—')}</div>
             <div class="tp-ex-muscle">${escapeHtml(planEx.muscle || '')}</div>
           </div>
-          <div class="tp-ex-plan">${planPill}</div>
-          ${editBar}
+          <div class="tp-ex-right">
+            <div class="tp-ex-plan">${planPill}</div>
+            ${editBar}
+          </div>
         </div>
         ${paramsEdit}
         <div class="tp-sets">${setsHtml}</div>
