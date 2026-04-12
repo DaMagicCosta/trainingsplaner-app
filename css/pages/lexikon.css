@@ -12,6 +12,7 @@
 .lx-card.lx-cat-schulter,     .lx-sheet-cat.lx-cat-schulter     { --lx-c: #D4A968; --lx-cd: rgba(212,169,104,0.14); --lx-cl: rgba(212,169,104,0.40); }
 .lx-card.lx-cat-ruecken,      .lx-sheet-cat.lx-cat-ruecken      { --lx-c: #0F766E; --lx-cd: rgba(15,118,110,0.18);  --lx-cl: rgba(15,118,110,0.45);  }
 .lx-card.lx-cat-arme,         .lx-sheet-cat.lx-cat-arme         { --lx-c: #10B981; --lx-cd: rgba(16,185,129,0.14);  --lx-cl: rgba(16,185,129,0.40);  }
+.lx-card.lx-cat-unterarme,   .lx-sheet-cat.lx-cat-unterarme     { --lx-c: #8B9E6F; --lx-cd: rgba(139,158,111,0.14); --lx-cl: rgba(139,158,111,0.40); }
 .lx-card.lx-cat-unterkoerper, .lx-sheet-cat.lx-cat-unterkoerper { --lx-c: #6B9BD4; --lx-cd: rgba(107,155,212,0.14); --lx-cl: rgba(107,155,212,0.40); }
 .lx-card.lx-cat-bauch,        .lx-sheet-cat.lx-cat-bauch        { --lx-c: #A481D4; --lx-cd: rgba(164,129,212,0.14); --lx-cl: rgba(164,129,212,0.40); }
 .lx-card.lx-cat-skill,        .lx-sheet-cat.lx-cat-skill        { --lx-c: #2FD4C4; --lx-cd: rgba(47,212,196,0.16);  --lx-cl: rgba(47,212,196,0.45);  }

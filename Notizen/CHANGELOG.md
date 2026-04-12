@@ -11,6 +11,12 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Lexikon-Erweiterung: Esquerdo Batch 2+3 (18 weitere Übungen)
+- **Batch 2 — Neue Kategorie `p_unterarme`** (5 Übungen): Handgelenk-Curls, Reverse Handgelenk-Curls, Reverse Curls stehend, Pronation/Supination, Farmer's Walk. Eigene CSS-Farbe `#8B9E6F` (Olive-Grün), LX_CATEGORIES-Eintrag, Filter-Chip
+- **Batch 3 — Varianten-Expansion** (13 Übungen): Negativbankdrücken, Kabelzüge über Kreuz, Überzüge/Pullover (Brust); Aufrechtes Rudern, Reverse Flys (Schulter); Latziehen Untergriff (Rücken); Sumo-Kniebeuge, Goblet Squat, Hip Thrust LH, Step-ups (Unterkörper); Seitliche Crunches, Knieheben hängend (Bauch); Seilspringen, Box Jumps (Cardio)
+- **Lexikon-Umfang**: 126 → 144 Übungen in **9 Kategorien** (neu: Unterarme)
+- Alle Beschreibungen eigen formuliert, Esquerdo-Quellenfeld pro Übung
+
 ### Lexikon-Erweiterung: Esquerdo Batch 1 (15 neue Übungen)
 - **Neue Quelle**: Óscar Morán Esquerdo, *Enzyklopädie Muskeltraining* (HEEL Verlag, 2009, 440+ Übungen). Wiki-Analyse liegt unter `08_Obsidian/Alex Wiki/wiki/quellen/Esquerdo-Enzyklopaedie-Muskeltraining.md`
 - **Brust** (2): Schrägbankdrücken mit Langhantel, Schrägbankdrücken mit Kurzhanteln — füllt die eklatanteste Lücke im Brust-Bereich (oberer Brustmuskel-Fokus)
