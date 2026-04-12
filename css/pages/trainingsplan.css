@@ -560,13 +560,17 @@
 .tp-mode { margin-left: auto; }
 body.role-athlete .tp-mode { display: none; }
 .tp-ex-edit-bar {
-  display: none;
+  display: flex; /* Immer sichtbar — der Swap-Button ist eine Trainings-Aktion,
+                    nicht nur eine Planungs-Aktion. Der Athlet soll waehrend des
+                    Trainings eine Alternative waehlen koennen. */
   position: absolute;
   top: var(--s-4);
   right: var(--s-4);
   gap: var(--s-2);
 }
-.page[data-page="trainingsplan"].tp-edit-active .tp-ex-edit-bar { display: flex; }
+/* Delete-Button nur im Bearbeiten-Modus, Swap-Button immer sichtbar */
+.tp-ex-edit-bar .tp-ex-delete { display: none; }
+.page[data-page="trainingsplan"].tp-edit-active .tp-ex-edit-bar .tp-ex-delete { display: grid; }
 .page[data-page="trainingsplan"].tp-edit-active .tp-ex-plan { display: none; }
 .page[data-page="trainingsplan"].tp-edit-active .tp-set-log-btn { display: none; }
 .tp-ex-edit-btn {
