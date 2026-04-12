@@ -421,6 +421,7 @@ function _renderTpExercises(day, session) {
 
     const editBar = `
       <div class="tp-ex-edit-bar">
+        <button class="tp-ex-edit-btn tp-ex-swap" data-ex-name="${escapeHtml(planEx.name)}" data-ex-muscle="${escapeHtml(planEx.muscle || '')}" title="Übung tauschen">⟳</button>
         <button class="tp-ex-edit-btn tp-ex-delete" data-ex-name="${escapeHtml(planEx.name)}" title="Übung entfernen">✕</button>
       </div>`;
     const paramsEdit = `
@@ -690,6 +691,10 @@ function _renderTpNoPlanState(kw) {
   // ── Übungspicker State ──
   let pickerCat = 'all';
   let pickerSearch = '';
+  // Swap-Modus: Wenn gesetzt, tauscht der Picker die angegebene Übung im Plan
+  // statt eine neue hinzuzufügen. Wird beim Klick auf den ⟳-Button gesetzt
+  // und nach Abschluss (Swap oder Abbrechen) wieder auf null.
+  let _swapTarget = null; // { name, muscle, catKey }
 
   // Equipment-Set für den aktuellen Plan-Block ermitteln
   function _pickerAvailableEq() {
@@ -728,6 +733,8 @@ function _renderTpNoPlanState(kw) {
     const beginnerLocked = _isBeginnerLevel();
 
     const filtered = all.filter(ex => {
+      // Im Swap-Modus die zu tauschende Übung selbst ausschließen
+      if (_swapTarget && ex.name === _swapTarget.name) return false;
       if (pickerCat !== 'all' && ex.catKey !== pickerCat) return false;
       if (q) {
         const hay = (ex.name + ' ' + ex.muscle).toLowerCase();
@@ -791,6 +798,10 @@ function _renderTpNoPlanState(kw) {
           days: [{ label: 'Mo', exercises: [] }]
         };
       }
+      // Swap-Modus zuruecksetzen, falls vorher aktiv
+      _swapTarget = null;
+      const titleEl = document.getElementById('exercisePickerTitle');
+      if (titleEl) titleEl.textContent = 'Aus dem Lexikon wählen';
       pickerCat = 'all';
       pickerSearch = '';
       const searchEl = document.getElementById('tpPickerSearch');
@@ -810,9 +821,17 @@ function _renderTpNoPlanState(kw) {
     });
   }
 
-  // ── Picker Grid Click → Übung zum Plan hinzufügen ──
+  // ── Picker Grid Click → Übung zum Plan hinzufügen oder tauschen ──
   // Übungen mit Voraussetzungen öffnen zuerst das prereqConfirmModal und
   // werden erst bei expliziter Bestätigung in den Plan geschrieben.
+  function _commitExercise(name, muscle) {
+    if (_swapTarget) {
+      _commitExerciseSwap(name, muscle);
+    } else {
+      _commitExerciseAdd(name, muscle);
+    }
+  }
+
   function _commitExerciseAdd(name, muscle) {
     const kw = state.tpViewKw;
     const plan = (state.profile?.plans || {})['w' + kw];
@@ -833,6 +852,39 @@ function _renderTpNoPlanState(kw) {
     toast(name + ' hinzugefügt');
   }
 
+  function _commitExerciseSwap(newName, newMuscle) {
+    const kw = state.tpViewKw;
+    const plan = (state.profile?.plans || {})['w' + kw];
+    if (!plan || !plan.days) return;
+    const dayIdx = state.tpViewDay;
+    if (!plan.days[dayIdx]) return;
+    const oldName = _swapTarget.name;
+    const ex = plan.days[dayIdx].exercises.find(e => e.name === oldName);
+    if (!ex) {
+      toast('Ursprüngliche Übung nicht mehr im Plan');
+      _swapTarget = null;
+      closeModal('exercisePickerModal');
+      return;
+    }
+    // Sätze und Wdh beibehalten, Name und Muskel tauschen.
+    // Gewicht per estimateStartWeight neu berechnen, damit der Nutzer
+    // nicht mit dem alten Gewicht einer ganz anderen Übung arbeitet.
+    ex.name = newName;
+    ex.muscle = newMuscle;
+    import('../data/strength-standards.js').then(({ estimateStartWeight }) => {
+      ex.gewicht = estimateStartWeight(newName, ex.wdh, state.profile);
+      _saveProfile();
+      renderTrainingsplan(state.profile);
+    }).catch(() => {
+      ex.gewicht = null;
+      _saveProfile();
+      renderTrainingsplan(state.profile);
+    });
+    closeModal('exercisePickerModal');
+    toast(oldName + ' → ' + newName + ' getauscht');
+    _swapTarget = null;
+  }
+
   function _openPrereqConfirm(ex) {
     const title = document.getElementById('prereqConfirmTitle');
     const list = document.getElementById('prereqList');
@@ -846,7 +898,7 @@ function _renderTpNoPlanState(kw) {
     if (levelWarn) levelWarn.hidden = !locked;
     btn.onclick = () => {
       closeModal('prereqConfirmModal');
-      _commitExerciseAdd(ex.name, ex.muscle);
+      _commitExercise(ex.name, ex.muscle);
     };
     openModal('prereqConfirmModal');
   }
@@ -863,7 +915,7 @@ function _renderTpNoPlanState(kw) {
         _openPrereqConfirm(exFull);
         return;
       }
-      _commitExerciseAdd(name, muscle);
+      _commitExercise(name, muscle);
     });
   }
 
@@ -871,6 +923,29 @@ function _renderTpNoPlanState(kw) {
   const exContainer = document.getElementById('tpExercises');
   if (exContainer) {
     exContainer.addEventListener('click', (e) => {
+      // Tauschen — Picker im Swap-Modus öffnen
+      const swapBtn = e.target.closest('.tp-ex-swap');
+      if (swapBtn) {
+        const exName = swapBtn.dataset.exName;
+        const exMuscle = swapBtn.dataset.exMuscle || '';
+        // Lexikon-Kategorie der Übung finden, damit der Picker vorgefiltered öffnet
+        const allEx = _lxAllExercises();
+        const found = allEx.find(x => x.name === exName);
+        const catKey = found ? found.catKey : 'all';
+        _swapTarget = { name: exName, muscle: exMuscle, catKey };
+        pickerCat = catKey;
+        pickerSearch = '';
+        const searchEl = document.getElementById('tpPickerSearch');
+        if (searchEl) searchEl.value = '';
+        // Picker-Modal-Titel anpassen
+        const titleEl = document.getElementById('exercisePickerTitle');
+        if (titleEl) titleEl.textContent = exName + ' ersetzen durch …';
+        renderPickerCats();
+        renderPickerGrid();
+        openModal('exercisePickerModal');
+        return;
+      }
+
       // Löschen
       const delBtn = e.target.closest('.tp-ex-delete');
       if (delBtn) {

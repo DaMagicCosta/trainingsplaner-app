@@ -582,6 +582,7 @@ body.role-athlete .tp-mode { display: none; }
   transition: all var(--ease);
 }
 .tp-ex-edit-btn:hover { background: var(--surface-3); color: var(--text); border-color: var(--border-strong); }
+.tp-ex-edit-btn.tp-ex-swap:hover { color: var(--accent); border-color: var(--accent); }
 .tp-ex-edit-btn.tp-ex-delete:hover { color: var(--danger); border-color: var(--danger); }
 @media (max-width: 720px) {
   .tp-ex-edit-bar { top: var(--s-3); right: var(--s-3); }

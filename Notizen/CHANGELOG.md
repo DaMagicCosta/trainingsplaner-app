@@ -11,6 +11,14 @@ Für rechtlich relevante Änderungen siehe zusätzlich:
 
 ## 2026-04-12
 
+### Übungs-Tausch im Training (Bau-Etappe 6)
+- **Neuer ⟳-Button in der `tp-ex-edit-bar`** neben dem bestehenden ✕-Delete-Button — pro Übung im Bearbeiten-Modus sichtbar, Accent-Hover statt Danger
+- **Swap-Modus im Picker**: Klick auf ⟳ öffnet das Picker-Modal mit Titel „[Übungsname] ersetzen durch …", vorgefiltered auf die Lexikon-Kategorie der aktuellen Übung. Die zu tauschende Übung selbst wird aus dem Grid ausgeschlossen
+- **In-place Tausch**: Bei Auswahl einer Alternative wird Name und Muskel der Übung im Plan-Array ersetzt, Sätze und Wdh bleiben erhalten, Gewicht wird per `estimateStartWeight()` für die neue Übung neu berechnet (dynamischer Import vermeidet Zirkel)
+- **Toast-Feedback**: „Bankdrücken → Kurzhantel-Drücken getauscht"
+- **Prereq-Confirm läuft auch im Swap-Modus**: Wenn die Ziel-Übung Voraussetzungen hat, kommt zuerst der Bestätigungs-Dialog
+- **Picker-Titel-Reset**: Beim normalen „+ Übung hinzufügen"-Klick wird der Titel zurück auf „Aus dem Lexikon wählen" gesetzt und `_swapTarget` geleert, damit Add- und Swap-Modus nicht kollidieren
+
 ### Onboarding-Polish: Mobile-Layout + alter Demo-Banner entfernt
 - **Mobile-Layout des Onboarding-Banners überarbeitet**: Unter 720px sind jetzt Padding, Schriftgrößen und die Schritt-Nummer-Größe (24px statt 28px) kompakter. Der Button geht weiterhin in die zweite Zeile, ist aber schmaler und korrekt auf die Nummer-Breite plus Gap eingerückt (`margin-left: 36px`)
 - **Alter `cpDemoBanner` komplett entfernt**: Das war der grüne „Leeres Profil — leg los"-Banner mit „Eigenes Profil erstellen" und „Später". Seit dem Onboarding-Kombi-Banner war seine Funktion redundant (Schritt 1 „Profil anlegen" macht genau dasselbe), plus er hatte einen sichtbaren Bug: Beim App-Start wurde er für jede `empty-`-Profil-ID eingeblendet, aber die ID ändert sich nach Profil-Save nicht — nach Abschluss der Onboarding-Schritte erschien er wieder, obwohl inhaltlich überholt
